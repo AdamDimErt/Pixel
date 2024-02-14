@@ -22,8 +22,6 @@ class PlatformProvider extends OrchidServiceProvider
     public function boot(Dashboard $dashboard): void
     {
         parent::boot($dashboard);
-
-        // ...
     }
 
     /**
@@ -76,6 +74,16 @@ class PlatformProvider extends OrchidServiceProvider
                 ->icon('bs.shield')
                 ->route('platform.systems.roles')
                 ->permission('platform.systems.roles'),
+
+            Menu::make(__('Goods'))
+                ->icon('bs.box')
+                ->route('platform.systems.goods')
+                ->permission('platform.systems.roles'),
+
+            Menu::make(__('GoodTypes'))
+                ->icon('bs.type')
+                ->route('platform.systems.goodTypes')
+                ->permission('platform.systems.goodTypes'),
 
         ];
     }

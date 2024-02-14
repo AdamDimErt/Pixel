@@ -11,6 +11,10 @@ use App\Orchid\Screens\Examples\ExampleGridScreen;
 use App\Orchid\Screens\Examples\ExampleLayoutsScreen;
 use App\Orchid\Screens\Examples\ExampleScreen;
 use App\Orchid\Screens\Examples\ExampleTextEditorsScreen;
+use App\Orchid\Screens\Good\GoodEditScreen;
+use App\Orchid\Screens\Good\GoodListScreen;
+use App\Orchid\Screens\GoodType\GoodTypeEditScreen;
+use App\Orchid\Screens\GoodType\GoodTypeListScreen;
 use App\Orchid\Screens\PlatformScreen;
 use App\Orchid\Screens\Role\RoleEditScreen;
 use App\Orchid\Screens\Role\RoleListScreen;
@@ -83,6 +87,48 @@ Route::screen('roles', RoleListScreen::class)
     ->breadcrumbs(fn (Trail $trail) => $trail
         ->parent('platform.index')
         ->push(__('Roles'), route('platform.systems.roles')));
+
+// Platform > System > Goods > Good
+Route::screen('goods/{good}/edit', GoodEditScreen::class)
+    ->name('platform.systems.goods.edit')
+    ->breadcrumbs(fn (Trail $trail, $good) => $trail
+        ->parent('platform.systems.goods')
+        ->push($good->name, route('platform.systems.goods.edit', $good)));
+
+// Platform > System > Goods > Create
+Route::screen('goods/create', GoodEditScreen::class)
+    ->name('platform.systems.goods.create')
+    ->breadcrumbs(fn (Trail $trail) => $trail
+        ->parent('platform.systems.goods')
+        ->push(__('Create'), route('platform.systems.goods.create')));
+
+// Platform > System > Goods
+Route::screen('goods', GoodListScreen::class)
+    ->name('platform.systems.goods')
+    ->breadcrumbs(fn (Trail $trail) => $trail
+        ->parent('platform.index')
+        ->push(__('Goods'), route('platform.systems.goods')));
+
+// Platform > System > GoodTypes > GoodType
+Route::screen('good-types/{goodType}/edit', GoodTypeEditScreen::class)
+    ->name('platform.systems.goodTypes.edit')
+    ->breadcrumbs(fn (Trail $trail, $goodType) => $trail
+        ->parent('platform.systems.goodTypes')
+        ->push($goodType->name, route('platform.systems.goodTypes.edit', $goodType)));
+
+// Platform > System > GoodTypes > Create
+Route::screen('good-types/create', GoodTypeEditScreen::class)
+    ->name('platform.systems.goodTypes.create')
+    ->breadcrumbs(fn (Trail $trail) => $trail
+        ->parent('platform.systems.goodTypes')
+        ->push(__('Create'), route('platform.systems.goodTypes.create')));
+
+// Platform > System > Goods
+Route::screen('good-types', GoodTypeListScreen::class)
+    ->name('platform.systems.goodTypes')
+    ->breadcrumbs(fn (Trail $trail) => $trail
+        ->parent('platform.index')
+        ->push(__('GoodTypes'), route('platform.systems.goodTypes')));
 
 // Example...
 Route::screen('example', ExampleScreen::class)
