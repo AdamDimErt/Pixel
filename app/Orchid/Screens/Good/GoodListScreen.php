@@ -2,52 +2,65 @@
 
 namespace App\Orchid\Screens\Good;
 
+use App\Models\Good;
+use App\Orchid\Layouts\Good\GoodListLayout;
 use Orchid\Screen\Actions\Link;
 use Orchid\Screen\Screen;
+use Orchid\Support\Facades\Layout;
 
 class GoodListScreen extends Screen
 {
     /**
-     * Fetch data to be displayed on the screen.
+     * Query data.
      *
      * @return array
      */
-    public function query(): iterable
-    {
-        return [];
-    }
-
-    /**
-     * The name of the screen displayed in the header.
-     *
-     * @return string|null
-     */
-    public function name(): ?string
-    {
-        return __('Goods');
-    }
-
-    /**
-     * The screen's action buttons.
-     *
-     * @return \Orchid\Screen\Action[]
-     */
-    public function commandBar(): iterable
+    public function query(): array
     {
         return [
-            Link::make(__('Add'))
-                ->icon('bs.plus-circle')
-                ->href(route('platform.goods.create')),
+            'goods' => Good::filters()->defaultSort('id')->paginate()
         ];
     }
 
     /**
-     * The screen's layout elements.
-     *
-     * @return \Orchid\Screen\Layout[]|string[]
+     * The name is displayed on the user's screen and in the headers
      */
-    public function layout(): iterable
+    public function name(): ?string
     {
-        return [];
+        return 'Good';
+    }
+
+    /**
+     * The description is displayed on the user's screen under the heading
+     */
+    public function description(): ?string
+    {
+        return "All goods";
+    }
+
+    /**
+     * Button commands.
+     *
+     * @return Link[]
+     */
+    public function commandBar(): array
+    {
+        return [
+            Link::make('Create new')
+                ->icon('pencil')
+                ->route('platform.goods.create')
+        ];
+    }
+
+    /**
+     * Views.
+     *
+     * @return Layout[]
+     */
+    public function layout(): array
+    {
+        return [
+            GoodListLayout::class
+        ];
     }
 }

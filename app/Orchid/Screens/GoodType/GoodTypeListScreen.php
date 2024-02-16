@@ -18,7 +18,7 @@ class GoodTypeListScreen extends Screen
     public function query(): array
     {
         return [
-            'goodTypes' => GoodType::paginate()
+            'goodTypes' => GoodType::filters()->defaultSort('id')->paginate()
         ];
     }
 

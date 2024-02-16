@@ -4,6 +4,7 @@ namespace App\Orchid\Layouts\GoodType;
 
 use App\Models\GoodType;
 use Orchid\Screen\Actions\Link;
+use Orchid\Screen\Fields\Input;
 use Orchid\Screen\Layouts\Table;
 use Orchid\Screen\TD;
 
@@ -29,6 +30,7 @@ class GoodTypeListLayout extends Table
         return [
             TD::make('name')
                 ->sort()
+                ->filter(Input::make())
                 ->render(function (GoodType $goodType) {
                     return Link::make($goodType->name)
                         ->route('platform.goodTypes.edit', $goodType);
@@ -36,6 +38,7 @@ class GoodTypeListLayout extends Table
 
             TD::make('description')
                 ->sort()
+                ->filter(Input::make())
                 ->render(function (GoodType $goodType) {
                     return $goodType->description;
                 }),

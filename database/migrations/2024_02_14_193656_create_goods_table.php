@@ -14,12 +14,12 @@ return new class extends Migration
         Schema::create('goods', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->binary('image');
             $table->integer('cost');
             $table->string('description');
 
             $table->unsignedBigInteger('good_type_id');
             $table->foreign('good_type_id')->references('id')->on('good_types');
+
             $table->timestamps();
         });
     }
