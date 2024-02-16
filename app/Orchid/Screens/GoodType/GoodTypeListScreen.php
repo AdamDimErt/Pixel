@@ -2,47 +2,65 @@
 
 namespace App\Orchid\Screens\GoodType;
 
+use App\Models\GoodType;
+use App\Orchid\Layouts\GoodType\GoodTypeListLayout;
+use Orchid\Screen\Actions\Link;
 use Orchid\Screen\Screen;
+use Orchid\Support\Facades\Layout;
 
 class GoodTypeListScreen extends Screen
 {
     /**
-     * Fetch data to be displayed on the screen.
+     * Query data.
      *
      * @return array
      */
-    public function query(): iterable
+    public function query(): array
     {
-        return [];
+        return [
+            'goodTypes' => GoodType::paginate()
+        ];
     }
 
     /**
-     * The name of the screen displayed in the header.
-     *
-     * @return string|null
+     * The name is displayed on the user's screen and in the headers
      */
     public function name(): ?string
     {
-        return 'GoodTypeListScreen';
+        return 'GoodType';
     }
 
     /**
-     * The screen's action buttons.
-     *
-     * @return \Orchid\Screen\Action[]
+     * The description is displayed on the user's screen under the heading
      */
-    public function commandBar(): iterable
+    public function description(): ?string
     {
-        return [];
+        return "All good types";
     }
 
     /**
-     * The screen's layout elements.
+     * Button commands.
      *
-     * @return \Orchid\Screen\Layout[]|string[]
+     * @return Link[]
      */
-    public function layout(): iterable
+    public function commandBar(): array
     {
-        return [];
+        return [
+            Link::make('Create new')
+                ->icon('pencil')
+                ->route('platform.goodTypes.create')
+        ];
+    }
+
+    /**
+     * Views.
+     *
+     * @return Layout[]
+     */
+    public function layout(): array
+    {
+        return [
+            GoodTypeListLayout::class
+        ];
     }
 }

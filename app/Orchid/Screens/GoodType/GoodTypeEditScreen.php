@@ -2,47 +2,122 @@
 
 namespace App\Orchid\Screens\GoodType;
 
+use App\Models\GoodType;
+use Illuminate\Http\Request;
+use Orchid\Screen\Actions\Button;
+use Orchid\Screen\Fields\Input;
+use Orchid\Screen\Fields\TextArea;
 use Orchid\Screen\Screen;
+use Orchid\Support\Facades\Alert;
+use Orchid\Support\Facades\Layout;
 
 class GoodTypeEditScreen extends Screen
 {
     /**
-     * Fetch data to be displayed on the screen.
+     * @var GoodType
+     */
+    public $goodType;
+
+    /**
+     * Query data.
+     *
+     * @param GoodType $goodType
      *
      * @return array
      */
-    public function query(): iterable
+    public function query(GoodType $goodType): array
     {
-        return [];
+        return [
+            'goodType' => $goodType
+        ];
     }
 
     /**
-     * The name of the screen displayed in the header.
-     *
-     * @return string|null
+     * The name is displayed on the user's screen and in the headers
      */
     public function name(): ?string
     {
-        return 'GoodTypeEditScreen';
+        return $this->goodType->exists ? 'Edit goodType' : 'Creating a new goodType';
     }
 
     /**
-     * The screen's action buttons.
-     *
-     * @return \Orchid\Screen\Action[]
+     * The description is displayed on the user's screen under the heading
      */
-    public function commandBar(): iterable
+    public function description(): ?string
     {
-        return [];
+        return "Good types";
+    }
+
+    public function commandBar(): array
+    {
+        return [
+            Button::make('Create goodType')
+                ->icon('pencil')
+                ->method('createOrUpdate')
+                ->canSee(!$this->goodType->exists),
+
+            Button::make('Update')
+                ->icon('note')
+                ->method('createOrUpdate')
+                ->canSee($this->goodType->exists),
+
+            Button::make('Remove')
+                ->icon('trash')
+                ->method('remove')
+                ->canSee($this->goodType->exists),
+        ];
     }
 
     /**
-     * The screen's layout elements.
+     * Views.
      *
-     * @return \Orchid\Screen\Layout[]|string[]
+     * @return Layout[]
      */
-    public function layout(): iterable
+    public function layout(): array
     {
-        return [];
+        return [
+            Layout::rows([
+                Input::make('goodType.name')
+                    ->title('Title')
+                    ->placeholder('Attractive but mysterious title')
+                    ->help('Specify a short descriptive title for this post.'),
+
+                TextArea::make('goodType.description')
+                    ->title('Description')
+                    ->rows(3)
+                    ->maxlength(200)
+                    ->placeholder('Brief description for preview'),
+            ])
+        ];
+    }
+
+    /**
+     * @param GoodType $goodType
+     * @param Request $request
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function createOrUpdate(GoodType $goodType, Request $request)
+    {
+        $goodType->fill($request->get('goodType'))->save();
+
+        Alert::info('You have successfully created a post.');
+
+        return redirect()->route('platform.goodTypes.list');
+    }
+
+    /**
+     * @param GoodType $goodType
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Exception
+     */
+    public function remove(GoodType $goodType)
+    {
+        $goodType->delete();
+
+        Alert::info('You have successfully deleted the goodType.');
+
+        return redirect()->route('platform.goodTypes.list');
     }
 }

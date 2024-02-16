@@ -90,45 +90,45 @@ Route::screen('roles', RoleListScreen::class)
 
 // Platform > System > Goods > Good
 Route::screen('goods/{good}/edit', GoodEditScreen::class)
-    ->name('platform.systems.goods.edit')
+    ->name('platform.goods.edit')
     ->breadcrumbs(fn (Trail $trail, $good) => $trail
-        ->parent('platform.systems.goods')
-        ->push($good->name, route('platform.systems.goods.edit', $good)));
+        ->parent('platform.goods.list')
+        ->push($good->name, route('platform.goods.edit', $good)));
 
 // Platform > System > Goods > Create
 Route::screen('goods/create', GoodEditScreen::class)
-    ->name('platform.systems.goods.create')
+    ->name('platform.goods.create')
     ->breadcrumbs(fn (Trail $trail) => $trail
-        ->parent('platform.systems.goods')
-        ->push(__('Create'), route('platform.systems.goods.create')));
+        ->parent('platform.goods.list')
+        ->push(__('Create'), route('platform.goods.create')));
 
 // Platform > System > Goods
 Route::screen('goods', GoodListScreen::class)
-    ->name('platform.systems.goods')
+    ->name('platform.goods.list')
     ->breadcrumbs(fn (Trail $trail) => $trail
         ->parent('platform.index')
-        ->push(__('Goods'), route('platform.systems.goods')));
+        ->push(__('Goods'), route('platform.goods.list')));
 
 // Platform > System > GoodTypes > GoodType
 Route::screen('good-types/{goodType}/edit', GoodTypeEditScreen::class)
-    ->name('platform.systems.goodTypes.edit')
+    ->name('platform.goodTypes.edit')
     ->breadcrumbs(fn (Trail $trail, $goodType) => $trail
-        ->parent('platform.systems.goodTypes')
-        ->push($goodType->name, route('platform.systems.goodTypes.edit', $goodType)));
+        ->parent('platform.goodTypes.list')
+        ->push($goodType->name, route('platform.goodTypes.edit', $goodType)));
 
 // Platform > System > GoodTypes > Create
 Route::screen('good-types/create', GoodTypeEditScreen::class)
-    ->name('platform.systems.goodTypes.create')
+    ->name('platform.goodTypes.create')
     ->breadcrumbs(fn (Trail $trail) => $trail
-        ->parent('platform.systems.goodTypes')
-        ->push(__('Create'), route('platform.systems.goodTypes.create')));
+        ->parent('platform.goodTypes.list')
+        ->push(__('Create'), route('platform.goodTypes.create')));
 
 // Platform > System > Goods
 Route::screen('good-types', GoodTypeListScreen::class)
-    ->name('platform.systems.goodTypes')
+    ->name('platform.goodTypes.list')
     ->breadcrumbs(fn (Trail $trail) => $trail
         ->parent('platform.index')
-        ->push(__('GoodTypes'), route('platform.systems.goodTypes')));
+        ->push(__('GoodTypes'), route('platform.goodTypes.list')));
 
 // Example...
 Route::screen('example', ExampleScreen::class)

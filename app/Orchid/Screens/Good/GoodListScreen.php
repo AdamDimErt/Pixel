@@ -37,7 +37,7 @@ class GoodListScreen extends Screen
         return [
             Link::make(__('Add'))
                 ->icon('bs.plus-circle')
-                ->href(route('platform.systems.goods.create')),
+                ->href(route('platform.goods.create')),
         ];
     }
 

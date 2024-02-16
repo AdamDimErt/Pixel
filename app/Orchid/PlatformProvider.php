@@ -77,13 +77,13 @@ class PlatformProvider extends OrchidServiceProvider
 
             Menu::make(__('Goods'))
                 ->icon('bs.box')
-                ->route('platform.systems.goods')
-                ->permission('platform.systems.roles'),
+                ->route('platform.goods.list')
+                ->permission('platform.goods.list'),
 
             Menu::make(__('GoodTypes'))
                 ->icon('bs.type')
-                ->route('platform.systems.goodTypes')
-                ->permission('platform.systems.goodTypes'),
+                ->route('platform.goodTypes.list')
+                ->permission('platform.goodTypes.list'),
 
         ];
     }
