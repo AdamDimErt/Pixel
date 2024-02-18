@@ -15,6 +15,8 @@ use App\Orchid\Screens\Good\GoodEditScreen;
 use App\Orchid\Screens\Good\GoodListScreen;
 use App\Orchid\Screens\GoodType\GoodTypeEditScreen;
 use App\Orchid\Screens\GoodType\GoodTypeListScreen;
+use App\Orchid\Screens\Item\ItemEditScreen;
+use App\Orchid\Screens\Item\ItemListScreen;
 use App\Orchid\Screens\PlatformScreen;
 use App\Orchid\Screens\Role\RoleEditScreen;
 use App\Orchid\Screens\Role\RoleListScreen;
@@ -130,21 +132,23 @@ Route::screen('good-types', GoodTypeListScreen::class)
         ->parent('platform.index')
         ->push(__('GoodTypes'), route('platform.goodTypes.list')));
 
-// Example...
-Route::screen('example', ExampleScreen::class)
-    ->name('platform.example')
+// Platform > System > Items > Item
+Route::screen('items/{item}/edit', ItemEditScreen::class)
+    ->name('platform.items.edit')
+    ->breadcrumbs(fn (Trail $trail, $item) => $trail
+        ->parent('platform.items.list')
+        ->push($item->good->name, route('platform.items.edit', $item)));
+
+// Platform > System > Items > Item
+Route::screen('items/create', ItemEditScreen::class)
+    ->name('platform.items.create')
+    ->breadcrumbs(fn (Trail $trail) => $trail
+        ->parent('platform.items.list')
+        ->push(__('Create'), route('platform.items.create')));
+
+// Platform > System > Items
+Route::screen('items', ItemListScreen::class)
+    ->name('platform.items.list')
     ->breadcrumbs(fn (Trail $trail) => $trail
         ->parent('platform.index')
-        ->push('Example Screen'));
-
-Route::screen('/examples/form/fields', ExampleFieldsScreen::class)->name('platform.example.fields');
-Route::screen('/examples/form/advanced', ExampleFieldsAdvancedScreen::class)->name('platform.example.advanced');
-Route::screen('/examples/form/editors', ExampleTextEditorsScreen::class)->name('platform.example.editors');
-Route::screen('/examples/form/actions', ExampleActionsScreen::class)->name('platform.example.actions');
-
-Route::screen('/examples/layouts', ExampleLayoutsScreen::class)->name('platform.example.layouts');
-Route::screen('/examples/grid', ExampleGridScreen::class)->name('platform.example.grid');
-Route::screen('/examples/charts', ExampleChartsScreen::class)->name('platform.example.charts');
-Route::screen('/examples/cards', ExampleCardsScreen::class)->name('platform.example.cards');
-
-//Route::screen('idea', Idea::class, 'platform.screens.idea');
+        ->push(__('Items'), route('platform.items.list')));

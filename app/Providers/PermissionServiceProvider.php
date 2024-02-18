@@ -20,6 +20,9 @@ class PermissionServiceProvider extends ServiceProvider
             ->addPermission('platform.goodTypes.list', 'GoodTypes')
             ->addPermission('platform.goodTypes.create', 'GoodTypes create')
             ->addPermission('platform.goodTypes.edit', 'GoodTypes edit')
+            ->addPermission('platform.items.list', 'Items')
+            ->addPermission('platform.items.create', 'Items create')
+            ->addPermission('platform.items.edit', 'Items edit')
         ;
 
         $dashboard->registerPermissions($permissions);
