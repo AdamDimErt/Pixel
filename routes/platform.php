@@ -17,6 +17,8 @@ use App\Orchid\Screens\GoodType\GoodTypeEditScreen;
 use App\Orchid\Screens\GoodType\GoodTypeListScreen;
 use App\Orchid\Screens\Item\ItemEditScreen;
 use App\Orchid\Screens\Item\ItemListScreen;
+use App\Orchid\Screens\Order\OrderEditScreen;
+use App\Orchid\Screens\Order\OrderListScreen;
 use App\Orchid\Screens\PlatformScreen;
 use App\Orchid\Screens\Role\RoleEditScreen;
 use App\Orchid\Screens\Role\RoleListScreen;
@@ -152,3 +154,24 @@ Route::screen('items', ItemListScreen::class)
     ->breadcrumbs(fn (Trail $trail) => $trail
         ->parent('platform.index')
         ->push(__('Items'), route('platform.items.list')));
+
+// Platform > System > Orders > Item
+Route::screen('orders/{order}/edit', OrderEditScreen::class)
+    ->name('platform.orders.edit')
+    ->breadcrumbs(fn (Trail $trail, $order) => $trail
+        ->parent('platform.orders.list')
+        ->push($order->item->good->name, route('platform.orders.edit', $order)));
+
+// Platform > System > Orders > Item
+Route::screen('orders/create', OrderEditScreen::class)
+    ->name('platform.orders.create')
+    ->breadcrumbs(fn (Trail $trail) => $trail
+        ->parent('platform.orders.list')
+        ->push(__('Create'), route('platform.orders.create')));
+
+// Platform > System > Orders
+Route::screen('orders', OrderListScreen::class)
+    ->name('platform.orders.list')
+    ->breadcrumbs(fn (Trail $trail) => $trail
+        ->parent('platform.index')
+        ->push(__('Orders'), route('platform.orders.list')));

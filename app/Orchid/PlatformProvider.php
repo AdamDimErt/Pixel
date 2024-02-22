@@ -63,6 +63,11 @@ class PlatformProvider extends OrchidServiceProvider
                 ->route('platform.items.list')
                 ->permission('platform.items.list'),
 
+            Menu::make(__('Orders'))
+                ->icon('bs.coin')
+                ->route('platform.orders.list')
+                ->permission('platform.orders.list'),
+
         ];
     }
 

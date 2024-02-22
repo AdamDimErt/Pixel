@@ -23,6 +23,9 @@ class PermissionServiceProvider extends ServiceProvider
             ->addPermission('platform.items.list', 'Items')
             ->addPermission('platform.items.create', 'Items create')
             ->addPermission('platform.items.edit', 'Items edit')
+            ->addPermission('platform.orders.list', 'Orders')
+            ->addPermission('platform.orders.create', 'Orders create')
+            ->addPermission('platform.orders.edit', 'Orders edit')
         ;
 
         $dashboard->registerPermissions($permissions);
