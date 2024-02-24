@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers as HttpControllers;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,4 +16,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
+});
+
+Route::prefix('/')->group(function () {
+    Route::get('/', function () {return view('welcome');});
+    Route::post('change-lang', [HttpControllers\LocalizationController::class, 'changeLang']);
 });
