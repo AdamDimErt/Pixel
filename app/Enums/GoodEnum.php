@@ -126,7 +126,6 @@ enum GoodEnum: string
     case FEELWORLD_4K_ULTRA = 'Feelworld 4K ultra';
     // Разное
     case VIDEOSENDERS_HOLLYLAND_MARS_400S_PRO = 'Видео сендеры Hollyland Mars 400s pro';
-    case VIDEO_SENDERS_HOLLYLAND_MARS_400S_PRO = 'Видео сендеры Hollyland mars 400s pro';
     case TELEPROMPTER_FEELWORLD_TP10 = 'Телесуфлер Feelworld Tp10';
     case REFLECTOR = 'Отражатель';
     case CHROMAKEY_200X150 = 'Хромакей 200x150';

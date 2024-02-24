@@ -222,7 +222,6 @@ class GoodSeeder extends Seeder
     {
         return [
             GoodEnum::VIDEOSENDERS_HOLLYLAND_MARS_400S_PRO->name => GoodEnum::VIDEOSENDERS_HOLLYLAND_MARS_400S_PRO->value,
-            GoodEnum::VIDEO_SENDERS_HOLLYLAND_MARS_400S_PRO->name => GoodEnum::VIDEO_SENDERS_HOLLYLAND_MARS_400S_PRO->value,
             GoodEnum::TELEPROMPTER_FEELWORLD_TP10->name => GoodEnum::TELEPROMPTER_FEELWORLD_TP10->value,
             GoodEnum::REFLECTOR->name => GoodEnum::REFLECTOR->value,
             GoodEnum::CHROMAKEY_200X150->name => GoodEnum::CHROMAKEY_200X150->value,
