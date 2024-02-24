@@ -17,6 +17,7 @@ class GoodFactory extends Factory
     {
         return [
             'name' => fake()->colorName(),
+            'title' => fake()->unique()->safeEmail(),
             'description' => fake()->unique()->safeEmail(),
             'cost' => fake()->numberBetween(10000, 50000),
             'good_type_id' => GoodType::query()->inRandomOrder()->first(),
