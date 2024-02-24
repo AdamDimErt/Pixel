@@ -4,6 +4,7 @@ namespace App\Orchid\Layouts\GoodType;
 
 use App\Models\GoodType;
 use Orchid\Screen\Actions\Link;
+use Orchid\Screen\Components\Cells\DateTimeSplit;
 use Orchid\Screen\Fields\Input;
 use Orchid\Screen\Layouts\Table;
 use Orchid\Screen\TD;
@@ -43,10 +44,16 @@ class GoodTypeListLayout extends Table
                     return $goodType->description;
                 }),
 
-            TD::make('created_at', 'Created')
+            TD::make('created_at', __('Created'))
+                ->usingComponent(DateTimeSplit::class)
+                ->align(TD::ALIGN_RIGHT)
+                ->defaultHidden()
                 ->sort(),
 
-            TD::make('updated_at', 'Last edit')
+            TD::make('updated_at', __('Created'))
+                ->usingComponent(DateTimeSplit::class)
+                ->align(TD::ALIGN_RIGHT)
+                ->defaultHidden()
                 ->sort(),
         ];
     }

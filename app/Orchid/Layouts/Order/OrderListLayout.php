@@ -10,6 +10,7 @@ use Illuminate\Http\RedirectResponse;
 use Orchid\Screen\Actions\Button;
 use Orchid\Screen\Actions\DropDown;
 use Orchid\Screen\Actions\Link;
+use Orchid\Screen\Components\Cells\DateTimeSplit;
 use Orchid\Screen\Fields\Input;
 use Orchid\Screen\Fields\Relation;
 use Orchid\Screen\Fields\Select;
@@ -64,16 +65,28 @@ class OrderListLayout extends Table
                     return $order->status;
                 }),
 
-            TD::make('rent_start', 'Rent start')
+            TD::make('rent_start', __('Created'))
+                ->usingComponent(DateTimeSplit::class)
+                ->align(TD::ALIGN_RIGHT)
+                ->defaultHidden()
                 ->sort(),
 
-            TD::make('rent_end', 'Rent end')
+            TD::make('rent_end', __('Created'))
+                ->usingComponent(DateTimeSplit::class)
+                ->align(TD::ALIGN_RIGHT)
+                ->defaultHidden()
                 ->sort(),
 
-            TD::make('created_at', 'Created')
+            TD::make('created_at', __('Created'))
+                ->usingComponent(DateTimeSplit::class)
+                ->align(TD::ALIGN_RIGHT)
+                ->defaultHidden()
                 ->sort(),
 
-            TD::make('updated_at', 'Last edit')
+            TD::make('updated_at', __('Created'))
+                ->usingComponent(DateTimeSplit::class)
+                ->align(TD::ALIGN_RIGHT)
+                ->defaultHidden()
                 ->sort(),
 
             TD::make(__('Actions'))

@@ -4,6 +4,7 @@ namespace App\Orchid\Layouts\Item;
 
 use App\Models\Item;
 use Orchid\Screen\Actions\Link;
+use Orchid\Screen\Components\Cells\DateTimeSplit;
 use Orchid\Screen\Fields\Input;
 use Orchid\Screen\Fields\Select;
 use Orchid\Screen\Layouts\Table;
@@ -55,10 +56,16 @@ class ItemListLayout extends Table
                     return $item->status;
                 }),
 
-            TD::make('created_at', 'Created')
+            TD::make('created_at', __('Created'))
+                ->usingComponent(DateTimeSplit::class)
+                ->align(TD::ALIGN_RIGHT)
+                ->defaultHidden()
                 ->sort(),
 
-            TD::make('updated_at', 'Last edit')
+            TD::make('updated_at', __('Created'))
+                ->usingComponent(DateTimeSplit::class)
+                ->align(TD::ALIGN_RIGHT)
+                ->defaultHidden()
                 ->sort(),
         ];
     }
