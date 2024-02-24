@@ -7,6 +7,7 @@ use App\Models\Item;
 use Illuminate\Http\Request;
 use Orchid\Screen\Actions\Button;
 use Orchid\Screen\Fields\Relation;
+use Orchid\Screen\Fields\Select;
 use Orchid\Screen\Screen;
 use Orchid\Support\Facades\Alert;
 use Orchid\Support\Facades\Layout;
@@ -80,8 +81,17 @@ class ItemEditScreen extends Screen
 
                 Relation::make('item.good_id')
                     ->fromModel(Good::class, 'name')
-                    ->help('Begin to enter a name to find an item you need ')
-                    ->title('Choose a category for that good'),
+                    ->help('Begin to enter a name to find a good that you need ')
+                    ->title('Choose a good for that item'),
+
+                Select::make('item.status')
+                    ->options([
+                        'Available' => 'available',
+                        'Rented' => 'rented',
+                        'Pre ordered' => 'pre-ordered',
+                    ])
+                    ->title('status')
+                    ->help('status itema')
             ]),
         ];
     }
@@ -96,7 +106,7 @@ class ItemEditScreen extends Screen
     {
         $item->fill($request->get('item'))->save();
 
-        Alert::info('You have successfully created a post.');
+        Alert::info('You have successfully created am item.');
 
         return redirect()->route('platform.items.list');
     }

@@ -103,7 +103,7 @@ class GoodTypeEditScreen extends Screen
     {
         $goodType->fill($request->get('goodType'))->save();
 
-        Alert::info('You have successfully created a post.');
+        Alert::info('You have successfully created a good type.');
 
         return redirect()->route('platform.goodTypes.list');
     }

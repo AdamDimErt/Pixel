@@ -2,11 +2,15 @@
 
 namespace App\Orchid\Screens\Order;
 
+use App\Models\Item;
 use App\Models\Order;
 use App\Orchid\Layouts\Order\OrderListLayout;
+use Illuminate\Http\Request;
+use Orchid\Platform\Models\User;
 use Orchid\Screen\Actions\Link;
 use Orchid\Screen\Screen;
 use Orchid\Support\Facades\Layout;
+use Orchid\Support\Facades\Toast;
 
 class OrderListScreen extends Screen
 {
@@ -62,5 +66,35 @@ class OrderListScreen extends Screen
         return [
             OrderListLayout::class
         ];
+    }
+
+    public function cancel(Request $request): void
+    {
+        $order = Order::findOrFail($request->get('id'));
+        $order->status = 'cancelled';
+        $order->save();
+        Toast::info(__('Order was cancelled'));
+    }
+
+    public function return(Request $request): void
+    {
+        $order = Order::findOrFail($request->get('id'));
+        $order->status = 'returned';
+        $order->save();
+
+        $order->items()->each(function (Item $item) {
+            $item->status = 'available';
+            $item->save();
+        });
+
+        Toast::info(__('Order was returned'));
+    }
+
+    public function confirm(Request $request): void
+    {
+        $order = Order::findOrFail($request->get('id'));
+        $order->status = 'in_rent';
+        $order->save();
+        Toast::info(__('Order was confirmed'));
     }
 }

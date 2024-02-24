@@ -46,6 +46,7 @@ class ItemListLayout extends Table
                         ->options([
                             'Available' => 'available',
                             'Rented' => 'rented',
+                            'Pre ordered' => 'pre-ordered',
                         ])
                         ->title('status')
                         ->help('status itema')

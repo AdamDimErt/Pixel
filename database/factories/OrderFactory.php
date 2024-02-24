@@ -18,7 +18,6 @@ class OrderFactory extends Factory
     public function definition(): array
     {
         return [
-            'item_id'     => Item::query()->inRandomOrder()->first(),
             'user_id'     => User::query()->inRandomOrder()->first(),
             'status'      => ['in_rent', 'returned'][$this->faker->numberBetween(0, 1)],
             'amount_paid' => $this->faker->randomNumber(),

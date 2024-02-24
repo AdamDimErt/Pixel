@@ -2,13 +2,17 @@
 
 namespace App\Orchid\Screens\Order;
 
-use App\Models\Client;
+use App\Models\User;
 use App\Models\Good;
 use App\Models\Item;
 use App\Models\Order;
 use Illuminate\Http\Request;
 use Orchid\Screen\Actions\Button;
+use Orchid\Screen\Components\Cells\DateTime;
+use Orchid\Screen\Fields\DateRange;
+use Orchid\Screen\Fields\DateTimer;
 use Orchid\Screen\Fields\Relation;
+use Orchid\Screen\Fields\Select;
 use Orchid\Screen\Screen;
 use Orchid\Support\Facades\Alert;
 use Orchid\Support\Facades\Layout;
@@ -80,16 +84,26 @@ class OrderEditScreen extends Screen
         return [
             Layout::rows([
 
-                Relation::make('items.')
+                Relation::make('items')
                     ->fromModel(Item::class, 'id')
+                    ->multiple()
+                    ->applyScope('available')
                     ->displayAppend('name')
                     ->help('Begin to enter a name to find an order you need')
                     ->title('Choose a item for that order'),
 
+                DateTimer::make('rent.start')
+                    ->enableTime()
+                    ->title('Begining of the rent'),
+
+                DateTimer::make('rent.end')
+                    ->enableTime()
+                    ->title('End  of the rent'),
+
                 Relation::make('order.user_id')
-                    ->fromModel(Client::class, 'email')
+                    ->fromModel(User::class, 'email')
                     ->help('Begin to enter a name to find an order you need')
-                    ->title('Choose a item for that order'),
+                    ->title('Choose an owner for that order'),
 
             ]),
         ];
@@ -103,9 +117,21 @@ class OrderEditScreen extends Screen
      */
     public function createOrUpdate(Order $order, Request $request)
     {
-        $order->fill($request->get('order'))->save();
+        $order->fill($request->get('order'));
 
-        Alert::info('You have successfully created a post.');
+        $order->rent_start = $request->get('rent')['start'];
+        $order->rent_end = $request->get('rent')['end'];
+
+        $order->save();
+
+        $order->items()->sync($request->input('items'));
+
+        $order->items()->each(function ($item) {
+            $item->status = 'pre-ordered';
+            $item->save();
+        });
+
+        Alert::info('You have successfully created an order.');
 
         return redirect()->route('platform.orders.list');
     }

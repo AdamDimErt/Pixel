@@ -117,7 +117,7 @@ class GoodEditScreen extends Screen
     {
         $good->fill($request->get('good'))->save();
 
-        Alert::info('You have successfully created a post.');
+        Alert::info('You have successfully created a good.');
 
         return redirect()->route('platform.goods.list');
     }

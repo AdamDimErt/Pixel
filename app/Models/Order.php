@@ -5,6 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Orchid\Filters\Filterable;
 use Orchid\Filters\Types\Where;
 use Orchid\Filters\Types\WhereDateStartEnd;
@@ -15,9 +18,14 @@ class Order extends Model
 {
     use HasFactory, AsSource, Filterable;
     protected $guarded = [];
+    protected $casts = [
+        'created_at' => 'datetime:Y-m-d h:m:s',
+        'updated_at' => 'datetime:Y-m-d h:m:s',
+        'rent_start' => 'datetime:Y-m-d h:m:s',
+        'rent_end'   => 'datetime:Y-m-d h:m:s',
+    ];
 
     protected $allowedFilters = [
-        'item_id'       => Where::class,
         'user_id'       => Where::class,
         'amount_paid'   => WhereMaxMin::class,
         'status'        => Where::class,
@@ -28,7 +36,6 @@ class Order extends Model
     ];
 
     protected $allowedSorts = [
-        'item_id',
         'user_id',
         'amount_paid',
         'status',
@@ -37,8 +44,13 @@ class Order extends Model
         'created_at',
         'deleted_at',
     ];
-    public function good(): BelongsTo
+
+    public function owner(): HasOne {
+        return $this->hasOne(User::class, 'id', 'user_id');
+    }
+
+    public function items(): BelongsToMany
     {
-        return $this->belongsTo(Good::class);
+        return $this->belongsToMany(Item::class, 'order_items');
     }
 }

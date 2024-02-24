@@ -160,9 +160,9 @@ Route::screen('orders/{order}/edit', OrderEditScreen::class)
     ->name('platform.orders.edit')
     ->breadcrumbs(fn (Trail $trail, $order) => $trail
         ->parent('platform.orders.list')
-        ->push($order->item->good->name, route('platform.orders.edit', $order)));
+        ->push( 'Order #    ' . $order->id, route('platform.orders.edit', $order)));
 
-// Platform > System > Orders > Item
+// Platform > System > Orders > Order
 Route::screen('orders/create', OrderEditScreen::class)
     ->name('platform.orders.create')
     ->breadcrumbs(fn (Trail $trail) => $trail
