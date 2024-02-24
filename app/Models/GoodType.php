@@ -19,6 +19,11 @@ class GoodType extends Model
 
     protected $guarded = [];
 
+    protected $casts = [
+        'created_at' => 'datetime:Y-m-d h:m:s',
+        'updated_at' => 'datetime:Y-m-d h:m:s',
+    ];
+
     protected $allowedFilters = [
         'name'        => Like::class,
         'description' => Like::class,

@@ -17,6 +17,11 @@ class Item extends Model
     use HasFactory, AsSource, Filterable;
     protected $guarded = [];
 
+    protected $casts = [
+        'created_at' => 'datetime:Y-m-d h:m:s',
+        'updated_at' => 'datetime:Y-m-d h:m:s',
+    ];
+
     protected $allowedFilters = [
         'id'           => WhereIn::class,
         'good_id'      => Where::class,

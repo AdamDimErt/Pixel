@@ -19,6 +19,11 @@ class Good extends Model
     use HasFactory, AsSource, Filterable, Attachable;
     protected $guarded = [];
 
+    protected $casts = [
+        'created_at' => 'datetime:Y-m-d h:m:s',
+        'updated_at' => 'datetime:Y-m-d h:m:s',
+    ];
+
     protected $allowedFilters = [
         'name'         => Like::class,
         'cost'         => WhereMaxMin::class,
