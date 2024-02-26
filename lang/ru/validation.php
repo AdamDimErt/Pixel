@@ -1,6 +1,5 @@
 <?php
 
-
 return [
 
     /*
@@ -77,7 +76,6 @@ return [
     'ipv6' => 'Поле :attribute должно быть действительным IPv6-адресом.',
     'json' => 'Поле :attribute должно быть действительной JSON-строкой.',
 
-
     'lowercase' => 'Поле :attribute должно быть в нижнем регистре.',
     'lt' => [
         'array' => 'Поле :attribute должно содержать менее :value элементов.',
@@ -147,7 +145,6 @@ return [
     'size' => [
         'array' => 'Поле :attribute должно содержать :size элементов.',
 
-
         'file' => 'Поле :attribute должно быть :size килобайт.',
         'numeric' => 'Поле :attribute должно быть :size.',
         'string' => 'Поле :attribute должно быть :size символов.',
@@ -193,4 +190,3 @@ return [
     'attributes' => [],
 
 ];
-

@@ -21,15 +21,11 @@ class ItemEditScreen extends Screen
 
     /**
      * Query data.
-     *
-     * @param Item $item
-     *
-     * @return array
      */
     public function query(Item $item): array
     {
         return [
-            'item' => $item
+            'item' => $item,
         ];
     }
 
@@ -46,7 +42,7 @@ class ItemEditScreen extends Screen
      */
     public function description(): ?string
     {
-        return "Items";
+        return 'Items';
     }
 
     public function commandBar(): array
@@ -55,7 +51,7 @@ class ItemEditScreen extends Screen
             Button::make('Create item')
                 ->icon('pencil')
                 ->method('createOrUpdate')
-                ->canSee(!$this->item->exists),
+                ->canSee(! $this->item->exists),
 
             Button::make('Update')
                 ->icon('note')
@@ -91,15 +87,12 @@ class ItemEditScreen extends Screen
                         'Pre ordered' => 'pre-ordered',
                     ])
                     ->title('status')
-                    ->help('status itema')
+                    ->help('status itema'),
             ]),
         ];
     }
 
     /**
-     * @param Item $item
-     * @param Request $request
-     *
      * @return \Illuminate\Http\RedirectResponse
      */
     public function createOrUpdate(Item $item, Request $request)
@@ -112,9 +105,8 @@ class ItemEditScreen extends Screen
     }
 
     /**
-     * @param Item $item
-     *
      * @return \Illuminate\Http\RedirectResponse
+     *
      * @throws \Exception
      */
     public function remove(Item $item)

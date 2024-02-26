@@ -16,10 +16,10 @@ class GoodSeeder extends Seeder
     public function run(): void
     {
         Good::query()->delete();
-        foreach ($this->goods() as $goodTypeName => $good){
+        foreach ($this->goods() as $goodTypeName => $good) {
             $goodTypeId = GoodType::query()->where('name', '=', $goodTypeName)->firstOrFail()->id;
 
-            foreach ($good as $key => $value){
+            foreach ($good as $key => $value) {
                 Good::factory()->create([
                     'name' => $value,
                     'title' => $value,
@@ -31,7 +31,8 @@ class GoodSeeder extends Seeder
         }
     }
 
-    public function goods(): array {
+    public function goods(): array
+    {
         return [
             GoodTypeEnum::CAMERAS->value => $this->cameras(),
             GoodTypeEnum::LENSES->value => $this->lenses(),
@@ -51,7 +52,8 @@ class GoodSeeder extends Seeder
         ];
     }
 
-    public function cameras(): array {
+    public function cameras(): array
+    {
         return [
             GoodEnum::CINEMA_CAMERA_SONY_FX6->name => GoodEnum::CINEMA_CAMERA_SONY_FX6->value,
             GoodEnum::CINEMA_CAMERA_BLACKMAGIC_6K_PRO->name => GoodEnum::CINEMA_CAMERA_BLACKMAGIC_6K_PRO->value,
@@ -69,7 +71,9 @@ class GoodSeeder extends Seeder
             GoodEnum::ACTION_CAMERA_GO_PRO_11->name => GoodEnum::ACTION_CAMERA_GO_PRO_11->value,
         ];
     }
-    public function lenses(): array {
+
+    public function lenses(): array
+    {
         return [
             GoodEnum::OBJECTIVE_SONY_16_50MM_F3_5_5_6_OSS->name => GoodEnum::OBJECTIVE_SONY_16_50MM_F3_5_5_6_OSS,
             GoodEnum::OBJECTIVE_SONY_28_70MM_F3_5_5_6_OSS->name => GoodEnum::OBJECTIVE_SONY_28_70MM_F3_5_5_6_OSS->value,
@@ -178,7 +182,7 @@ class GoodSeeder extends Seeder
     private function drones(): array
     {
         return [
-            GoodEnum::DJI_AIR_2->name => GoodEnum::DJI_AIR_2->value
+            GoodEnum::DJI_AIR_2->name => GoodEnum::DJI_AIR_2->value,
         ];
     }
 

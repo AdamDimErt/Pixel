@@ -5,7 +5,6 @@ namespace Database\Seeders;
 use App\Enums\GoodEnum;
 use App\Models\Good;
 use App\Models\Item;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class ItemSeeder extends Seeder
@@ -16,12 +15,12 @@ class ItemSeeder extends Seeder
     public function run(): void
     {
         Item::query()->delete();
-        foreach ($this->goodsAmount() as $goodName => $amount){
+        foreach ($this->goodsAmount() as $goodName => $amount) {
             $goodId = Good::query()->where('name', '=', $goodName)->firstOrFail();
-            for ($i = 0; $i < $amount; $i++){
+            for ($i = 0; $i < $amount; $i++) {
                 Item::factory()->create([
                     'good_id' => $goodId,
-                    'status'  => 'available'
+                    'status' => 'available',
                 ]);
             }
         }
@@ -131,12 +130,12 @@ class ItemSeeder extends Seeder
             GoodEnum::SAMSUNG_EVO_PLUS_256GB->value => 1,
             GoodEnum::MICRO_64GB_ADATA->value => 2,
             GoodEnum::SAMSUNG_T7_1TB->value => 1,
-            GoodEnum::UURIG_HAND_FOR_SONY_A7_3->value =>1,
-            GoodEnum::UURIG_FOR_FUJIFILM_T4->value =>1,
-            GoodEnum::SMALLRIG_FOR_A7C->value =>1,
-            GoodEnum::SMALLRIG_HAND_AND_HANDLE_A6600->value =>1,
-            GoodEnum::TILTA_ADVANCED_FX6->value =>1,
-            GoodEnum::TILTA_ADVANCED_KIT_FX3->value =>1,
+            GoodEnum::UURIG_HAND_FOR_SONY_A7_3->value => 1,
+            GoodEnum::UURIG_FOR_FUJIFILM_T4->value => 1,
+            GoodEnum::SMALLRIG_FOR_A7C->value => 1,
+            GoodEnum::SMALLRIG_HAND_AND_HANDLE_A6600->value => 1,
+            GoodEnum::TILTA_ADVANCED_FX6->value => 1,
+            GoodEnum::TILTA_ADVANCED_KIT_FX3->value => 1,
             GoodEnum::FEELWORLD_LUT_7_4K_HDMI->value => 1,
             GoodEnum::LILIPUT_4K->value => 1,
             GoodEnum::FEELWORLD_4K_ULTRA->value => 1,

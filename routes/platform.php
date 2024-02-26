@@ -2,15 +2,6 @@
 
 declare(strict_types=1);
 
-use App\Orchid\Screens\Examples\ExampleActionsScreen;
-use App\Orchid\Screens\Examples\ExampleCardsScreen;
-use App\Orchid\Screens\Examples\ExampleChartsScreen;
-use App\Orchid\Screens\Examples\ExampleFieldsAdvancedScreen;
-use App\Orchid\Screens\Examples\ExampleFieldsScreen;
-use App\Orchid\Screens\Examples\ExampleGridScreen;
-use App\Orchid\Screens\Examples\ExampleLayoutsScreen;
-use App\Orchid\Screens\Examples\ExampleScreen;
-use App\Orchid\Screens\Examples\ExampleTextEditorsScreen;
 use App\Orchid\Screens\Good\GoodEditScreen;
 use App\Orchid\Screens\Good\GoodListScreen;
 use App\Orchid\Screens\GoodType\GoodTypeEditScreen;
@@ -160,7 +151,7 @@ Route::screen('orders/{order}/edit', OrderEditScreen::class)
     ->name('platform.orders.edit')
     ->breadcrumbs(fn (Trail $trail, $order) => $trail
         ->parent('platform.orders.list')
-        ->push( 'Order #    ' . $order->id, route('platform.orders.edit', $order)));
+        ->push('Order #    '.$order->id, route('platform.orders.edit', $order)));
 
 // Platform > System > Orders > Order
 Route::screen('orders/create', OrderEditScreen::class)

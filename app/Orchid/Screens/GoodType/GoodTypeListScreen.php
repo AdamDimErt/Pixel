@@ -12,13 +12,11 @@ class GoodTypeListScreen extends Screen
 {
     /**
      * Query data.
-     *
-     * @return array
      */
     public function query(): array
     {
         return [
-            'goodTypes' => GoodType::filters()->defaultSort('id')->paginate()
+            'goodTypes' => GoodType::filters()->defaultSort('id')->paginate(),
         ];
     }
 
@@ -35,7 +33,7 @@ class GoodTypeListScreen extends Screen
      */
     public function description(): ?string
     {
-        return "All good types";
+        return 'All good types';
     }
 
     /**
@@ -48,7 +46,7 @@ class GoodTypeListScreen extends Screen
         return [
             Link::make('Create new')
                 ->icon('pencil')
-                ->route('platform.goodTypes.create')
+                ->route('platform.goodTypes.create'),
         ];
     }
 
@@ -60,7 +58,7 @@ class GoodTypeListScreen extends Screen
     public function layout(): array
     {
         return [
-            GoodTypeListLayout::class
+            GoodTypeListLayout::class,
         ];
     }
 }

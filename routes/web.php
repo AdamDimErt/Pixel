@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers as HttpControllers;
+use App\Models\GoodType;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,11 +15,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 Route::prefix('/')->group(function () {
-    Route::get('/', function () {return view('welcome');});
-    Route::post('change-lang', [HttpControllers\LocalizationController::class, 'changeLang']);
+    //    Route::get('/', function () {
+    //        return view('app');
+    //    });
+    Route::get('/', [HttpControllers\GoodController::class, 'index']);
+    Route::get('/category/{goodType}', [HttpControllers\GoodController::class, 'goodList'])
+        ->whereIn('goodType', GoodType::all()->pluck('code')->toArray())
+        ->name('goodList');
+    Route::post('/change-lang', [HttpControllers\LocalizationController::class, 'changeLang']);
 });

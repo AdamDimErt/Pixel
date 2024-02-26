@@ -2,10 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Enums\GoodEnum;
-use App\Enums\GoodTypeEnum;
-use App\Models\Good;
-use App\Models\GoodType;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 

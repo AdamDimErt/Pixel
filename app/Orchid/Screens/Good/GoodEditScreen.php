@@ -10,6 +10,7 @@ use Orchid\Screen\Actions\Button;
 use Orchid\Screen\Fields\Input;
 use Orchid\Screen\Fields\Relation;
 use Orchid\Screen\Fields\TextArea;
+use Orchid\Screen\Fields\Upload;
 use Orchid\Screen\Screen;
 use Orchid\Support\Facades\Alert;
 use Orchid\Support\Facades\Layout;
@@ -23,15 +24,13 @@ class GoodEditScreen extends Screen
 
     /**
      * Query data.
-     *
-     * @param Good $good
-     *
-     * @return array
      */
     public function query(Good $good): array
     {
+        $good->load('attachment');
+
         return [
-            'good' => $good
+            'good' => $good,
         ];
     }
 
@@ -48,7 +47,7 @@ class GoodEditScreen extends Screen
      */
     public function description(): ?string
     {
-        return "Goods";
+        return 'Goods';
     }
 
     public function commandBar(): array
@@ -57,7 +56,7 @@ class GoodEditScreen extends Screen
             Button::make('Create good')
                 ->icon('pencil')
                 ->method('createOrUpdate')
-                ->canSee(!$this->good->exists),
+                ->canSee(! $this->good->exists),
 
             Button::make('Update')
                 ->icon('note')
@@ -83,7 +82,7 @@ class GoodEditScreen extends Screen
                 Input::make('good.name')
                     ->title('Title')
                     ->placeholder('Attractive but mysterious title')
-                    ->help('Specify a short descriptive title for this post.')
+                    ->help('Specify a short descriptive title for this good.')
                     ->required(),
 
                 Input::make('good.cost')
@@ -103,19 +102,24 @@ class GoodEditScreen extends Screen
                     ->maxlength(200)
                     ->placeholder('Brief description for preview')
                     ->required(),
-            ])
+
+                Upload::make('good.attachment')
+                    ->title('All files')
+                    ->acceptedFiles('image/*'),
+            ]),
         ];
     }
 
     /**
-     * @param Good $good
-     * @param Request $request
-     *
      * @return RedirectResponse
      */
     public function createOrUpdate(Good $good, Request $request)
     {
-        $good->fill($request->get('good'))->save();
+        $good->fill($request->except('good.attachment')['good'])->save();
+
+        $good->attachment()->syncWithoutDetaching(
+            $request->input('good.attachment', [])
+        );
 
         Alert::info('You have successfully created a good.');
 
@@ -123,9 +127,8 @@ class GoodEditScreen extends Screen
     }
 
     /**
-     * @param Good $good
-     *
      * @return RedirectResponse
+     *
      * @throws \Exception
      */
     public function remove(Good $good)

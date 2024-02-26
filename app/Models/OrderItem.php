@@ -11,17 +11,17 @@ use Orchid\Screen\AsSource;
 
 final class OrderItem extends Model
 {
-    use HasFactory, AsSource, Filterable;
+    use AsSource, Filterable, HasFactory;
 
     protected $guarded = [];
 
     protected $allowedFilters = [
-        'item_id'  => Where::class,
+        'item_id' => Where::class,
         'order_id' => Where::class,
     ];
 
     protected $allowedSorts = [
-        'item_id'  => Where::class,
+        'item_id' => Where::class,
         'order_id' => Where::class,
     ];
 

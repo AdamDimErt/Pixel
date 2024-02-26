@@ -7,15 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Orchid\Filters\Filterable;
 use Orchid\Filters\Types\Like;
-use Orchid\Filters\Types\Where;
 use Orchid\Filters\Types\WhereDateStartEnd;
-use Orchid\Filters\Types\WhereIn;
-use Orchid\Filters\Types\WhereMaxMin;
 use Orchid\Screen\AsSource;
 
 class GoodType extends Model
 {
-    use HasFactory, AsSource, Filterable;
+    use AsSource, Filterable, HasFactory;
 
     protected $guarded = [];
 
@@ -25,10 +22,10 @@ class GoodType extends Model
     ];
 
     protected $allowedFilters = [
-        'name'        => Like::class,
+        'name' => Like::class,
         'description' => Like::class,
-        'created_at'  => WhereDateStartEnd::class,
-        'deleted_at'  => WhereDateStartEnd::class,
+        'created_at' => WhereDateStartEnd::class,
+        'deleted_at' => WhereDateStartEnd::class,
     ];
 
     protected $allowedSorts = [

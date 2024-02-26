@@ -16,13 +16,11 @@ class OrderListScreen extends Screen
 {
     /**
      * Query data.
-     *
-     * @return array
      */
     public function query(): array
     {
         return [
-            'orders' => Order::filters()->defaultSort('id')->paginate()
+            'orders' => Order::filters()->defaultSort('id')->paginate(),
         ];
     }
 
@@ -39,7 +37,7 @@ class OrderListScreen extends Screen
      */
     public function description(): ?string
     {
-        return "All orders";
+        return 'All orders';
     }
 
     /**
@@ -52,7 +50,7 @@ class OrderListScreen extends Screen
         return [
             Link::make('Create new')
                 ->icon('pencil')
-                ->route('platform.orders.create')
+                ->route('platform.orders.create'),
         ];
     }
 
@@ -64,7 +62,7 @@ class OrderListScreen extends Screen
     public function layout(): array
     {
         return [
-            OrderListLayout::class
+            OrderListLayout::class,
         ];
     }
 

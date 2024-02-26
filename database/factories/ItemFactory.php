@@ -5,7 +5,6 @@ namespace Database\Factories;
 use App\Models\Good;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-
 class ItemFactory extends Factory
 {
     /**
@@ -17,7 +16,7 @@ class ItemFactory extends Factory
     {
         return [
             'good_id' => Good::query()->inRandomOrder()->first(),
-            'status'  => ['available', 'rented'][$this->faker->numberBetween(0, 1)]
+            'status' => ['available', 'rented'][$this->faker->numberBetween(0, 1)],
         ];
     }
 }

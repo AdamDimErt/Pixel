@@ -2,17 +2,13 @@
 
 namespace App\Orchid\Screens\Order;
 
-use App\Models\User;
-use App\Models\Good;
 use App\Models\Item;
 use App\Models\Order;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Orchid\Screen\Actions\Button;
-use Orchid\Screen\Components\Cells\DateTime;
-use Orchid\Screen\Fields\DateRange;
 use Orchid\Screen\Fields\DateTimer;
 use Orchid\Screen\Fields\Relation;
-use Orchid\Screen\Fields\Select;
 use Orchid\Screen\Screen;
 use Orchid\Support\Facades\Alert;
 use Orchid\Support\Facades\Layout;
@@ -26,15 +22,11 @@ class OrderEditScreen extends Screen
 
     /**
      * Query data.
-     *
-     * @param Order $order
-     *
-     * @return array
      */
     public function query(Order $order): array
     {
         return [
-            'order' => $order
+            'order' => $order,
         ];
     }
 
@@ -51,7 +43,7 @@ class OrderEditScreen extends Screen
      */
     public function description(): ?string
     {
-        return "Orders";
+        return 'Orders';
     }
 
     public function commandBar(): array
@@ -60,7 +52,7 @@ class OrderEditScreen extends Screen
             Button::make('Create order')
                 ->icon('pencil')
                 ->method('createOrUpdate')
-                ->canSee(!$this->order->exists),
+                ->canSee(! $this->order->exists),
 
             Button::make('Update')
                 ->icon('note')
@@ -110,9 +102,6 @@ class OrderEditScreen extends Screen
     }
 
     /**
-     * @param Order $order
-     * @param Request $request
-     *
      * @return \Illuminate\Http\RedirectResponse
      */
     public function createOrUpdate(Order $order, Request $request)
@@ -137,9 +126,8 @@ class OrderEditScreen extends Screen
     }
 
     /**
-     * @param Order $order
-     *
      * @return \Illuminate\Http\RedirectResponse
+     *
      * @throws \Exception
      */
     public function remove(Order $order)

@@ -12,13 +12,11 @@ class ItemListScreen extends Screen
 {
     /**
      * Query data.
-     *
-     * @return array
      */
     public function query(): array
     {
         return [
-            'items' => Item::filters()->defaultSort('id')->paginate()
+            'items' => Item::filters()->defaultSort('id')->paginate(),
         ];
     }
 
@@ -35,7 +33,7 @@ class ItemListScreen extends Screen
      */
     public function description(): ?string
     {
-        return "All items";
+        return 'All items';
     }
 
     /**
@@ -48,7 +46,7 @@ class ItemListScreen extends Screen
         return [
             Link::make('Create new')
                 ->icon('pencil')
-                ->route('platform.items.create')
+                ->route('platform.items.create'),
         ];
     }
 
@@ -60,7 +58,7 @@ class ItemListScreen extends Screen
     public function layout(): array
     {
         return [
-            ItemListLayout::class
+            ItemListLayout::class,
         ];
     }
 }

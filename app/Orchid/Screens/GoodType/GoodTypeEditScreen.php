@@ -20,15 +20,11 @@ class GoodTypeEditScreen extends Screen
 
     /**
      * Query data.
-     *
-     * @param GoodType $goodType
-     *
-     * @return array
      */
     public function query(GoodType $goodType): array
     {
         return [
-            'goodType' => $goodType
+            'goodType' => $goodType,
         ];
     }
 
@@ -45,7 +41,7 @@ class GoodTypeEditScreen extends Screen
      */
     public function description(): ?string
     {
-        return "Good types";
+        return 'Good types';
     }
 
     public function commandBar(): array
@@ -54,7 +50,7 @@ class GoodTypeEditScreen extends Screen
             Button::make('Create goodType')
                 ->icon('pencil')
                 ->method('createOrUpdate')
-                ->canSee(!$this->goodType->exists),
+                ->canSee(! $this->goodType->exists),
 
             Button::make('Update')
                 ->icon('note')
@@ -89,14 +85,11 @@ class GoodTypeEditScreen extends Screen
                     ->maxlength(200)
                     ->required()
                     ->placeholder('Brief description for preview'),
-            ])
+            ]),
         ];
     }
 
     /**
-     * @param GoodType $goodType
-     * @param Request $request
-     *
      * @return \Illuminate\Http\RedirectResponse
      */
     public function createOrUpdate(GoodType $goodType, Request $request)
@@ -109,9 +102,8 @@ class GoodTypeEditScreen extends Screen
     }
 
     /**
-     * @param GoodType $goodType
-     *
      * @return \Illuminate\Http\RedirectResponse
+     *
      * @throws \Exception
      */
     public function remove(GoodType $goodType)

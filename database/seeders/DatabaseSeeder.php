@@ -18,7 +18,7 @@ class DatabaseSeeder extends Seeder
             RoleUserSeeder::class,
             GoodTypeSeeder::class,
             GoodSeeder::class,
-            ItemSeeder::class
+            ItemSeeder::class,
         ]);
     }
 }

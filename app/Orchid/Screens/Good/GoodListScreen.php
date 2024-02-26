@@ -12,13 +12,11 @@ class GoodListScreen extends Screen
 {
     /**
      * Query data.
-     *
-     * @return array
      */
     public function query(): array
     {
         return [
-            'goods' => Good::filters()->defaultSort('id')->paginate()
+            'goods' => Good::filters()->defaultSort('id')->paginate(),
         ];
     }
 
@@ -35,7 +33,7 @@ class GoodListScreen extends Screen
      */
     public function description(): ?string
     {
-        return "All goods";
+        return 'All goods';
     }
 
     /**
@@ -48,7 +46,7 @@ class GoodListScreen extends Screen
         return [
             Link::make('Create new')
                 ->icon('pencil')
-                ->route('platform.goods.create')
+                ->route('platform.goods.create'),
         ];
     }
 
@@ -60,7 +58,7 @@ class GoodListScreen extends Screen
     public function layout(): array
     {
         return [
-            GoodListLayout::class
+            GoodListLayout::class,
         ];
     }
 }

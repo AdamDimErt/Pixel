@@ -4,7 +4,6 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-
 class GoodTypeFactory extends Factory
 {
     /**
@@ -16,6 +15,7 @@ class GoodTypeFactory extends Factory
     {
         return [
             'name' => fake()->colorName(),
+            'code' => fake()->colorName(),
             'description' => fake()->unique()->safeEmail(),
         ];
     }

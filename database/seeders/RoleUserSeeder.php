@@ -7,7 +7,8 @@ use Illuminate\Support\Facades\DB;
 
 class RoleUserSeeder extends Seeder
 {
-    public function run() {
+    public function run()
+    {
         DB::table('role_users')->delete();
         DB::table('role_users')->insert(['user_id' => 1, 'role_id' => 1]);
     }

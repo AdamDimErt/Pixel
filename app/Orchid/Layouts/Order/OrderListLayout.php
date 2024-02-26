@@ -2,8 +2,6 @@
 
 namespace App\Orchid\Layouts\Order;
 
-use App\Models\Good;
-use App\Models\GoodType;
 use App\Models\Order;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
@@ -11,7 +9,6 @@ use Orchid\Screen\Actions\Button;
 use Orchid\Screen\Actions\DropDown;
 use Orchid\Screen\Actions\Link;
 use Orchid\Screen\Components\Cells\DateTimeSplit;
-use Orchid\Screen\Fields\Input;
 use Orchid\Screen\Fields\Relation;
 use Orchid\Screen\Fields\Select;
 use Orchid\Screen\Layouts\Table;
@@ -100,13 +97,13 @@ class OrderListLayout extends Table
                                     'filter[id]' => $order
                                         ->items()
                                         ->pluck('items.id')
-                                        ->implode(',')
+                                        ->implode(','),
                                 ]
                             )
-                            ->icon('bs.search')
+                            ->icon('bs.search'),
                     ];
 
-                    if ($order->status === 'in_rent'){
+                    if ($order->status === 'in_rent') {
                         $btnsList[] = Button::make(__('Return'))
                             ->icon('bs.arrow-return-left')
                             ->confirm(__('If you return this order, you will not be available to use it again'))
@@ -115,7 +112,7 @@ class OrderListLayout extends Table
                             ]);
                     }
 
-                    if ($order->status === 'waiting'){
+                    if ($order->status === 'waiting') {
                         $btnsList[] = Link::make(__('Edit'))
                             ->route('platform.orders.edit', $order->id)
                             ->icon('bs.pencil');
@@ -142,8 +139,6 @@ class OrderListLayout extends Table
     }
 
     /**
-     * @param Order $order
-     *
      * @return RedirectResponse
      */
     public function remove(Order $order)
