@@ -16,6 +16,7 @@ class GoodTypeFactory extends Factory
         return [
             'name' => fake()->colorName(),
             'code' => fake()->colorName(),
+            'icon' => fake()->colorName(),
             'description' => fake()->unique()->safeEmail(),
         ];
     }

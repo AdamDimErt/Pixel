@@ -2,7 +2,11 @@
     <img src="{{asset('img/logo.png')}}"/>
     <div class="container">
         @foreach($goodTypes as $goodType)
-            <li><a href="{{route('goodList', $goodType->code, false)}}" class="white-text">{{$goodType->name}}</a></li>
+            <li>
+                <a href="{{route('goodList', $goodType->code, false)}}" class="white-text">
+                    <p class="flow-text"><i class="material-icons">{{$goodType->icon}}</i>{{$goodType->name}}</p>
+                </a>
+            </li>
         @endforeach
     </div>
 </ul>

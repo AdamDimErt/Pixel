@@ -28,3 +28,12 @@ header, .main, footer {
     display:grid;
     grid-auto-flow: column;
 }
+
+.card {
+    padding-bottom: 5%;
+    border-radius: 5px;
+}
+
+.container {
+    width: 95%;
+}
