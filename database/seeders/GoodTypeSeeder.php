@@ -51,7 +51,7 @@ class GoodTypeSeeder extends Seeder
             GoodTypeEnum::STABILIZERS->value => [
                 'code' => GoodTypeEnum::STABILIZERS->name,
                 'description' => 'Стабилизаторы для камер',
-                'icon' => 'grid_on'
+                'icon' => 'multiline_chart'
                 ],
             GoodTypeEnum::BATTERIES->value => [
                 'code' => GoodTypeEnum::BATTERIES->name,
@@ -71,7 +71,7 @@ class GoodTypeSeeder extends Seeder
             GoodTypeEnum::CAGES->value => [
                 'code' => GoodTypeEnum::CAGES->name,
                 'description' => 'Клетки для оборудования',
-                'icon' => 'devices_other'
+                'icon' => 'developer_board'
                 ],
             GoodTypeEnum::DISPLAYS->value => [
                 'code' => GoodTypeEnum::DISPLAYS->name,
@@ -101,7 +101,7 @@ class GoodTypeSeeder extends Seeder
             GoodTypeEnum::KITS->value => [
                 'code' => GoodTypeEnum::KITS->name,
                 'description' => 'Наборы инструментов, тщательно подобранные для комфортной работы друг с другом',
-                'icon' => ''
+                'icon' => 'devices_other'
                 ],
         ];
     }

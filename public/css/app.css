@@ -13,14 +13,58 @@ header, .main, footer {
     padding-left: 300px;
 }
 
+.nav-wrapper {
+    width: 100%;
+}
+
 @media only screen and (max-width : 992px) {
     header, main, footer {
         padding-left: 0;
     }
 }
 
+.input-field label {
+    color: orange;
+}
+.input-field input[type=text]:focus + label {
+    color: orange;
+}
+.input-field input[type=text]:focus {
+    border-bottom: 1px solid orange;
+    box-shadow: 0 1px 0 0 orange;
+}
+.input-field input[type=text].valid {
+    border-bottom: 1px solid orange;
+    box-shadow: 0 1px 0 0 orange;
+}
+.input-field input[type=text].invalid {
+    border-bottom: 1px solid orange;
+    box-shadow: 0 1px 0 0 orange;
+}
+.input-field .prefix.active {
+    color: orange;
+}
+
+/* label focus color */
+.input-field input:focus + label {
+    color: orange !important;
+}
+/* label underline focus color */
+.row .input-field input:focus {
+    border-bottom: 1px solid orange !important;
+    box-shadow: 0 1px 0 0 orange !important
+}
+
 .sidenav {
     background-color: black !important;
+    border-bottom-right-radius: 15px !important;
+    border-top-right-radius: 15px !important;
+}
+
+.nav-inner-wrapper{
+    padding-left: 40px;
+    padding-right: 10px;
+    justify-content: space-between;
 }
 
 .main {
@@ -34,6 +78,30 @@ header, .main, footer {
     border-radius: 5px;
 }
 
+.sidenav {
+    width: 320px;
+}
+
+::-webkit-scrollbar {
+    display: none;
+}
+
 .container {
     width: 95%;
+}
+
+.menu-item {
+    padding: 3%;
+}
+
+.menu-item-content {
+    font-size: calc(0.5vw + 0.6em);
+}
+
+.menu-item-link {
+    border-radius: 5px;
+}
+
+.brand-logo {
+    width: 50%;
 }

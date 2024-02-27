@@ -13,9 +13,10 @@ class GoodController extends Controller
 {
     public function index(Request $request): \Illuminate\Contracts\Foundation\Application|Factory|View|Application
     {
-        $goods = Good::query()->paginate();
+        $goods = Good::query()->inRandomOrder()->paginate();
 
-        return view('good', compact('goods'));
+        $goodTypeDesc = 'Все товары';
+        return view('good', compact('goods', 'goodTypeDesc'));
     }
 
     public function goodList(string $goodTypeCode, Request $request): \Illuminate\Contracts\Foundation\Application|Factory|View|Application
@@ -25,7 +26,7 @@ class GoodController extends Controller
             ->hasAvailableItems()
             ->with(['attachment'])
             ->get();
-
-        return view('good', compact('goods'));
+        $goodTypeDesc = $goodType->description;
+        return view('good', compact('goods', 'goodTypeDesc'));
     }
 }

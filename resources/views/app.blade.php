@@ -11,7 +11,16 @@
 <body>
     @include('navigation.sidemenu')
     <div class="main grey darken-4">
-        @yield('content')
+{{--        <div class="container">--}}
+            <div class="row">
+                <div class="col s12 no-padding">
+                    @include('navigation.navbar')
+                </div>
+                <div class="col s12 no-padding">
+                    @yield('content')
+                </div>
+            </div>
+{{--        </div>--}}
     </div>
 
     <script src="{{asset('js/script.js')}}"></script>
