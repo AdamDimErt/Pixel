@@ -13,34 +13,57 @@ header, .main, footer {
     padding-left: 300px;
 }
 
-.nav-wrapper {
-    width: 100%;
+.card.hoverable {
+    box-shadow: 0 0 0 0 orange, 0 0 0 0 orange, 0 0 0 0 orange;
 }
 
-@media only screen and (max-width : 992px) {
-    header, main, footer {
+.card.hoverable:hover {
+    box-shadow: 0 0 20px 2px darkorange;
+    cursor: pointer;
+}
+
+@media only screen and (max-width: 992px) {
+    header, .main, footer {
         padding-left: 0;
     }
+}
+
+.logo {
+    aspect-ratio: 1;
+    width: 80%;
+}
+
+.main-color {
+    background-color: #161616;
+}
+
+.nav-wrapper {
+    width: 100%;
 }
 
 .input-field label {
     color: orange;
 }
+
 .input-field input[type=text]:focus + label {
     color: orange;
 }
+
 .input-field input[type=text]:focus {
     border-bottom: 1px solid orange;
     box-shadow: 0 1px 0 0 orange;
 }
+
 .input-field input[type=text].valid {
     border-bottom: 1px solid orange;
     box-shadow: 0 1px 0 0 orange;
 }
+
 .input-field input[type=text].invalid {
     border-bottom: 1px solid orange;
     box-shadow: 0 1px 0 0 orange;
 }
+
 .input-field .prefix.active {
     color: orange;
 }
@@ -49,6 +72,7 @@ header, .main, footer {
 .input-field input:focus + label {
     color: orange !important;
 }
+
 /* label underline focus color */
 .row .input-field input:focus {
     border-bottom: 1px solid orange !important;
@@ -56,12 +80,11 @@ header, .main, footer {
 }
 
 .sidenav {
-    background-color: black !important;
     border-bottom-right-radius: 15px !important;
     border-top-right-radius: 15px !important;
 }
 
-.nav-inner-wrapper{
+.nav-inner-wrapper {
     padding-left: 40px;
     padding-right: 10px;
     justify-content: space-between;
@@ -69,13 +92,16 @@ header, .main, footer {
 
 .main {
     background-color: grey;
-    display:grid;
-    grid-auto-flow: column;
+}
+
+.add-to-favorites-btn {
+    margin-right: 65px;
 }
 
 .card {
     padding-bottom: 5%;
-    border-radius: 5px;
+    border-radius: 10px;
+    height: auto;
 }
 
 .sidenav {
@@ -104,4 +130,47 @@ header, .main, footer {
 
 .brand-logo {
     width: 50%;
+}
+
+.card-presenter-image {
+    border-top-left-radius: 8px !important;
+    border-top-right-radius: 8px !important;
+}
+
+.modal-btn {
+    border-radius: 5px;
+}
+
+.search-wrapper {
+    height: auto;
+}
+
+.modal {
+    border-radius: 15px;
+}
+
+#search {
+    border-radius: 5px;
+    outline: none;
+    background-color: gray;
+    color: white;
+    border: none;
+    font-size: calc(0.4vw + 0.3em);
+    padding: 1%;
+    font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    transition: 0.7ms;
+}
+
+#search:focus {
+    outline: none;
+    border: 1px solid orange;
+    transition: 0.7ms;
+}
+
+.nav-element {
+    width: auto;
+}
+
+.nav-buttons {
+    width: auto;
 }

@@ -278,6 +278,16 @@ class GoodSeeder extends Seeder
 
     private function kits(): array
     {
-        return [];
+        return [
+            GoodEnum::SONY_FX6_V_MOUNT_SET->name => GoodEnum::SONY_FX6_V_MOUNT_SET->value,
+            GoodEnum::BLACKMAGIC_6K_PRO_FULL_SET->name => GoodEnum::BLACKMAGIC_6K_PRO_FULL_SET->value,
+            GoodEnum::APUTURE_300X_LED_LIGHTS_SET->name => GoodEnum::APUTURE_300X_LED_LIGHTS_SET->value,
+            GoodEnum::GODOX_SL200IIID_LED_LIGHTS_SET->name => GoodEnum::GODOX_SL200IIID_LED_LIGHTS_SET->value,
+            GoodEnum::GODOX_SL100BI_LED_LIGHTS_SET->name => GoodEnum::GODOX_SL100BI_LED_LIGHTS_SET->value,
+            GoodEnum::NANLITE_FORZA_60C_LED_LIGHTS_SET->name => GoodEnum::NANLITE_FORZA_60C_LED_LIGHTS_SET->value,
+            GoodEnum::APUTURE_AMARAN_P60C_LED_LIGHTS_SET->name => GoodEnum::APUTURE_AMARAN_P60C_LED_LIGHTS_SET->value,
+            GoodEnum::GODOX_TL60_JEDI_LIGHTS_SET->name => GoodEnum::GODOX_TL60_JEDI_LIGHTS_SET->value,
+            GoodEnum::NANLITE_30CM_JEDI_LIGHTS_SET->name => GoodEnum::NANLITE_30CM_JEDI_LIGHTS_SET->value,
+        ];
     }
 }

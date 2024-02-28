@@ -40,8 +40,6 @@ class RoleSeeder extends Seeder
                 'platform.goodTypes.create' => '1',
                 'platform.systems.attachment' => '1',
             ]),
-            'created_at' => '2024-02-25 03:09:18',
-            'updated_at' => '2024-02-25 03:09:18',
         ];
     }
 }

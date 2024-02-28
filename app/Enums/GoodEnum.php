@@ -159,4 +159,14 @@ enum GoodEnum: string
     case BLACK_TRIPOD = 'Штатив черный';
     case CONTINENTAL_TRIPOD_DAMAGED = 'Штатив continental (поврежденный)';
     // Наборы
+    case SONY_FX6_V_MOUNT_SET = 'Набор Sony FX6 V-mount';
+    case BLACKMAGIC_6K_PRO_FULL_SET = 'Полный набор Blackmagic 6k pro';
+    case APUTURE_300X_LED_LIGHTS_SET = 'Комплект светодиодных осветителей Aputure 300x';
+    case GODOX_SL200IIID_LED_LIGHTS_SET = 'Комплект светодиодных осветителей Godox sl200IIID';
+    case GODOX_SL100BI_LED_LIGHTS_SET = 'Комплект светодиодных осветителей Godox sl100bi';
+    case NANLITE_FORZA_60C_LED_LIGHTS_SET = 'Комплект светодиодных осветителей Nanlite Forza 60c';
+    case APUTURE_AMARAN_P60C_LED_LIGHTS_SET = 'Комплект светодиодных осветителей Aputure Amaran p60c';
+    case GODOX_TL60_JEDI_LIGHTS_SET = 'Комплект Джедаек Godox TL60';
+    case NANLITE_30CM_JEDI_LIGHTS_SET = 'Комплект Джедаек Nanlite 30см';
+
 }

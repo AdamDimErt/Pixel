@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\Good;
 use App\Models\GoodType;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
@@ -22,5 +23,6 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         View::share('goodTypes', GoodType::all());
+        View::share('goodOptions', Good::all()->pluck('id', 'name'));
     }
 }

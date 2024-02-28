@@ -1,9 +1,11 @@
-<ul id="slide-out" class="sidenav sidenav-fixed">
-    <a href="/"><img src="{{asset('img/logo.png')}}"/></a>
+<ul id="slide-out" class="sidenav sidenav-fixed main-color">
+    <div class="logo-wrapper center">
+        <a href="/"><img src="{{asset('img/logo.jpg')}}" class="logo"/></a>
+    </div>
     <div class="container">
         <hr>
         @foreach($goodTypes as $goodType)
-            <li class="menu-item ">
+            <li class="menu-item">
                 <a href="{{route('goodList', $goodType->code, false)}}"
                    class="white-text waves-effect waves-light menu-item-link waves-ripple">
                     <span class="menu-item-content">

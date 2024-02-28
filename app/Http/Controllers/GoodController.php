@@ -13,7 +13,7 @@ class GoodController extends Controller
 {
     public function index(Request $request): \Illuminate\Contracts\Foundation\Application|Factory|View|Application
     {
-        $goods = Good::query()->inRandomOrder()->paginate();
+        $goods = Good::all();
 
         $goodTypeDesc = 'Все товары';
         return view('good', compact('goods', 'goodTypeDesc'));

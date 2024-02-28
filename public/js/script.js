@@ -5,3 +5,10 @@ document.addEventListener('DOMContentLoaded', function() {
         preventScroll: false
     });
 });
+
+document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('.modal');
+    var instances = M.Modal.init(elems, {
+
+    });
+});

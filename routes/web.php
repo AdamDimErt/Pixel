@@ -24,4 +24,9 @@ Route::prefix('/')->group(function () {
         ->whereIn('goodType', GoodType::all()->pluck('code')->toArray())
         ->name('goodList');
     Route::post('/change-lang', [HttpControllers\LocalizationController::class, 'changeLang']);
+
+
+    Route::post('/add-to-cart', [HttpControllers\CartController::class, 'addToCart']);
+    Route::get('/get-cart-count', [HttpControllers\CartController::class, 'getCartCount']);
+
 });

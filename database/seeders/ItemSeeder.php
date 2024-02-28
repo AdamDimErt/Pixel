@@ -169,6 +169,15 @@ class ItemSeeder extends Seeder
             GoodEnum::ALUMINUM_TRIPOD->value => 2,
             GoodEnum::BLACK_TRIPOD->value => 1,
             GoodEnum::CONTINENTAL_TRIPOD_DAMAGED->value => 2,
+            GoodEnum::SONY_FX6_V_MOUNT_SET->value => 1,
+            GoodEnum::BLACKMAGIC_6K_PRO_FULL_SET->value => 1,
+            GoodEnum::APUTURE_300X_LED_LIGHTS_SET->value => 1,
+            GoodEnum::GODOX_SL200IIID_LED_LIGHTS_SET->value => 1,
+            GoodEnum::GODOX_SL100BI_LED_LIGHTS_SET->value => 1,
+            GoodEnum::NANLITE_FORZA_60C_LED_LIGHTS_SET->value => 1,
+            GoodEnum::APUTURE_AMARAN_P60C_LED_LIGHTS_SET->value => 1,
+            GoodEnum::GODOX_TL60_JEDI_LIGHTS_SET->value => 1,
+            GoodEnum::NANLITE_30CM_JEDI_LIGHTS_SET->value => 1,
         ];
     }
 }
