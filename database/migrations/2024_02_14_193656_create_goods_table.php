@@ -17,6 +17,9 @@ return new class extends Migration
             $table->string('title');
             $table->string('description');
             $table->integer('cost');
+            $table->integer('discount_cost')->nullable();
+            $table->integer('damage_cost')->nullable();
+            $table->json('related_goods')->nullable();
 
             $table->unsignedBigInteger('good_type_id');
             $table->foreign('good_type_id')->references('id')->on('good_types');

@@ -27,6 +27,7 @@ Route::prefix('/')->group(function () {
 
 
     Route::post('/add-to-cart', [HttpControllers\CartController::class, 'addToCart']);
+    Route::post('/remove-from-cart', [HttpControllers\CartController::class, 'removeFromCart']);
     Route::get('/get-cart-count', [HttpControllers\CartController::class, 'getCartCount']);
-
+    Route::get('/cart', [HttpControllers\CartController::class, 'cart'])->name('cart');
 });

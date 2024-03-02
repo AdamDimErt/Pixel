@@ -25,7 +25,10 @@ class GoodSeeder extends Seeder
                     'title' => $value,
                     'description' => $value,
                     'cost' => 15000,
+                    'damage_cost' => 1600000,
                     'good_type_id' => $goodTypeId,
+                    'discount_cost' => rand(0, 1) ? 10000 : null,
+                    'related_goods' => Good::query()->inRandomOrder()->limit(5)->pluck('id')
                 ]);
             }
         }

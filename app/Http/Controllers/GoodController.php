@@ -26,7 +26,6 @@ class GoodController extends Controller
             ->hasAvailableItems()
             ->with(['attachment'])
             ->get();
-        $goodTypeDesc = $goodType->description;
-        return view('good', compact('goods', 'goodTypeDesc'));
+        return view('good', compact('goods', 'goodType'));
     }
 }

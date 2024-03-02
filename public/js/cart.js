@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function () {
     const addToCartButtons = document.querySelectorAll('.add-to-cart-btn');
     const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
-    const cartCountContainer = document.getElementById('cart-count'); // assuming you have an element with id 'cart-count'
+    const cartCountContainer = document.querySelector('.in-cart-item-counter');
 
     addToCartButtons.forEach(button => {
         button.addEventListener('click', function () {
@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     })
                 .then(response => response.json())
                     .then(cartData => {
-                        cartCountContainer.textContent = cartData.cartCount;
+                        cartCountContainer.innerHTML = cartData.cartCount;
                     })
                     .catch(error => {
                         console.error('Error fetching cart count:', error);

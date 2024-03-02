@@ -14,13 +14,18 @@ header, .main, footer {
 }
 
 .card.hoverable {
-    box-shadow: 0 0 0 0 orange, 0 0 0 0 orange, 0 0 0 0 orange;
+    box-shadow: 0 0 0 0 darkorange, 0 0 0 0 darkorange, 0 0 0 0 darkorange;
 }
 
 .card.hoverable:hover {
     box-shadow: 0 0 20px 2px darkorange;
     cursor: pointer;
 }
+
+.breadcrumbs-section {
+    padding: 2%;
+}
+
 
 @media only screen and (max-width: 992px) {
     header, .main, footer {
@@ -42,41 +47,41 @@ header, .main, footer {
 }
 
 .input-field label {
-    color: orange;
+    color: darkorange;
 }
 
 .input-field input[type=text]:focus + label {
-    color: orange;
+    color: darkorange;
 }
 
 .input-field input[type=text]:focus {
-    border-bottom: 1px solid orange;
-    box-shadow: 0 1px 0 0 orange;
+    border-bottom: 1px solid darkorange;
+    box-shadow: 0 1px 0 0 darkorange;
 }
 
 .input-field input[type=text].valid {
-    border-bottom: 1px solid orange;
-    box-shadow: 0 1px 0 0 orange;
+    border-bottom: 1px solid darkorange;
+    box-shadow: 0 1px 0 0 darkorange;
 }
 
 .input-field input[type=text].invalid {
-    border-bottom: 1px solid orange;
-    box-shadow: 0 1px 0 0 orange;
+    border-bottom: 1px solid darkorange;
+    box-shadow: 0 1px 0 0 darkorange;
 }
 
 .input-field .prefix.active {
-    color: orange;
+    color: darkorange;
 }
 
 /* label focus color */
 .input-field input:focus + label {
-    color: orange !important;
+    color: darkorange !important;
 }
 
 /* label underline focus color */
 .row .input-field input:focus {
-    border-bottom: 1px solid orange !important;
-    box-shadow: 0 1px 0 0 orange !important
+    border-bottom: 1px solid darkorange !important;
+    box-shadow: 0 1px 0 0 darkorange !important
 }
 
 .sidenav {
@@ -132,6 +137,18 @@ header, .main, footer {
     width: 50%;
 }
 
+.card-content {
+    max-height: 140px;
+    min-height: 140px;
+    position: relative;
+}
+
+.cost-label {
+    position: absolute;
+    right: 5%;
+    bottom: 0;
+}
+
 .card-presenter-image {
     border-top-left-radius: 8px !important;
     border-top-right-radius: 8px !important;
@@ -161,16 +178,104 @@ header, .main, footer {
     transition: 0.7ms;
 }
 
+.section-search input.autocomplete {
+    color: #000;
+}
+.input-field .prefix.active {
+    color: #000!important;
+}
+.dropdown-content li>a, .dropdown-content li>span {
+    color: #000!important;
+}
+.autocomplete-content li .highlight {
+    color: darkorange!important;
+}
+
 #search:focus {
     outline: none;
-    border: 1px solid orange;
+    border: 1px solid darkorange;
     transition: 0.7ms;
 }
 
-.nav-element {
-    width: auto;
+.badge {
+    border-radius: 50%;
+    padding: 0 !important;
+    margin: 0 !important;
+    width: 20px !important;
+    min-width: 20px !important;
+    height: 20px !important;
+    position: relative;
 }
 
-.nav-buttons {
-    width: auto;
+.in-cart-item-counter {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.breadcrumb::before{
+    margin: 0 !important;
+}
+
+.breadcrumb-item {
+    margin: 0 !important;
+}
+
+.nav-element {
+    border-radius: 10px !important;
+    line-height: 46px;
+    padding-top: 9px;
+    padding-bottom: 9px;
+}
+
+.nav-link {
+    border-radius: 5px !important;
+    line-height: 46px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.cart-link {
+    border: 1px solid darkorange;
+    transition: 0.4s;
+}
+
+.auth-link {
+    transition: 0.4s;
+}
+
+.auth-link:hover {
+    background-color: darkorange !important;
+    color: black !important;
+    transition: 0.4s;
+}
+
+.register-link {
+    transition: 0.4s;
+}
+
+.register-link:hover {
+    background-color: white !important;
+    color: black !important;
+    transition: 0.4s;
+}
+
+.cart-link:hover {
+    background-color: darkorange;
+    color: black !important;
+    transition: 0.4s;
+}
+
+.navbar-icon {
+    height: auto !important;
+    line-height: inherit !important;
+}
+
+.additional-info {
+    border-left: 1px white solid;
+}
+
+.good-cart-image {
+    border-radius: 10px;
 }

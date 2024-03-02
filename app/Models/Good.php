@@ -9,8 +9,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Facades\DB;
 use Orchid\Attachment\Attachable;
-use Orchid\Attachment\Models\Attachment;
-use Orchid\Attachment\Models\Attachmentable;
 use Orchid\Filters\Filterable;
 use Orchid\Filters\Types\Like;
 use Orchid\Filters\Types\Where;
@@ -42,6 +40,10 @@ class Good extends Model
         'deleted_at',
     ];
 
+    protected $casts = [
+        'related_goods' => 'json',
+    ];
+
     public function goodType(): BelongsTo
     {
         return $this->belongsTo(GoodType::class);
@@ -62,5 +64,30 @@ class Good extends Model
             ->where('items.status', '=', 'available')
             ->having('items_count', '>', '0')
             ->groupBy('goods.id');
+    }
+
+    public function relatedGoods(): HasMany
+    {
+        return $this->hasMany(Good::class, 'id', 'related_goods');
+    }
+
+    public function addRelatedGood($relatedGoodId)
+    {
+        $relatedGoods = $this->related_goods ?? [];
+        $relatedGoods = array_unique(array_merge($relatedGoods, [$relatedGoodId]));
+
+        $this->update([
+            'related_goods' => $relatedGoods,
+        ]);
+    }
+
+    public function removeRelatedGood($relatedGoodId)
+    {
+        $relatedGoods = $this->related_goods ?? [];
+        $relatedGoods = array_diff($relatedGoods, [$relatedGoodId]);
+
+        $this->update([
+            'related_goods' => $relatedGoods,
+        ]);
     }
 }

@@ -18,7 +18,12 @@
                     @include('navigation.navbar')
                 </div>
                 <div class="col s12 no-padding">
-                    @yield('content')
+                    @include('navigation.breadcrumbs')
+                </div>
+                <div class="col s12 no-padding">
+                    <div class="container">
+                        @yield('content')
+                    </div>
                 </div>
             </div>
 {{--        </div>--}}
