@@ -31,3 +31,11 @@ Route::prefix('/')->group(function () {
     Route::get('/get-cart-count', [HttpControllers\CartController::class, 'getCartCount']);
     Route::get('/cart', [HttpControllers\CartController::class, 'cart'])->name('cart');
 });
+
+Route::prefix('/auth')->group(function () {
+    Route::get('/logout', [HttpControllers\AuthController::class, 'logout'])->name('logout');
+    Route::get('/login', [HttpControllers\AuthController::class, 'login'])->name('login');
+    Route::post('/login', [HttpControllers\AuthController::class, 'authenticate'])->name('authenticate');
+    Route::get('/register', [HttpControllers\AuthController::class, 'register'])->name('register');
+    Route::post('/register', [HttpControllers\AuthController::class, 'storeUser'])->name('storeUser');
+});

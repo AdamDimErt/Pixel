@@ -25,7 +25,7 @@
                         @endif
                     </a>
                 </li>
-                @auth
+                @auth('clients')
                     <li class="nav-element">
                         <a href="#" class="nav-link">
                             <i class="material-icons left navbar-icon">
@@ -35,27 +35,40 @@
                         </a>
                     </li>
                     <li class="nav-element">
-                        <a href="#" class="nav-link">
+                        <a href="#" class="nav-link dropdown-trigger" data-target="profile-options">
                             <i class="material-icons left navbar-icon">
                                 account_circle
                             </i>
                             Профиль
                         </a>
+
+                        <ul id='profile-options' class='dropdown-content main-color white-text'>
+                            <li><a href="#!" class="white-text profile-dropdown-link">Мои заказы</a></li>
+                            <li><a href="#!" class="white-text profile-dropdown-link">Просмотреть профиль</a></li>
+                            <li class="divider" tabindex="-1"></li>
+                            <li><a href="{{route('logout')}}" class="white-text profile-dropdown-link"><i class="material-icons orange-text">cancel</i>Выйти</a></li>
+                        </ul>
                     </li>
                 @endauth
-                @guest
+                @guest('clients')
                     <li class="nav-element">
-                        <a href="#" class="nav-link orange darken-4 auth-link ">
+                        <a href="{{route('login')}}" class="nav-link orange darken-4 auth-link ">
                             Войти
                         </a>
                     </li>
                     <li class="nav-element">
-                        <a href="#" class="nav-link grey darken-4 white-text register-link">
+                        <a href="{{route('register')}}" class="nav-link grey darken-4 white-text register-link">
                             Зарегистрироваться
                         </a>
                     </li>
                 @endguest
-                <li class="hide-on-large-only hide-on-extra-large-only"><a href="#" class="btn-floating btn orange darken-4 white-text"><i class="material-icons">menu</i></a></li>
+                <li class="hide-on-large-only hide-on-extra-large-only">
+                    <a href="#" class="btn-floating btn orange darken-4 white-text">
+                        <i class="material-icons">
+                            menu
+                        </i>
+                    </a>
+                </li>
             </ul>
         </div>
     </div>

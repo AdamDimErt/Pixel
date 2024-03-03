@@ -12,12 +12,12 @@
                     <div class="card hoverable z-depth-5">
                         <div class="card-image">
                             <img src="{{$good->attachment()?->first()?->url()}}" class="card-presenter-image">
-                            @auth()
+                            @auth('clients')
                                 <a class="btn-floating add-to-favorites-btn btn-large halfway-fab waves-effect waves-light orange darken-4">
                                     <i class="large material-icons">favorite_border</i>
                                 </a>
                             @endauth
-                            @guest()
+                            @guest('clients')
                                 <a class="btn-floating add-to-favorites-btn btn-large halfway-fab waves-effect waves-light orange darken-4 modal-trigger"
                                    href="#auth-modal">
                                     <i class="large material-icons">favorite_border</i>
@@ -46,5 +46,5 @@
             <h5>Тут пока ничего нет :(</h5>
         @endif
     </div>
-    @include('auth.authModal')
+    @include('auth.modal')
 @endsection
