@@ -3,19 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Models\Good;
-use App\Models\GoodType;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Cookie;
 
 class CartController extends Controller
 {
     public function addToCart(Request $request): JsonResponse
     {
         $goodId = $request->input('product_id');
+
         $cartData = json_decode($request->cookie('cart', '{}'), true);
         $cartData[] = $goodId;
         return response()
@@ -25,7 +24,7 @@ class CartController extends Controller
 
     public function removeFromCart(Request $request): JsonResponse
     {
-        $cartData = json_decode($request->cookie('cart'), true);
+        $cartData = json_decode($request->cookie('cart', '{}'), true);
         $goodIdToRemove = $request->input('product_id');
         $index = array_search($goodIdToRemove, $cartData);
         if ($index !== false) {
@@ -38,9 +37,10 @@ class CartController extends Controller
 
     public function getCartCount(Request $request): JsonResponse
     {
-        return response()
-            ->json(['success' => true])
-            ->cookie('cart', json_encode([]));
+        $cartData = json_decode($request->cookie('cart', '{}'), true);
+        $cartCount = count($cartData);
+
+        return response()->json(['cartCount' => $cartCount]);
     }
 
     public function cleanupCart(Request $request): JsonResponse
@@ -58,14 +58,14 @@ class CartController extends Controller
         $goodsInCart = Good::query()->whereIn('id', $cartData)
             ->with(['attachment'])
             ->get();
-
-        $goodsWithCount = $goodsInCart->map(function ($good) use ($idCounts) {
+        $totalCount = 0;
+        $goodsInCart->map(function ($good) use (&$totalCount, $idCounts) {
             $goodId = $good->id;
-            $count = $idCount[$goodId] ?? 0;
+            $count = $idCounts[$goodId] ?? 0;
             $good->cookie_count = $count;
-
+            $totalCount += $count;
             return $good;
         });
-        return view('cart', compact('goodsInCart'));
+        return view('cart', compact('goodsInCart', 'totalCount'));
     }
 }

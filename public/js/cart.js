@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', function () {
         .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    M.toast({html: 'Product added to cart!'});
+                    M.toast({html: 'Продукт успешно добавлен в корзину!'});
                     fetch('/get-cart-count', {
                         method: 'GET',
                         headers: {
@@ -30,15 +30,15 @@ document.addEventListener('DOMContentLoaded', function () {
                         cartCountContainer.innerHTML = cartData.cartCount;
                     })
                     .catch(error => {
-                        console.error('Error fetching cart count:', error);
+                        console.error('Не получилось посчитать количество товаров в корзине:', error);
                     });
                 } else {
-                    M.toast({html: 'Failed to add product to cart.'});
+                    M.toast({html: 'Не удалось добавить товар в корзину.'});
                 }
             })
             .catch(error => {
                 console.error('Error:', error);
-                alert('An error occurred while adding the product to the cart.');
+                alert('Произошла ошибка при попытке добавить товар в корзину.');
             });
         });
     });

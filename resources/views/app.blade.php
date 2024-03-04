@@ -10,27 +10,28 @@
     <link href="{{  asset('css/app.css') }}" rel="stylesheet">
 </head>
 <body>
-    @include('navigation.sidemenu')
-    <div class="main grey darken-4">
-{{--        <div class="container">--}}
-            <div class="row">
-                <div class="col s12 no-padding">
-                    @include('navigation.navbar')
-                </div>
-                <div class="col s12 no-padding">
-                    @include('navigation.breadcrumbs')
-                </div>
-                <div class="col s12 no-padding">
-                    <div class="container">
-                        @yield('content')
-                    </div>
-                </div>
+@include('navigation.sidemenu')
+<div class="main grey darken-4">
+    <div class="row no-padding main-row">
+        <div class="col s12 no-padding">
+            @include('navigation.navbar')
+        </div>
+        <div class="col s12 no-padding">
+            @include('navigation.breadcrumbs')
+        </div>
+        <div class="col s12 no-padding">
+            <div class="container">
+                @yield('content')
             </div>
-{{--        </div>--}}
+        </div>
+        <div class="col s12 no-padding">
+            @include('navigation.footer')
+        </div>
     </div>
-    <script src="{{asset('js/script.js')}}"></script>
-    <script src="{{asset('js/cart.js')}}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-    @stack('scripts')
+</div>
+<script src="{{asset('js/script.js')}}"></script>
+<script src="{{asset('js/cart.js')}}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+@stack('scripts')
 </body>
 </html>

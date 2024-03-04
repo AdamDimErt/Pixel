@@ -9,7 +9,15 @@ body {
     background-color: black !important;
 }
 
-header, .main, footer {
+.no-margin {
+    margin: 0 !important;
+}
+
+h5 {
+    margin: 16.4px 0px;
+}
+
+header, .main {
     padding-left: 300px;
 }
 
@@ -28,7 +36,7 @@ header, .main, footer {
 
 
 @media only screen and (max-width: 992px) {
-    header, .main, footer {
+    header, .main {
         padding-left: 0;
     }
 }
@@ -196,6 +204,21 @@ header, .main, footer {
     position: relative;
 }
 
+.control-sum {
+    position: relative;
+}
+
+hr {
+    margin: 0;
+}
+
+.control-buttons{
+    position: absolute;
+    right: 15px;
+    bottom: 50%;
+    transform: translate(0%,50%);
+}
+
 .in-cart-item-counter {
     position: absolute;
     top: 50%;
@@ -207,8 +230,26 @@ header, .main, footer {
     margin: 0 !important;
 }
 
+.instagram-logo {
+    color: white;
+    background-color: white;
+}
+
 .breadcrumb-item {
     margin: 0 !important;
+}
+
+.section-search input.autocomplete {
+    color: #000;
+}
+.input-field .prefix.active {
+    color: #000!important;
+}
+.dropdown-content li>a, .dropdown-content li>span {
+    color: #000!important;
+}
+.autocomplete-content li .highlight {
+    color: darkorange!important;
 }
 
 .nav-element {
@@ -270,8 +311,13 @@ header, .main, footer {
 }
 
 .auth-container {
-    height: 80vh;
-    padding: 20% 35%;
+    height: 85vh;
+    display: flex;
+    justify-content: center;
+}
+
+.auth-inner {
+    max-width: 500px;
 }
 
 .auth-inner {
@@ -290,7 +336,81 @@ header, .main, footer {
     height: 100px;
 }
 
+.profile-dropdown-link {
+    color: white !important;
+    transition: 0.4s;
+}
+
 .profile-dropdown-link:hover {
     color: black !important;
     transition: 0.4s;
+}
+
+.page-footer {
+    border-top: 1px grey solid;
+    width: 100%;
+}
+
+.main-row {
+    margin: 0;
+}
+
+.social-media-link {
+    font-size: calc(0.8vw + 0.5em);
+    padding: 5%;
+}
+
+.map-iframe {
+    border-radius: 15px;
+}
+
+.footer-social {
+    padding: 5%;
+}
+
+.page-footer {
+    margin-top: 5%;
+}
+
+.datepicker-date-display {
+    background-color: #161616 !important;
+}
+
+.is-selected {
+    background-color: darkorange !important;
+}
+
+.is-today {
+    color: darkorange !important;
+}
+
+.datepicker-day-button:focus {
+    background-color: lightsalmon !important;
+}
+
+.month-prev:focus, .month-next:focus {
+    background-color: darkorange !important;
+    border-radius: 5px;
+    transition: 0.2s;
+}
+
+.month-prev, .month-next {
+    transition: 0.2s !important;
+}
+
+.datepicker-cancel, .datepicker-done {
+    color: darkorange !important;
+}
+
+.cart-view-counter {
+    font-size: calc(1vw + 1em);
+}
+
+.control-buttons {
+    width: 25%;
+    justify-content: space-between;
+}
+
+.next-step-btn, .clean-cart-btn {
+    margin: 1%;
 }
