@@ -46,5 +46,5 @@
             <h5>Тут пока ничего нет :(</h5>
         @endif
     </div>
-    @include('auth.modal')
+    @include('auth.modal', ['icon' => 'favorite_border', 'title' => 'Необходима аутентификация', 'content' => 'Для добавления товара в "любимые" необходимо аутентифицироваться'])
 @endsection

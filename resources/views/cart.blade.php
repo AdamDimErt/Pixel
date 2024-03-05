@@ -3,8 +3,10 @@
     @if (count($goodsInCart) > 0)
         <h5 class="white-text">Корзина <span class="grey-text">({{$goodsInCart->count()}} позиции)</span></h5>
         <p class="grey-text">Общее количество: {{$totalCount}}</p>
-        <a href="#" class="btn waves-ripple clean-cart-btn waves-orange waves-effect orange darken-4"><i class="material-icons">delete_forever</i>
-            Очистить корзину</a>
+        <a href="#" class="btn waves-ripple clean-cart-btn waves-orange waves-effect orange darken-4 valign-wrapper">
+            <i class="material-icons">delete_forever</i>
+            Очистить корзину
+        </a>
         <div class="row">
             <div class="col s12 m9 goods-list">
                 @foreach($goodsInCart as $good)
@@ -23,9 +25,13 @@
                             <div class="control-sum">
                                 <h5 class="inline">Итог: {{$good->cookie_count * $good->cost}} / сутки</h5>
                                 <div class="control-buttons valign-wrapper">
-                                    <button class="substract-btn inline-button btn btn-floating waves-effect waves-orange orange white-text darken-4"><i class="material-icons">exposure_neg_1</i></button>
+                                    <button
+                                        class="substract-btn inline-button btn btn-floating waves-effect waves-orange orange white-text darken-4">
+                                        <i class="material-icons">exposure_neg_1</i></button>
                                     <span class="cart-view-counter">{{$good->cookie_count}}</span>
-                                    <button class="add-btn inline-button btn btn-floating waves-effect waves-orange orange white-text darken-4"><i class="material-icons">exposure_plus_1</i></button>
+                                    <button
+                                        class="add-btn inline-button btn btn-floating waves-effect waves-orange orange white-text darken-4">
+                                        <i class="material-icons">exposure_plus_1</i></button>
                                 </div>
                             </div>
                         </div>
@@ -43,76 +49,22 @@
                 <p>Обязательно имейте в виду, что при аренде оборудования и его поломке, следует дополнительная оплата,
                     исходя из условий договора</p>
                 <hr>
-                <a href="#" class="btn orange darken-4 auth-link valign-wrapper next-step-btn">
-                    Продолжить к шагу 2 <i class="material-icons">keyboard_arrow_right</i>
-                </a>
             </div>
         </div>
         @auth('clients')
-            <div class="row">
-                <div class="col s12 m9">
-                    <div class="row">
-                        <div class="col s12 input-field">
-                            <input name="rent_start_date" type="text" class="datepicker white-text">
-                            <label for="rent_start_date">Дата начала аренды: </label>
-                        </div>
-                        <div class="col s12 input-field">
-                            <input name="rent_start_time" type="text" class="timepicker white-text">
-                            <label for="rent_start_time">Время начала аренды: </label>
-                        </div>
-                        <div class="col s12">
-                            <input name="rent_end_date" type="text" class="datepicker white-text">
-                            <label for="rent_end_date">Дата конца аренды:</label>
-                        </div>
-                        <div class="col s12">
-                            <input name="rent_end_time" type="text" class="timepicker white-text">
-                            <label for="rent_end_time">Время конца аренды:</label>
-                        </div>
-                    </div>
-                </div>
-                <hr>
-                <div class="col s12 m3 additional-info white-text">
-                    <span class="grey-text">Шаг 2 из 3</span>
-                    <p>Укажите дату и время начала аренды, и окончания аренды оборудования</p>
-                    <hr>
-                    <p><b>ВАЖНО!</b></p>
-                    <p>Примите к сведению: За просрочку выплаты платежей, указанных в договоре, Арендодатель в праве
-                        требовать от Арендатора выплатить пеню в размере 5 % от не выплаченного платежа за каждый день
-                        просрочки</p>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col s12 m9">
-                    <div class="row">
-                        <div class="col s12 input-field">
-                            <input name="rent_start_date" type="text" class="datepicker white-text">
-                            <label for="rent_start_date">Дата начала аренды: </label>
-                        </div>
-                        <div class="col s12">
-                            <input name="rent_end_date" type="text" class="datepicker white-text">
-                            <label for="rent_end_date"></label>
-                        </div>
-                    </div>
-                </div>
-                <div class="col s12 m3 additional-info white-text">
-                    <span class="grey-text">Шаг 3 из 3</span>
-                    <p>Укажите дату и время начала аренды, и окончания аренды оборудования</p>
-                    <hr>
-                    <p><b>ВАЖНО!</b></p>
-                    <p>Примите к сведению: За просрочку выплаты платежей, указанных в договоре, Арендодатель в праве
-                        требовать от Арендатора выплатить пеню в размере 5 % от не выплаченного платежа за каждый день
-                        просрочки</p>
-                </div>
+            <div class="col s12 right-align">
+                <a href="{{route('preOrder')}}" class="btn orange darken-4 auth-link valign-wrapper next-step-btn">
+                    Продолжить к шагу 2 <i class="material-icons">keyboard_arrow_right</i>
+                </a>
+                @include('auth.modal', ['icon' => 'favorite_border', 'title' => "Необходима авторизация", 'content' => "Пожалуйста, войдите в аккаунт для продолжения оформления заказа"])
             </div>
         @endauth
         @guest('clients')
             <div class="col s12 right-align">
-                <a href="#" class="btn orange darken-4 auth-link ">
-                    Войти
+                <a href="#auth-modal" class="btn orange darken-4 auth-link valign-wrapper next-step-btn modal-trigger">
+                    Продолжить к шагу 2 <i class="material-icons">keyboard_arrow_right</i>
                 </a>
-                <a href="#" class="btn grey darken-4 white-text register-link">
-                    Зарегистрироваться
-                </a>
+                @include('auth.modal', ['icon' => 'favorite_border', 'title' => "Необходима авторизация", 'content' => "Пожалуйста, войдите в аккаунт для продолжения оформления заказа"])
             </div>
         @endguest
     @else

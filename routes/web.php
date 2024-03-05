@@ -39,3 +39,7 @@ Route::prefix('/auth')->group(function () {
     Route::get('/register', [HttpControllers\AuthController::class, 'register'])->name('register');
     Route::post('/register', [HttpControllers\AuthController::class, 'storeUser'])->name('storeUser');
 });
+
+Route::prefix('/order')->group(function () {
+   Route::get('pre-order', [HttpControllers\OrderController::class, 'preOrder'])->name('preOrder');
+});
