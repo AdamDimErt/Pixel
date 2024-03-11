@@ -62,7 +62,6 @@ enum GoodEnum: string
     case NANLITE_FORZA_60C = 'Nanlite Forza 60c';
     case APUTURE_100X = 'Aputure 100x';
     case GODOX_TL60 = 'Godox TL60';
-    case WEYLIGHT_DJEDAIKA = 'Weylight джедайка';
     case GODOX_V1_FLASH = 'Вспышка Godox V1';
     case GODOX_V860_FLASH = 'Вспышка Godox V860';
     case NANLITE_DJEDAIKA_30CM = 'Nanlite джедайка 30см';
@@ -82,20 +81,16 @@ enum GoodEnum: string
     case RONIN_SC = 'Ronin Sc';
     case OSMO_4 = 'Osmo 4';
     // Аккумуляторы
-    case CHARGEABLE_BATTERIES_AA_BLOCK = 'Заряжаемые батареи AA + блок';
     case SONY_NP_FZ100 = 'Sony NP-fz100';
     case SONY_NP_FW50 = 'Sony NP-fw50';
     case FUJIFILM_NP_W126 = 'Fujifilm Np-w126';
     case FUJIFILM_NP_W235 = 'Fujifilm Np-w235';
     case CANON_LP_E6NH = 'Canon LP e6Nh';
-    case BLACKMAGIC_BATTERY = 'Blackmagic battery';
     case FUJIFILM_NP_W235_DUMMY_BATTERY = 'Аккумулятор пустышка Fujifilm Np-w235';
     case SONY_NP_FZ100_DUMMY_BATTERY = 'Аккумулятор пустышка Sony NP-fz100';
     case BOYA_IPHONE_ADAPTER_CABLE = 'Шнур переходник Boya iPhone';
-    case NP_FZ100_JUPIO_CHARGER = 'Зарядный блок NP-fz100 Jupio';
     case NP_FZ100_SONY_CHARGER = 'Зарядный блок NP-fz100 Sony';
     case NP_FW50_SONY_CHARGER = 'Зарядный блок NP-fw50 Sony';
-    case NP_FW50_JUPIO_CHARGER = 'Зарядный блок NP-fw50 Jupio';
     case GOPRO_BATTERIES = 'Батарейки Go pro';
     case NPF_970_SET_OF_12 = 'Npf 970 (12 шт)';
     case NPF_750_SET_OF_1 = 'Npf 750 (1 шт)';
@@ -150,13 +145,12 @@ enum GoodEnum: string
     case LIGHT_STAND_GODOX_213B = 'Стойка Godox 213b';
     case LIGHT_STAND_GODOX_380 = 'Стойка Godox 380';
     case LIGHT_STAND_GODOX_SL = 'Стойка Godox sl';
-    case REGULAR_LIGHT_STAND = 'Стойка обычная';
     case NO_NAME_LIGHT_STANDS = 'Стойки no name';
     case LARGE_NO_NAME_LIGHT_STAND = 'Стойка no name большая';
     case C_STAND_K2_MEKING = 'Стойка C stand k2 meking';
     case TRIPOD_COMAN = 'Штатив Coman';
     case ALUMINUM_TRIPOD = 'Штатив Алюминиевый';
-    case BLACK_TRIPOD = 'Штатив черный';
+    case WEIFENG_TRIPOD = 'Штатив Weifeng';
     case CONTINENTAL_TRIPOD_DAMAGED = 'Штатив continental (поврежденный)';
     // Наборы
     case SONY_FX6_V_MOUNT_SET = 'Набор Sony FX6 V-mount';

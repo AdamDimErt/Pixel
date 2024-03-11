@@ -14,15 +14,15 @@ return new class extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
 
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('client_id');
 
             $table->integer('amount_paid')->nullable();
             $table->enum('status', ['in_rent', 'returned', 'cancelled', 'waiting'])->default('waiting');
 
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('client_id')->references('id')->on('clients');
 
-            $table->timestamp('rent_start')->nullable()->default(null);
-            $table->timestamp('rent_end')->nullable()->default(null);
+            $table->date('rent_start')->nullable()->default(null);
+            $table->date('rent_end')->nullable()->default(null);
 
             $table->timestamps();
         });

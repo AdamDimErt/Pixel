@@ -444,3 +444,7 @@ hr {
 .next-step-btn, .clean-cart-btn {
     margin: 1%;
 }
+
+.confirm-order-btn {
+    margin: 5%;
+}

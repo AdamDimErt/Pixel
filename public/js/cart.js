@@ -12,34 +12,38 @@ document.addEventListener('DOMContentLoaded', function () {
                     'Content-Type': 'application/json',
                     'X-CSRF-TOKEN': csrfToken,
                 },
-                body: JSON.stringify({ product_id: productId }),
+                body: JSON.stringify({product_id: productId}),
             })
-        .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    M.toast({html: 'Продукт успешно добавлен в корзину!'});
-                    fetch('/get-cart-count', {
-                        method: 'GET',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-CSRF-TOKEN': csrfToken,
-                        },
-                    })
                 .then(response => response.json())
-                    .then(cartData => {
-                        cartCountContainer.innerHTML = cartData.cartCount;
-                    })
-                    .catch(error => {
-                        console.error('Не получилось посчитать количество товаров в корзине:', error);
-                    });
-                } else {
+                .then(data => {
+                    if (data.hasOwnProperty('error')) {
+                        M.toast({html: `<i class="material-icons orange-text text-darken-4">error_outline</i>` + data.error});
+                    } else {
+                        if (data.success) {
+                            M.toast({html: 'Продукт успешно добавлен в корзину!'});
+                            fetch('/get-cart-count', {
+                                method: 'GET',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'X-CSRF-TOKEN': csrfToken,
+                                },
+                            })
+                                .then(response => response.json())
+                                .then(cartData => {
+                                    cartCountContainer.innerHTML = cartData.cartCount;
+                                })
+                                .catch(error => {
+                                    console.error('Не получилось посчитать количество товаров в корзине:', error);
+                                });
+                        } else {
+                            M.toast({html: 'Не удалось добавить товар в корзину.'});
+                        }
+                    }
+                })
+
+                .catch(error => {
                     M.toast({html: 'Не удалось добавить товар в корзину.'});
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('Произошла ошибка при попытке добавить товар в корзину.');
-            });
+                });
         });
     });
 });

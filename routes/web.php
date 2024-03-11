@@ -25,7 +25,6 @@ Route::prefix('/')->group(function () {
         ->name('goodList');
     Route::post('/change-lang', [HttpControllers\LocalizationController::class, 'changeLang']);
 
-
     Route::post('/add-to-cart', [HttpControllers\CartController::class, 'addToCart']);
     Route::post('/remove-from-cart', [HttpControllers\CartController::class, 'removeFromCart']);
     Route::get('/get-cart-count', [HttpControllers\CartController::class, 'getCartCount']);
@@ -41,5 +40,7 @@ Route::prefix('/auth')->group(function () {
 });
 
 Route::prefix('/order')->group(function () {
-   Route::get('pre-order', [HttpControllers\OrderController::class, 'preOrder'])->name('preOrder');
+    Route::get('pre-order', [HttpControllers\OrderController::class, 'preOrder'])->name('preOrder');
+    Route::get('confirm-order', [HttpControllers\OrderController::class, 'confirmOrder'])->name('confirmOrder');
+    Route::post('settle-order', [HttpControllers\OrderController::class, 'settleOrder'])->name('settleOrder');
 });

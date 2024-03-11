@@ -89,7 +89,10 @@ document.addEventListener('DOMContentLoaded', function () {
             cancel: 'Отменить',
             clear: 'Очистить',
             done: 'ОК'
-        }
+        },
+        firstDay: 1,
+        format: 'dd/mm/yyyy',
+        minDate: new Date()
     });
 });
 

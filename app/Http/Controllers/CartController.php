@@ -16,10 +16,16 @@ class CartController extends Controller
         $goodId = $request->input('product_id');
 
         $cartData = json_decode($request->cookie('cart', '{}'), true);
-        $cartData[] = $goodId;
-        return response()
-            ->json(['success' => true])
-            ->cookie('cart', json_encode($cartData), 60 * 24 * 30);
+
+        $idCounts = array_count_values($cartData);
+
+        if (!isset($idCounts[$goodId]) || $idCounts[$goodId] < count(Good::query()->find($goodId)->availableItems())){
+            $cartData[] = $goodId;
+            return response()
+                ->json(['success' => true])
+                ->cookie('cart', json_encode($cartData), 60 * 24 * 30);
+        }
+        return response()->json(['error' => 'На данный момент такой товар имеется в количестве: ' . count(Good::query()->find($goodId)->availableItems())], 400);
     }
 
     public function removeFromCart(Request $request): JsonResponse

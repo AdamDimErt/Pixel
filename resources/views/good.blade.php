@@ -46,5 +46,8 @@
             <h5>Тут пока ничего нет :(</h5>
         @endif
     </div>
+    @push('scripts')
+        <script src="{{asset('js/cart.js')}}"></script>
+    @endpush
     @include('auth.modal', ['icon' => 'favorite_border', 'title' => 'Необходима аутентификация', 'content' => 'Для добавления товара в "любимые" необходимо аутентифицироваться'])
 @endsection
