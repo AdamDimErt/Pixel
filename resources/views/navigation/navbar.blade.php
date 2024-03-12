@@ -80,6 +80,7 @@
                     data: data,
                     limit: 5,
                     onAutocomplete: (item) => {
+                        window.location.href = '/autofill/' + item
                     }
                 });
             });

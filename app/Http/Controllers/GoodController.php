@@ -34,4 +34,10 @@ class GoodController extends Controller
             ->get();
         return view('good', compact('goods', 'goodType'));
     }
+
+    public function autofill(string $goodName)
+    {
+        $good = Good::query()->where('name', '=', $goodName)->first();
+        return redirect(route('view', ['good' => $good]));
+    }
 }

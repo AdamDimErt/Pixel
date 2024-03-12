@@ -485,5 +485,10 @@ hr {
 .carousel-item {
     width: auto !important;
     max-width: 300px !important;
+    height: 450px !important;
+}
+
+.indicators {
+    display: none !important;
 }
 

@@ -60,13 +60,14 @@
                 </div>
             </div>
         </div>
-        <div class="carousel">
-            @foreach($good->getRelatedGoods() as $relatedGood)
-                <div class="carousel-item">
-                    @include('goodCard', ['good' => $relatedGood])
-                </div>
-            @endforeach
-        </div>
+    </div>
+    <h4 class="white-text">Похожие товары:</h4>
+    <div class="carousel">
+        @foreach($good->getRelatedGoods() as $relatedGood)
+            <div class="carousel-item">
+                @include('goodCard', ['good' => $relatedGood])
+            </div>
+        @endforeach
     </div>
     @include('auth.modal', ['icon' => 'favorite_border', 'title' => 'Необходима аутентификация', 'content' => 'Для добавления товара в "любимые" необходимо аутентифицироваться'])
     @push('scripts')
