@@ -47,7 +47,7 @@ class Order extends Model
 
     public function owner(): HasOne
     {
-        return $this->hasOne(User::class, 'id', 'user_id');
+        return $this->hasOne(Client::class, 'id', 'client_id');
     }
 
     public function items(): BelongsToMany

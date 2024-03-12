@@ -62,28 +62,24 @@ class OrderListLayout extends Table
                     return $order->status;
                 }),
 
-            TD::make('rent_start', __('Created'))
+            TD::make('rent_start', __('Начало аренды'))
                 ->usingComponent(DateTimeSplit::class)
                 ->align(TD::ALIGN_RIGHT)
-                ->defaultHidden()
                 ->sort(),
 
-            TD::make('rent_end', __('Created'))
+            TD::make('rent_end', __('Конец аренды'))
                 ->usingComponent(DateTimeSplit::class)
                 ->align(TD::ALIGN_RIGHT)
-                ->defaultHidden()
                 ->sort(),
 
-            TD::make('created_at', __('Created'))
+            TD::make('created_at', __('Создан'))
                 ->usingComponent(DateTimeSplit::class)
                 ->align(TD::ALIGN_RIGHT)
-                ->defaultHidden()
                 ->sort(),
 
-            TD::make('updated_at', __('Created'))
+            TD::make('updated_at', __('Изменён'))
                 ->usingComponent(DateTimeSplit::class)
                 ->align(TD::ALIGN_RIGHT)
-                ->defaultHidden()
                 ->sort(),
 
             TD::make(__('Actions'))

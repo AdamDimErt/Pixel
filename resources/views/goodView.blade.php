@@ -26,7 +26,17 @@
                 </p>
             </div>
             <div class="info-btns-wrapper">
-                <h5>В дополнение к комплекту берут: </h5>
+                @if(count(json_decode($good->additionals, true)) > 0)
+                    <h5>В дополнение к комплекту берут: </h5>
+                    @foreach(json_decode($good->additionals, true) as $additional => $cost)
+                        <p>
+                            <label>
+                                <input type="checkbox" class="orange-text"/>
+                                <span>{{$additional}} <span class="white-text">(+ {{$cost}}тг)</span></span>
+                            </label>
+                        </p>
+                    @endforeach
+                @endif
                 {{--        TODO        --}}
                 <form action="">
                     <input type="checkbox" name="" id="">
@@ -61,14 +71,17 @@
             </div>
         </div>
     </div>
-    <h4 class="white-text">Похожие товары:</h4>
-    <div class="carousel">
-        @foreach($good->getRelatedGoods() as $relatedGood)
-            <div class="carousel-item">
-                @include('goodCard', ['good' => $relatedGood])
-            </div>
-        @endforeach
-    </div>
+    @if(count($good->getRelatedGoods()) > 0)
+        <h4 class="white-text">Похожие товары:</h4>
+        <div class="carousel">
+            @foreach($good->getRelatedGoods() as $relatedGood)
+                <div class="carousel-item">
+                    @include('goodCard', ['good' => $relatedGood])
+                </div>
+            @endforeach
+        </div>
+    @endif
+
     @include('auth.modal', ['icon' => 'favorite_border', 'title' => 'Необходима аутентификация', 'content' => 'Для добавления товара в "любимые" необходимо аутентифицироваться'])
     @push('scripts')
         <script src="{{asset('js/cart.js')}}"></script>

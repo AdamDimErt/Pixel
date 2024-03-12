@@ -492,3 +492,10 @@ hr {
     display: none !important;
 }
 
+input[type="checkbox"]:checked + span:not(.lever)::before {
+    border: 2px solid transparent;
+    border-bottom: 2px solid darkorange;
+    border-right: 2px solid darkorange;
+    background: transparent;
+}
+
