@@ -19,6 +19,12 @@ class GoodController extends Controller
         return view('good', compact('goods', 'goodTypeDesc'));
     }
 
+    public function view(Good $good)
+    {
+        $good->with('relatedGoods');
+        return view('goodView', compact('good'));
+    }
+
     public function goodList(string $goodTypeCode, Request $request): \Illuminate\Contracts\Foundation\Application|Factory|View|Application
     {
         $goodType = GoodType::query()->where('code', '=', $goodTypeCode)->first();

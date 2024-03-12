@@ -21,6 +21,8 @@ class GoodFactory extends Factory
             'cost' => fake()->numberBetween(10000, 50000),
             'discount_cost' => rand(0, 1) ? fake()->numberBetween(10000, 50000) : null,
             'related_goods' => json_encode(Good::query()->inRandomOrder()->pluck('id')),
+            // TODO
+            'additionals' => json_encode([]),
             'good_type_id' => GoodType::query()->inRandomOrder()->first(),
         ];
     }

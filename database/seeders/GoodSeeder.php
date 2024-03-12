@@ -62,8 +62,7 @@ class GoodSeeder extends Seeder
                 'cost' => 40000,
                 'damage_cost' => 3000000,
                 'description' => "-SONY FX6 (Fullframe)
--Sony bp battery            GoodEnum::WEYLIGHT_DJEDAIKA->value => 1,
-
+-Sony bp battery,
 -Ручка с монитором"
             ],
             GoodEnum::CINEMA_CAMERA_BLACKMAGIC_6K_PRO->name => [

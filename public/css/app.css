@@ -41,6 +41,12 @@ header, .main {
     }
 }
 
+@media only screen and (min-width: 600px){
+    .detailed-info-wrapper {
+        border-left: 1px solid white;
+    }
+}
+
 .logo {
     aspect-ratio: 1;
     width: 80%;
@@ -448,3 +454,36 @@ hr {
 .confirm-order-btn {
     margin: 5%;
 }
+
+.detailed-info {
+    padding: 2% 5% !important;
+}
+
+.detailed-info-wrapper {
+    padding: 5% ;
+    position: relative;
+}
+
+.good-image {
+    border-radius: 15px;
+}
+
+.item-cost-view {
+    position: absolute;
+    right: 1px;
+    bottom: 1px;
+}
+
+.info-btns-wrapper {
+    padding: 20px;
+}
+
+.carousel {
+    height: 500px !important;
+}
+
+.carousel-item {
+    width: auto !important;
+    max-width: 300px !important;
+}
+

@@ -44,3 +44,6 @@ Route::prefix('/order')->group(function () {
     Route::get('confirm-order', [HttpControllers\OrderController::class, 'confirmOrder'])->name('confirmOrder');
     Route::post('settle-order', [HttpControllers\OrderController::class, 'settleOrder'])->name('settleOrder');
 });
+
+Route::get('{good}', [HttpControllers\GoodController::class, 'view'])->name('view');
+

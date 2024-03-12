@@ -3,9 +3,11 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Facades\DB;
 use Orchid\Attachment\Attachable;
@@ -75,23 +77,7 @@ class Good extends Model
         return $this->hasMany(Good::class, 'id', 'related_goods');
     }
 
-    public function addRelatedGood($relatedGoodId)
-    {
-        $relatedGoods = $this->related_goods ?? [];
-        $relatedGoods = array_unique(array_merge($relatedGoods, [$relatedGoodId]));
-
-        $this->update([
-            'related_goods' => $relatedGoods,
-        ]);
-    }
-
-    public function removeRelatedGood($relatedGoodId)
-    {
-        $relatedGoods = $this->related_goods ?? [];
-        $relatedGoods = array_diff($relatedGoods, [$relatedGoodId]);
-
-        $this->update([
-            'related_goods' => $relatedGoods,
-        ]);
+    public function getRelatedGoods(): Collection {
+        return Good::whereIn('id', $this->related_goods)->get();
     }
 }

@@ -19,6 +19,7 @@ return new class extends Migration
             $table->integer('discount_cost')->nullable();
             $table->integer('damage_cost')->nullable();
             $table->json('related_goods')->nullable();
+            $table->json('additionals')->nullable();
 
             $table->unsignedBigInteger('good_type_id');
             $table->foreign('good_type_id')->references('id')->on('good_types');

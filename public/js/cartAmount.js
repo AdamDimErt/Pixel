@@ -49,7 +49,7 @@ removeFromCartButtons.forEach(button => {
                         e.target.parentNode.parentNode.querySelector('.cart-view-counter').innerHTML = +e.target.parentNode.parentNode.querySelector('.cart-view-counter').innerHTML - 1
                         e.target.parentNode.parentNode.parentNode.querySelector('.good-cost-holder').innerHTML = +e.target.parentNode.parentNode.querySelector('.cart-view-counter').innerHTML * productCost
                     } else {
-                        e.target.parentNode.parentNode.parentNode.parentNode.remove();
+                        e.target.parentNode.parentNode.parentNode.parentNode.parentNode.remove();
                     }
                 }
             })
