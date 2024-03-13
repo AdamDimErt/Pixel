@@ -38,10 +38,6 @@
                         </p>
                     @endforeach
                 @endif
-                {{--        TODO        --}}
-                <form action="">
-                    <input type="checkbox" name="" id="">
-                </form>
                 <div class="row">
                     <div class="col s6">
                         <a class="btn-large orange darken-4 auth-link confirm-order-btn no-margin add-to-cart-btn"
