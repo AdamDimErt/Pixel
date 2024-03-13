@@ -60,7 +60,7 @@ class OrderController extends Controller
         foreach ($goodsInCart as $good) {
             $goodId = $good->id;
             $count = $idCounts[$goodId] ?? 0;
-            foreach ($good->availableItems()->take($count)->pluck('id')->toArray() as $itemId){
+            foreach ($good->availableItems()->take($count)->pluck('id')->toArray() as $itemId) {
                 $itemsToAttach[] = $itemId;
             }
         }

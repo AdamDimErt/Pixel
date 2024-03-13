@@ -47,4 +47,3 @@ Route::prefix('/order')->group(function () {
 
 Route::get('{good}', [HttpControllers\GoodController::class, 'view'])->name('view');
 Route::get('autofill/{goodName}', [HttpControllers\GoodController::class, 'autofill'])->name('autofill');
-

@@ -51,7 +51,7 @@ class AppServiceProvider extends ServiceProvider
             return [
                 'name' => $good->name,
                 'url' => optional($good->attachment->first())->url,
-                'id' => $good->id
+                'id' => $good->id,
             ];
         });
     }

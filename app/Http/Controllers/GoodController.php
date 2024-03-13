@@ -16,12 +16,14 @@ class GoodController extends Controller
         $goods = Good::query()->hasAvailableItems()->get();
 
         $goodTypeDesc = 'Все товары';
+
         return view('good', compact('goods', 'goodTypeDesc'));
     }
 
     public function view(Good $good)
     {
         $good->with('relatedGoods');
+
         return view('goodView', compact('good'));
     }
 
@@ -32,12 +34,14 @@ class GoodController extends Controller
             ->hasAvailableItems()
             ->with(['attachment'])
             ->get();
+
         return view('good', compact('goods', 'goodType'));
     }
 
     public function autofill(string $goodName)
     {
         $good = Good::query()->where('name', '=', $goodName)->first();
+
         return redirect(route('view', ['good' => $good]));
     }
 }

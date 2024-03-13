@@ -2,9 +2,6 @@
 
 namespace Database\Factories;
 
-use App\Models\Additional;
-use App\Models\Good;
-use App\Models\GoodType;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class AdditionalFactory extends Factory

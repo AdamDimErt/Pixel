@@ -15,6 +15,7 @@ use Orchid\Screen\AsSource;
 class Additional extends Model
 {
     use AsSource, Attachable, Filterable, HasFactory;
+
     protected $guarded = [];
 
     protected $allowedFilters = [

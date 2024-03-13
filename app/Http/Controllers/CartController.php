@@ -19,13 +19,15 @@ class CartController extends Controller
 
         $idCounts = array_count_values($cartData);
 
-        if (!isset($idCounts[$goodId]) || $idCounts[$goodId] < count(Good::query()->find($goodId)->availableItems())){
+        if (! isset($idCounts[$goodId]) || $idCounts[$goodId] < count(Good::query()->find($goodId)->availableItems())) {
             $cartData[] = $goodId;
+
             return response()
                 ->json(['success' => true])
                 ->cookie('cart', json_encode($cartData), 60 * 24 * 30);
         }
-        return response()->json(['error' => 'На данный момент такой товар имеется в количестве: ' . count(Good::query()->find($goodId)->availableItems())], 400);
+
+        return response()->json(['error' => 'На данный момент такой товар имеется в количестве: '.count(Good::query()->find($goodId)->availableItems())], 400);
     }
 
     public function removeFromCart(Request $request): JsonResponse
@@ -36,6 +38,7 @@ class CartController extends Controller
         if ($index !== false) {
             array_splice($cartData, $index, 1);
         }
+
         return response()
             ->json(['success' => true])
             ->cookie('cart', json_encode($cartData), 60 * 24 * 30);
@@ -70,8 +73,10 @@ class CartController extends Controller
             $count = $idCounts[$goodId] ?? 0;
             $good->cookie_count = $count;
             $totalCount += $count;
+
             return $good;
         });
+
         return view('cart', compact('goodsInCart', 'totalCount'));
     }
 }

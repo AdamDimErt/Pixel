@@ -70,6 +70,7 @@ class AuthController extends Controller
     {
         Auth::guard('clients')->logout();
         $request->session()->invalidate();
+
         return redirect('/auth/login');
     }
 }
