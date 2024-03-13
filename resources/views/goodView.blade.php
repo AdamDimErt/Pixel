@@ -26,13 +26,14 @@
                 </p>
             </div>
             <div class="info-btns-wrapper">
-                @if(count(json_decode($good->additionals, true)) > 0)
+                @if(count($good->getAdditionals()) > 0)
                     <h5>В дополнение к комплекту берут: </h5>
-                    @foreach(json_decode($good->additionals, true) as $additional => $cost)
+                    @foreach($good->getAdditionals() as $additional)
                         <p>
                             <label>
-                                <input type="checkbox" class="orange-text"/>
-                                <span>{{$additional}} <span class="white-text">(+ {{$cost}}тг)</span></span>
+                                <input type="checkbox" class="orange-text"
+                                data-additional-id="{{$additional->id}}"/>
+                                <span>{{$additional->name}} <span class="white-text">(+ {{$additional->cost}}тг)</span></span>
                             </label>
                         </p>
                     @endforeach
