@@ -8,6 +8,8 @@ use App\Models\Additional;
 use App\Models\Good;
 use App\Models\GoodType;
 use Illuminate\Database\Seeder;
+use Illuminate\Http\UploadedFile;
+use Orchid\Attachment\File;
 
 class GoodSeeder extends Seeder
 {
@@ -21,7 +23,7 @@ class GoodSeeder extends Seeder
             $goodTypeId = GoodType::query()->where('name', '=', $goodTypeName)->firstOrFail()->id;
 
             foreach ($good as $key => $value) {
-                Good::factory()->create([
+                $good = Good::factory()->create([
                     'name' => $value['name'],
                     'description' => $value['description'],
                     'cost' => $value['cost'],
@@ -31,6 +33,14 @@ class GoodSeeder extends Seeder
                     'discount_cost' => null,
                     'related_goods' => Good::query()->inRandomOrder()->limit(5)->pluck('id'),
                 ]);
+
+                if (!is_null($value['image'])) {
+                    $file = new UploadedFile('resources/img/' . $value['image'], $value['image']);
+
+                    $attachment = (new File($file))->load();
+
+                    $good->attachment()->syncWithoutDetaching($attachment);
+                }
             }
         }
     }
@@ -72,6 +82,7 @@ class GoodSeeder extends Seeder
                     'Tilta V mount',
                     'CF Tough 160gb',
                 ],
+                'image' => '5.png'
             ],
             GoodEnum::CINEMA_CAMERA_BLACKMAGIC_6K_PRO->name => [
                 'name' => GoodEnum::CINEMA_CAMERA_BLACKMAGIC_6K_PRO->value,
@@ -86,6 +97,7 @@ class GoodSeeder extends Seeder
                     'Tilta + v mount',
                     'SmallRig 99wh',
                 ],
+                'image' => '18.png'
             ],
             GoodEnum::CINEMA_CAMERA_SONY_FX3->name => [
                 'name' => GoodEnum::CINEMA_CAMERA_SONY_FX3->value,
@@ -99,6 +111,7 @@ class GoodSeeder extends Seeder
                     'Tilta advanced cage',
                     'Доп аккумулятор NPF Z100',
                 ],
+                'image' => '7.png'
             ],
             GoodEnum::CINEMA_CAMERA_SONY_FX30->name => [
                 'name' => GoodEnum::CINEMA_CAMERA_SONY_FX30->value,
@@ -112,6 +125,7 @@ class GoodSeeder extends Seeder
                     'Tilta advanced cage',
                     'Доп аккумулятор NPF Z100',
                 ],
+                'image' => '8.png'
 
             ],
             GoodEnum::PHOTO_CAMERA_CANON_R7->name => [
@@ -126,6 +140,7 @@ class GoodSeeder extends Seeder
                     'Объектив Canon RF 24-105mm f4-7.1',
                     'Дополнительный аккумулятор',
                 ],
+                'image' => '15.png'
 
             ],
             GoodEnum::PHOTO_CAMERA_CANON_R->name => [
@@ -140,6 +155,7 @@ class GoodSeeder extends Seeder
                     'Объектив Canon RF 24-105mm f4-7.1',
                     'Дополнительный аккумулятор',
                 ],
+                'image' => '16.png'
 
             ],
             GoodEnum::PHOTO_CAMERA_SONY_A7_III->name => [
@@ -154,6 +170,7 @@ class GoodSeeder extends Seeder
                     'Клетка A7 III с рукояткой UURig',
                     'Дополнительный аккумулятор',
                 ],
+                'image' => '4.png'
             ],
             GoodEnum::PHOTO_CAMERA_SONY_A7C->name => [
                 'name' => GoodEnum::PHOTO_CAMERA_SONY_A7C->value,
@@ -167,6 +184,7 @@ class GoodSeeder extends Seeder
                     'Клетка A7c',
                     'Дополнительный аккумулятор',
                 ],
+                'image' => '10.png'
             ],
             GoodEnum::PHOTO_CAMERA_SONY_A7_IV->name => [
                 'name' => GoodEnum::PHOTO_CAMERA_SONY_A7_IV->value,
@@ -180,6 +198,7 @@ class GoodSeeder extends Seeder
                     'Клетка Sony a7 IV',
                     'Дополнительный аккумулятор',
                 ],
+                'image' => '9.png'
             ],
             GoodEnum::PHOTO_CAMERA_SONY_A6600->name => [
                 'name' => GoodEnum::PHOTO_CAMERA_SONY_A6600->value,
@@ -193,6 +212,7 @@ class GoodSeeder extends Seeder
                     'Клетка a6600',
                     'Дополнительный аккумулятор',
                 ],
+                'image' => '12.png'
             ],
             GoodEnum::PHOTO_CAMERA_SONY_A6400->name => [
                 'name' => GoodEnum::PHOTO_CAMERA_SONY_A6400->value,
@@ -206,6 +226,7 @@ class GoodSeeder extends Seeder
                     'Клетка a6400',
                     'Дополнительный аккумулятор',
                 ],
+                'image' => '11.png'
             ],
             GoodEnum::PHOTO_CAMERA_FUJIFILM_T4->name => [
                 'name' => GoodEnum::PHOTO_CAMERA_FUJIFILM_T4->value,
@@ -219,6 +240,7 @@ class GoodSeeder extends Seeder
                     'Клетка Fujifilm T4',
                     'Дополнительный аккумулятор',
                 ],
+                'image' => '14.png'
             ],
             GoodEnum::PHOTO_CAMERA_FUJIFILM_T3->name => [
                 'name' => GoodEnum::PHOTO_CAMERA_FUJIFILM_T3->value,
@@ -232,6 +254,7 @@ class GoodSeeder extends Seeder
                     'Клетка Fujifilm T3',
                     'Дополнительный аккумулятор',
                 ],
+                'image' => '13.png'
             ],
             GoodEnum::ACTION_CAMERA_GO_PRO_11->name => [
                 'name' => GoodEnum::ACTION_CAMERA_GO_PRO_11->value,
@@ -248,6 +271,7 @@ class GoodSeeder extends Seeder
                     'Селфи палка',
                     'Дополнительный аккумулятор',
                 ],
+                'image' => '17.png'
             ],
         ];
     }
@@ -266,6 +290,7 @@ class GoodSeeder extends Seeder
 Мин. дистанция фокусировки, м 0.25−0.3
 Стабилизация изображения есть',
                 'additionals' => [],
+                'image' => '36.png'
             ],
             GoodEnum::OBJECTIVE_SONY_28_70MM_F3_5_5_6_OSS->name => [
                 'name' => GoodEnum::OBJECTIVE_SONY_28_70MM_F3_5_5_6_OSS->value,
@@ -278,6 +303,7 @@ class GoodSeeder extends Seeder
 Мин. дистанция фокусировки, м 0.3-0.45
 Стабилизация изображения есть',
                 'additionals' => [],
+                'image' => null
             ],
             GoodEnum::OBJECTIVE_SONY_28_60MM_F4_5_6_OSS->name => [
                 'name' => GoodEnum::OBJECTIVE_SONY_28_60MM_F4_5_6_OSS->value,
@@ -290,9 +316,10 @@ class GoodSeeder extends Seeder
 Мин. дистанция фокусировки, м 0.3-0.45
 Стабилизация изображения есть',
                 'additionals' => [],
+                'image' => '35.png'
             ],
-            GoodEnum::OBJECTIVE_SONY_ZEISS_28_70MM_F4_OSS->name => [
-                'name' => GoodEnum::OBJECTIVE_SONY_ZEISS_28_70MM_F4_OSS->value,
+            GoodEnum::OBJECTIVE_SONY_ZEISS_24_70MM_F4_OSS->name => [
+                'name' => GoodEnum::OBJECTIVE_SONY_ZEISS_24_70MM_F4_OSS->value,
                 'cost' => 3500,
                 'damage_cost' => 300000,
                 'description' => 'Размер матрицы Full frame
@@ -304,6 +331,7 @@ class GoodSeeder extends Seeder
                 'additionals' => [
                     'ND Filter 77mm',
                 ],
+                'image' => '34.png'
             ],
             GoodEnum::OBJECTIVE_SONY_85MM_GM_F1_4->name => [
                 'name' => GoodEnum::OBJECTIVE_SONY_85MM_GM_F1_4->value,
@@ -318,6 +346,7 @@ class GoodSeeder extends Seeder
                 'additionals' => [
                     'ND Filter 77mm',
                 ],
+                'image' => '22.png'
             ],
             GoodEnum::OBJECTIVE_SONY_35MM_GM_F1_4->name => [
                 'name' => GoodEnum::OBJECTIVE_SONY_35MM_GM_F1_4->value,
@@ -333,6 +362,7 @@ class GoodSeeder extends Seeder
                     'ND Filter Freewell 67mm',
                     'Tiffent mist Filter 67mm',
                 ],
+                'image' => '23.png'
             ],
             GoodEnum::OBJECTIVE_SONY_70_200_MM_GM_II_F2_8->name => [
                 'name' => GoodEnum::OBJECTIVE_SONY_70_200_MM_GM_II_F2_8,
@@ -349,6 +379,7 @@ class GoodSeeder extends Seeder
                 'additionals' => [
                     'ND Filter 77mm',
                 ],
+                'image' => '24.png'
             ],
             GoodEnum::OBJECTIVE_SONY_20MM_G_F1_8->name => [
                 'name' => GoodEnum::OBJECTIVE_SONY_20MM_G_F1_8->value,
@@ -364,6 +395,7 @@ class GoodSeeder extends Seeder
                     'ND Filter Freewell 67mm',
                     'Tiffent mist Filter 67mm',
                 ],
+                'image' => '21.png'
             ],
             GoodEnum::OBJECTIVE_SONY_18_105MM_G_F4->name => [
                 'name' => GoodEnum::OBJECTIVE_SONY_18_105MM_G_F4->value,
@@ -377,6 +409,7 @@ class GoodSeeder extends Seeder
                 'additionals' => [
                     'ND Filter 77mm',
                 ],
+                'image' => '25.png'
             ],
             GoodEnum::OBJECTIVE_SONY_18_135MM_F3_5_5_6->name => [
                 'name' => GoodEnum::OBJECTIVE_SONY_18_135MM_F3_5_5_6->value,
@@ -390,6 +423,7 @@ class GoodSeeder extends Seeder
                     'ND Filter Freewell 67mm',
                     'Tiffent mist Filter 67mm',
                 ],
+                'image' => '118.png'
             ],
             GoodEnum::OBJECTIVE_SONY_50MM_F1_8->name => [
                 'name' => GoodEnum::OBJECTIVE_SONY_50MM_F1_8->value,
@@ -405,6 +439,7 @@ class GoodSeeder extends Seeder
                     'ND Filter Freewell 67mm',
                     'Tiffent mist Filter 67mm',
                 ],
+                'image' => '32.png'
             ],
             GoodEnum::OBJECTIVE_TAMRON_28_75MM_F2_8_RXD_SONY->name => [
                 'name' => GoodEnum::OBJECTIVE_TAMRON_28_75MM_F2_8_RXD_SONY->value,
@@ -420,6 +455,7 @@ class GoodSeeder extends Seeder
                     'ND Filter Freewell 67mm',
                     'Tiffent mist Filter 67mm',
                 ],
+                'image' => '19.png'
             ],
             GoodEnum::OBJECTIVE_TAMRON_17_70MM_F2_8_RXD_SONY->name => [
                 'name' => GoodEnum::OBJECTIVE_TAMRON_17_70MM_F2_8_RXD_SONY->value,
@@ -435,6 +471,7 @@ class GoodSeeder extends Seeder
                     'ND Filter Freewell 67mm',
                     'Tiffent mist Filter 67mm',
                 ],
+                'image' => '20.png'
             ],
             GoodEnum::OBJECTIVE_SIGMA_ART_24_70MM_F2_8_DG_DN_SONY->name => [
                 'name' => GoodEnum::OBJECTIVE_SIGMA_ART_24_70MM_F2_8_DG_DN_SONY->value,
@@ -446,6 +483,7 @@ class GoodSeeder extends Seeder
 Минимальное расстояние фокусировки, м 0.18
 Стабилизация изображения нет',
                 'additionals' => [],
+                'image' => '33.png'
             ],
             GoodEnum::OBJECTIVE_SIGMA_70MM_F2_8_DG_MACRO_SONY->name => [
                 'name' => GoodEnum::OBJECTIVE_SIGMA_70MM_F2_8_DG_MACRO_SONY->value,
@@ -459,6 +497,7 @@ class GoodSeeder extends Seeder
 Стабилизация изображения нет
 ',
                 'additionals' => [],
+                'image' => '31.png'
             ],
             GoodEnum::OBJECTIVE_SIGMA_ART_16_28MM_F2_8_DG_DN_SONY->name => [
                 'name' => GoodEnum::OBJECTIVE_SIGMA_ART_16_28MM_F2_8_DG_DN_SONY->value,
@@ -473,6 +512,7 @@ class GoodSeeder extends Seeder
                 'additionals' => [
                     'ND Filter 77mm',
                 ],
+                'image' => '29.png'
             ],
             GoodEnum::OBJECTIVE_SIGMA_56MM_F1_4_DC_DN_SONY->name => [
                 'name' => GoodEnum::OBJECTIVE_SIGMA_56MM_F1_4_DC_DN_SONY->value,
@@ -485,6 +525,7 @@ class GoodSeeder extends Seeder
 Мин. дистанция фокусировки, м 0.5
 Стабилизация изображения нет',
                 'additionals' => [],
+                'image' => '28.png'
             ],
             GoodEnum::OBJECTIVE_SIGMA_30MM_F1_4_DC_DN_SONY->name => [
                 'name' => GoodEnum::OBJECTIVE_SIGMA_30MM_F1_4_DC_DN_SONY->value,
@@ -497,6 +538,7 @@ class GoodSeeder extends Seeder
 Мин. дистанция фокусировки, м 0.3
 Стабилизация изображения нет',
                 'additionals' => [],
+                'image' => '27.png'
             ],
             GoodEnum::OBJECTIVE_SIGMA_16MM_F1_4_DC_DN_SONY->name => [
                 'name' => GoodEnum::OBJECTIVE_SIGMA_16MM_F1_4_DC_DN_SONY->value,
@@ -512,6 +554,7 @@ class GoodSeeder extends Seeder
                     'ND Filter Freewell 67mm',
                     'Tiffent mist Filter 67mm',
                 ],
+                'image' => '26.png'
             ],
             GoodEnum::OBJECTIVE_SIRUI_50MM_F1_8_ANAMORPHIC_SONY->name => [
                 'name' => GoodEnum::OBJECTIVE_SIRUI_50MM_F1_8_ANAMORPHIC_SONY->value,
@@ -523,6 +566,7 @@ class GoodSeeder extends Seeder
 Стабилизация изображения — нет
 Анаморфотное искажение — 1.33',
                 'additionals' => [],
+                'image' => '115.png'
             ],
             GoodEnum::FUJINON_18_55MM->name => [
                 'name' => GoodEnum::FUJINON_18_55MM->value,
@@ -537,6 +581,7 @@ class GoodSeeder extends Seeder
                 'additionals' => [
                     'ND Filter 77mm',
                 ],
+                'image' => '37.png'
             ],
             GoodEnum::CANON_RF_50MM_F1_8->name => [
                 'name' => GoodEnum::CANON_RF_50MM_F1_8->value,
@@ -549,6 +594,7 @@ class GoodSeeder extends Seeder
 Мин. дистанция фокусировки, м 0.3
 Стабилизация изображения нет',
                 'additionals' => [],
+                'image' => '85.png'
             ],
             GoodEnum::CANON_RF_24_105_MM_F4_7_1->name => [
                 'name' => GoodEnum::CANON_RF_24_105_MM_F4_7_1->value,
@@ -564,6 +610,7 @@ class GoodSeeder extends Seeder
                     'ND Filter Freewell 67mm',
                     'Tiffent mist Filter 67mm',
                 ],
+                'image' => '86.png'
             ],
             GoodEnum::SAMYANG_14MM_CANON->name => [
                 'name' => GoodEnum::SAMYANG_14MM_CANON->value,
@@ -576,6 +623,7 @@ class GoodSeeder extends Seeder
 Мин. дистанция фокусировки, м 0.28
 Стабилизация изображения нет',
                 'additionals' => [],
+                'image' => '78.png'
             ],
             GoodEnum::SAMYANG_24MM_CANON->name => [
                 'name' => GoodEnum::SAMYANG_24MM_CANON->value,
@@ -590,6 +638,7 @@ class GoodSeeder extends Seeder
                 'additionals' => [
                     'ND Filter 77mm',
                 ],
+                'image' => '77.png'
             ],
             GoodEnum::SAMYANG_135MM_CANON->name => [
                 'name' => GoodEnum::SAMYANG_135MM_CANON->value,
@@ -604,6 +653,7 @@ class GoodSeeder extends Seeder
                 'additionals' => [
                     'ND Filter 77mm',
                 ],
+                'image' => '79.png'
             ],
             GoodEnum::SAMYANG_85MM_CANON->name => [
                 'name' => GoodEnum::SAMYANG_85MM_CANON->value,
@@ -618,6 +668,7 @@ class GoodSeeder extends Seeder
                 'additionals' => [
                     'ND Filter 77mm',
                 ],
+                'image' => '76.png'
             ],
             GoodEnum::SAMYANG_35MM_CANON->name => [
                 'name' => GoodEnum::SAMYANG_35MM_CANON->value,
@@ -632,6 +683,7 @@ class GoodSeeder extends Seeder
                 'additionals' => [
                     'ND Filter 77mm',
                 ],
+                'image' => '81.png'
             ],
             GoodEnum::SIGMA_ART_18_35_MM_DC_CANON->name => [
                 'name' => GoodEnum::SIGMA_ART_18_35_MM_DC_CANON->value,
@@ -646,6 +698,7 @@ class GoodSeeder extends Seeder
                 'additionals' => [
                     'ND Filter 77mm',
                 ],
+                'image' => '84.png'
             ],
             GoodEnum::SIGMA_ART_24_70MM_DG_CANON->name => [
                 'name' => GoodEnum::SIGMA_ART_24_70MM_DG_CANON->value,
@@ -658,6 +711,7 @@ class GoodSeeder extends Seeder
 Мин. дистанция фокусировки, м 0.37
 Стабилизация изображения есть',
                 'additionals' => [],
+                'image' => '30.png'
             ],
         ];
     }
@@ -676,6 +730,7 @@ class GoodSeeder extends Seeder
                     'Софтбокс Lantern 90',
                     'Софтбокс Octadome 120',
                 ],
+                'image' => '106.png'
 
             ],
             GoodEnum::APUTURE_600X->name => [
@@ -688,6 +743,7 @@ class GoodSeeder extends Seeder
                     'С-Stand',
                     'Софтбокс dome 150',
                 ],
+                'image' => '105.png'
 
             ],
             GoodEnum::APUTURE_NOVA_P300_KIT->name => [
@@ -700,6 +756,7 @@ class GoodSeeder extends Seeder
                     'С-Stand',
                     'Cофтбокс P300',
                 ],
+                'image' => '110.png'
 
             ],
             GoodEnum::APUTURE_MC_RGBW_2->name => [
@@ -713,6 +770,7 @@ Bi-color: 3200K-6500K
 Вес: 130 г
 Толщина: 17 мм',
                 'additionals' => [],
+                'image' => '112.png'
             ],
             GoodEnum::AMARAN_150C->name => [
                 'name' => GoodEnum::AMARAN_150C->value,
@@ -726,7 +784,7 @@ Bi-color: 3200K-6500K
                     'Софтбокс Octadome 120',
                     'Стойка',
                 ],
-
+                'image' => '41.png'
             ],
             GoodEnum::GODOX_SL200III->name => [
                 'name' => GoodEnum::GODOX_SL200III->value,
@@ -737,6 +795,7 @@ Bi-color: 3200K-6500K
                     'Стойка',
                     'Софтбокс godox 60x60',
                 ],
+                'image' => '74.png'
 
             ],
             GoodEnum::GODOX_SL100BI->name => [
@@ -749,7 +808,7 @@ Bi-color: 3200K-6500K
                     'Стойка',
                     'Софтбокс godox 60x60',
                 ],
-
+                'image' => '73.png'
             ],
             GoodEnum::GODOX_AD300PRO->name => [
                 'name' => GoodEnum::GODOX_AD300PRO->value,
@@ -761,6 +820,7 @@ Bi-color: 3200K-6500K
                     'Стойка',
                     'Софтбокс godox 60x60',
                 ],
+                'image' => '75.png'
 
             ],
             GoodEnum::NANLITE_FORZA_60C->name => [
@@ -775,6 +835,7 @@ CCT: 1800К-20000К
                     'Стойка godox',
                     '2 аккумулятора NPF 970 для беспроводной зарядки',
                 ],
+                'image' => '102.png'
 
             ],
             GoodEnum::APUTURE_100X->name => [
@@ -787,6 +848,7 @@ CCT: 1800К-20000К
                     'Стойка',
                     'Софтбокс godox 60x60',
                 ],
+                'image' => '104.png'
 
             ],
             GoodEnum::GODOX_TL60->name => [
@@ -800,7 +862,7 @@ CCT: 1800К-20000К
                 'additionals' => [
                     'Стойка',
                 ],
-
+                'image' => '68.png'
             ],
             GoodEnum::GODOX_V1_FLASH->name => [
                 'name' => GoodEnum::GODOX_V1_FLASH->value,
@@ -812,7 +874,7 @@ CCT: 1800К-20000К
                     'Синхронизатор Godox X PRO',
                     'Монопод',
                 ],
-
+                'image' => '67.png'
             ],
             GoodEnum::GODOX_V860_FLASH->name => [
                 'name' => GoodEnum::GODOX_V860_FLASH->value,
@@ -824,7 +886,7 @@ CCT: 1800К-20000К
                     'Синхронизатор Godox X PRO',
                     'Монопод',
                 ],
-
+                'image' => '61.png'
             ],
             GoodEnum::NANLITE_DJEDAIKA_30CM->name => [
                 'name' => GoodEnum::NANLITE_DJEDAIKA_30CM->value,
@@ -837,7 +899,7 @@ CCT: 1800К-20000К
 Время работы: 100% мощности :~65 минут;
 Длина 0.3 м"',
                 'additionals' => [],
-
+                'image' => '43.png'
             ],
             GoodEnum::APUTURE_AMARAN_P60C->name => [
                 'name' => GoodEnum::APUTURE_AMARAN_P60C->value,
@@ -851,7 +913,7 @@ CCT: 1800К-20000К
                     'Стойка godox',
                     '2 аккумулятора NPF 970 для беспроводной зарядки',
                 ],
-
+                'image' => '39.png'
             ],
         ];
     }
@@ -868,6 +930,7 @@ CCT: 1800К-20000К
 Встроенное хранилище до 14 часов
 Время работы батареи 15 часов',
                 'additionals' => [],
+                'image' => '88.png'
             ],
             GoodEnum::DJI_MIC_2_DUO->name => [
                 'name' => GoodEnum::DJI_MIC_2_DUO->value,
@@ -880,6 +943,7 @@ CCT: 1800К-20000К
 Встроенное хранилище до 14 часов
 Время работы батареи 15 часов',
                 'additionals' => [],
+                'image' => '89.png'
 
             ],
             GoodEnum::HOLLYLAND_LARK_MAX->name => [
@@ -892,7 +956,7 @@ CCT: 1800К-20000К
 Встроенное хранилище до 14 часов
 Время работы батареи 8 часов',
                 'additionals' => [],
-
+                'image' => '90.png'
             ],
             GoodEnum::RODE_GO_2->name => [
                 'name' => GoodEnum::RODE_GO_2->value,
@@ -903,6 +967,7 @@ CCT: 1800К-20000К
 Встроенное хранилище до 24 часов
 Время работы батареи 7 часов',
                 'additionals' => ['Переходник на телефон'],
+                'image' => '87.png'
             ],
             GoodEnum::BOYA_WM4_PRO_K2->name => [
                 'name' => GoodEnum::BOYA_WM4_PRO_K2->value,
@@ -914,7 +979,7 @@ CCT: 1800К-20000К
 Рабочий диапазон 60 м (без препятствий)
 Питание от двух батареек типа ААА (в комплект не входит)',
                 'additionals' => [],
-
+                'image' => '60.png'
             ],
             GoodEnum::SARAMONIC_UWMIC9_TX_TX_RX->name => [
                 'name' => GoodEnum::SARAMONIC_UWMIC9_TX_TX_RX->value,
@@ -927,7 +992,7 @@ CCT: 1800К-20000К
 Питание: Две батарейки типа AA (в комплект не входит)
 Время работы 1-2 часа',
                 'additionals' => [],
-
+                'image' => '59.png'
             ],
             GoodEnum::MICROPHONE_RODE_VIDEOMIC_PRO->name => [
                 'name' => GoodEnum::MICROPHONE_RODE_VIDEOMIC_PRO->value,
@@ -937,7 +1002,7 @@ CCT: 1800К-20000К
 Сверхлегкий (85 г), сверхкомпактный (15 см длиной)
 Питание от 9В батарейки (свыше 70 часов)',
                 'additionals' => [],
-
+                'image' => '56.png'
             ],
             GoodEnum::WALKIE_TALKIE_LUITON_316->name => [
                 'name' => GoodEnum::WALKIE_TALKIE_LUITON_316->value,
@@ -947,6 +1012,7 @@ CCT: 1800К-20000К
 Литиевая батарея емкостью 1500 мАч обеспечивает напряженную работу радиостанции в течение 8 часов.
 Динамики повышенной мощности (1000 мВт) обеспечивают громкий и разборчивый звук.',
                 'additionals' => [],
+                'image' => null
 
             ],
             GoodEnum::AUDIO_RECORDER_ZOOM_H6->name => [
@@ -961,7 +1027,7 @@ CCT: 1800К-20000К
 Работа от стандартных алкалиновых батареек типа AA или аккумуляторов NiMH.
 Более 20 часов работы от четырех алкалиновых батареек.',
                 'additionals' => [],
-
+                'image' => '91.png'
             ],
         ];
     }
@@ -981,6 +1047,7 @@ CCT: 1800К-20000К
                     'Ручка' => 1000,
                     'Follow focus' => 1000,
                 ],
+                'image' => '116.png'
             ],
             GoodEnum::RONIN_SC->name => [
                 'name' => GoodEnum::RONIN_SC->value,
@@ -988,7 +1055,7 @@ CCT: 1800К-20000К
                 'damage_cost' => 200000,
                 'description' => '',
                 'additionals' => [],
-
+                'image' => '38.png'
             ],
             GoodEnum::OSMO_4->name => [
                 'name' => GoodEnum::OSMO_4->value,
@@ -996,7 +1063,7 @@ CCT: 1800К-20000К
                 'damage_cost' => 100000,
                 'description' => '',
                 'additionals' => [],
-
+                'image' => '117.png'
             ],
         ];
     }
@@ -1010,6 +1077,7 @@ CCT: 1800К-20000К
                 'damage_cost' => 50000,
                 'description' => '',
                 'additionals' => [],
+                'image' => '98.png'
             ],
             GoodEnum::SONY_NP_FW50->name => [
                 'name' => GoodEnum::SONY_NP_FW50->value,
@@ -1017,6 +1085,7 @@ CCT: 1800К-20000К
                 'damage_cost' => 35000,
                 'description' => '',
                 'additionals' => [],
+                'image' => null
             ],
             GoodEnum::FUJIFILM_NP_W126->name => [
                 'name' => GoodEnum::FUJIFILM_NP_W126->value,
@@ -1024,6 +1093,7 @@ CCT: 1800К-20000К
                 'damage_cost' => 40000,
                 'description' => '',
                 'additionals' => [],
+                'image' => null
             ],
             GoodEnum::FUJIFILM_NP_W235->name => [
                 'name' => GoodEnum::FUJIFILM_NP_W235->value,
@@ -1031,6 +1101,7 @@ CCT: 1800К-20000К
                 'damage_cost' => 40000,
                 'description' => '',
                 'additionals' => [],
+                'image' => null
             ],
             GoodEnum::CANON_LP_E6NH->name => [
                 'name' => GoodEnum::CANON_LP_E6NH->value,
@@ -1038,6 +1109,7 @@ CCT: 1800К-20000К
                 'damage_cost' => 50000,
                 'description' => '',
                 'additionals' => [],
+                'image' => null
             ],
             GoodEnum::FUJIFILM_NP_W235_DUMMY_BATTERY->name => [
                 'name' => GoodEnum::FUJIFILM_NP_W235_DUMMY_BATTERY->value,
@@ -1045,6 +1117,7 @@ CCT: 1800К-20000К
                 'damage_cost' => 30000,
                 'description' => '',
                 'additionals' => [],
+                'image' => '101.png'
             ],
             GoodEnum::SONY_NP_FZ100_DUMMY_BATTERY->name => [
                 'name' => GoodEnum::SONY_NP_FZ100_DUMMY_BATTERY->value,
@@ -1052,6 +1125,7 @@ CCT: 1800К-20000К
                 'damage_cost' => 30000,
                 'description' => '',
                 'additionals' => [],
+                'image' => '100.png'
             ],
             GoodEnum::BOYA_IPHONE_ADAPTER_CABLE->name => [
                 'name' => GoodEnum::BOYA_IPHONE_ADAPTER_CABLE->value,
@@ -1059,6 +1133,7 @@ CCT: 1800К-20000К
                 'damage_cost' => 15000,
                 'description' => '',
                 'additionals' => [],
+                'image' => null
             ],
             GoodEnum::NP_FZ100_SONY_CHARGER->name => [
                 'name' => GoodEnum::NP_FZ100_SONY_CHARGER->value,
@@ -1066,6 +1141,7 @@ CCT: 1800К-20000К
                 'damage_cost' => 15000,
                 'description' => '',
                 'additionals' => [],
+                'image' => null
             ],
             GoodEnum::NP_FW50_SONY_CHARGER->name => [
                 'name' => GoodEnum::NP_FW50_SONY_CHARGER->value,
@@ -1073,6 +1149,7 @@ CCT: 1800К-20000К
                 'damage_cost' => 15000,
                 'description' => '',
                 'additionals' => [],
+                'image' => null
             ],
             GoodEnum::GOPRO_BATTERIES->name => [
                 'name' => GoodEnum::GOPRO_BATTERIES->value,
@@ -1080,6 +1157,7 @@ CCT: 1800К-20000К
                 'damage_cost' => 40000,
                 'description' => '',
                 'additionals' => [],
+                'image' => null
             ],
             GoodEnum::NPF_970_SET_OF_12->name => [
                 'name' => GoodEnum::NPF_970_SET_OF_12->value,
@@ -1087,6 +1165,7 @@ CCT: 1800К-20000К
                 'damage_cost' => 60000,
                 'description' => '',
                 'additionals' => [],
+                'image' => '97.png'
             ],
             GoodEnum::NPF_750_SET_OF_1->name => [
                 'name' => GoodEnum::NPF_750_SET_OF_1->value,
@@ -1094,6 +1173,7 @@ CCT: 1800К-20000К
                 'damage_cost' => 40000,
                 'description' => '',
                 'additionals' => [],
+                'image' => null
             ],
             GoodEnum::SMALL_RIG_V_MOUNT_99WH->name => [
                 'name' => GoodEnum::SMALL_RIG_V_MOUNT_99WH->value,
@@ -1101,6 +1181,7 @@ CCT: 1800К-20000К
                 'damage_cost' => 100000,
                 'description' => '',
                 'additionals' => [],
+                'image' => '99.png'
             ],
             GoodEnum::AIR_2_BATTERIES->name => [
                 'name' => GoodEnum::AIR_2_BATTERIES->value,
@@ -1108,6 +1189,7 @@ CCT: 1800К-20000К
                 'damage_cost' => 80000,
                 'description' => '',
                 'additionals' => [],
+                'image' => null
             ],
         ];
     }
@@ -1123,6 +1205,7 @@ CCT: 1800К-20000К
                 'additionals' => [
                     'Доп. аккумулятор',
                 ],
+                'image' => '3.png'
             ],
         ];
     }
@@ -1136,6 +1219,7 @@ CCT: 1800К-20000К
                 'damage_cost' => 20000,
                 'description' => '',
                 'additionals' => [],
+                'image' => '50.png'
             ],
             GoodEnum::SANDISK_128GB_170MB_S->name => [
                 'name' => GoodEnum::SANDISK_128GB_170MB_S->value,
@@ -1143,7 +1227,7 @@ CCT: 1800К-20000К
                 'damage_cost' => 30000,
                 'description' => '',
                 'additionals' => [],
-
+                'image' => '49.png'
             ],
             GoodEnum::MICRO_SANDISK_64_GB->name => [
                 'name' => GoodEnum::MICRO_SANDISK_64_GB->value,
@@ -1151,6 +1235,7 @@ CCT: 1800К-20000К
                 'damage_cost' => 18000,
                 'description' => '',
                 'additionals' => [],
+                'image' => null
 
             ],
             GoodEnum::SONY_256GB_UHS_2->name => [
@@ -1159,6 +1244,7 @@ CCT: 1800К-20000К
                 'damage_cost' => 100000,
                 'description' => '',
                 'additionals' => [],
+                'image' => '48.png'
             ],
             GoodEnum::TOUGH_80GB_G_800_MBS->name => [
                 'name' => GoodEnum::TOUGH_80GB_G_800_MBS->value,
@@ -1166,6 +1252,7 @@ CCT: 1800К-20000К
                 'damage_cost' => 130000,
                 'description' => '',
                 'additionals' => [],
+                'image' => '47.png'
             ],
             GoodEnum::SAMSUNG_EVO_PLUS_64GB->name => [
                 'name' => GoodEnum::SAMSUNG_EVO_PLUS_64GB->value,
@@ -1173,6 +1260,7 @@ CCT: 1800К-20000К
                 'damage_cost' => 15000,
                 'description' => '',
                 'additionals' => [],
+                'image' => '51.png'
             ],
             GoodEnum::SAMSUNG_EVO_PLUS_256GB->name => [
                 'name' => GoodEnum::SAMSUNG_EVO_PLUS_256GB->value,
@@ -1180,6 +1268,7 @@ CCT: 1800К-20000К
                 'damage_cost' => 25000,
                 'description' => '',
                 'additionals' => [],
+                'image' => null
             ],
             GoodEnum::MICRO_64GB_ADATA->name => [
                 'name' => GoodEnum::MICRO_64GB_ADATA->value,
@@ -1187,6 +1276,7 @@ CCT: 1800К-20000К
                 'damage_cost' => 15000,
                 'description' => '',
                 'additionals' => [],
+                'image' => null
             ],
             GoodEnum::SAMSUNG_T7_1TB->name => [
                 'name' => GoodEnum::SAMSUNG_T7_1TB->value,
@@ -1194,6 +1284,7 @@ CCT: 1800К-20000К
                 'damage_cost' => 80000,
                 'description' => '',
                 'additionals' => [],
+                'image' => '94.png'
             ],
         ];
     }
@@ -1207,6 +1298,7 @@ CCT: 1800К-20000К
                 'damage_cost' => 35000,
                 'description' => '',
                 'additionals' => [],
+                'image' => null
             ],
             GoodEnum::UURIG_FOR_FUJIFILM_T4->name => [
                 'name' => GoodEnum::UURIG_FOR_FUJIFILM_T4->value,
@@ -1214,6 +1306,7 @@ CCT: 1800К-20000К
                 'damage_cost' => 25000,
                 'description' => '',
                 'additionals' => [],
+                'image' => '113.png'
             ],
             GoodEnum::SMALLRIG_FOR_A7C->name => [
                 'name' => GoodEnum::SMALLRIG_FOR_A7C->value,
@@ -1221,6 +1314,7 @@ CCT: 1800К-20000К
                 'damage_cost' => 25000,
                 'description' => '',
                 'additionals' => [],
+                'image' => '113.png'
             ],
             GoodEnum::SMALLRIG_HAND_AND_HANDLE_A6600->name => [
                 'name' => GoodEnum::SMALLRIG_HAND_AND_HANDLE_A6600->value,
@@ -1228,6 +1322,7 @@ CCT: 1800К-20000К
                 'damage_cost' => 25000,
                 'description' => '',
                 'additionals' => [],
+                'image' => null
             ],
             GoodEnum::TILTA_ADVANCED_FX6->name => [
                 'name' => GoodEnum::TILTA_ADVANCED_FX6->value,
@@ -1235,6 +1330,7 @@ CCT: 1800К-20000К
                 'damage_cost' => 30000,
                 'description' => '',
                 'additionals' => [],
+                'image' => null
             ],
             GoodEnum::TILTA_ADVANCED_KIT_FX3->name => [
                 'name' => GoodEnum::TILTA_ADVANCED_KIT_FX3->value,
@@ -1242,6 +1338,7 @@ CCT: 1800К-20000К
                 'damage_cost' => 180000,
                 'description' => '',
                 'additionals' => [],
+                'image' => null
             ],
         ];
     }
@@ -1257,6 +1354,7 @@ CCT: 1800К-20000К
                 'additionals' => [
                     'Аккумулятор NPF 970',
                 ],
+                'image' => '57.png'
             ],
             GoodEnum::LILIPUT_4K->name => [
                 'name' => GoodEnum::LILIPUT_4K->value,
@@ -1266,6 +1364,7 @@ CCT: 1800К-20000К
                 'additionals' => [
                     'Аккумулятор NPF 970',
                 ],
+                'image' => '58.png'
             ],
             GoodEnum::FEELWORLD_4K_ULTRA->name => [
                 'name' => GoodEnum::FEELWORLD_4K_ULTRA->value,
@@ -1275,6 +1374,7 @@ CCT: 1800К-20000К
                 'additionals' => [
                     'Аккумулятор NPF 970',
                 ],
+                'image' => null
             ],
         ];
     }
@@ -1290,6 +1390,7 @@ CCT: 1800К-20000К
 Входы SDI и HDMI
 Несколько режимов мониторинга',
                 'additionals' => [],
+                'image' => '93.png'
             ],
             GoodEnum::TELEPROMPTER_FEELWORLD_TP10->name => [
                 'name' => GoodEnum::TELEPROMPTER_FEELWORLD_TP10->value,
@@ -1297,6 +1398,7 @@ CCT: 1800К-20000К
                 'damage_cost' => 60000,
                 'description' => 'FEELWORLD TP10 - это складной портативный телесуфлер, оснащенный 10-дюймовым стандартным светоделителем, который позволяет четко читать прокручиваемый текст, глядя прямо в камеру, что идеально подходит для видеоблога и прямой трансляции , онлайн-уроки, видеозапись, интервью, видеостудия, новости и презентации.',
                 'additionals' => [],
+                'image' => '92.png'
             ],
             GoodEnum::REFLECTOR->name => [
                 'name' => GoodEnum::REFLECTOR->value,
@@ -1304,6 +1406,7 @@ CCT: 1800К-20000К
                 'damage_cost' => 30000,
                 'description' => 'Отражатель Selens 60х90 см 5 в 1 состоит из пяти отражающих поверхностей: белой, серебряной, золотой, черной, полупрозрачной. Оснащен тремя удобными ручками, что упрощает работу с отражателем.',
                 'additionals' => [],
+                'image' => '45.png'
             ],
             GoodEnum::CHROMAKEY_200X150->name => [
                 'name' => GoodEnum::CHROMAKEY_200X150->value,
@@ -1311,6 +1414,7 @@ CCT: 1800К-20000К
                 'damage_cost' => 30000,
                 'description' => '',
                 'additionals' => [],
+                'image' => '46.png'
             ],
             GoodEnum::SYNCHRONIZER_GODOX_X_PRO->name => [
                 'name' => GoodEnum::SYNCHRONIZER_GODOX_X_PRO->value,
@@ -1318,6 +1422,7 @@ CCT: 1800К-20000К
                 'damage_cost' => 35000,
                 'description' => 'синхронизатор Godox Xpro-C TTL с функцией Дистанционного управления вспышками',
                 'additionals' => [],
+                'image' => '55.png'
             ],
             GoodEnum::MONOPOD->name => [
                 'name' => GoodEnum::MONOPOD->value,
@@ -1325,6 +1430,7 @@ CCT: 1800К-20000К
                 'damage_cost' => 15000,
                 'description' => '',
                 'additionals' => [],
+                'image' => null
             ],
             GoodEnum::COMPENDIUM_SMALLRIG->name => [
                 'name' => GoodEnum::COMPENDIUM_SMALLRIG->value,
@@ -1332,6 +1438,7 @@ CCT: 1800К-20000К
                 'damage_cost' => 40000,
                 'description' => '',
                 'additionals' => [],
+                'image' => null
             ],
             GoodEnum::SMOKE_MACHINE_900W->name => [
                 'name' => GoodEnum::SMOKE_MACHINE_900W->value,
@@ -1339,6 +1446,7 @@ CCT: 1800К-20000К
                 'damage_cost' => 40000,
                 'description' => '',
                 'additionals' => [],
+                'image' => '95.png'
             ],
         ];
     }
@@ -1352,6 +1460,7 @@ CCT: 1800К-20000К
                 'damage_cost' => 70000,
                 'description' => '',
                 'additionals' => [],
+                'image' => '109.png'
             ],
             GoodEnum::SOFTBOX_OCTADOME_120->name => [
                 'name' => GoodEnum::SOFTBOX_OCTADOME_120->value,
@@ -1359,6 +1468,7 @@ CCT: 1800К-20000К
                 'damage_cost' => 70000,
                 'description' => '',
                 'additionals' => [],
+                'image' => '108.png'
             ],
             GoodEnum::SOFTBOX_LIGHT_DOME_150->name => [
                 'name' => GoodEnum::SOFTBOX_LIGHT_DOME_150->value,
@@ -1366,6 +1476,7 @@ CCT: 1800К-20000К
                 'damage_cost' => 75000,
                 'description' => '',
                 'additionals' => [],
+                'image' => '107.png'
             ],
             GoodEnum::SOFTBOX_GODOX_60_60->name => [
                 'name' => GoodEnum::SOFTBOX_GODOX_60_60->value,
@@ -1373,6 +1484,7 @@ CCT: 1800К-20000К
                 'damage_cost' => 150000,
                 'description' => '',
                 'additionals' => [],
+                'image' => null
             ],
             GoodEnum::FLASH_SOFTBOX->name => [
                 'name' => GoodEnum::FLASH_SOFTBOX->value,
@@ -1380,6 +1492,7 @@ CCT: 1800К-20000К
                 'damage_cost' => 15000,
                 'description' => '',
                 'additionals' => [],
+                'image' => null
             ],
         ];
     }
@@ -1393,6 +1506,7 @@ CCT: 1800К-20000К
                 'damage_cost' => 100000,
                 'description' => '',
                 'additionals' => [],
+                'image' => '123.png'
             ],
             GoodEnum::ND_77MM->name => [
                 'name' => GoodEnum::ND_77MM->value,
@@ -1400,6 +1514,7 @@ CCT: 1800К-20000К
                 'damage_cost' => 32000,
                 'description' => '',
                 'additionals' => [],
+                'image' => '121.png'
             ],
             GoodEnum::ND_58MM->name => [
                 'name' => GoodEnum::ND_58MM->value,
@@ -1407,6 +1522,7 @@ CCT: 1800К-20000К
                 'damage_cost' => 32000,
                 'description' => '',
                 'additionals' => [],
+                'image' => '122.png'
             ],
             GoodEnum::ND_72MM->name => [
                 'name' => GoodEnum::ND_72MM->value,
@@ -1414,6 +1530,7 @@ CCT: 1800К-20000К
                 'damage_cost' => 32000,
                 'description' => '',
                 'additionals' => [],
+                'image' => '120.png'
             ],
             GoodEnum::TIFFEN_MIST_FILTER_67MM->name => [
                 'name' => GoodEnum::TIFFEN_MIST_FILTER_67MM->value,
@@ -1421,6 +1538,7 @@ CCT: 1800К-20000К
                 'damage_cost' => 50000,
                 'description' => '',
                 'additionals' => [],
+                'image' => null,
             ],
             GoodEnum::POLARIZED_77MM->name => [
                 'name' => GoodEnum::POLARIZED_77MM->value,
@@ -1428,6 +1546,7 @@ CCT: 1800К-20000К
                 'damage_cost' => 32000,
                 'description' => '',
                 'additionals' => [],
+                'image' => null,
             ],
         ];
     }
@@ -1442,7 +1561,7 @@ CCT: 1800К-20000К
                 'description' => 'Максимальная высота 213 см
 Нагрузка 2кг',
                 'additionals' => [],
-
+                'image' => '62.png'
             ],
             GoodEnum::LIGHT_STAND_GODOX_380->name => [
                 'name' => GoodEnum::LIGHT_STAND_GODOX_380->value,
@@ -1451,7 +1570,7 @@ CCT: 1800К-20000К
                 'description' => 'Максимальная высота 380 см
 Нагрузка 5кг',
                 'additionals' => [],
-
+                'image' => null,
             ],
             GoodEnum::LIGHT_STAND_GODOX_SL->name => [
                 'name' => GoodEnum::LIGHT_STAND_GODOX_SL->value,
@@ -1460,7 +1579,7 @@ CCT: 1800К-20000К
                 'description' => 'Максимальная высота 200 см
 Нагрузка 2.5кг',
                 'additionals' => [],
-
+                'image' => null,
             ],
             GoodEnum::NO_NAME_LIGHT_STANDS->name => [
                 'name' => GoodEnum::NO_NAME_LIGHT_STANDS->value,
@@ -1469,7 +1588,7 @@ CCT: 1800К-20000К
                 'description' => 'Максимальная высота 300 см
 Нагрузка 2.5кг',
                 'additionals' => [],
-
+                'image' => null,
             ],
             GoodEnum::LARGE_NO_NAME_LIGHT_STAND->name => [
                 'name' => GoodEnum::LARGE_NO_NAME_LIGHT_STAND->value,
@@ -1478,7 +1597,7 @@ CCT: 1800К-20000К
                 'description' => 'Максимальная высота 380см
 Нагрузка 4кг',
                 'additionals' => [],
-
+                'image' => null,
             ],
             GoodEnum::C_STAND_K2_MEKING->name => [
                 'name' => GoodEnum::C_STAND_K2_MEKING->value,
@@ -1497,7 +1616,7 @@ CCT: 1800К-20000К
 Длина руки: 1200мм/47
 Высота в Г-образном положении: 2200мм/87',
                 'additionals' => [],
-
+                'image' => '66.png'
             ],
             GoodEnum::TRIPOD_COMAN->name => [
                 'name' => GoodEnum::TRIPOD_COMAN->value,
@@ -1508,7 +1627,7 @@ CCT: 1800К-20000К
 Максимальная выоста - 180 см
 Максимальная нагрузка 10 кг',
                 'additionals' => [],
-
+                'image' => '64.png'
             ],
             GoodEnum::ALUMINUM_TRIPOD->name => [
                 'name' => GoodEnum::ALUMINUM_TRIPOD->value,
@@ -1518,7 +1637,7 @@ CCT: 1800К-20000К
 Максимальная высота штатива 165см
 Нагрузка 5кг',
                 'additionals' => [],
-
+                'image' => '65.png'
             ],
             GoodEnum::WEIFENG_TRIPOD->name => [
                 'name' => GoodEnum::WEIFENG_TRIPOD->value,
@@ -1528,7 +1647,7 @@ CCT: 1800К-20000К
 Максимальная нагрузка, кг 5
 Чехол в комплекте',
                 'additionals' => [],
-
+                'image' => null,
             ],
             GoodEnum::CONTINENTAL_TRIPOD_DAMAGED->name => [
                 'name' => GoodEnum::CONTINENTAL_TRIPOD_DAMAGED->value,
@@ -1537,7 +1656,7 @@ CCT: 1800К-20000К
                 'description' => 'Максимальная высота съемки, см  165
 Максимальная нагрузка, кг  4.5',
                 'additionals' => [],
-
+                'image' => '63.png'
             ],
         ];
     }
@@ -1559,6 +1678,7 @@ CCT: 1800К-20000К
                     'Доп Swit 220 WH V mount',
                     'Доп CF express Tough 160 gb',
                 ],
+                'image' => '6.png'
 
             ],
             GoodEnum::BLACKMAGIC_6K_PRO_FULL_SET->name => [
@@ -1577,6 +1697,7 @@ Small Rig Vmount 99wh + родной аккумулятор
                     'Доп Терабайт памяти samsung T7',
                     'Доп V mount 99wh аккумулятор',
                 ],
+                'image' => '119.png'
 
             ],
             GoodEnum::APUTURE_300X_LED_LIGHTS_SET->name => [
@@ -1587,6 +1708,7 @@ Small Rig Vmount 99wh + родной аккумулятор
 2 софтбокса Lantern 90
 2 Стойки Godox 380F',
                 'additionals' => [],
+                'image' => '72.png'
             ],
             GoodEnum::GODOX_SL200IIID_LED_LIGHTS_SET->name => [
                 'name' => GoodEnum::GODOX_SL200IIID_LED_LIGHTS_SET->value,
@@ -1596,7 +1718,7 @@ Small Rig Vmount 99wh + родной аккумулятор
 
 в комплекте два софтбокса, 2 стойки и два источника света с переносной сумкой.',
                 'additionals' => [],
-
+                'image' => '71.png'
             ],
             GoodEnum::GODOX_SL100BI_LED_LIGHTS_SET->name => [
                 'name' => GoodEnum::GODOX_SL100BI_LED_LIGHTS_SET->value,
@@ -1606,7 +1728,7 @@ Small Rig Vmount 99wh + родной аккумулятор
 
 в комплекте два софтбокса, 2 стойки и два источника света с переносной сумкой.',
                 'additionals' => [],
-
+                'image' => '70.png'
             ],
             GoodEnum::NANLITE_FORZA_60C_LED_LIGHTS_SET->name => [
                 'name' => GoodEnum::NANLITE_FORZA_60C_LED_LIGHTS_SET->value,
@@ -1616,6 +1738,7 @@ Small Rig Vmount 99wh + родной аккумулятор
 
 В комплекте 3 источника света Forza 60c, 3 софтбокса и 3 стойки',
                 'additionals' => [],
+                'image' => '103.png'
 
             ],
             GoodEnum::APUTURE_AMARAN_P60C_LED_LIGHTS_SET->name => [
@@ -1626,7 +1749,7 @@ Small Rig Vmount 99wh + родной аккумулятор
 
 В комплекте 3 панели, 3 софтбокса и 3 стойки',
                 'additionals' => [],
-
+                'image' => '40.png'
             ],
             GoodEnum::GODOX_TL60_JEDI_LIGHTS_SET->name => [
                 'name' => GoodEnum::GODOX_TL60_JEDI_LIGHTS_SET->value,
@@ -1634,7 +1757,7 @@ Small Rig Vmount 99wh + родной аккумулятор
                 'damage_cost' => 200000,
                 'description' => 'Комплект из двукх Джедаек Godox TL60',
                 'additionals' => [],
-
+                'image' => '82.png'
             ],
             GoodEnum::NANLITE_30CM_JEDI_LIGHTS_SET->name => [
                 'name' => GoodEnum::NANLITE_30CM_JEDI_LIGHTS_SET->value,
@@ -1642,7 +1765,7 @@ Small Rig Vmount 99wh + родной аккумулятор
                 'damage_cost' => 100000,
                 'description' => 'Комплект из двух маленьких Nanlite джедаек',
                 'additionals' => [],
-
+                'image' => '44.png'
             ],
         ];
     }

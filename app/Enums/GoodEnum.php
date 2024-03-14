@@ -23,7 +23,7 @@ enum GoodEnum: string
     case OBJECTIVE_SONY_16_50MM_F3_5_5_6_OSS = 'Объектив Sony 16-50mm f3.5-5.6 oss';
     case OBJECTIVE_SONY_28_70MM_F3_5_5_6_OSS = 'Объектив Sony 28-70mm f3.5-5.6 oss';
     case OBJECTIVE_SONY_28_60MM_F4_5_6_OSS = 'Объектив Sony 28-60mm f4-5.6 oss';
-    case OBJECTIVE_SONY_ZEISS_28_70MM_F4_OSS = 'Объектив Sony Zeiss 28-70mm f4 oss';
+    case OBJECTIVE_SONY_ZEISS_24_70MM_F4_OSS = 'Объектив Sony Zeiss 24-70mm f4 oss';
     case OBJECTIVE_SONY_85MM_GM_F1_4 = 'Объектив Sony 85mm GM F1.4';
     case OBJECTIVE_SONY_35MM_GM_F1_4 = 'Объектив Sony 35mm GM F1.4';
     case OBJECTIVE_SONY_70_200_MM_GM_II_F2_8 = 'Объектив Sony 70-200 mm GM II F2.8';

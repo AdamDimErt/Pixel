@@ -46,7 +46,7 @@ class ItemSeeder extends Seeder
             GoodEnum::OBJECTIVE_SONY_16_50MM_F3_5_5_6_OSS->value => 1,
             GoodEnum::OBJECTIVE_SONY_28_70MM_F3_5_5_6_OSS->value => 2,
             GoodEnum::OBJECTIVE_SONY_28_60MM_F4_5_6_OSS->value => 1,
-            GoodEnum::OBJECTIVE_SONY_ZEISS_28_70MM_F4_OSS->value => 1,
+            GoodEnum::OBJECTIVE_SONY_ZEISS_24_70MM_F4_OSS->value => 1,
             GoodEnum::OBJECTIVE_SONY_85MM_GM_F1_4->value => 1,
             GoodEnum::OBJECTIVE_SONY_35MM_GM_F1_4->value => 1,
             GoodEnum::OBJECTIVE_SONY_70_200_MM_GM_II_F2_8->value => 1,

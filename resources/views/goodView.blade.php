@@ -9,9 +9,13 @@
             <div class="detailed-info-wrapper">
                 <h4 class="center no-margin">{{$good->name}}</h4>
                 <span class="flow-text">Описание:</span>
-                @foreach(explode('-', $good->description) as $desc)
-                    <li>{{$desc}}</li>
-                @endforeach
+                @if(count(explode('-', $good->description)) > 0)
+                    @foreach(explode('-', $good->description) as $desc)
+                        <li>{{$desc}}</li>
+                    @endforeach
+                @else
+                    <p>{{$good->desc}}</p>
+                @endif
                 <span class="item-cost-view">
                                     <span class="chip">
                                         <b>{{$good->cost}}</b>

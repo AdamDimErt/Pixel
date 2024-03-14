@@ -499,3 +499,7 @@ input[type="checkbox"]:checked + span:not(.lever)::before {
     background: transparent;
 }
 
+.discount-btn {
+    margin-right: 125px;
+}
+
