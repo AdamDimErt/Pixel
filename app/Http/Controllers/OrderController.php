@@ -16,7 +16,7 @@ class OrderController extends Controller
     public function preOrder(Request $request)
     {
         $cartData = json_decode($request->cookie('cart', '{}'), true);
-        $idCounts = array_count_values($cartData);
+        $idCounts = $this->countDistinctKeys($cartData);
         $goodsInCart = Good::query()->whereIn('id', $cartData)
             ->with(['attachment'])
             ->get();
@@ -50,7 +50,7 @@ class OrderController extends Controller
     public function settleOrder(Request $request)
     {
         $cartData = json_decode($request->cookie('cart', '{}'), true);
-        $idCounts = array_count_values($cartData);
+        $idCounts = $this->countDistinctKeys($cartData);
         $goodsInCart = Good::query()->whereIn('id', $cartData)
             ->with(['attachment'])
             ->get();
@@ -92,5 +92,21 @@ class OrderController extends Controller
         $cookie = Cookie::forget('cart');
 
         return response()->view('ordering.final')->withCookie($cookie);
+    }
+
+    public function countDistinctKeys($array)
+    {
+        $counts = [];
+        foreach ($array as $key => $value) {
+            $goodId = explode('pixelrental', $key)[0];
+            $counts[$goodId] = 0;
+            foreach ($array as $subArrayKey => $subArrayValue) {
+                if (explode('pixelrental', $subArrayKey)[0] === $goodId) {
+                    $counts[$goodId] += 1;
+                }
+            }
+        }
+
+        return $counts;
     }
 }

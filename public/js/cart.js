@@ -6,13 +6,22 @@ document.addEventListener('DOMContentLoaded', function () {
     addToCartButtons.forEach(button => {
         button.addEventListener('click', function () {
             const productId = this.dataset.productId;
+            const selectedAdditionals = document.querySelectorAll('.additional-checkbox:checked');
+            const additionalIds = [];
+            selectedAdditionals.forEach(additional => {
+                additionalIds.push(additional.dataset.additionalId);
+            });
+
             fetch('/add-to-cart', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                     'X-CSRF-TOKEN': csrfToken,
                 },
-                body: JSON.stringify({product_id: productId}),
+                body: JSON.stringify({
+                    product_id: productId,
+                    additional_ids: additionalIds
+                }),
             })
                 .then(response => response.json())
                 .then(data => {
@@ -40,7 +49,6 @@ document.addEventListener('DOMContentLoaded', function () {
                         }
                     }
                 })
-
                 .catch(error => {
                     M.toast({html: 'Не удалось добавить товар в корзину.'});
                 });

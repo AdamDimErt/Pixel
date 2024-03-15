@@ -1,15 +1,15 @@
 @extends('app')
 @section('content')
     @if (count($goodsInCart) > 0)
-        <h5 class="white-text">Корзина <span class="grey-text">({{$goodsInCart->count()}} позиции)</span></h5>
+        <h5 class="white-text">Корзина <span class="grey-text">({{$goodsInCart->count()}} уникальных товаров)</span></h5>
         <p class="grey-text">Общее количество: {{$totalCount}}</p>
-        <a href="#" class="btn waves-ripple clean-cart-btn waves-orange waves-effect orange darken-4 valign-wrapper">
-            <i class="material-icons">delete_forever</i>
-            Очистить корзину
-        </a>
+{{--        <a href="#" class="btn waves-ripple clean-cart-btn waves-orange waves-effect orange darken-4 valign-wrapper">--}}
+{{--            <i class="material-icons">delete_forever</i>--}}
+{{--            Очистить корзину--}}
+{{--        </a>--}}
         <div class="row">
             <div class="col s12 m3 additional-info white-text hide-on-med-and-up">
-                <span class="grey-text">Шаг 1 из 3</span>
+                <span class="grey-text"><u>Выберите промежутки аренды для товаров</u></span>
                 <p>Тут перечислены все товары, которые вы добавляли к себе в корзину.</p>
                 <p>Проверьте каждый из них на соответствие, и, в случае надобности, уберите ненужные.</p>
                 <p>Если вдруг, вы захотите добавить что-то ещё, не стесняйтесь переходить на <a
@@ -21,52 +21,60 @@
                 <hr>
             </div>
             <div class="col s12 m9 goods-list">
-                @foreach($goodsInCart as $good)
-                    <div class="row no-margin">
+                @foreach($items as $item)
+                    <div class="row no-margin good-wrapper">
+                        <a href="#" class="cancel-btn"
+                            data-product-id="{{$item->good->id . 'pixelrental' . $item->id}}">
+                            <i class="material-icons white-text ">clear</i>
+                        </a>
                         <hr>
                         <div class="col s12 m3 good-cart-image">
-                            <img src="{{$good->attachment()?->first()?->url}}" alt="" width="200px" class="">
+                            <img src="{{$item->good->attachment()?->first()?->url}}" alt="" width="200px" class="">
                         </div>
                         <div class="col s12 m9 good-cart-additional-info white-text">
-                            <p>Наменование: <b class="orange-text text-darken-4"><u>{{$good->name}}</u></b></p>
-                            <p>Цена (за сутки): <b>{{$good->cost}}</b></p>
-                            <p>Цена за поломку во время аренды: <b>{{$good->damage_cost}}</b></p>
-                            <p>Описание: <b class="truncate">{{$good->description}}</b></p>
-                            @if(count($good->availableItems()) < $good->cookie_count && !$errors->has($good->name))
-                                <p class="red-text">{{ 'На данный момент такой товар имеется в количестве: '.count($good->availableItems()) }}</p>
+                            <p>Наименование: <a href="/{{$item->good->id}}"><b class="orange-text text-darken-4"><u>{{$item->good->name}}</u></b></a></p>
+                            @if($item->good->discount_cost && $item->good->discount_cost != 0)
+                                <p>Цена (за сутки): <s>{{$item->good->cost}}</s> <b class="orange-text text-darken-4">{{$item->good->discount_cost}}</b></p>
+                            @else
+                                <p>Цена (за сутки): <b>{{$item->good->cost}}</b></p>
                             @endif
-                            @if ($errors->has($good->name))
-                                <p class="red-text">{{ $errors->first($good->name) }}</p>
+                            <p>Цена за поломку во время аренды: <b>{{$item->good->damage_cost}}</b></p>
+                            <p>Описание: <b class="truncate">{{$item->good->description}}</b></p>
+                            @if(count($item->good->getAdditionals()) > 0)
+                                <p><u>Доп. аксессуары: </u></p>
+                                @foreach($item->good->getAdditionals() as $additional)
+                                    <p>
+                                        <label>
+                                            <input type="checkbox" class="orange-text additional-checkbox"
+                                                   data-additional-id="{{$additional->id}}" @if(in_array($additional->id, $cartData[$item->good->id . 'pixelrental' .$item->id])) checked @endif/>
+                                            <span>{{$additional->name}} <span class="white-text">(+ {{$additional->cost}}тг)</span></span>
+                                        </label>
+                                    </p>
+                                @endforeach
                             @endif
                             <hr>
-                            <div class="control-sum">
-                                <h5 class="inline">Итог: <span class="good-cost-holder">{{$good->cookie_count * $good->cost}}</span> / сутки</h5>
-                                <div class="control-buttons valign-wrapper">
-                                    <button
-                                        class="substract-btn inline-button btn btn-floating waves-effect waves-orange orange white-text darken-4"
-                                        data-product-id="{{ $good->id }}"
-                                        data-product-cost="{{ $good->cost }}"
-                                    >
-                                        <i class="material-icons">exposure_neg_1</i></button>
-                                    @if(count($good->availableItems()) < $good->cookie_count && !$errors->has($good->name))
-                                        <span class="cart-view-counter red-text">{{$good->cookie_count}}</span>
+                            <div class="control-sum right">
+                                <h5 class="inline">Итог:
+                                    @if($item->good->discount_cost && $item->good->discount_cost != 0)
+                                        <span
+                                            class="good-cost-holder orange-text text-darken-4">{{$item->good->discount_cost}}
+                                        </span>
+                                        / сутки
                                     @else
-                                        <span class="cart-view-counter">{{$good->cookie_count}}</span>
+                                        <span
+                                            class="good-cost-holder">{{$item->good->cost}}
+                                        </span>
+                                        / сутки
                                     @endif
-                                    <button
-                                        class="add-btn inline-button btn btn-floating waves-effect waves-orange orange white-text darken-4"
-                                        data-product-id="{{ $good->id }}"
-                                        data-product-cost="{{ $good->cost }}"
-                                    >
-                                        <i class="material-icons">exposure_plus_1</i></button>
-                                </div>
+                                </h5>
                             </div>
                         </div>
                     </div>
                 @endforeach
+
             </div>
             <div class="col s12 m3 additional-info white-text hide-on-med-and-down">
-                <span class="grey-text">Шаг 1 из 3</span>
+                <span class="grey-text"><u>Выберите промежутки аренды для товаров</u></span>
                 <p>Тут перечислены все товары, которые вы добавляли к себе в корзину.</p>
                 <p>Проверьте каждый из них на соответствие, и, в случае надобности, уберите ненужные.</p>
                 <p>Если вдруг, вы захотите добавить что-то ещё, не стесняйтесь переходить на <a
@@ -100,6 +108,6 @@
             добавьте в корзину что-нибудь, что вам приглянётся</h5>
     @endif
     @push('scripts')
-        <script src="{{asset('js/cartAmount.js')}}"></script>
+        <script src="{{asset('js/cartActions.js')}}"></script>
     @endpush
 @endsection

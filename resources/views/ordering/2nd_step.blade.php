@@ -7,7 +7,7 @@
         <input type="hidden" value="{{$totalPrice}}" id="total_price">
         <div class="row">
             <div class="col s12 m3 additional-info white-text hide-on-med-and-up">
-                <span class="grey-text">Шаг 2 из 3</span>
+                <span class="grey-text">Шаг 2 из 2</span>
                 <p>Укажите дату и время начала аренды, и окончания аренды оборудования</p>
                 <hr>
                 <p><b>ВАЖНО!</b></p>
@@ -37,7 +37,7 @@
                     </div>
                 </div>
                 <div class="col s12 m3 pull-s2 additional-info white-text hide-on-med-and-down">
-                    <span class="grey-text">Шаг 2 из 3</span>
+                    <span class="grey-text">Шаг 2 из 2</span>
                     <p>Укажите дату и время начала аренды, и окончания аренды оборудования</p>
                     <hr>
                     <p><b>ВАЖНО!</b></p>

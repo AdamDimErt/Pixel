@@ -37,7 +37,7 @@ class AppServiceProvider extends ServiceProvider
         if (! is_null($cookie)) {
             $decryptedCookie = Crypt::decryptString($cookie);
             $parts = explode('|', $decryptedCookie);
-            $amount = count(json_decode($parts[1]));
+            $amount = count(json_decode($parts[1], true));
 
             return $amount;
         }

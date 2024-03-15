@@ -16,12 +16,24 @@
                 @else
                     <p>{{$good->desc}}</p>
                 @endif
-                <span class="item-cost-view">
-                                    <span class="chip">
-                                        <b>{{$good->cost}}</b>
-                                    </span>
-                                    тг/сутки
-                                </span>
+                @if($good->discount_cost)
+                    <span class="cost-label">
+                        <span class="chip small">
+                            <s>{{$good->cost}}</s>
+                        </span>
+                    <span class="chip red white-text large">
+                        <u><b>{{$good->discount_cost}}</b></u>
+                    </span>
+                тг/сутки
+                </span>
+                @else
+                    <span class="cost-label">
+                        <span class="chip">
+                            <b>{{$good->cost}}</b>
+                        </span>
+                    тг/сутки
+                    </span>
+                @endif
                 <p class="flow-text">Стоимость при повреждении:
                     <span class="orange-text">
                         <u>{{$good->damage_cost}}</u>
@@ -35,7 +47,7 @@
                     @foreach($good->getAdditionals() as $additional)
                         <p>
                             <label>
-                                <input type="checkbox" class="orange-text"
+                                <input type="checkbox" class="orange-text additional-checkbox"
                                 data-additional-id="{{$additional->id}}"/>
                                 <span>{{$additional->name}} <span class="white-text">(+ {{$additional->cost}}тг)</span></span>
                             </label>
