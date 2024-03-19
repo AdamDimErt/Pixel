@@ -1,4 +1,4 @@
-<div id="{{$modalClass}}" class="modal bottom-sheet">
+<div id="{{$modalClass}}" class="modal bottom-sheet custom-modal">
     <div class="modal-content container center">
         <h4>{{$title}}</h4>
         <p>{{$subTitle}}</p>

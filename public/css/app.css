@@ -180,6 +180,31 @@ header, .main {
 
 .modal {
     border-radius: 15px;
+}
+
+td[aria-selected="false"]:not(.is-disabled) {
+    color: black;
+}
+
+.select-dropdown {
+    color: white !important;
+}
+
+li.disabled{
+    background-color: grey !important;
+    color: white !important;
+}
+
+li.disabled>span{
+    color: white !important;
+}
+
+.caret {
+    border-radius: 50% !important;
+    background-color: darkorange !important;
+}
+
+.custom-modal {
     padding: 15px;
 }
 

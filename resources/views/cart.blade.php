@@ -1,12 +1,12 @@
 @extends('app')
 @section('content')
     @if (count($goodsInCart) > 0)
-        <h5 class="white-text">Корзина <span class="grey-text">({{$goodsInCart->count()}} уникальных товаров)</span></h5>
+        <h5 class="white-text">Корзина</h5>
         <p class="grey-text">Общее количество: {{$totalCount}}</p>
-{{--        <a href="#" class="btn waves-ripple clean-cart-btn waves-orange waves-effect orange darken-4 valign-wrapper">--}}
-{{--            <i class="material-icons">delete_forever</i>--}}
-{{--            Очистить корзину--}}
-{{--        </a>--}}
+        {{--        <a href="#" class="btn waves-ripple clean-cart-btn waves-orange waves-effect orange darken-4 valign-wrapper">--}}
+        {{--            <i class="material-icons">delete_forever</i>--}}
+        {{--            Очистить корзину--}}
+        {{--        </a>--}}
         <div class="row">
             <div class="col s12 m3 additional-info white-text hide-on-med-and-up">
                 <span class="grey-text"><u>Выберите промежутки аренды для товаров</u></span>
@@ -24,7 +24,7 @@
                 @foreach($items as $item)
                     <div class="row no-margin good-wrapper">
                         <a href="#" class="cancel-btn"
-                            data-product-id="{{$item->good->id . 'pixelrental' . $item->id}}">
+                           data-product-id="{{$item->good->id . 'pixelrental' . $item->id}}">
                             <i class="material-icons white-text ">clear</i>
                         </a>
                         <hr>
@@ -32,9 +32,11 @@
                             <img src="{{$item->good->attachment()?->first()?->url}}" alt="" width="200px" class="">
                         </div>
                         <div class="col s12 m9 good-cart-additional-info white-text">
-                            <p>Наименование: <a href="/{{$item->good->id}}"><b class="orange-text text-darken-4"><u>{{$item->good->name}}</u></b></a></p>
+                            <p>Наименование: <a href="/{{$item->good->id}}"><b
+                                        class="orange-text text-darken-4"><u>{{$item->good->name}}</u></b></a></p>
                             @if($item->good->discount_cost && $item->good->discount_cost != 0)
-                                <p>Цена (за сутки): <s>{{$item->good->cost}}</s> <b class="orange-text text-darken-4">{{$item->good->discount_cost}}</b></p>
+                                <p>Цена (за сутки): <s>{{$item->good->cost}}</s> <b
+                                        class="orange-text text-darken-4">{{$item->good->discount_cost}}</b></p>
                             @else
                                 <p>Цена (за сутки): <b>{{$item->good->cost}}</b></p>
                             @endif
@@ -46,23 +48,47 @@
                                     <p>
                                         <label>
                                             <input type="checkbox" class="orange-text additional-checkbox"
-                                                   data-additional-id="{{$additional->id}}" @if(in_array($additional->id, $cartData[$item->good->id . 'pixelrental' .$item->id])) checked @endif/>
+                                                   data-cart-key="{{$item->good->id . 'pixelrental' . $item->id}}"
+                                                   data-additional-id="{{$additional->id}}"
+                                                   data-additional-cost="{{$additional->cost}}"
+                                                   @if(in_array($additional->id, $cartData[$item->good->id . 'pixelrental' .$item->id])) checked @endif/>
                                             <span>{{$additional->name}} <span class="white-text">(+ {{$additional->cost}}тг)</span></span>
                                         </label>
                                     </p>
                                 @endforeach
                             @endif
+                            <div class="col s12 input-field">
+                                <input name="start_date" data-item-id="{{$item->id}}" type="text"
+                                       class="datepicker white-text begining-date">
+                                <label for="rent_start_date">Дата начала аренды: </label>
+                            </div>
+                            <div class="col s12 input-field white-text hide">
+                                <select class="white-text left rent-start-time">
+                                    <option value="" disabled selected>Выберите время:</option>
+                                </select>
+                                <label>Время начала аренды</label>
+                            </div>
+                            <div class="col s12 input-field hide">
+                                <input name="rent_end_date" type="text" class="datepicker white-text ending-date">
+                                <label for="rent_end_date">Дата конца аренды:</label>
+                            </div>
+                            <div class="col s12 input-field white-text hide">
+                                <select class="white-text left rent-end-time">
+                                    <option value="" disabled selected>Выберите время:</option>
+                                </select>
+                                <label>Время конца аренды</label>
+                            </div>
                             <hr>
                             <div class="control-sum right">
                                 <h5 class="inline">Итог:
                                     @if($item->good->discount_cost && $item->good->discount_cost != 0)
                                         <span
-                                            class="good-cost-holder orange-text text-darken-4">{{$item->good->discount_cost}}
+                                            class="good-cost-holder orange-text text-darken-4">{{$item->totalCost}}
                                         </span>
                                         / сутки
                                     @else
                                         <span
-                                            class="good-cost-holder">{{$item->good->cost}}
+                                            class="good-cost-holder">{{$item->totalCost}}
                                         </span>
                                         / сутки
                                     @endif
@@ -83,13 +109,12 @@
                 <p><b>ВАЖНО!</b></p>
                 <p>Обязательно имейте в виду, что при аренде оборудования и его поломке, следует дополнительная оплата,
                     исходя из условий договора</p>
-                <hr>
             </div>
         </div>
         @auth('clients')
             <div class="col s12 right-align">
-                <a href="{{route('preOrder')}}" class="btn orange darken-4 auth-link valign-wrapper next-step-btn">
-                    Продолжить к шагу 2 <i class="material-icons">keyboard_arrow_right</i>
+                <a href="{{route('settleOrder')}}" class="btn orange darken-4 auth-link valign-wrapper next-step-btn">
+                    Оформить заказ
                 </a>
                 @include('auth.modal', ['icon' => 'favorite_border', 'title' => "Необходима авторизация", 'content' => "Пожалуйста, войдите в аккаунт для продолжения оформления заказа"])
             </div>
@@ -97,7 +122,7 @@
         @guest('clients')
             <div class="col s12 right-align">
                 <a href="#auth-modal" class="btn orange darken-4 auth-link valign-wrapper next-step-btn modal-trigger">
-                    Продолжить к шагу 2 <i class="material-icons">keyboard_arrow_right</i>
+                    Оформить заказ
                 </a>
                 @include('auth.modal', ['icon' => 'favorite_border', 'title' => "Необходима авторизация", 'content' => "Пожалуйста, войдите в аккаунт для продолжения оформления заказа"])
             </div>
@@ -109,5 +134,8 @@
     @endif
     @push('scripts')
         <script src="{{asset('js/cartActions.js')}}"></script>
+        <script>
+
+        </script>
     @endpush
 @endsection

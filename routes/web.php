@@ -27,6 +27,9 @@ Route::prefix('/')->group(function () {
 
     Route::post('/add-to-cart', [HttpControllers\CartController::class, 'addToCart']);
     Route::post('/remove-from-cart', [HttpControllers\CartController::class, 'removeFromCart']);
+    Route::post('/cleanup-cart', [HttpControllers\CartController::class, 'cleanupCart']);
+    Route::post('/additional-add', [HttpControllers\CartController::class, 'additionalAdd']);
+    Route::post('/additional-remove', [HttpControllers\CartController::class, 'additionalRemove']);
     Route::get('/get-cart-count', [HttpControllers\CartController::class, 'getCartCount']);
     Route::get('/cart', [HttpControllers\CartController::class, 'cart'])->name('cart');
 });
@@ -40,9 +43,14 @@ Route::prefix('/auth')->group(function () {
 });
 
 Route::prefix('/order')->group(function () {
-    Route::get('pre-order', [HttpControllers\OrderController::class, 'preOrder'])->name('preOrder');
     Route::get('confirm-order', [HttpControllers\OrderController::class, 'confirmOrder'])->name('confirmOrder');
     Route::post('settle-order', [HttpControllers\OrderController::class, 'settleOrder'])->name('settleOrder');
+});
+
+Route::prefix('/item')->group(function () {
+    Route::get('/{item}/get-unavailable-dates', [HttpControllers\ItemController::class, 'getUnavailableDates'])->name('getUnavailableDates');
+    Route::post('/{item}/get-available-times', [HttpControllers\ItemController::class, 'getAvailableTimes'])->name('getAvailableTimes');
+    Route::post('/{item}/get-next-rent-times', [HttpControllers\ItemController::class, 'getAvailableRentEndTimespans'])->name('getAvailableRentEndTimespans');
 });
 
 Route::get('{good}', [HttpControllers\GoodController::class, 'view'])->name('view');

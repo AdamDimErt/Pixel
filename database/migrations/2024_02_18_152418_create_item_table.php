@@ -14,8 +14,6 @@ return new class extends Migration
         Schema::create('items', function (Blueprint $table) {
             $table->id();
 
-            $table->enum('status', ['rented', 'available', 'pre-ordered']);
-
             $table->unsignedBigInteger('good_id');
             $table->foreign('good_id')->references('id')->on('goods');
 

@@ -16,7 +16,6 @@ class ItemFactory extends Factory
     {
         return [
             'good_id' => Good::query()->inRandomOrder()->first(),
-            'status' => ['available', 'rented'][$this->faker->numberBetween(0, 1)],
         ];
     }
 }

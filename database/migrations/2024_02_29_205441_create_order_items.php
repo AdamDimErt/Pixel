@@ -28,6 +28,21 @@ return new class extends Migration
                 ->cascadeOnUpdate()
                 ->cascadeOnDelete();
 
+            $table->json('additionals')
+                ->nullable(false);
+
+            $table->enum('status', ['returned', 'in_rent', 'waiting']);
+
+            $table->date('rent_start_date')
+                ->nullable(false);
+            $table->time('rent_start_time')
+                ->nullable(false);
+
+            $table->date('rent_end_date')
+                ->nullable(false);
+            $table->time('rent_end_time')
+                ->nullable(false);
+
             $table->timestamps();
         });
     }

@@ -49,49 +49,8 @@ class OrderController extends Controller
 
     public function settleOrder(Request $request)
     {
-        $cartData = json_decode($request->cookie('cart', '{}'), true);
-        $idCounts = $this->countDistinctKeys($cartData);
-        $goodsInCart = Good::query()->whereIn('id', $cartData)
-            ->with(['attachment'])
-            ->get();
-        $totalPrice = 0;
-        $itemsToAttach = [];
-
-        foreach ($goodsInCart as $good) {
-            $goodId = $good->id;
-            $count = $idCounts[$goodId] ?? 0;
-            foreach ($good->availableItems()->take($count)->pluck('id')->toArray() as $itemId) {
-                $itemsToAttach[] = $itemId;
-            }
-        }
-
-        $rentStartDate = Carbon::createFromFormat('d/m/Y', $request->input('start_date'));
-        $rentEndDate = Carbon::createFromFormat('d/m/Y', $request->input('end_date'));
-
-        $order = Order::query()->create([
-            'client_id' => Auth::guard('clients')->id(),
-            'amount_paid' => $totalPrice,
-            'status' => 'waiting',
-            'rent_start' => $rentStartDate,
-            'rent_end' => $rentEndDate,
-        ]);
-
-        $order->items()->sync($itemsToAttach);
-
-        foreach ($itemsToAttach as $itemId) {
-            $item = Item::query()->find($itemId);
-            $item->status = 'pre-ordered';
-            $item->save();
-        }
 
         return redirect(route('confirmOrder'));
-    }
-
-    public function confirmOrder(Request $request)
-    {
-        $cookie = Cookie::forget('cart');
-
-        return response()->view('ordering.final')->withCookie($cookie);
     }
 
     public function countDistinctKeys($array)

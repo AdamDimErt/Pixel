@@ -56,23 +56,6 @@ class Good extends Model
         return $this->hasMany(Item::class);
     }
 
-    public function scopeAvailableItems()
-    {
-        return $this->items()->where('items.status', '=', 'available')->get();
-    }
-
-    public function scopeHasAvailableItems(Builder $query)
-    {
-        return $query->join('items', 'items.good_id', '=', 'goods.id')
-            ->select([
-                DB::raw('count(items.id) as items_count'),
-                'goods.*',
-            ])
-            ->where('items.status', '=', 'available')
-            ->having('items_count', '>', '0')
-            ->groupBy('goods.id');
-    }
-
     public function relatedGoods(): HasMany
     {
         return $this->hasMany(Good::class, 'id', 'related_goods');

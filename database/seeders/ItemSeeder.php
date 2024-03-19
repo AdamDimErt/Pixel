@@ -20,7 +20,6 @@ class ItemSeeder extends Seeder
             for ($i = 0; $i < $amount; $i++) {
                 Item::factory()->create([
                     'good_id' => $goodId,
-                    'status' => 'available',
                 ]);
             }
         }
