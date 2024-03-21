@@ -16,9 +16,6 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::prefix('/')->group(function () {
-    //    Route::get('/', function () {
-    //        return view('app');
-    //    });
     Route::get('/', [HttpControllers\GoodController::class, 'index']);
     Route::get('/category/{goodType}', [HttpControllers\GoodController::class, 'goodList'])
         ->whereIn('goodType', GoodType::all()->pluck('code')->toArray())

@@ -320,3 +320,31 @@ beginingDatepickers.forEach(async item => {
     }
 })
 
+document.querySelectorAll('.control-sum').forEach(item => {
+    const changeFunc = (e) => {
+        const sumHolder = document.querySelector('#total-sum-holder')
+        document.querySelectorAll('.control-sum').forEach(el => {
+            sumHolder.innerHTML = +sumHolder.innterHTML + +el.innerHTML
+        }
+    )
+    item.addEventListener('DOMSubtreeModified', changeFunc)
+    }
+})
+
+function placeOrder() {
+    const errorTextHolder = document.querySelector('.error-text')
+    errorTextHolder.innerHTML = '';
+    var flag = true;
+    document.querySelectorAll('[required]').forEach(field => {
+        if (!field.value){
+            flag = false;
+            return null;
+        }
+    })
+    if (flag){
+        document.querySelector('#order-placement-form').submit()
+    } else {
+        errorTextHolder.innerHTML = 'Не все даты и время заполнены!'
+    }
+}
+

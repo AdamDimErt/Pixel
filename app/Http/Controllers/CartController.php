@@ -147,10 +147,11 @@ class CartController extends Controller
     {
         $cost = $item->good->discount_cost ?? $item->good->cost;
         foreach ($item->good->getAdditionals() as $additional) {
-            if (in_array($additional->id, $cartData[$item->good->id . 'pixelrental' .$item->id])){
+            if (in_array($additional->id, $cartData[$item->good->id.'pixelrental'.$item->id])) {
                 $cost += $additional->cost;
             }
         }
+
         return $cost;
     }
 }

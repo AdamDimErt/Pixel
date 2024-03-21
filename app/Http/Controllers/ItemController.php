@@ -22,7 +22,7 @@ class ItemController extends Controller
         return response()
             ->json([
                 'success' => true,
-                'forbiddenDates' => $forbiddenDates
+                'forbiddenDates' => $forbiddenDates,
             ]);
     }
 
@@ -40,7 +40,7 @@ class ItemController extends Controller
             ->json([
                 'success' => true,
                 'availableTimes' => $forbiddenTimes,
-                'nextUnavailableDate' => $nextUnavailableDate
+                'nextUnavailableDate' => $nextUnavailableDate,
             ]);
     }
 
@@ -57,7 +57,7 @@ class ItemController extends Controller
         return response()
             ->json([
                 'success' => true,
-                'nextAvailableTimes' => $timeSpans
+                'nextAvailableTimes' => $timeSpans,
             ]);
     }
 
@@ -68,7 +68,7 @@ class ItemController extends Controller
         $futureRentStartTimes = [];
 
         foreach ($orderItems as $orderItem) {
-            $itemRentStartDate = Carbon::parse($orderItem->rent_start_date . ' ' . $orderItem->rent_start_time);
+            $itemRentStartDate = Carbon::parse($orderItem->rent_start_date.' '.$orderItem->rent_start_time);
 
             if ($selectedDateTime->lessThan($itemRentStartDate)) {
                 $futureRentStartTimes[] = $itemRentStartDate;
@@ -78,12 +78,13 @@ class ItemController extends Controller
         usort($futureRentStartTimes, function ($a, $b) use ($selectedDateTime) {
             $diffA = $a->diffInMinutes($selectedDateTime);
             $diffB = $b->diffInMinutes($selectedDateTime);
+
             return $diffA <=> $diffB;
         });
 
         $timeSpans = [];
 
-        if (!empty($futureRentStartTimes)) {
+        if (! empty($futureRentStartTimes)) {
             $closestRentStartTime = $futureRentStartTimes[0];
 
             $currentTime = $selectedDateTime->copy();
@@ -103,6 +104,7 @@ class ItemController extends Controller
                     $timeSpans[] = "$hoursStr:$minutesStr";
                 }
             }
+
             return $timeSpans;
         }
 
@@ -126,7 +128,7 @@ class ItemController extends Controller
         usort($futureRentStartDates, function ($a, $b) {
             return $a <=> $b;
         });
-        if (!empty($futureRentStartDates)) {
+        if (! empty($futureRentStartDates)) {
             return $futureRentStartDates[0]->format('Y-m-d');
         }
 
@@ -164,7 +166,7 @@ class ItemController extends Controller
         $endTime = Carbon::createFromTime(23, 59, 0);
         while ($startTime->lessThan($endTime)) {
             $timeSlot = $startTime->format('H:i');
-            if (!in_array($timeSlot, $occupiedTimeSlots)) {
+            if (! in_array($timeSlot, $occupiedTimeSlots)) {
                 $availableTimeSlots[] = $timeSlot;
             }
             $startTime->addMinutes(5);

@@ -18,86 +18,90 @@
                 <p><b>ВАЖНО!</b></p>
                 <p>Обязательно имейте в виду, что при аренде оборудования и его поломке, следует дополнительная оплата,
                     исходя из условий договора</p>
+                <p>Примите к сведению: За просрочку выплаты платежей, указанных в договоре, Арендодатель в праве
+                    требовать от Арендатора выплатить пеню в размере 5% от не выплаченного платежа за каждый день
+                    просрочки</p>
                 <hr>
             </div>
             <div class="col s12 m9 goods-list">
-                @foreach($items as $item)
-                    <div class="row no-margin good-wrapper">
-                        <a href="#" class="cancel-btn"
-                           data-product-id="{{$item->good->id . 'pixelrental' . $item->id}}">
-                            <i class="material-icons white-text ">clear</i>
-                        </a>
-                        <hr>
-                        <div class="col s12 m3 good-cart-image">
-                            <img src="{{$item->good->attachment()?->first()?->url}}" alt="" width="200px" class="">
-                        </div>
-                        <div class="col s12 m9 good-cart-additional-info white-text">
-                            <p>Наименование: <a href="/{{$item->good->id}}"><b
-                                        class="orange-text text-darken-4"><u>{{$item->good->name}}</u></b></a></p>
-                            @if($item->good->discount_cost && $item->good->discount_cost != 0)
-                                <p>Цена (за сутки): <s>{{$item->good->cost}}</s> <b
-                                        class="orange-text text-darken-4">{{$item->good->discount_cost}}</b></p>
-                            @else
-                                <p>Цена (за сутки): <b>{{$item->good->cost}}</b></p>
-                            @endif
-                            <p>Цена за поломку во время аренды: <b>{{$item->good->damage_cost}}</b></p>
-                            <p>Описание: <b class="truncate">{{$item->good->description}}</b></p>
-                            @if(count($item->good->getAdditionals()) > 0)
-                                <p><u>Доп. аксессуары: </u></p>
-                                @foreach($item->good->getAdditionals() as $additional)
-                                    <p>
-                                        <label>
-                                            <input type="checkbox" class="orange-text additional-checkbox"
-                                                   data-cart-key="{{$item->good->id . 'pixelrental' . $item->id}}"
-                                                   data-additional-id="{{$additional->id}}"
-                                                   data-additional-cost="{{$additional->cost}}"
-                                                   @if(in_array($additional->id, $cartData[$item->good->id . 'pixelrental' .$item->id])) checked @endif/>
-                                            <span>{{$additional->name}} <span class="white-text">(+ {{$additional->cost}}тг)</span></span>
-                                        </label>
-                                    </p>
-                                @endforeach
-                            @endif
-                            <div class="col s12 input-field">
-                                <input name="start_date" data-item-id="{{$item->id}}" type="text"
-                                       class="datepicker white-text begining-date">
-                                <label for="rent_start_date">Дата начала аренды: </label>
-                            </div>
-                            <div class="col s12 input-field white-text hide">
-                                <select class="white-text left rent-start-time">
-                                    <option value="" disabled selected>Выберите время:</option>
-                                </select>
-                                <label>Время начала аренды</label>
-                            </div>
-                            <div class="col s12 input-field hide">
-                                <input name="rent_end_date" type="text" class="datepicker white-text ending-date">
-                                <label for="rent_end_date">Дата конца аренды:</label>
-                            </div>
-                            <div class="col s12 input-field white-text hide">
-                                <select class="white-text left rent-end-time">
-                                    <option value="" disabled selected>Выберите время:</option>
-                                </select>
-                                <label>Время конца аренды</label>
-                            </div>
+                <form action="{{route('settleOrder')}}" method="POST" id="order-placement-form">
+                    {{csrf_field()}}
+                    @foreach($items as $item)
+                        <div class="row no-margin good-wrapper">
+                            <a href="#" class="cancel-btn"
+                               data-product-id="{{$item->good->id . 'pixelrental' . $item->id}}">
+                                <i class="material-icons white-text ">clear</i>
+                            </a>
                             <hr>
-                            <div class="control-sum right">
-                                <h5 class="inline">Итог:
-                                    @if($item->good->discount_cost && $item->good->discount_cost != 0)
-                                        <span
-                                            class="good-cost-holder orange-text text-darken-4">{{$item->totalCost}}
+                            <div class="col s12 m3 good-cart-image center">
+                                <img src="{{$item->good->attachment()?->first()?->url}}" alt="" class="good-image">
+                            </div>
+                            <div class="col s12 m9 good-cart-additional-info white-text">
+                                <p>Наименование: <a href="/{{$item->good->id}}"><b
+                                            class="orange-text text-darken-4"><u>{{$item->good->name}}</u></b></a></p>
+                                @if($item->good->discount_cost && $item->good->discount_cost != 0)
+                                    <p>Цена (за сутки): <s>{{$item->good->cost}}</s> <b
+                                            class="orange-text text-darken-4">{{$item->good->discount_cost}}</b></p>
+                                @else
+                                    <p>Цена (за сутки): <b>{{$item->good->cost}}</b></p>
+                                @endif
+                                <p>Цена за поломку во время аренды: <b>{{$item->good->damage_cost}}</b></p>
+                                <p>Описание: <b class="truncate">{{$item->good->description}}</b></p>
+                                @if(count($item->good->getAdditionals()) > 0)
+                                    <p><u>Доп. аксессуары: </u></p>
+                                    @foreach($item->good->getAdditionals() as $additional)
+                                        <p>
+                                            <label>
+                                                <input type="checkbox" class="orange-text additional-checkbox"
+                                                       data-cart-key="{{$item->good->id . 'pixelrental' . $item->id}}"
+                                                       data-additional-id="{{$additional->id}}"
+                                                       data-additional-cost="{{$additional->cost}}"
+                                                       @if(in_array($additional->id, $cartData[$item->good->id . 'pixelrental' .$item->id])) checked @endif/>
+                                                <span>{{$additional->name}} <span class="white-text">(+ {{$additional->cost}}тг)</span></span>
+                                            </label>
+                                        </p>
+                                    @endforeach
+                                @endif
+                                <div class="col s12 input-field">
+                                    <input name="{{$item->good->id . 'pixelrental' . $item->id}}[rent_start_date]" data-item-id="{{$item->id}}" type="text" class="datepicker white-text begining-date" required>
+                                    <label for="rent_start_date">Дата начала аренды: </label>
+                                </div>
+                                <div class="col s12 input-field white-text hide">
+                                    <select name="{{$item->good->id . 'pixelrental' . $item->id}}[start_time]" class="white-text left rent-start-time" required>
+                                        <option value="" disabled selected>Выберите время:</option>
+                                    </select>
+                                    <label>Время начала аренды</label>
+                                </div>
+                                <div class="col s12 input-field hide">
+                                    <input name="{{$item->good->id . 'pixelrental' . $item->id}}[rent_end_date]" type="text" class="datepicker white-text ending-date" required>
+                                    <label for="rent_end_date">Дата конца аренды:</label>
+                                </div>
+                                <div class="col s12 input-field white-text hide">
+                                    <select name="{{$item->good->id . 'pixelrental' . $item->id}}[end_time]" class="white-text left rent-end-time" required>
+                                        <option value="" disabled selected>Выберите время:</option>
+                                    </select>
+                                    <label>Время конца аренды</label>
+                                </div>
+                                <hr>
+                                <div class="control-sum right">
+                                    <h5 class="inline">Итог:
+                                        @if($item->good->discount_cost && $item->good->discount_cost != 0)
+                                            <span
+                                                class="good-cost-holder orange-text text-darken-4">{{$item->totalCost}}
                                         </span>
-                                        / сутки
-                                    @else
-                                        <span
-                                            class="good-cost-holder">{{$item->totalCost}}
+                                            / сутки
+                                        @else
+                                            <span
+                                                class="good-cost-holder">{{$item->totalCost}}
                                         </span>
-                                        / сутки
-                                    @endif
-                                </h5>
+                                            / сутки
+                                        @endif
+                                    </h5>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                @endforeach
-
+                    @endforeach
+                </form>
             </div>
             <div class="col s12 m3 additional-info white-text hide-on-med-and-down">
                 <span class="grey-text"><u>Выберите промежутки аренды для товаров</u></span>
@@ -109,14 +113,16 @@
                 <p><b>ВАЖНО!</b></p>
                 <p>Обязательно имейте в виду, что при аренде оборудования и его поломке, следует дополнительная оплата,
                     исходя из условий договора</p>
+                <p>Примите к сведению: За просрочку выплаты платежей, указанных в договоре, Арендодатель в праве
+                    требовать от Арендатора выплатить пеню в размере 5% от не выплаченного платежа за каждый день
+                    просрочки</p>
             </div>
         </div>
         @auth('clients')
             <div class="col s12 right-align">
-                <a href="{{route('settleOrder')}}" class="btn orange darken-4 auth-link valign-wrapper next-step-btn">
+                <a href="#order-placement-modal" class="btn orange darken-4 auth-link valign-wrapper next-step-btn modal-trigger">
                     Оформить заказ
                 </a>
-                @include('auth.modal', ['icon' => 'favorite_border', 'title' => "Необходима авторизация", 'content' => "Пожалуйста, войдите в аккаунт для продолжения оформления заказа"])
             </div>
         @endauth
         @guest('clients')
@@ -127,6 +133,16 @@
                 @include('auth.modal', ['icon' => 'favorite_border', 'title' => "Необходима авторизация", 'content' => "Пожалуйста, войдите в аккаунт для продолжения оформления заказа"])
             </div>
         @endguest
+        @include('confirmModal', [
+    'modalClass' => 'order-placement-modal',
+    'title' => 'Вы действительно готовы оформить заказ?',
+    'subTitle' => 'После подтверждения оформления заказа ваш заказ будет передан менеджеру и вы сможете получить свой товар в пункте выдачи по адресу:',
+    'link' => 'https://2gis.kz/almaty/firm/70000001069136996',
+    'linkCaption' => 'Улица Толе БИ, 176.',
+    'downTitle' => 'Менеджер ещё раз перепроверит ваши контактные данные и фотографии удостоверения, после чего будет подписан договор об аренде оборудования.',
+    'btnAction' => 'placeOrder',
+    'btnCaption' => 'Оформить заказ',
+])
     @else
         <h4 class="white-text center">Тут пока ничего нет :(</h4>
         <h5 class="white-text center">Возвращайтесь на <a href="/" class="orange-text"><b><u>главную</u></b></a>, и

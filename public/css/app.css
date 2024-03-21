@@ -302,7 +302,7 @@ hr {
 .input-field .prefix.active {
     color: #000!important;
 }
-.dropdown-content li>a, .dropdown-content li>span {
+.autocomplete-content li>a, .autocomplete-content li>span {
     color: #000!important;
 }
 .autocomplete-content li .highlight {
@@ -370,6 +370,10 @@ hr {
 
 .good-cart-image {
     border-radius: 10px;
+}
+
+.good-image {
+    width: 100%;
 }
 
 .auth-container {
@@ -537,5 +541,9 @@ input[type="checkbox"]:checked + span:not(.lever)::before {
 
 .good-wrapper {
     position: relative
+}
+
+.profile-dropdown-link {
+    color: white !important;
 }
 
