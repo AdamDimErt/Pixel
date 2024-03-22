@@ -9,9 +9,10 @@
     <div class="modal-footer">
         <div class="row center">
             <p><b class="error-text red-text"></b></p>
-            <button class="btn-large nav-link orange darken-4 auth-link confirm-order-btn" onclick="{{$btnAction}}()">
-                {{$btnCaption}}
-                <i class="material-icons">done</i>
+            <button class="btn-large nav-link orange darken-4 auth-link confirm-order-btn"
+            onclick="{{$btnAction}}()">
+            {{$btnCaption}}
+            <i class="material-icons">done</i>
             </button>
         </div>
     </div>

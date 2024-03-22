@@ -8,14 +8,26 @@
                 </a>
             @endif
             @auth('clients')
-                <a class="btn-floating add-to-favorites-btn btn-large halfway-fab waves-effect waves-light orange darken-4">
-                    <i class="large material-icons">favorite_border</i>
-                </a>
+                @if (in_array($good->id, App\Models\Client::query()->find(Auth::guard('clients')->id())->favorites()->pluck('good_id')->toArray()))
+                    <a class="btn-floating remove-from-favorites-btn btn-large halfway-fab waves-effect waves-light orange darken-4" data-product-id="{{$good->id}}">
+                        <i class="large material-icons">
+                            favorite
+                        </i>
+                    </a>
+                @else
+                    <a class="btn-floating add-to-favorites-btn btn-large halfway-fab waves-effect waves-light orange darken-4" data-product-id="{{$good->id}}">
+                        <i class="large material-icons">
+                            favorite_border
+                        </i>
+                    </a>
+                @endif
             @endauth
             @guest('clients')
                 <a class="btn-floating add-to-favorites-btn btn-large halfway-fab waves-effect waves-light orange darken-4 modal-trigger"
                    href="#auth-modal">
-                    <i class="large material-icons">favorite_border</i>
+                    <i class="large material-icons">
+                        favorite_border
+                    </i>
                 </a>
             @endguest
             <a class="btn-floating add-to-cart-btn btn-large halfway-fab waves-effect waves-light orange darken-4"

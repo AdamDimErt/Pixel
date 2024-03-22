@@ -186,7 +186,7 @@ beginingDatepickers.forEach(async item => {
         selector.parentNode.classList.remove('hide')
         selector.innerHTML = '<option value="" disabled selected>Выберите время:</option>'
         availableTimes.forEach(time => {
-            selector.innerHTML += `<option value="${time}">${time}</option>`
+            selector.innerHTML += `<option value="${time}" class="black-text">${time}</option>`
         })
         M.FormSelect.init(selector, {});
         selector.onchange = async (e) => {
@@ -300,7 +300,7 @@ beginingDatepickers.forEach(async item => {
                     endTimeSelector.parentNode.classList.remove('hide')
                     endTimeSelector.innerHTML = '<option value="" disabled selected>Выберите время:</option>'
                     nextAvailableTimes.forEach(time => {
-                        endTimeSelector.innerHTML += `<option value="${time}">${time}</option>`
+                        endTimeSelector.innerHTML += `<option value="${time}" class="black-text">${time}</option>`
                     })
                     M.FormSelect.init(endTimeSelector, {});
                     endTimeSelector.onchange = (e) => {

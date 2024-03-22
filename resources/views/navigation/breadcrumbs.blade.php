@@ -16,6 +16,31 @@
                 </span>
             </a>
         @endif
+        @if (Route::is('viewGood') && isset($good))
+            <a href="category/{{$good->goodType->code}}" class="breadcrumb">
+                <span class="breadcrumb-item chip orange darken-4 white-text">
+                    <b>
+                        {{$good->goodType->name}}
+                    </b>
+                </span>
+            </a>
+            <a href="{{route('viewGood', $good)}}" class="breadcrumb">
+                <span class="breadcrumb-item chip orange darken-4 white-text">
+                    <b>
+                        {{$good->name}}
+                    </b>
+                </span>
+            </a>
+        @endif
+        @if (Route::is('getFavorites'))
+            <a href="{{route('getFavorites')}}" class="breadcrumb">
+                <span class="breadcrumb-item chip orange darken-4 white-text">
+                    <b>
+                        Любимое
+                    </b>
+                </span>
+            </a>
+        @endif
         @if (Route::is('cart'))
             <a href="/cart" class="breadcrumb">
                 <span class="breadcrumb-item chip orange darken-4 white-text">

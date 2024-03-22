@@ -29,7 +29,7 @@ class CartController extends Controller
         }
 
         return response()->json(['error' => 'На данный момент такой товар имеется в количестве: '.
-            count(Good::query()->find($goodId)->availableItems())], 400);
+            count(Good::query()->find($goodId)->items)], 400);
     }
 
     public function removeFromCart(Request $request): JsonResponse

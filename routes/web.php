@@ -50,5 +50,11 @@ Route::prefix('/item')->group(function () {
     Route::post('/{item}/get-next-rent-times', [HttpControllers\ItemController::class, 'getAvailableRentEndTimespans'])->name('getAvailableRentEndTimespans');
 });
 
-Route::get('{good}', [HttpControllers\GoodController::class, 'view'])->name('view');
+Route::prefix('/favorite')->group(function () {
+    Route::get('/', [HttpControllers\FavoriteController::class, 'getFavorites'])->name('getFavorites');
+    Route::get('/{good}/add', [HttpControllers\FavoriteController::class, 'add'])->name('addFavorite');
+    Route::get('/{good}/remove', [HttpControllers\FavoriteController::class, 'remove'])->name('removeFavorite');
+});
+
+Route::get('{good}', [HttpControllers\GoodController::class, 'view'])->name('viewGood');
 Route::get('autofill/{goodName}', [HttpControllers\GoodController::class, 'autofill'])->name('autofill');

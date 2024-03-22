@@ -12,4 +12,9 @@ class Client extends Authenticatable
     use Attachable, Authorizable, HasFactory;
 
     protected $guarded = [];
+
+    public function favorites()
+    {
+        return $this->hasMany(Favorite::class);
+    }
 }

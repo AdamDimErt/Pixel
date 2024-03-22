@@ -41,6 +41,6 @@ class GoodController extends Controller
     {
         $good = Good::query()->where('name', '=', $goodName)->first();
 
-        return redirect(route('view', ['good' => $good]));
+        return redirect(route('viewGood', ['good' => $good]));
     }
 }

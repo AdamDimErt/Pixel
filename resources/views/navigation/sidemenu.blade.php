@@ -4,6 +4,16 @@
     </div>
     <div class="container">
         <hr>
+        <li class="menu-item">
+            <div class="hide-on-med-and-up">
+                <input id="search" type="text"
+                       class="validate browser-default text-white center-align autocomplete"
+                       placeholder="Поиск">
+                <i class="material-icons white-text">
+                    search
+                </i>
+            </div>
+        </li>
         @foreach($goodTypes as $goodType)
             <li class="menu-item">
                 <a href="{{route('goodList', $goodType->code, false)}}"

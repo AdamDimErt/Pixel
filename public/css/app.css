@@ -31,13 +31,26 @@ header, .main {
 }
 
 .breadcrumbs-section {
-    padding: 2%;
+    padding: 3%;
 }
 
 
 @media only screen and (max-width: 992px) {
     header, .main {
-        padding-left: 0;
+        padding-left: 0 !important;
+    }
+    .nav-buttons {
+        right: 25px !important;
+    }
+    .brand-logo {
+        left: 32% !important;
+        right: 0 !important;
+    }
+    .nav-element {
+        border-radius: 10px !important;
+        line-height: 30px;
+        padding-top: 5px !important;
+        padding-bottom: 5px !important;
     }
 }
 
@@ -119,6 +132,10 @@ header, .main {
     margin-right: 65px;
 }
 
+.remove-from-favorites-btn {
+    margin-right: 65px;
+}
+
 .card {
     padding-bottom: 5%;
     border-radius: 10px;
@@ -142,11 +159,16 @@ header, .main {
 }
 
 .menu-item-content {
-    font-size: calc(0.5vw + 0.6em);
+    font-size: 18px;
 }
 
 .menu-item-link {
     border-radius: 5px;
+}
+
+.nav-buttons {
+    position: absolute;
+    right: 340px;
 }
 
 .brand-logo {
@@ -547,3 +569,24 @@ input[type="checkbox"]:checked + span:not(.lever)::before {
     color: white !important;
 }
 
+.dropdown-content li>span {
+    color: black !important;
+}
+
+.favorite-holder {
+    border-radius: 15px;
+    border: 1px solid grey;
+}
+
+.page-presenter-header {
+    padding-left: 20px;
+}
+
+.good-view-button-holder {
+    display: flex;
+    justify-content: space-between;
+}
+
+.good-view-action-btn {
+    font-size: calc(0.5vw + 0.5em);
+}
