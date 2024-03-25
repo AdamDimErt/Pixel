@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('client_id');
             $table->integer('amount_paid')->nullable();
-            $table->enum('status', ['in_rent', 'returned', 'cancelled', 'waiting'])->default('waiting');
+            $table->enum('status', ['returned', 'in_rent', 'waiting', 'confirmed', 'cancelled'])->default('waiting');
             $table->foreign('client_id')->references('id')->on('clients');
             $table->timestamps();
         });

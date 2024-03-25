@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Orchid\Filters\Filterable;
 use Orchid\Filters\Types\Where;
@@ -50,8 +49,8 @@ class Order extends Model
         return $this->hasOne(Client::class, 'id', 'client_id');
     }
 
-    public function items(): BelongsToMany
+    public function orderItems()
     {
-        return $this->belongsToMany(Item::class, 'order_items');
+        return $this->hasMany(OrderItem::class);
     }
 }

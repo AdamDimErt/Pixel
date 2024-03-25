@@ -26,8 +26,9 @@ class FavoriteController extends Controller
         Favorite::query()
             ->create([
                 'good_id' => $good->id,
-                'client_id' => $clientId
+                'client_id' => $clientId,
             ]);
+
         return response()
             ->json(['success' => true]);
     }
@@ -35,8 +36,9 @@ class FavoriteController extends Controller
     public function remove(Good $good)
     {
         $clientId = Auth::guard('clients')->id();
-        Favorite::query()->where('client_id','=', $clientId)
+        Favorite::query()->where('client_id', '=', $clientId)
             ->where('good_id', '=', $good->id)->delete();
+
         return response()
             ->json(['success' => true]);
     }

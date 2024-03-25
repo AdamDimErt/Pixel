@@ -54,8 +54,8 @@
                             </a>
 
                             <ul id='profile-options' class='dropdown-content main-color white-text'>
-                                <li><a href="#!" class="profile-dropdown-link white-text">Мои заказы</a></li>
-                                <li><a href="#!" class="profile-dropdown-link white-text">Просмотреть профиль</a></li>
+                                <li><a href="{{route('getMyOrders')}}" class="profile-dropdown-link white-text">Мои заказы</a></li>
+                                <li><a href="{{route('viewProfile')}}" class="profile-dropdown-link white-text">Просмотреть профиль</a></li>
                                 <li class="divider" tabindex="-1"></li>
                                 <li><a href="{{route('logout')}}" class="white-text profile-dropdown-link"><i
                                             class="material-icons orange-text">cancel</i>Выйти</a></li>

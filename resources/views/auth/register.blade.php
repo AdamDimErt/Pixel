@@ -22,11 +22,11 @@
                     <div class="row">
                         <div class="input-field col s12">
                             <i class="material-icons prefix white-text">account_circle</i>
-                            <input name="name" id="name" type="text" placeholder="ФИО" class="white-text">
+                            <input name="name" id="name" type="text" placeholder="ФИО" class="white-text" required>
                         </div>
                         <div class="input-field col s12">
                             <i class="material-icons prefix white-text">phone</i>
-                            <input name="phone" id="phone" type="tel" placeholder="Номер телефона" class="white-text">
+                            <input name="phone" id="phone" type="tel" placeholder="Номер телефона" class="white-text" required>
                         </div>
                         <div class="file-field input-field col s12">
                             <div>
@@ -40,12 +40,12 @@
                         </div>
                         <div class="input-field col s12">
                             <i class="material-icons prefix white-text">lock</i>
-                            <input name="password" type="password" placeholder="Пароль" class="white-text">
+                            <input name="password" type="password" placeholder="Пароль" class="white-text" required>
                         </div>
                         <div class="input-field col s12">
                             <i class="material-icons prefix white-text">done</i>
                             <input name="password_confirmation" type="password" placeholder="Подтвердите пароль"
-                                   class="white-text">
+                                   class="white-text" required>
                         </div>
                         <div class="input-field col s12">
                             <button type="submit" class="btn orange darken-4 authorization-link">

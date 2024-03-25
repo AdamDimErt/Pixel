@@ -50,10 +50,22 @@ Route::prefix('/item')->group(function () {
     Route::post('/{item}/get-next-rent-times', [HttpControllers\ItemController::class, 'getAvailableRentEndTimespans'])->name('getAvailableRentEndTimespans');
 });
 
-Route::prefix('/favorite')->group(function () {
-    Route::get('/', [HttpControllers\FavoriteController::class, 'getFavorites'])->name('getFavorites');
-    Route::get('/{good}/add', [HttpControllers\FavoriteController::class, 'add'])->name('addFavorite');
-    Route::get('/{good}/remove', [HttpControllers\FavoriteController::class, 'remove'])->name('removeFavorite');
+Route::prefix('/profile')->group(function () {
+    Route::get('/', [HttpControllers\ProfileController::class, 'viewProfile'])->name('viewProfile');
+    Route::get('/edit', [HttpControllers\ProfileController::class, 'editProfile'])->name('editProfile');
+    Route::post('/update', [HttpControllers\ProfileController::class, 'updateProfile'])->name('updateProfile');
+
+    Route::prefix('/favorite')->group(function () {
+        Route::get('/', [HttpControllers\FavoriteController::class, 'getFavorites'])->name('getFavorites');
+        Route::get('/{good}/add', [HttpControllers\FavoriteController::class, 'add'])->name('addFavorite');
+        Route::get('/{good}/remove', [HttpControllers\FavoriteController::class, 'remove'])->name('removeFavorite');
+    });
+
+    Route::prefix('/orders')->group(function () {
+        Route::get('/', [HttpControllers\MyOrderController::class, 'getMyOrders'])->name('getMyOrders');
+        Route::get('/{order}', [HttpControllers\MyOrderController::class, 'viewOrder'])->name('viewOrder');
+        Route::get('/{order}/cancel', [HttpControllers\MyOrderController::class, 'cancelOrder'])->name('cancelOrder');
+    });
 });
 
 Route::get('{good}', [HttpControllers\GoodController::class, 'view'])->name('viewGood');

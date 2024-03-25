@@ -18,29 +18,23 @@
                     <p>{{$good->desc}}</p>
                 @endif
                 @if($good->discount_cost)
-                    <span class="cost-label">
-                        <span class="chip small">
+                    <span class="right">
+                        <span class="chip small item-cost-holder">
                             <s>{{$good->cost}}</s>
                         </span>
-                    <span class="chip red white-text large">
-                        <u><b>{{$good->discount_cost}}</b></u>
+                    <span class="chip red white-text large item-cost-holder">
+                        <u>{{$good->discount_cost}}</u>
                     </span>
                 тг/сутки
                 </span>
                 @else
-                    <span class="cost-label">
-                        <span class="chip">
-                            <b>{{$good->cost}}</b>
+                    <span class="right">
+                        <span class="chip item-cost-holder">
+                            {{$good->cost}}
                         </span>
                     тг/сутки
                     </span>
                 @endif
-                <p class="flow-text">Стоимость при повреждении:
-                    <span class="orange-text">
-                        <u>{{$good->damage_cost}}</u>
-                    </span>
-                    тг
-                </p>
             </div>
             <div class="info-btns-wrapper">
                 @if(count($good->getAdditionals()) > 0)
@@ -56,9 +50,15 @@
                     @endforeach
                 @endif
             </div>
+            <hr>
+            <p class="grey-text text-darken-2">Стоимость при повреждении:
+                    {{$good->damage_cost}}
+                тг
+            </p>
         </div>
         <div class="col s12">
-            <div class="row">
+            <hr>
+            <div class="row view-btns-holder">
                 <div class="col s6 center">
                     <a class="btn-large orange darken-4 auth-link confirm-order-btn no-margin add-to-cart-btn"
                        data-product-id="{{ $good->id }}">

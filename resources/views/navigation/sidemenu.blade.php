@@ -5,7 +5,7 @@
     <div class="container">
         <hr>
         <li class="menu-item">
-            <div class="hide-on-med-and-up">
+            <div class="hide-on-med-and-up search-wrapper valign-wrapper hide-on-med-and-up input-field">
                 <input id="search" type="text"
                        class="validate browser-default text-white center-align autocomplete"
                        placeholder="Поиск">
@@ -13,6 +13,7 @@
                     search
                 </i>
             </div>
+            <hr class="hide-on-med-and-up">
         </li>
         @foreach($goodTypes as $goodType)
             <li class="menu-item">

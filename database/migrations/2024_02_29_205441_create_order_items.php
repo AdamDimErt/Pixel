@@ -31,8 +31,12 @@ return new class extends Migration
             $table->json('additionals')
                 ->nullable(false);
 
-            $table->enum('status', ['returned', 'in_rent', 'waiting']);
+            $table->enum('status', ['returned', 'in_rent', 'waiting', 'confirmed', 'cancelled']);
 
+            $table->integer('amount_of_days')
+                ->nullable(false);
+            $table->integer('amount_paid')
+                ->nullable(false);
             $table->date('rent_start_date')
                 ->nullable(false);
             $table->time('rent_start_time')

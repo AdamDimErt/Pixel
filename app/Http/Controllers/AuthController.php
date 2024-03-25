@@ -53,9 +53,9 @@ class AuthController extends Controller
 
         $attachmentIds = [];
 
-        foreach ($request->allFiles()['files'] as $fileData) {
+        foreach ($request->file('files') as $fileData) {
             $file = new File($fileData);
-            $attachment = $file->load();
+            $attachment = $file->path('idCards')->load();
             $attachmentIds[] = $attachment->id;
         }
 

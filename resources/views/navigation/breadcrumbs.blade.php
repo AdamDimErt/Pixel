@@ -16,6 +16,31 @@
                 </span>
             </a>
         @endif
+        @if (Route::is('viewProfile'))
+            <a href="#" class="breadcrumb">
+                <span class="breadcrumb-item chip orange darken-4 white-text">
+                    <b>
+                        Профиль
+                    </b>
+                </span>
+            </a>
+        @endif
+        @if (Route::is('editProfile'))
+            <a href="{{route('viewProfile')}}" class="breadcrumb">
+                <span class="breadcrumb-item chip orange darken-4 white-text">
+                    <b>
+                        Профиль
+                    </b>
+                </span>
+            </a>
+            <a href="#" class="breadcrumb">
+                <span class="breadcrumb-item chip orange darken-4 white-text">
+                    <b>
+                        Редактирование
+                    </b>
+                </span>
+            </a>
+        @endif
         @if (Route::is('viewGood') && isset($good))
             <a href="category/{{$good->goodType->code}}" class="breadcrumb">
                 <span class="breadcrumb-item chip orange darken-4 white-text">

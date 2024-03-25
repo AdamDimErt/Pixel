@@ -310,7 +310,10 @@ beginingDatepickers.forEach(async item => {
 
                         var differenceMs = Math.abs(endDate.getTime() - startDate.getTime());
 
-                        var differenceDays = Math.ceil(differenceMs / (1000 * 60 * 60 * 24));
+                        var differenceDays = Math.ceil(differenceMs / (1000 * 60 * 60 * 24)) ?? 1;
+                        if (differenceDays >= 2){
+                            differenceDays--;
+                        }
                         const sumHolder= e.target.parentNode.parentNode.parentNode.parentNode.querySelector('.good-cost-holder')
                         sumHolder.innerHTML = +sumHolder.innerHTML * differenceDays;
                     }

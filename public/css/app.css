@@ -1,6 +1,7 @@
 html {
     padding: 0;
     margin: 0;
+    overflow-x: hidden;
 }
 
 body {
@@ -34,10 +35,12 @@ header, .main {
     padding: 3%;
 }
 
-
 @media only screen and (max-width: 992px) {
-    header, .main {
+    header, .main, .page-footer {
         padding-left: 0 !important;
+    }
+    .container {
+        padding: 2% !important;
     }
     .nav-buttons {
         right: 25px !important;
@@ -181,10 +184,12 @@ header, .main {
     position: relative;
 }
 
-.cost-label {
-    position: absolute;
-    right: 5%;
-    bottom: 0;
+.item-cost-holder {
+    font-size: 20px !important;
+}
+
+.view-btns-holder {
+    padding: 20px !important;
 }
 
 .card-presenter-image {
@@ -236,7 +241,7 @@ li.disabled>span{
     background-color: gray;
     color: white;
     border: none;
-    font-size: calc(0.4vw + 0.3em);
+    font-size: 17px;
     padding: 1%;
     font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
     transition: 0.7ms;
@@ -437,6 +442,39 @@ hr {
 .page-footer {
     border-top: 1px grey solid;
     width: 100%;
+    padding: 5%;
+}
+
+.id-image-wrapper {
+    display: flex;
+    justify-content: space-evenly;
+    border-top: 1px solid white;
+}
+
+.file-path {
+    color: white !important;
+}
+
+.profile-form-wrapper {
+    border-radius: 15px;
+    padding: 2%;
+    border: 1px solid white;
+}
+
+.save-profile-btn {
+    margin: 2%;
+}
+
+.id-image {
+    width: 100%;
+    max-width: 250px;
+    margin: 5%;
+    border-radius: 15px;
+    border: 1px solid grey;
+}
+
+.basic-info {
+    border-radius: 14px !important;
 }
 
 .main-row {
@@ -444,7 +482,7 @@ hr {
 }
 
 .social-media-link {
-    font-size: calc(0.8vw + 0.5em);
+    font-size: 20px ;
     padding: 5%;
 }
 
@@ -589,4 +627,28 @@ input[type="checkbox"]:checked + span:not(.lever)::before {
 
 .good-view-action-btn {
     font-size: calc(0.5vw + 0.5em);
+}
+
+.order-wrapper {
+    border: 1px solid grey;
+}
+
+.order-view-wrapper {
+    border: 1px solid grey;
+    border-radius: 15px;
+    padding: 2% !important;
+}
+
+.order-item-wrapper {
+    border: 1px solid grey;
+    padding: 2%;
+}
+
+.order-item-image-wrapper {
+    width: 100%;
+    border-radius: 15px;
+}
+
+.cancel-order-btn {
+    margin: 5% 2%;
 }

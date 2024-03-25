@@ -11,7 +11,7 @@ document.querySelectorAll('.remove-from-favorites-btn').forEach(btn => {
 
 function deleteFromFavorite(e) {
     const productId = this.dataset.productId;
-    fetch('/favorite/' + productId + '/remove', {
+    fetch('/profile/favorite/' + productId + '/remove', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -58,7 +58,7 @@ function deleteFromFavorite(e) {
 
 function addToFavorite(e) {
     const productId = this.dataset.productId;
-    fetch('/favorite/' + productId + '/add', {
+    fetch('/profile/favorite/' + productId + '/add', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
