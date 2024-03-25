@@ -2,11 +2,6 @@
     <div class="card hoverable z-depth-5">
         <div class="card-image">
             <img src="{{$good->attachment()?->first()?->url()}}" class="card-presenter-image">
-            @if($good->discount_cost)
-                <a class="btn-floating discount-btn halfway-fab waves-effect waves-light red darken-4">
-                    <i class="medium material-icons white-text">money_off</i>
-                </a>
-            @endif
             @auth('clients')
                 @if (in_array($good->id, App\Models\Client::query()->find(Auth::guard('clients')->id())->favorites()->pluck('good_id')->toArray()))
                     <a class="btn-floating remove-from-favorites-btn btn-large halfway-fab waves-effect waves-light orange darken-4" data-product-id="{{$good->id}}">
@@ -36,7 +31,7 @@
             </a>
         </div>
         <div class="card-content">
-            <span class="card-title">
+            <span class="card-title flow-text">
                 <b>{{$good->name}}</b>
             </span>
             @if($good->discount_cost)
@@ -45,7 +40,7 @@
                         <s>{{$good->cost}}</s>
                     </span>
                     <span class="chip red white-text large">
-                        <u><b>{{$good->discount_cost}}</b></u>
+                        <b>{{$good->discount_cost}}</b>
                     </span>
                 тг/сутки
                 </span>
@@ -56,6 +51,11 @@
                     </span>
                 тг/сутки
                 </span>
+            @endif
+            @if($good->discount_cost)
+                <a class="btn-floating discount-btn waves-effect waves-light red darken-4">
+                    <i class="medium material-icons white-text">money_off</i>
+                </a>
             @endif
         </div>
     </div>

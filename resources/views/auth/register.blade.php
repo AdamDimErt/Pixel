@@ -32,6 +32,12 @@
                             <i class="material-icons prefix white-text">email</i>
                             <input name="email" id="email" type="email" placeholder="Адрес почты" class="white-text" required>
                         </div>
+                        <div class="input-field col s12">
+                            <i class="material-icons prefix white-text">
+                                <img src="{{asset('/img/instagram.svg')}}" height="35px" alt="">
+                            </i>
+                            <input name="instagram" id="email" type="text" placeholder="Ваш instagram (только тег без @)" class="white-text" required>
+                        </div>
                         <div class="file-field input-field col s12">
                             <div>
                                 <input type="file" name="files[]" multiple="multiple" accept=".jpg,.jpeg,.png">

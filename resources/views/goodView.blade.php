@@ -23,7 +23,7 @@
                             <s>{{$good->cost}}</s>
                         </span>
                     <span class="chip red white-text large item-cost-holder">
-                        <u>{{$good->discount_cost}}</u>
+                        {{$good->discount_cost}}
                     </span>
                 тг/сутки
                 </span>

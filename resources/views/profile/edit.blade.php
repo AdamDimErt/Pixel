@@ -16,6 +16,13 @@
                 <i class="material-icons prefix white-text">email</i>
                 <input name="email" id="email" value={{$client->email}} type="tel" placeholder="Почтовый адрес" class="white-text" required>
             </div>
+            <div class="input-field">
+                <i class="material-icons prefix white-text">
+                    <img src="{{asset('/img/instagram.svg')}}" height="35px" alt="">
+                </i>
+                <input name="instagram" id="instagram"
+                       value={{$client->instagram}} type="text" placeholder="Ваш instagram (только тег, без @)" class="white-text" required>
+            </div>
             <div class="file-field input-field">
                 <div>
                     <input type="file" name="files[]" multiple="multiple" accept=".jpg,.jpeg,.png">
@@ -26,6 +33,7 @@
                            placeholder="Удостоверение личности (с двух сторон)">
                 </div>
             </div>
+
             <hr>
             <button type="submit" class="btn btn-medium save-profile-btn orange darken-4 white-text">Сохранить <i class="material-icons">save</i></button>
         </div>

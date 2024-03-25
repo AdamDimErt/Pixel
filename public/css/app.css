@@ -40,7 +40,7 @@ header, .main {
 }
 
 @media only screen and (max-width: 992px) {
-    header, .main, .page-footer {
+    header, .main, .page-footer, .nav-inner-wrapper {
         padding-left: 0 !important;
     }
     .container {
@@ -58,6 +58,9 @@ header, .main {
         line-height: 30px;
         padding-top: 5px !important;
         padding-bottom: 5px !important;
+    }
+    .navbar-icon {
+        margin-right: 0 !important;
     }
 }
 
@@ -183,13 +186,12 @@ header, .main {
 }
 
 .card-content {
-    max-height: 140px;
-    min-height: 140px;
+    padding: 25px 14px !important;
     position: relative;
 }
 
 .item-cost-holder {
-    font-size: 20px !important;
+    font-size: 15px !important;
 }
 
 .view-btns-holder {
@@ -307,13 +309,6 @@ hr {
     transform: translate(0%,50%);
 }
 
-.in-cart-item-counter {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
-
 .breadcrumb::before{
     margin: 0 !important;
 }
@@ -352,11 +347,15 @@ hr {
     vertical-align:top;
 }
 
+.cart-counter-badge {
+    height: 100%;
+}
+
 .nav-link {
     border-radius: 5px !important;
     line-height: 46px;
-    margin-left: 10px;
-    margin-right: 10px;
+    margin-left: 5px;
+    margin-right: 5px;
 }
 
 .cart-link {
@@ -594,7 +593,9 @@ input[type="checkbox"]:checked + span:not(.lever)::before {
 }
 
 .discount-btn {
-    margin-right: 125px;
+    position: absolute;
+    bottom: 0px;
+    right: 10px;
 }
 
 .cancel-btn {

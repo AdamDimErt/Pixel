@@ -15,7 +15,7 @@
                     </div>
                 </div>
                 <ul class="right nav-buttons">
-                    <li class="nav-element">
+                    <li class="nav-element center">
                         <a href="/cart" class="nav-link cart-link">
                             <i class="material-icons left navbar-icon">
                                 shopping_cart
@@ -24,7 +24,7 @@
                                 Корзина
                             </span>
                             @if(isset($cartCount))
-                                <span class="badge red white-text">
+                                <span class="cart-counter-badge badge red white-text">
                                     <span class="in-cart-item-counter">
                                         {{$cartCount}}
                                     </span>
@@ -33,7 +33,7 @@
                         </a>
                     </li>
                     @auth('clients')
-                        <li class="nav-element">
+                        <li class="nav-element center">
                             <a href="{{route('getFavorites')}}" class="nav-link white-text">
                                 <i class="material-icons left navbar-icon">
                                     favorite_border
@@ -43,7 +43,7 @@
                             </span>
                             </a>
                         </li>
-                        <li class="nav-element">
+                        <li class="nav-element center">
                             <a href="#" class="nav-link dropdown-trigger white-text" data-target="profile-options">
                                 <i class="material-icons left navbar-icon">
                                     account_circle
@@ -63,14 +63,9 @@
                         </li>
                     @endauth
                     @guest('clients')
-                        <li class="nav-element">
+                        <li class="nav-element center">
                             <a href="{{route('login')}}" class="nav-link orange darken-4 auth-link ">
                                 Войти
-                            </a>
-                        </li>
-                        <li class="nav-element">
-                            <a href="{{route('register')}}" class="nav-link grey darken-4 white-text register-link">
-                                Зарегистрироваться
                             </a>
                         </li>
                     @endguest

@@ -89,12 +89,12 @@
                                             <span
                                                 class="good-cost-holder orange-text text-darken-4">{{$item->totalCost}}
                                         </span>
-                                            / сутки
+                                            тг
                                         @else
                                             <span
                                                 class="good-cost-holder">{{$item->totalCost}}
                                         </span>
-                                            / сутки
+                                            тг
                                         @endif
                                     </h5>
                                 </div>

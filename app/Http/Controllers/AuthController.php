@@ -53,6 +53,7 @@ class AuthController extends Controller
             'name' => 'required|string|max:255',
             'phone' => 'required|string|max:15|unique:clients',
             'email' => 'required|string|email|unique:clients',
+            'instagram' => 'required|string|unique:clients',
             'password' => 'required|string|min:8|confirmed',
             'files' => 'required|array|size:2',
         ]);
@@ -61,6 +62,7 @@ class AuthController extends Controller
             'name' => $request->input('name'),
             'phone' => $request->input('phone'),
             'email' => $request->input('email'),
+            'instagram' => $request->input('instagram'),
             'password' => Hash::make($request->input('password')),
             'confirmation_code' => Str::random(10),
         ]);

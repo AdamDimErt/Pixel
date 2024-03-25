@@ -108,22 +108,24 @@ class OrderController extends Controller
 
         $client = \App\Models\Client::query()->find(Auth::guard('clients')->id());
 
-        $client->phone = str_replace('+', '', $client->phone);
-
         $response = sendTelegramMessage(
             "*НОВЫЙ ЗАКАЗ*
 Покупатель: [$client->phone](https://wa.me/$client->phone)
 Имя: $client->name
+Электронный адрес: $client->email
+Инстаграм: [$client->instagram](https://www.instagram.com/$client->instagram/)
 Общая сумма: $totalSum тг
 
 Список товаров:
-".$orderItemMessageData);
+" . $orderItemMessageData);
 
         if (! $response->ok()) {
             sendTelegramMessage(
                 "*НОВЫЙ ЗАКАЗ*
 Покупатель: [$client->phone](https://wa.me/$client->phone)
 Имя: $client->name
+Электронный адрес: $client->email
+Инстаграм: [$client->instagram](https://www.instagram.com/$client->instagram/)
 Общая сумма: $totalSum тг
 
 Список товаров слишком большой для отображения в боте.");

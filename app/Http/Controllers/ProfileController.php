@@ -56,6 +56,11 @@ class ProfileController extends Controller
                 'email',
                 Rule::unique('clients')->ignore(Auth::guard('clients')->id()),
             ],
+            'instagram' => [
+                'required',
+                'string',
+                Rule::unique('clients')->ignore(Auth::guard('clients')->id()),
+            ],
             'files' => 'required|array|size:2',
         ]);
 
@@ -66,6 +71,7 @@ class ProfileController extends Controller
                 'name' => $request->input('name'),
                 'phone' => $request->input('phone'),
                 'email' => $request->input('email'),
+                'instagram' => $request->input('instagram'),
                 'updated_at' => now(),
             ]
         );
