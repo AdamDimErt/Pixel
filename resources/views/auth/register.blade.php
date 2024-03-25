@@ -28,6 +28,10 @@
                             <i class="material-icons prefix white-text">phone</i>
                             <input name="phone" id="phone" type="tel" placeholder="Номер телефона" class="white-text" required>
                         </div>
+                        <div class="input-field col s12">
+                            <i class="material-icons prefix white-text">email</i>
+                            <input name="email" id="email" type="email" placeholder="Адрес почты" class="white-text" required>
+                        </div>
                         <div class="file-field input-field col s12">
                             <div>
                                 <input type="file" name="files[]" multiple="multiple" accept=".jpg,.jpeg,.png">

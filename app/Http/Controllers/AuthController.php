@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\ConfirmationMail;
 use App\Models\Client;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
@@ -11,6 +12,8 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
 use Orchid\Attachment\File;
 
 class AuthController extends Controller
@@ -23,7 +26,10 @@ class AuthController extends Controller
     public function authenticate(Request $request): RedirectResponse
     {
         $credentials = $request->only('phone', 'password');
-
+        $isConfirmed = Client::query()->where('phone', '=', $credentials['phone'])->firstOrFail()->email_confirmed;
+        if (! $isConfirmed) {
+            return redirect()->back()->withErrors(['authentication' => 'Сперва нужно подтвердить свой почтовый адрес']);
+        }
         if (Auth::guard('clients')->attempt($credentials)) {
             return redirect()->intended('');
         }
@@ -36,11 +42,17 @@ class AuthController extends Controller
         return view('auth.register');
     }
 
+    public function needConfirmation()
+    {
+        return view('auth.neededConfirmation');
+    }
+
     public function storeUser(Request $request): \Illuminate\Foundation\Application|Redirector|RedirectResponse|Application
     {
         $this->validate($request, [
             'name' => 'required|string|max:255',
             'phone' => 'required|string|max:15|unique:clients',
+            'email' => 'required|string|email|unique:clients',
             'password' => 'required|string|min:8|confirmed',
             'files' => 'required|array|size:2',
         ]);
@@ -48,7 +60,9 @@ class AuthController extends Controller
         $client = Client::create([
             'name' => $request->input('name'),
             'phone' => $request->input('phone'),
+            'email' => $request->input('email'),
             'password' => Hash::make($request->input('password')),
+            'confirmation_code' => Str::random(10),
         ]);
 
         $attachmentIds = [];
@@ -60,10 +74,9 @@ class AuthController extends Controller
         }
 
         $client->attachment()->syncWithoutDetaching($attachmentIds);
+        Mail::to($client->email)->send(new ConfirmationMail($client->email, $client->confirmation_code));
 
-        Auth::guard('clients')->login($client);
-
-        return redirect('/');
+        return redirect(route('needConfirmation'));
     }
 
     public function logout(Request $request)
@@ -72,5 +85,26 @@ class AuthController extends Controller
         $request->session()->invalidate();
 
         return redirect('/auth/login');
+    }
+
+    public function confirmEmail(Request $request, string $confirmationString)
+    {
+        try {
+            $confirmationStringSplit = explode('pixelrental', $confirmationString);
+            $clientEmail = $confirmationStringSplit[0];
+            $clientCode = $confirmationStringSplit[1];
+            $client = Client::query()->where('email', '=', $clientEmail)->firstOrFail();
+            if ($client->confirmation_code === $clientCode) {
+                $client->email_confirmed = true;
+                $client->confirmation_code = '@@@@@@';
+                $client->save();
+
+                return view('auth.emailConfirmed');
+            }
+
+            return view('auth.invalidConfirmationLink');
+        } catch (\Exception) {
+            return view('auth.invalidConfirmationLink');
+        }
     }
 }

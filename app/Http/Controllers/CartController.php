@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Good;
-use http\Client;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;

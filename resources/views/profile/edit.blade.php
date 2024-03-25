@@ -12,6 +12,10 @@
                 <i class="material-icons prefix white-text">phone</i>
                 <input name="phone" id="phone" value={{$client->phone}} type="tel" placeholder="Номер телефона" class="white-text" required>
             </div>
+            <div class="input-field">
+                <i class="material-icons prefix white-text">email</i>
+                <input name="email" id="email" value={{$client->email}} type="tel" placeholder="Почтовый адрес" class="white-text" required>
+            </div>
             <div class="file-field input-field">
                 <div>
                     <input type="file" name="files[]" multiple="multiple" accept=".jpg,.jpeg,.png">

@@ -50,6 +50,12 @@ class ProfileController extends Controller
                 'max:15',
                 Rule::unique('clients')->ignore(Auth::guard('clients')->id()),
             ],
+            'email' => [
+                'required',
+                'string',
+                'email',
+                Rule::unique('clients')->ignore(Auth::guard('clients')->id()),
+            ],
             'files' => 'required|array|size:2',
         ]);
 
@@ -59,6 +65,7 @@ class ProfileController extends Controller
             [
                 'name' => $request->input('name'),
                 'phone' => $request->input('phone'),
+                'email' => $request->input('email'),
                 'updated_at' => now(),
             ]
         );

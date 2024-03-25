@@ -34,6 +34,8 @@ Route::prefix('/')->group(function () {
 Route::prefix('/auth')->group(function () {
     Route::get('/logout', [HttpControllers\AuthController::class, 'logout'])->name('logout');
     Route::get('/login', [HttpControllers\AuthController::class, 'login'])->name('login');
+    Route::get('/need-to-confirm', [HttpControllers\AuthController::class, 'needConfirmation'])->name('needConfirmation');
+    Route::get('/confirm/{confirmationCheckSum}', [HttpControllers\AuthController::class, 'confirmEmail'])->name('confirmEmail');
     Route::post('/login', [HttpControllers\AuthController::class, 'authenticate'])->name('authenticate');
     Route::get('/register', [HttpControllers\AuthController::class, 'register'])->name('register');
     Route::post('/register', [HttpControllers\AuthController::class, 'storeUser'])->name('storeUser');

@@ -117,7 +117,7 @@ class OrderController extends Controller
 Общая сумма: $totalSum тг
 
 Список товаров:
-" . $orderItemMessageData);
+".$orderItemMessageData);
 
         if (! $response->ok()) {
             sendTelegramMessage(
