@@ -40,29 +40,13 @@ class ItemListLayout extends Table
                         ->route('platform.items.edit', $item);
                 }),
 
-            TD::make('status')
-                ->sort()
-                ->filter(
-                    Select::make('status')
-                        ->options([
-                            'Available' => 'available',
-                            'Rented' => 'rented',
-                            'Pre ordered' => 'pre-ordered',
-                        ])
-                        ->title('status')
-                        ->help('status itema')
-                )
-                ->render(function (Item $item) {
-                    return $item->status;
-                }),
-
             TD::make('created_at', __('Created'))
                 ->usingComponent(DateTimeSplit::class)
                 ->align(TD::ALIGN_RIGHT)
                 ->defaultHidden()
                 ->sort(),
 
-            TD::make('updated_at', __('Created'))
+            TD::make('updated_at', __('Updated'))
                 ->usingComponent(DateTimeSplit::class)
                 ->align(TD::ALIGN_RIGHT)
                 ->defaultHidden()

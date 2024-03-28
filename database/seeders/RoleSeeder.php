@@ -38,6 +38,9 @@ class RoleSeeder extends Seeder
                 'platform.goodTypes.edit' => '1',
                 'platform.goodTypes.list' => '1',
                 'platform.goodTypes.create' => '1',
+                'platform.clients.edit' => '1',
+                'platform.clients.list' => '1',
+                'platform.clients.create' => '1',
                 'platform.systems.attachment' => '1',
             ]),
         ];

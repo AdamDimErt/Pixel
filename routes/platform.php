@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use App\Orchid\Screens\Client\ClientEditScreen;
+use App\Orchid\Screens\Client\ClientListScreen;
 use App\Orchid\Screens\Good\GoodEditScreen;
 use App\Orchid\Screens\Good\GoodListScreen;
 use App\Orchid\Screens\GoodType\GoodTypeEditScreen;
@@ -146,7 +148,7 @@ Route::screen('items', ItemListScreen::class)
         ->parent('platform.index')
         ->push(__('Items'), route('platform.items.list')));
 
-// Platform > System > Orders > Item
+// Platform > System > Orders > Order
 Route::screen('orders/{order}/edit', OrderEditScreen::class)
     ->name('platform.orders.edit')
     ->breadcrumbs(fn (Trail $trail, $order) => $trail
@@ -166,3 +168,24 @@ Route::screen('orders', OrderListScreen::class)
     ->breadcrumbs(fn (Trail $trail) => $trail
         ->parent('platform.index')
         ->push(__('Orders'), route('platform.orders.list')));
+
+// Platform > System > clients > client
+Route::screen('clients/{client}/edit', ClientEditScreen::class)
+    ->name('platform.clients.edit')
+    ->breadcrumbs(fn (Trail $trail, $client) => $trail
+        ->parent('platform.clients.list')
+        ->push('client #    '.$client->id, route('platform.clients.edit', $client)));
+
+// Platform > System > clients > client
+Route::screen('clients/create', ClientEditScreen::class)
+    ->name('platform.clients.create')
+    ->breadcrumbs(fn (Trail $trail) => $trail
+        ->parent('platform.clients.list')
+        ->push(__('Create'), route('platform.clients.create')));
+
+// Platform > System > clients
+Route::screen('clients', ClientListScreen::class)
+    ->name('platform.clients.list')
+    ->breadcrumbs(fn (Trail $trail) => $trail
+        ->parent('platform.index')
+        ->push(__('clients'), route('platform.clients.list')));

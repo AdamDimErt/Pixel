@@ -63,6 +63,11 @@ class PlatformProvider extends OrchidServiceProvider
                 ->route('platform.orders.list')
                 ->permission('platform.orders.list'),
 
+            Menu::make(__('Clients'))
+                ->icon('bs.file-earmark-person')
+                ->route('platform.clients.list')
+                ->permission('platform.clients.list'),
+
         ];
     }
 

@@ -1,18 +1,18 @@
 <?php
 
-namespace App\Orchid\Layouts\Good;
+namespace App\Orchid\Layouts\Client;
 
-use App\Models\Good;
-use App\Models\GoodType;
+use App\Models\Client;
 use Orchid\Screen\Actions\Link;
 use Orchid\Screen\Components\Cells\DateTimeSplit;
 use Orchid\Screen\Fields\Input;
 use Orchid\Screen\Fields\NumberRange;
 use Orchid\Screen\Fields\Relation;
+use Orchid\Screen\Fields\Select;
 use Orchid\Screen\Layouts\Table;
 use Orchid\Screen\TD;
 
-class GoodListLayout extends Table
+class ClientListLayout extends Table
 {
     /**
      * Data source.
@@ -22,7 +22,7 @@ class GoodListLayout extends Table
      *
      * @var string
      */
-    protected $target = 'goods';
+    protected $target = 'clients';
 
     /**
      * Get the table cells to be displayed.
@@ -37,37 +37,37 @@ class GoodListLayout extends Table
                 ->filter(
                     Input::make()
                 )
-                ->render(function (Good $good) {
-                    return Link::make($good->name)
-                        ->route('platform.goods.edit', $good);
+                ->render(function (Client $client) {
+                    return Link::make($client->name)
+                        ->route('platform.clients.edit', $client);
                 }),
 
-            TD::make('description')
+            TD::make('phone')
                 ->sort()
                 ->filter(
                     Input::make()
-                )
-                ->render(function (Good $good) {
-                    return $good->description;
-                }),
+                ),
 
-            TD::make('cost')
+            TD::make('instagram')
                 ->sort()
                 ->filter(
-                    NumberRange::make()
-                )
-                ->render(function (Good $good) {
-                    return $good->cost;
-                }),
+                    Input::make()
+                ),
 
-            TD::make('Category')
+            TD::make('email_confirmed')
+                ->sort()
                 ->filter(
-                    Relation::make()
-                        ->fromModel(GoodType::class, 'name')
-                )
-                ->render(function (Good $good) {
-                    return Link::make($good->goodType->name)
-                        ->route('platform.goodTypes.edit', $good->goodType);
+                    Select::make('email_confirmed')
+                        ->options([
+                            'Подтверждён' => 1,
+                            'Не подтверждён' => 0,
+                        ])
+                        ->title('email_confirmed')
+                )->render(function (Client $client) {
+                    return [
+                        0 => 'Не подтверждён',
+                        1 => 'Подтверждён',
+                    ][$client->email_confirmed];
                 }),
 
             TD::make('created_at', __('Created'))

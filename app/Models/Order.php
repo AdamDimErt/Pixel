@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Orchid\Filters\Filterable;
 use Orchid\Filters\Types\Where;
@@ -20,8 +21,6 @@ class Order extends Model
     protected $casts = [
         'created_at' => 'datetime:Y-m-d h:m:s',
         'updated_at' => 'datetime:Y-m-d h:m:s',
-        'rent_start' => 'datetime:Y-m-d h:m:s',
-        'rent_end' => 'datetime:Y-m-d h:m:s',
     ];
 
     protected $allowedFilters = [
@@ -52,5 +51,10 @@ class Order extends Model
     public function orderItems()
     {
         return $this->hasMany(OrderItem::class);
+    }
+
+    public function items(): BelongsToMany
+    {
+        return $this->belongsToMany(Item::class, 'order_items');
     }
 }
