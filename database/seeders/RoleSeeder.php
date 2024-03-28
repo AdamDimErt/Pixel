@@ -45,6 +45,9 @@ class RoleSeeder extends Seeder
                 'platform.additionals.list' => '1',
                 'platform.additionals.create' => '1',
                 'platform.additionals.edit' => '1',
+                'platform.orderItems.list' => '1',
+                'platform.orderItems.create' => '1',
+                'platform.orderItems.edit' => '1',
             ]),
         ];
     }

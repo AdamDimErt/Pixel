@@ -14,6 +14,8 @@ use App\Orchid\Screens\Item\ItemEditScreen;
 use App\Orchid\Screens\Item\ItemListScreen;
 use App\Orchid\Screens\Order\OrderEditScreen;
 use App\Orchid\Screens\Order\OrderListScreen;
+use App\Orchid\Screens\OrderItem\OrderItemEditScreen;
+use App\Orchid\Screens\OrderItem\OrderItemListScreen;
 use App\Orchid\Screens\PlatformScreen;
 use App\Orchid\Screens\Role\RoleEditScreen;
 use App\Orchid\Screens\Role\RoleListScreen;
@@ -212,3 +214,24 @@ Route::screen('additionals', AdditionalListScreen::class)
     ->breadcrumbs(fn (Trail $trail) => $trail
         ->parent('platform.index')
         ->push(__('additionals'), route('platform.additionals.list')));
+
+// Platform > System > orderItems > orderItem
+Route::screen('orderItems/{orderItem}/edit', OrderItemEditScreen::class)
+    ->name('platform.orderItems.edit')
+    ->breadcrumbs(fn (Trail $trail, $orderItem) => $trail
+        ->parent('platform.orderItems.list')
+        ->push('orderItem #    '.$orderItem->id, route('platform.orderItems.edit', $orderItem)));
+
+// Platform > System > orderItems > orderItem
+Route::screen('orderItems/create', OrderItemEditScreen::class)
+    ->name('platform.orderItems.create')
+    ->breadcrumbs(fn (Trail $trail) => $trail
+        ->parent('platform.orderItems.list')
+        ->push(__('Create'), route('platform.orderItems.create')));
+
+// Platform > System > orderItems
+Route::screen('orderItems', OrderItemListScreen::class)
+    ->name('platform.orderItems.list')
+    ->breadcrumbs(fn (Trail $trail) => $trail
+        ->parent('platform.index')
+        ->push(__('orderItems'), route('platform.orderItems.list')));

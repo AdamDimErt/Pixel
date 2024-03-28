@@ -73,6 +73,11 @@ class PlatformProvider extends OrchidServiceProvider
                 ->route('platform.additionals.list')
                 ->permission('platform.additionals.list'),
 
+            Menu::make(__('OrderItems'))
+                ->icon('bs.plus-circle-fill')
+                ->route('platform.orderItems.list')
+                ->permission('platform.orderItems.list'),
+
         ];
     }
 

@@ -1,11 +1,9 @@
 <?php
 
-namespace App\Orchid\Layouts\Order;
+namespace App\Orchid\Layouts\OrderItem;
 
-use App\Models\Client;
 use App\Models\Order;
-use App\Models\User;
-use Illuminate\Http\RedirectResponse;
+use App\Models\OrderItem;
 use Orchid\Screen\Actions\Button;
 use Orchid\Screen\Actions\DropDown;
 use Orchid\Screen\Actions\Link;
@@ -16,9 +14,8 @@ use Orchid\Screen\Fields\Relation;
 use Orchid\Screen\Fields\Select;
 use Orchid\Screen\Layouts\Table;
 use Orchid\Screen\TD;
-use Orchid\Support\Facades\Alert;
 
-class OrderListLayout extends Table
+class OrderItemListLayout extends Table
 {
     /**
      * Data source.
@@ -28,7 +25,7 @@ class OrderListLayout extends Table
      *
      * @var string
      */
-    protected $target = 'orders';
+    protected $target = 'orderItems';
 
     /**
      * Get the table cells to be displayed.
@@ -38,26 +35,15 @@ class OrderListLayout extends Table
     protected function columns(): iterable
     {
         return [
-            TD::make('id', __('OrderID'))
-                ->filter(Input::make())
-
-                ->render(function (Order $order) {
-                    return Link::make($order->id)
-                        ->route('platform.orders.edit', $order->id);
-                }),
-            TD::make('client_id', __('Owner'))
+            TD::make('name')
+                ->sort()
                 ->filter(
-                    Relation::make()
-                        ->fromModel(Client::class, 'name')
+                    Input::make()
                 )
-                ->render(function (Order $order) {
-                    return Link::make($order->owner->name)
-                        ->route('platform.clients.edit', $order->owner);
+                ->render(function (OrderItem $orderItemItem) {
+                    return Link::make($orderItemItem->item->name)
+                        ->route('platform.orderItems.edit', $orderItemItem);
                 }),
-            TD::make('amount_paid', __('Amount paid'))
-                ->filter(
-                    NumberRange::make()
-                ),
 
             TD::make('status')
                 ->sort()
@@ -73,91 +59,81 @@ class OrderListLayout extends Table
                         ->title('status')
                         ->help('status itema')
                 )
-                ->render(function (Order $order) {
-                    return $order->status;
+                ->render(function (OrderItem $orderItemItem) {
+                    return $orderItemItem->status;
                 }),
 
-            TD::make('first_order_date', __('Начало аренды'))
-                ->usingComponent(DateTimeSplit::class)
+            TD::make('amount_paid')
+                ->sort()
+                ->filter(
+                    Input::make()
+                ),
+
+            TD::make('rent_start_date', __('Rent start date'))
                 ->align(TD::ALIGN_RIGHT)
                 ->sort(),
 
-            TD::make('last_order_date', __('Конец аренды'))
-                ->usingComponent(DateTimeSplit::class)
+            TD::make('rent_start_time', __('Rent start time'))
                 ->align(TD::ALIGN_RIGHT)
                 ->sort(),
 
-            TD::make('created_at', __('Создан'))
-                ->usingComponent(DateTimeSplit::class)
+            TD::make('rent_end_date', __('Rent start date'))
                 ->align(TD::ALIGN_RIGHT)
                 ->sort(),
 
-            TD::make('updated_at', __('Изменён'))
+            TD::make('rent_end_time', __('Rent end time'))
+                ->align(TD::ALIGN_RIGHT)
+                ->sort(),
+
+            TD::make('created_at', __('Created'))
                 ->usingComponent(DateTimeSplit::class)
                 ->align(TD::ALIGN_RIGHT)
+                ->defaultHidden()
+                ->sort(),
+
+            TD::make('updated_at', __('Updated'))
+                ->usingComponent(DateTimeSplit::class)
+                ->align(TD::ALIGN_RIGHT)
+                ->defaultHidden()
                 ->sort(),
 
             TD::make(__('Actions'))
                 ->align(TD::ALIGN_CENTER)
                 ->width('100px')
-                ->render(function (\App\Models\Order $order) {
-                    $btnsList = [
-                        Link::make(__('Look at items'))
-                            ->route('platform.items.list',
-                                [
-                                    'filter[id]' => $order
-                                        ->items()
-                                        ->pluck('items.id')
-                                        ->implode(','),
-                                ]
-                            )
-                            ->icon('bs.search'),
-                    ];
+                ->render(function (\App\Models\OrderItem $orderItem) {
+                    $btnsList = [Link::make(__('Edit'))
+                        ->route('platform.orderItems.edit', $orderItem->id)
+                        ->icon('bs.pencil')];
 
-                    if ($order->status === 'in_rent') {
+                    if ($orderItem->status === 'in_rent') {
                         $btnsList[] = Button::make(__('Return'))
                             ->icon('bs.arrow-return-left')
                             ->confirm(__('If you return this order, you will not be available to use it again'))
                             ->method('return', [
-                                'id' => $order->id,
+                                'id' => $orderItem->id,
                             ]);
                     }
 
-                    if ($order->status === 'waiting') {
-                        $btnsList[] = Link::make(__('Edit'))
-                            ->route('platform.orders.edit', $order->id)
-                            ->icon('bs.pencil');
+                    if ($orderItem->status === 'waiting') {
+
                         $btnsList[] = Button::make(__('Confirm'))
                             ->icon('bs.check2')
                             ->confirm(__('Would you like to confirm this order?'))
                             ->method('confirm', [
-                                'id' => $order->id,
+                                'id' => $orderItem->id,
                             ]);
                         $btnsList[] = Button::make(__('Cancel'))
                             ->icon('bs.x')
                             ->confirm(__('If you cancel this order, you will not be available to use it again'))
                             ->method('cancel', [
-                                'id' => $order->id,
+                                'id' => $orderItem->id,
                             ]);
                     }
 
                     return DropDown::make()
                         ->icon('bs.three-dots-vertical')
                         ->list($btnsList);
-                }
-                ),
+                })
         ];
-    }
-
-    /**
-     * @return RedirectResponse
-     */
-    public function remove(Order $order)
-    {
-        $order->delete();
-
-        Alert::info('You have successfully deleted the orders.');
-
-        return redirect()->route('platform.orders.list');
     }
 }

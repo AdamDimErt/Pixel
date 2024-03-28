@@ -115,7 +115,7 @@ class ClientEditScreen extends Screen
                         1 => 'Заблокирован',
                         0 => 'Не заблокирован',
                     ])
-                    ->title('email_confirmed')
+                    ->title('blocked')
                     ->help('Specify a short descriptive title for this client.')
                     ->required(),
 
@@ -147,9 +147,8 @@ class ClientEditScreen extends Screen
         $client->confirmation_code = Str::random(10);
         if (($request->input('client')['password1'])){
             $client->password = Hash::make(($request->input('client')['password1']));
-
-            $client->save();
         }
+        $client->save();
 
         Mail::to($client->email)->send(new ConfirmationMail($client->email, $client->confirmation_code));
 
