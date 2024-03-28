@@ -1,15 +1,20 @@
 <?php
 
-namespace App\Orchid\Layouts\GoodType;
+namespace App\Orchid\Layouts\Additional;
 
-use App\Models\GoodType;
+use App\Models\Additional;
+use Orchid\Screen\Actions\Button;
+use Orchid\Screen\Actions\DropDown;
 use Orchid\Screen\Actions\Link;
 use Orchid\Screen\Components\Cells\DateTimeSplit;
 use Orchid\Screen\Fields\Input;
+use Orchid\Screen\Fields\NumberRange;
+use Orchid\Screen\Fields\Relation;
+use Orchid\Screen\Fields\Select;
 use Orchid\Screen\Layouts\Table;
 use Orchid\Screen\TD;
 
-class GoodTypeListLayout extends Table
+class AdditionalListLayout extends Table
 {
     /**
      * Data source.
@@ -19,7 +24,7 @@ class GoodTypeListLayout extends Table
      *
      * @var string
      */
-    protected $target = 'goodTypes';
+    protected $target = 'additionals';
 
     /**
      * Get the table cells to be displayed.
@@ -31,25 +36,19 @@ class GoodTypeListLayout extends Table
         return [
             TD::make('name')
                 ->sort()
-                ->filter(Input::make())
-                ->render(function (GoodType $goodType) {
-                    return Link::make($goodType->name)
-                        ->route('platform.goodTypes.edit', $goodType);
+                ->filter(
+                    Input::make()
+                )
+                ->render(function (Additional $additional) {
+                    return Link::make($additional->name)
+                        ->route('platform.additionals.edit', $additional);
                 }),
 
-            TD::make('description')
+            TD::make('cost')
                 ->sort()
-                ->filter(Input::make())
-                ->render(function (GoodType $goodType) {
-                    return $goodType->description;
-                }),
-
-            TD::make('code', __('Route'))
-                ->sort()
-                ->filter(Input::make())
-                ->render(function (GoodType $goodType) {
-                    return $goodType->code;
-                }),
+                ->filter(
+                    Input::make()
+                ),
 
             TD::make('created_at', __('Created'))
                 ->usingComponent(DateTimeSplit::class)

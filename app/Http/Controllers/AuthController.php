@@ -27,6 +27,10 @@ class AuthController extends Controller
     {
         $credentials = $request->only('phone', 'password');
         $isConfirmed = Client::query()->where('phone', '=', $credentials['phone'])->firstOrFail()->email_confirmed;
+        $isBlocked = Client::query()->where('phone', '=', $credentials['phone'])->firstOrFail()->blocked;
+        if ($isBlocked) {
+            return redirect()->back()->withErrors(['authentication' => 'Профиль был заблокирован']);
+        }
         if (! $isConfirmed) {
             return redirect()->back()->withErrors(['authentication' => 'Сперва нужно подтвердить свой почтовый адрес']);
         }

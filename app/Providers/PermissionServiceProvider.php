@@ -30,11 +30,16 @@ class PermissionServiceProvider extends ServiceProvider
             ->addPermission('platform.clients.list', 'Clients')
             ->addPermission('platform.clients.create', 'Clients create')
             ->addPermission('platform.clients.edit', 'Clients edit');
+        $additionalsPermissions = ItemPermission::group('Additionals')
+            ->addPermission('platform.additionals.list', 'Additionals')
+            ->addPermission('platform.additionals.create', 'Additionals create')
+            ->addPermission('platform.additionals.edit', 'Additionals edit');
 
         $dashboard->registerPermissions($goodsPermissions);
         $dashboard->registerPermissions($goodTypesPermissions);
         $dashboard->registerPermissions($itemsPermissions);
         $dashboard->registerPermissions($ordersPermissions);
         $dashboard->registerPermissions($clientsPermissions);
+        $dashboard->registerPermissions($additionalsPermissions);
     }
 }

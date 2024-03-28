@@ -79,6 +79,12 @@ class GoodTypeEditScreen extends Screen
                     ->required()
                     ->help('Specify a short descriptive title for this post.'),
 
+                Input::make('goodType.code')
+                    ->title('Title')
+                    ->placeholder('Attractive but mysterious title')
+                    ->required()
+                    ->help('Specify a short descriptive title for this post.'),
+
                 TextArea::make('goodType.description')
                     ->title('Description')
                     ->rows(3)

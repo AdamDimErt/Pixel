@@ -24,6 +24,8 @@ class Good extends Model
     protected $allowedFilters = [
         'name' => Like::class,
         'cost' => WhereMaxMin::class,
+        'discount_cost' => WhereMaxMin::class,
+        'damage_cost' => WhereMaxMin::class,
         'good_type_id' => Where::class,
         'description' => Like::class,
         'created_at' => WhereDateStartEnd::class,
@@ -33,8 +35,10 @@ class Good extends Model
     protected $allowedSorts = [
         'name',
         'cost',
-        'description',
+        'discount_cost',
+        'damage_cost',
         'good_type_id',
+        'description',
         'created_at',
         'deleted_at',
     ];

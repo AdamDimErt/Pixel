@@ -6,11 +6,13 @@ use App\Mail\ConfirmationMail;
 use App\Models\Client;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use Orchid\Screen\Actions\Button;
 use Orchid\Screen\Fields\Input;
 use Orchid\Screen\Fields\Relation;
+use Orchid\Screen\Fields\Select;
 use Orchid\Screen\Fields\TextArea;
 use Orchid\Screen\Fields\Upload;
 use Orchid\Screen\Screen;
@@ -58,7 +60,7 @@ class ClientEditScreen extends Screen
             Button::make('Create client')
                 ->icon('pencil')
                 ->method('createOrUpdate')
-                ->canSee(! $this->client->exists),
+                ->canSee(!$this->client->exists),
 
             Button::make('Update')
                 ->icon('note')
@@ -99,17 +101,34 @@ class ClientEditScreen extends Screen
                     ->help('Specify a short descriptive title for this client.')
                     ->required(),
 
+                Select::make('client.email_confirmed')
+                    ->options([
+                        1 => 'Подтверждён',
+                        0 => 'Не подтверждён',
+                    ])
+                    ->title('email_confirmed')
+                    ->help('Specify a short descriptive title for this client.')
+                    ->required(),
+
+                Select::make('client.blocked')
+                    ->options([
+                        1 => 'Заблокирован',
+                        0 => 'Не заблокирован',
+                    ])
+                    ->title('email_confirmed')
+                    ->help('Specify a short descriptive title for this client.')
+                    ->required(),
+
                 Input::make('client.instagram')
                     ->title('Instagram')
                     ->placeholder('Attractive but mysterious title')
                     ->help('Specify a short descriptive title for this client.')
                     ->required(),
 
-                Input::make('client.password')
+                Input::make('client.password1')
                     ->title('Password')
                     ->placeholder('Attractive but mysterious title')
-                    ->help('Specify a short descriptive title for this client.')
-                    ->required(),
+                    ->help('Specify a short descriptive title for this client.'),
 
                 Upload::make('client.attachment')
                     ->title('All files')
@@ -123,11 +142,14 @@ class ClientEditScreen extends Screen
      */
     public function createOrUpdate(Client $client, Request $request)
     {
-        $client->fill($request->except('client.attachment')['client']);
+        $client->fill($request->except('client.attachment', 'client.password1')['client']);
 
         $client->confirmation_code = Str::random(10);
+        if (($request->input('client')['password1'])){
+            $client->password = Hash::make(($request->input('client')['password1']));
 
-        $client->save();
+            $client->save();
+        }
 
         Mail::to($client->email)->send(new ConfirmationMail($client->email, $client->confirmation_code));
 

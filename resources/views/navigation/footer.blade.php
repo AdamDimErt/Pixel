@@ -40,7 +40,7 @@
     <div class="footer-copyright">
         <div class="container">
             <span class="right">
-            {{ now()->year }}<a href="https://msbtrust.kz"><b class="orange-text text-lighten-1"> ©MSB trust</b></a>
+            {{ now()->tz('Asia/Almaty')->year }}<a href="https://msbtrust.kz"><b class="orange-text text-lighten-1"> ©MSB trust</b></a>
             </span>
         </div>
     </div>

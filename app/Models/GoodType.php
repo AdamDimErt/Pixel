@@ -24,6 +24,7 @@ class GoodType extends Model
     protected $allowedFilters = [
         'name' => Like::class,
         'description' => Like::class,
+        'code' => Like::class,
         'created_at' => WhereDateStartEnd::class,
         'deleted_at' => WhereDateStartEnd::class,
     ];
@@ -31,6 +32,7 @@ class GoodType extends Model
     protected $allowedSorts = [
         'name',
         'description',
+        'code',
         'created_at',
         'deleted_at',
     ];

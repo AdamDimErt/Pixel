@@ -46,7 +46,7 @@ class GoodListLayout extends Table
                 ->sort()
                 ->filter(
                     Input::make()
-                )
+                )->width('100px')
                 ->render(function (Good $good) {
                     return $good->description;
                 }),
@@ -60,7 +60,25 @@ class GoodListLayout extends Table
                     return $good->cost;
                 }),
 
-            TD::make('Category')
+            TD::make('discount_cost')
+                ->sort()
+                ->filter(
+                    NumberRange::make()
+                )
+                ->render(function (Good $good) {
+                    return $good->cost;
+                }),
+
+            TD::make('damage_cost')
+                ->sort()
+                ->filter(
+                    NumberRange::make()
+                )
+                ->render(function (Good $good) {
+                    return $good->cost;
+                }),
+
+            TD::make('good_type_id', 'Category')
                 ->filter(
                     Relation::make()
                         ->fromModel(GoodType::class, 'name')

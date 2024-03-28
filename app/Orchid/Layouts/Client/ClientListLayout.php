@@ -3,11 +3,10 @@
 namespace App\Orchid\Layouts\Client;
 
 use App\Models\Client;
+use Orchid\Screen\Actions\DropDown;
 use Orchid\Screen\Actions\Link;
 use Orchid\Screen\Components\Cells\DateTimeSplit;
 use Orchid\Screen\Fields\Input;
-use Orchid\Screen\Fields\NumberRange;
-use Orchid\Screen\Fields\Relation;
 use Orchid\Screen\Fields\Select;
 use Orchid\Screen\Layouts\Table;
 use Orchid\Screen\TD;
@@ -59,8 +58,8 @@ class ClientListLayout extends Table
                 ->filter(
                     Select::make('email_confirmed')
                         ->options([
-                            'Подтверждён' => 1,
-                            'Не подтверждён' => 0,
+                            1 => 'Подтверждён',
+                            0 => 'Не подтверждён',
                         ])
                         ->title('email_confirmed')
                 )->render(function (Client $client) {
@@ -71,7 +70,7 @@ class ClientListLayout extends Table
                 }),
 
             TD::make('created_at', __('Created'))
-                ->usingComponent(DateTimeSplit::class)
+                ->usingComponent(DateTimeSplit::class, tz: 'UTC')
                 ->align(TD::ALIGN_RIGHT)
                 ->defaultHidden()
                 ->sort(),
@@ -81,6 +80,28 @@ class ClientListLayout extends Table
                 ->align(TD::ALIGN_RIGHT)
                 ->defaultHidden()
                 ->sort(),
+
+            TD::make(__('Actions'))
+                ->align(TD::ALIGN_CENTER)
+                ->width('100px')
+                ->render(function (\App\Models\Client $client) {
+                    $btnsList = [
+                        Link::make(__('Look at orders'))
+                            ->route('platform.orders.list',
+                                [
+                                    'filter[client_id]' => $client
+                                        ->orders()
+                                        ->pluck('id')
+                                        ->implode(','),
+                                ]
+                            )
+                            ->icon('bs.search'),
+                    ];
+
+                    return DropDown::make()
+                        ->icon('bs.three-dots-vertical')
+                        ->list($btnsList);
+                }),
         ];
     }
 }

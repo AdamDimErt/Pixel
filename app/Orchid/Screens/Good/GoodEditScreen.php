@@ -2,6 +2,7 @@
 
 namespace App\Orchid\Screens\Good;
 
+use App\Models\Additional;
 use App\Models\Good;
 use App\Models\GoodType;
 use Illuminate\Http\RedirectResponse;
@@ -92,8 +93,31 @@ class GoodEditScreen extends Screen
                     ->type('number')
                     ->required(),
 
+                Input::make('good.discount_cost')
+                    ->title('Discount_cost')
+                    ->placeholder('Define a discount_cost for a good')
+                    ->help('Specify a discount_cost for a good')
+                    ->type('number'),
+
+                Input::make('good.damage_cost')
+                    ->title('Damage_cost')
+                    ->placeholder('Define a damage_cost for a good')
+                    ->help('Specify a damage_cost for a good')
+                    ->type('number')
+                    ->required(),
+
                 Relation::make('good.good_type_id')
                     ->fromModel(GoodType::class, 'name')
+                    ->title('Choose a category for that good'),
+
+                Relation::make('good.related_goods')
+                    ->fromModel(Good::class, 'name')
+                    ->multiple()
+                    ->title('Choose a category for that good'),
+
+                Relation::make('good.additionals')
+                    ->fromModel(Additional::class, 'name')
+                    ->multiple()
                     ->title('Choose a category for that good'),
 
                 TextArea::make('good.description')
@@ -115,7 +139,17 @@ class GoodEditScreen extends Screen
      */
     public function createOrUpdate(Good $good, Request $request)
     {
-        $good->fill($request->except('good.attachment')['good'])->save();
+        $good->fill($request->except('good.attachment')['good']);
+
+        if (!$request->input('good.related_goods')){
+            $good->related_goods = '[]';
+        }
+
+        if (!$request->input('good.additionals')){
+            $good->additionals = '[]';
+        }
+
+        $good->save();
 
         $good->attachment()->syncWithoutDetaching(
             $request->input('good.attachment', [])

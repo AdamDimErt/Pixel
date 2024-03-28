@@ -35,7 +35,7 @@ class OrderListLayout extends Table
     protected function columns(): iterable
     {
         return [
-            TD::make('Owner')
+            TD::make('client_id', __('Owner'))
                 ->filter(
                     Relation::make()
                         ->fromModel(User::class, 'name')
@@ -62,12 +62,12 @@ class OrderListLayout extends Table
                     return $order->status;
                 }),
 
-            TD::make('rent_start', __('Начало аренды'))
+            TD::make('first_order_date', __('Начало аренды'))
                 ->usingComponent(DateTimeSplit::class)
                 ->align(TD::ALIGN_RIGHT)
                 ->sort(),
 
-            TD::make('rent_end', __('Конец аренды'))
+            TD::make('last_order_date', __('Конец аренды'))
                 ->usingComponent(DateTimeSplit::class)
                 ->align(TD::ALIGN_RIGHT)
                 ->sort(),

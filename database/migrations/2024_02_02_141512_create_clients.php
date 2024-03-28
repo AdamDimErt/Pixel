@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('instagram')->nullable(false);
             $table->string('confirmation_code')->nullable(false);
             $table->boolean('email_confirmed')->nullable(false)->default(false);
+            $table->boolean('blocked')->nullable(false)->default(false);
             $table->string('password');
 
             $table->timestamps();

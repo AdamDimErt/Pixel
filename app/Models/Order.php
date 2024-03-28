@@ -24,7 +24,7 @@ class Order extends Model
     ];
 
     protected $allowedFilters = [
-        'user_id' => Where::class,
+        'client_id' => Where::class,
         'amount_paid' => WhereMaxMin::class,
         'status' => Where::class,
         'rent_start_at' => WhereDateStartEnd::class,
@@ -34,7 +34,7 @@ class Order extends Model
     ];
 
     protected $allowedSorts = [
-        'user_id',
+        'client_id',
         'amount_paid',
         'status',
         'rent_start_at',
@@ -51,6 +51,34 @@ class Order extends Model
     public function orderItems()
     {
         return $this->hasMany(OrderItem::class);
+    }
+
+    public function getFirstOrderDate()
+    {
+        $firstOrder = $this->firstOrder();
+        return $firstOrder->rent_start_date . ' ' . $firstOrder->rent_start_time;
+    }
+
+    public function getLastOrderDate()
+    {
+        $firstOrder = $this->lastOrder();
+        return $firstOrder->rent_end_date . ' ' . $firstOrder->rent_end_time;
+    }
+
+    public function firstOrder()
+    {
+        return $this->orderItems()
+            ->orderBy('rent_start_date', 'ASC')
+            ->orderBy('rent_start_time', 'ASC')
+            ->first(['rent_start_date', 'rent_start_time']);
+    }
+
+    public function lastOrder()
+    {
+        return $this->orderItems()
+            ->orderBy('rent_end_date', 'DESC')
+            ->orderBy('rent_end_time', 'DESC')
+            ->first(['rent_end_date', 'rent_end_time']);
     }
 
     public function items(): BelongsToMany

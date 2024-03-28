@@ -72,7 +72,7 @@ class ProfileController extends Controller
                 'phone' => $request->input('phone'),
                 'email' => $request->input('email'),
                 'instagram' => $request->input('instagram'),
-                'updated_at' => now(),
+                'updated_at' => now()->tz('Asia/Almaty'),
             ]
         );
 

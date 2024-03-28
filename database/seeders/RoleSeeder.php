@@ -42,6 +42,9 @@ class RoleSeeder extends Seeder
                 'platform.clients.list' => '1',
                 'platform.clients.create' => '1',
                 'platform.systems.attachment' => '1',
+                'platform.additionals.list' => '1',
+                'platform.additionals.create' => '1',
+                'platform.additionals.edit' => '1',
             ]),
         ];
     }

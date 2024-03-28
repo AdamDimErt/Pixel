@@ -21,8 +21,6 @@ class Additional extends Model
     protected $allowedFilters = [
         'name' => Like::class,
         'cost' => WhereMaxMin::class,
-        'good_type_id' => Where::class,
-        'description' => Like::class,
         'created_at' => WhereDateStartEnd::class,
         'deleted_at' => WhereDateStartEnd::class,
     ];
@@ -30,8 +28,6 @@ class Additional extends Model
     protected $allowedSorts = [
         'name',
         'cost',
-        'description',
-        'good_type_id',
         'created_at',
         'deleted_at',
     ];
