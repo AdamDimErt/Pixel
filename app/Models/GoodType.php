@@ -25,6 +25,7 @@ class GoodType extends Model
         'name' => Like::class,
         'description' => Like::class,
         'code' => Like::class,
+        'icon' => Like::class,
         'created_at' => WhereDateStartEnd::class,
         'deleted_at' => WhereDateStartEnd::class,
     ];
@@ -33,6 +34,7 @@ class GoodType extends Model
         'name',
         'description',
         'code',
+        'icon',
         'created_at',
         'deleted_at',
     ];

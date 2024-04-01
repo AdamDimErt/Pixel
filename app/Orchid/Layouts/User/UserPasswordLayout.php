@@ -22,13 +22,13 @@ class UserPasswordLayout extends Rows
         $user = $this->query->get('user');
 
         $placeholder = $user->exists
-            ? __('Leave empty to keep current password')
-            : __('Enter the password to be set');
+            ? __('translations.Leave empty to keep current password')
+            : __('translations.Enter the password to be set');
 
         return [
             Password::make('user.password')
                 ->placeholder($placeholder)
-                ->title(__('Password')),
+                ->title(__('translations.Password')),
         ];
     }
 }

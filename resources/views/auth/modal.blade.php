@@ -10,7 +10,7 @@
         <div class="row">
             <div class="col s12 center">
                 <a href="{{route('login')}}" class="btn-large nav-link orange darken-4 auth-link ">
-                    Войти
+                    {{__('translations.Log in')}}
                 </a>
             </div>
             <div class="col s12 center">

@@ -15,7 +15,7 @@
     <div class="valign-wrapper">
         <div class="main-color center auth-inner">
             <a href="/" class="back-auth-button"><i class="material-icons orange-text text-lighten-3">cancel</i></a>
-            <h5 class="white-text">Создайте новый аккаунт</h5>
+            <h5 class="white-text">{{__('translations.Create new account')}}</h5>
             <div class="row">
                 <form class="col s12" method="POST" action="{{route('register')}}" enctype="multipart/form-data">
                     {{csrf_field()}}
@@ -26,17 +26,20 @@
                         </div>
                         <div class="input-field col s12">
                             <i class="material-icons prefix white-text">phone</i>
-                            <input name="phone" id="phone" type="tel" placeholder="Номер телефона" class="white-text" required>
+                            <input name="phone" id="phone" type="tel" placeholder="Номер телефона" class="white-text"
+                                   required>
                         </div>
                         <div class="input-field col s12">
                             <i class="material-icons prefix white-text">email</i>
-                            <input name="email" id="email" type="email" placeholder="Адрес почты" class="white-text" required>
+                            <input name="email" id="email" type="email" placeholder="Адрес почты" class="white-text"
+                                   required>
                         </div>
                         <div class="input-field col s12">
                             <i class="material-icons prefix white-text">
                                 <img src="{{asset('/img/instagram.svg')}}" height="35px" alt="">
                             </i>
-                            <input name="instagram" id="email" type="text" placeholder="Ваш instagram (только тег без @)" class="white-text" required>
+                            <input name="instagram" id="email" type="text"
+                                   placeholder="Ваш instagram (только тег без @)" class="white-text" required>
                         </div>
                         <div class="file-field input-field col s12">
                             <div>
@@ -75,7 +78,9 @@
                     <hr>
                 </form>
             </div>
-            <span class="white-text">Уже есть аккаунт? <a href="{{route('login')}}" class="orange-text"><u>Войти</u></a></span>
+            <span class="white-text">Уже есть аккаунт? <a href="{{route('login')}}" class="orange-text"><u>
+                        {{__('translations.Log in')}}
+</u></a></span>
         </div>
     </div>
 </div>

@@ -33,7 +33,7 @@ class GoodTypeEditScreen extends Screen
      */
     public function name(): ?string
     {
-        return $this->goodType->exists ? 'Edit goodType' : 'Creating a new goodType';
+        return $this->goodType->exists ? __('translations.Edit goodType') : __('translations.Creating a new goodType');
     }
 
     /**
@@ -41,23 +41,23 @@ class GoodTypeEditScreen extends Screen
      */
     public function description(): ?string
     {
-        return 'Good types';
+        return __('translations.GoodTypes');
     }
 
     public function commandBar(): array
     {
         return [
-            Button::make('Create goodType')
+            Button::make(__('translations.Create'))
                 ->icon('pencil')
                 ->method('createOrUpdate')
                 ->canSee(! $this->goodType->exists),
 
-            Button::make('Update')
+            Button::make(__('translations.Update'))
                 ->icon('note')
                 ->method('createOrUpdate')
                 ->canSee($this->goodType->exists),
 
-            Button::make('Remove')
+            Button::make(__('translations.Delete'))
                 ->icon('trash')
                 ->method('remove')
                 ->canSee($this->goodType->exists),
@@ -74,23 +74,26 @@ class GoodTypeEditScreen extends Screen
         return [
             Layout::rows([
                 Input::make('goodType.name')
-                    ->title('Title')
-                    ->placeholder('Attractive but mysterious title')
-                    ->required()
-                    ->help('Specify a short descriptive title for this post.'),
+                    ->title(__('translations.Name'))
+                    ->help(__('translations.GoodType name help'))
+                    ->required(),
 
                 Input::make('goodType.code')
-                    ->title('Title')
-                    ->placeholder('Attractive but mysterious title')
+                    ->title(__('translations.Route'))
                     ->required()
-                    ->help('Specify a short descriptive title for this post.'),
+                    ->help(__('translations.GoodType code help')),
+
+                Input::make('goodType.icon')
+                    ->title(__('translations.Icon'))
+                    ->required()
+                    ->help(__('translations.GoodType icon help')),
 
                 TextArea::make('goodType.description')
-                    ->title('Description')
+                    ->title(__('translations.Description'))
+                    ->help(__('translations.GoodType description help'))
                     ->rows(3)
                     ->maxlength(200)
-                    ->required()
-                    ->placeholder('Brief description for preview'),
+                    ->required(),
             ]),
         ];
     }

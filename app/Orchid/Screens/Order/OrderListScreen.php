@@ -29,7 +29,7 @@ class OrderListScreen extends Screen
      */
     public function name(): ?string
     {
-        return 'Order';
+        return __('translations.Orders');
     }
 
     /**
@@ -37,7 +37,7 @@ class OrderListScreen extends Screen
      */
     public function description(): ?string
     {
-        return 'All orders';
+        return __('translations.Order');
     }
 
     /**
@@ -48,7 +48,7 @@ class OrderListScreen extends Screen
     public function commandBar(): array
     {
         return [
-            Link::make('Create new')
+            Link::make(__('translations.Create'))
                 ->icon('pencil')
                 ->route('platform.orders.create'),
         ];
@@ -71,7 +71,7 @@ class OrderListScreen extends Screen
         $order = Order::findOrFail($request->get('id'));
         $order->status = 'cancelled';
         $order->save();
-        Toast::info(__('Order was cancelled'));
+        Toast::info(__('translations.Order was cancelled'));
     }
 
     public function return(Request $request): void

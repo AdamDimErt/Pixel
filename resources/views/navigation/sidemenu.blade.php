@@ -24,12 +24,12 @@
                             <span class="btn-medium btn-floating orange darken-4">
                                 <i class="material-icons">{{$goodType->icon}}</i>
                             </span>
-                            <span class="orange-text">{{$goodType->name}}</span>
+                            <span class="orange-text">{{__( 'translations.'. $goodType->code)}}</span>
                         @else
                             <span class="btn-medium btn-floating grey darken-4">
                                 <i class="material-icons">{{$goodType->icon}}</i>
                             </span>
-                            <span class="">{{$goodType->name}}</span>
+                            <span class="">{{__( 'translations.'. $goodType->code)}}</span>
                         @endif
                     </span>
                 </a>

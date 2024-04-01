@@ -43,7 +43,7 @@ class ClientEditScreen extends Screen
      */
     public function name(): ?string
     {
-        return $this->client->exists ? 'Edit client' : 'Creating a new client';
+        return $this->client->exists ? __('translations.Edit client') : __('translations.Creating a new client');
     }
 
     /**
@@ -51,23 +51,23 @@ class ClientEditScreen extends Screen
      */
     public function description(): ?string
     {
-        return 'Clients';
+        return __('translations.Clients');
     }
 
     public function commandBar(): array
     {
         return [
-            Button::make('Create client')
+            Button::make(__('translations.Create'))
                 ->icon('pencil')
                 ->method('createOrUpdate')
                 ->canSee(!$this->client->exists),
 
-            Button::make('Update')
+            Button::make(__('translations.Update'))
                 ->icon('note')
                 ->method('createOrUpdate')
                 ->canSee($this->client->exists),
 
-            Button::make('Remove')
+            Button::make(__('translations.Delete'))
                 ->icon('trash')
                 ->method('remove')
                 ->canSee($this->client->exists),
@@ -84,54 +84,50 @@ class ClientEditScreen extends Screen
         return [
             Layout::rows([
                 Input::make('client.name')
-                    ->title('Name')
-                    ->placeholder('Attractive but mysterious title')
-                    ->help('Specify a short descriptive title for this client.')
+                    ->title(__('translations.Name'))
+                    ->help(__('translations.Client name help'))
                     ->required(),
 
                 Input::make('client.email')
-                    ->title('Email')
-                    ->placeholder('Attractive but mysterious title')
-                    ->help('Specify a short descriptive title for this client.')
+                    ->title(__('translations.Email'))
+                    ->help(__('translations.Client email help'))
                     ->required(),
 
                 Input::make('client.phone')
-                    ->title('Phone')
-                    ->placeholder('Attractive but mysterious title')
-                    ->help('Specify a short descriptive title for this client.')
+                    ->title(__('translations.Phone'))
+                    ->help(__('translations.Client phone help'))
                     ->required(),
 
                 Select::make('client.email_confirmed')
                     ->options([
-                        1 => 'Подтверждён',
-                        0 => 'Не подтверждён',
+                        1 => __('translations.Confirmed'),
+                        0 => __('translations.Not confirmed'),
                     ])
-                    ->title('email_confirmed')
-                    ->help('Specify a short descriptive title for this client.')
+                    ->title(__('translations.Email confirmed'))
+                    ->help(__('translations.Client email confirmed help'))
                     ->required(),
 
                 Select::make('client.blocked')
                     ->options([
-                        1 => 'Заблокирован',
-                        0 => 'Не заблокирован',
+                        1 => __('translations.Blocked'),
+                        0 => __('translations.Not blocked'),
                     ])
-                    ->title('blocked')
-                    ->help('Specify a short descriptive title for this client.')
+                    ->title(__('translations.Blocked'))
+                    ->help(__('translations.Client blocked help'))
                     ->required(),
 
                 Input::make('client.instagram')
                     ->title('Instagram')
-                    ->placeholder('Attractive but mysterious title')
-                    ->help('Specify a short descriptive title for this client.')
+                    ->help(__('translations.Client instagram help'))
                     ->required(),
 
                 Input::make('client.password1')
-                    ->title('Password')
-                    ->placeholder('Attractive but mysterious title')
-                    ->help('Specify a short descriptive title for this client.'),
+                    ->title(__('translations.Password'))
+                    ->help(__('translations.Client password help')),
 
                 Upload::make('client.attachment')
-                    ->title('All files')
+                    ->title(__('translations.ID card'))
+                    ->help(__('translations.Client id card help'))
                     ->acceptedFiles('image/*'),
             ]),
         ];

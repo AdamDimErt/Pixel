@@ -25,7 +25,7 @@ class ClientListScreen extends Screen
      */
     public function name(): ?string
     {
-        return 'Client';
+        return __('translations.Client');
     }
 
     /**
@@ -33,7 +33,7 @@ class ClientListScreen extends Screen
      */
     public function description(): ?string
     {
-        return 'All clients';
+        return __('translations.Clients');
     }
 
     /**
@@ -44,7 +44,7 @@ class ClientListScreen extends Screen
     public function commandBar(): array
     {
         return [
-            Link::make('Create new')
+            Link::make(__('translations.Create'))
                 ->icon('pencil')
                 ->route('platform.clients.create'),
         ];

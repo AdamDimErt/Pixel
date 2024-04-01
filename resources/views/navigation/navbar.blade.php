@@ -21,7 +21,7 @@
                                 shopping_cart
                             </i>
                             <span class="hide-on-med-and-down">
-                                Корзина
+                                {{__('translations.Cart')}}
                             </span>
                             @if(isset($cartCount))
                                 <span class="cart-counter-badge badge red white-text">
@@ -64,8 +64,8 @@
                     @endauth
                     @guest('clients')
                         <li class="nav-element center">
-                            <a href="{{route('login')}}" class="nav-link orange darken-4 auth-link ">
-                                Войти
+                            <a href="{{route('login')}}" class="nav-link orange darken-4 auth-link z-depth-3">
+                                {{__('translations.Log in')}}
                             </a>
                         </li>
                     @endguest

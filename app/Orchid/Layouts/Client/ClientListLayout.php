@@ -31,7 +31,7 @@ class ClientListLayout extends Table
     protected function columns(): iterable
     {
         return [
-            TD::make('name')
+            TD::make('name', __('translations.Name'))
                 ->sort()
                 ->filter(
                     Input::make()
@@ -41,32 +41,48 @@ class ClientListLayout extends Table
                         ->route('platform.clients.edit', $client);
                 }),
 
-            TD::make('phone')
+            TD::make('phone', __('translations.Phone'))
                 ->sort()
                 ->filter(
                     Input::make()
                 ),
 
-            TD::make('instagram')
+            TD::make('instagram', 'Instagram')
                 ->sort()
                 ->filter(
                     Input::make()
                 ),
 
-            TD::make('email_confirmed')
+            TD::make('email_confirmed', __('translations.Email confirmed'))
                 ->sort()
                 ->filter(
                     Select::make('email_confirmed')
                         ->options([
-                            1 => 'Подтверждён',
-                            0 => 'Не подтверждён',
+                            1 => __('translations.Confirmed'),
+                            0 => __('translations.Not confirmed'),
                         ])
                         ->title('email_confirmed')
                 )->render(function (Client $client) {
                     return [
-                        0 => 'Не подтверждён',
-                        1 => 'Подтверждён',
+                        1 => __('translations.Confirmed'),
+                        0 => __('translations.Not confirmed'),
                     ][$client->email_confirmed];
+                }),
+
+            TD::make('blocked', __('translations.Blocked'))
+                ->sort()
+                ->filter(
+                    Select::make('email_confirmed')
+                        ->options([
+                            1 => __('translations.Blocked'),
+                            0 => __('translations.Not blocked'),
+                        ])
+                        ->title('email_confirmed')
+                )->render(function (Client $client) {
+                    return [
+                        1 => __('translations.Blocked'),
+                        0 => __('translations.Not blocked'),
+                    ][$client->blocked];
                 }),
 
             TD::make('created_at', __('Created'))
@@ -75,7 +91,7 @@ class ClientListLayout extends Table
                 ->defaultHidden()
                 ->sort(),
 
-            TD::make('updated_at', __('Updated'))
+            TD::make('updated_at', __('translations.Last edit'))
                 ->usingComponent(DateTimeSplit::class)
                 ->align(TD::ALIGN_RIGHT)
                 ->defaultHidden()
@@ -86,7 +102,7 @@ class ClientListLayout extends Table
                 ->width('100px')
                 ->render(function (\App\Models\Client $client) {
                     $btnsList = [
-                        Link::make(__('Look at orders'))
+                        Link::make(__('translations.Look at orders'))
                             ->route('platform.orders.list',
                                 [
                                     'filter[client_id]' => $client

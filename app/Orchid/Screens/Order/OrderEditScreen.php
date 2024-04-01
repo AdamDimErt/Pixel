@@ -8,8 +8,10 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Orchid\Screen\Actions\Button;
 use Orchid\Screen\Fields\DateTimer;
+use Orchid\Screen\Fields\Input;
 use Orchid\Screen\Fields\Relation;
 use Orchid\Screen\Fields\Select;
+use Orchid\Screen\Fields\Upload;
 use Orchid\Screen\Screen;
 use Orchid\Support\Facades\Alert;
 use Orchid\Support\Facades\Layout;
@@ -44,23 +46,23 @@ class OrderEditScreen extends Screen
      */
     public function description(): ?string
     {
-        return 'Orders';
+        return __('translations.Orders');
     }
 
     public function commandBar(): array
     {
         return [
-            Button::make('Create order')
+            Button::make(__('translations.Create'))
                 ->icon('pencil')
                 ->method('createOrUpdate')
                 ->canSee(! $this->order->exists),
 
-            Button::make('Update')
+            Button::make(__('translations.Update'))
                 ->icon('note')
                 ->method('createOrUpdate')
                 ->canSee($this->order->exists),
 
-            Button::make('Remove')
+            Button::make(__('translations.Delete'))
                 ->icon('trash')
                 ->method('remove')
                 ->canSee($this->order->exists),
@@ -86,7 +88,18 @@ class OrderEditScreen extends Screen
                          'cancelled'=>'Cancelled'
                     ])
                     ->title('status')
-                    ->help('status itema')
+                    ->help(__('translations.Name')),
+
+                Input::make('order.agreement_id')
+                    ->title(__('translations.Agreement id'))
+                    ->help(__('translations.Order agreement id help'))
+                    ->type('number')
+                    ->required(),
+
+                Upload::make('order.attachment')
+                    ->help(__('translations.Order Agreement help'))
+                    ->title(__('translations.Agreement'))
+                    ->acceptedFiles('.doc, .docx, .pdf, .txt'),
 
             ]),
         ];
@@ -97,7 +110,11 @@ class OrderEditScreen extends Screen
      */
     public function createOrUpdate(Order $order, Request $request)
     {
-        $order->fill($request->get('order'));
+        $order->fill($request->except('order.attachment')['order']);
+
+        $order->attachment()->syncWithoutDetaching(
+            $request->input('order.attachment', [])
+        );
 
         $order->save();
 

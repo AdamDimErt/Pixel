@@ -55,7 +55,7 @@ class RoleListScreen extends Screen
     public function commandBar(): iterable
     {
         return [
-            Link::make(__('Add'))
+            Link::make(__('translations.Add'))
                 ->icon('bs.plus-circle')
                 ->href(route('platform.systems.roles.create')),
         ];

@@ -25,7 +25,7 @@ class AdditionalListScreen extends Screen
      */
     public function name(): ?string
     {
-        return 'Additional';
+        return __('translations.Additional');
     }
 
     /**
@@ -33,7 +33,7 @@ class AdditionalListScreen extends Screen
      */
     public function description(): ?string
     {
-        return 'All additionals';
+        return __('Additionals');
     }
 
     /**
@@ -44,7 +44,7 @@ class AdditionalListScreen extends Screen
     public function commandBar(): array
     {
         return [
-            Link::make('Create new')
+            Link::make(__('translations.Create'))
                 ->icon('pencil')
                 ->route('platform.additionals.create'),
         ];

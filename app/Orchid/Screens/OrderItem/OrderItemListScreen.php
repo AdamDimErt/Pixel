@@ -29,7 +29,7 @@ class OrderItemListScreen extends Screen
      */
     public function name(): ?string
     {
-        return 'OrderItem';
+        return __('translations.OrderItem');
     }
 
     /**
@@ -37,7 +37,7 @@ class OrderItemListScreen extends Screen
      */
     public function description(): ?string
     {
-        return 'All orderItems';
+        return __('translations.OrderItems');
     }
 
     /**
@@ -48,7 +48,7 @@ class OrderItemListScreen extends Screen
     public function commandBar(): array
     {
         return [
-            Link::make('Create new')
+            Link::make(__('translations.Create'))
                 ->icon('pencil')
                 ->route('platform.orderItems.create'),
         ];

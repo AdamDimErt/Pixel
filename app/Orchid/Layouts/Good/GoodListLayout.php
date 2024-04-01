@@ -32,7 +32,7 @@ class GoodListLayout extends Table
     protected function columns(): iterable
     {
         return [
-            TD::make('name')
+            TD::make('name', __('translations.Name'))
                 ->sort()
                 ->filter(
                     Input::make()
@@ -42,7 +42,7 @@ class GoodListLayout extends Table
                         ->route('platform.goods.edit', $good);
                 }),
 
-            TD::make('description')
+            TD::make('description', __('translations.Description'))
                 ->sort()
                 ->filter(
                     Input::make()
@@ -51,7 +51,7 @@ class GoodListLayout extends Table
                     return $good->description;
                 }),
 
-            TD::make('cost')
+            TD::make('cost', __('translations.Cost'))
                 ->sort()
                 ->filter(
                     NumberRange::make()
@@ -60,7 +60,7 @@ class GoodListLayout extends Table
                     return $good->cost;
                 }),
 
-            TD::make('discount_cost')
+            TD::make('discount_cost', __('translations.Discount cost'))
                 ->sort()
                 ->filter(
                     NumberRange::make()
@@ -69,7 +69,7 @@ class GoodListLayout extends Table
                     return $good->cost;
                 }),
 
-            TD::make('damage_cost')
+            TD::make('damage_cost', __('translations.Damage cost'))
                 ->sort()
                 ->filter(
                     NumberRange::make()
@@ -78,7 +78,7 @@ class GoodListLayout extends Table
                     return $good->cost;
                 }),
 
-            TD::make('good_type_id', 'Category')
+            TD::make('good_type_id', __('translations.GoodType'))
                 ->filter(
                     Relation::make()
                         ->fromModel(GoodType::class, 'name')
@@ -88,13 +88,13 @@ class GoodListLayout extends Table
                         ->route('platform.goodTypes.edit', $good->goodType);
                 }),
 
-            TD::make('created_at', __('Created'))
+            TD::make('created_at', __('translations.Created'))
                 ->usingComponent(DateTimeSplit::class)
                 ->align(TD::ALIGN_RIGHT)
                 ->defaultHidden()
                 ->sort(),
 
-            TD::make('updated_at', __('Updated'))
+            TD::make('updated_at', __('translations.Last edit'))
                 ->usingComponent(DateTimeSplit::class)
                 ->align(TD::ALIGN_RIGHT)
                 ->defaultHidden()

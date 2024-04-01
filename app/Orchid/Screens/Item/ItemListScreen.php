@@ -25,7 +25,7 @@ class ItemListScreen extends Screen
      */
     public function name(): ?string
     {
-        return 'Item';
+        return __('translations.Item');
     }
 
     /**
@@ -33,7 +33,7 @@ class ItemListScreen extends Screen
      */
     public function description(): ?string
     {
-        return 'All items';
+        return __('translations.Items');
     }
 
     /**
@@ -44,7 +44,7 @@ class ItemListScreen extends Screen
     public function commandBar(): array
     {
         return [
-            Link::make('Create new')
+            Link::make(__('translations.Create'))
                 ->icon('pencil')
                 ->route('platform.items.create'),
         ];

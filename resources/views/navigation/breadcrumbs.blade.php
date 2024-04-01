@@ -3,7 +3,7 @@
         <a href="/" class="breadcrumb">
             <span class="breadcrumb-item chip orange darken-4 white-text">
                 <b>
-                Главная
+                {{__('translations.Main')}}
                 </b>
             </span>
         </a>
@@ -11,7 +11,7 @@
             <a href="category/{{$goodType->code}}" class="breadcrumb">
                 <span class="breadcrumb-item chip orange darken-4 white-text">
                     <b>
-                        {{$goodType->name}}
+                        {{__( 'translations.'. $goodType->code)}}
                     </b>
                 </span>
             </a>
@@ -20,7 +20,7 @@
             <a href="#" class="breadcrumb">
                 <span class="breadcrumb-item chip orange darken-4 white-text">
                     <b>
-                        Профиль
+                        {{__( 'translations.Profile')}}
                     </b>
                 </span>
             </a>
@@ -29,14 +29,14 @@
             <a href="{{route('viewProfile')}}" class="breadcrumb">
                 <span class="breadcrumb-item chip orange darken-4 white-text">
                     <b>
-                        Профиль
+                        {{__( 'translations.Profile')}}
                     </b>
                 </span>
             </a>
             <a href="#" class="breadcrumb">
                 <span class="breadcrumb-item chip orange darken-4 white-text">
                     <b>
-                        Редактирование
+                        {{__( 'translations.Editing')}}
                     </b>
                 </span>
             </a>
@@ -45,7 +45,7 @@
             <a href="category/{{$good->goodType->code}}" class="breadcrumb">
                 <span class="breadcrumb-item chip orange darken-4 white-text">
                     <b>
-                        {{$good->goodType->name}}
+                        {{__( 'translations.'. $good->goodType->code)}}
                     </b>
                 </span>
             </a>
@@ -61,7 +61,7 @@
             <a href="{{route('getFavorites')}}" class="breadcrumb">
                 <span class="breadcrumb-item chip orange darken-4 white-text">
                     <b>
-                        Любимое
+                        {{__( 'translations.Favorites')}}
                     </b>
                 </span>
             </a>
@@ -70,7 +70,7 @@
             <a href="/cart" class="breadcrumb">
                 <span class="breadcrumb-item chip orange darken-4 white-text">
                 <b>
-                    Корзина
+                    {{__( 'translations.Cart')}}
                 </b>
                 </span>
             </a>

@@ -16,7 +16,7 @@ class GoodFilter extends Filter
      */
     public function name(): string
     {
-        return __('Goods');
+        return __('translations.Goods');
     }
 
     /**
@@ -47,7 +47,7 @@ class GoodFilter extends Filter
                 ->fromModel(Role::class, 'name', 'slug')
                 ->empty()
                 ->value($this->request->get('role'))
-                ->title(__('Roles')),
+                ->title(__('translations.Roles')),
         ];
     }
 

@@ -25,7 +25,7 @@ class GoodTypeListScreen extends Screen
      */
     public function name(): ?string
     {
-        return 'GoodType';
+        return __('translations.GoodType');
     }
 
     /**
@@ -33,7 +33,7 @@ class GoodTypeListScreen extends Screen
      */
     public function description(): ?string
     {
-        return 'All good types';
+        return __('translations.GoodTypes');
     }
 
     /**
@@ -44,7 +44,7 @@ class GoodTypeListScreen extends Screen
     public function commandBar(): array
     {
         return [
-            Link::make('Create new')
+            Link::make(__('translations.Create'))
                 ->icon('pencil')
                 ->route('platform.goodTypes.create'),
         ];

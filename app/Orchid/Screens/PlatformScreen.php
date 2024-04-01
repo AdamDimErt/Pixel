@@ -24,7 +24,7 @@ class PlatformScreen extends Screen
      */
     public function name(): ?string
     {
-        return 'Get Started';
+        return __('translations.Get Started');
     }
 
     /**
@@ -32,7 +32,7 @@ class PlatformScreen extends Screen
      */
     public function description(): ?string
     {
-        return 'Welcome to your Orchid application.';
+        return __('translations.Welcome to your PixelRental admin panel.');
     }
 
     /**

@@ -25,7 +25,6 @@ class Item extends Model
     protected $allowedFilters = [
         'id' => WhereIn::class,
         'good_id' => Where::class,
-        'status' => Where::class,
         'created_at' => WhereDateStartEnd::class,
         'deleted_at' => WhereDateStartEnd::class,
     ];
@@ -33,7 +32,6 @@ class Item extends Model
     protected $allowedSorts = [
         'id',
         'good_id',
-        'status',
         'created_at',
         'deleted_at',
     ];

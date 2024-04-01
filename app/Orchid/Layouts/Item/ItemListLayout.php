@@ -2,10 +2,13 @@
 
 namespace App\Orchid\Layouts\Item;
 
+use App\Models\Good;
+use App\Models\GoodType;
 use App\Models\Item;
 use Orchid\Screen\Actions\Link;
 use Orchid\Screen\Components\Cells\DateTimeSplit;
 use Orchid\Screen\Fields\Input;
+use Orchid\Screen\Fields\Relation;
 use Orchid\Screen\Fields\Select;
 use Orchid\Screen\Layouts\Table;
 use Orchid\Screen\TD;
@@ -30,23 +33,24 @@ class ItemListLayout extends Table
     protected function columns(): iterable
     {
         return [
-            TD::make('name')
+            TD::make('good_id', __('translations.Name'))
                 ->sort()
                 ->filter(
-                    Input::make()
+                    Relation::make()
+                        ->fromModel(Good::class, 'name')
                 )
                 ->render(function (Item $item) {
                     return Link::make($item->good->name)
                         ->route('platform.items.edit', $item);
                 }),
 
-            TD::make('created_at', __('Created'))
+            TD::make('created_at', __('translations.Created'))
                 ->usingComponent(DateTimeSplit::class)
                 ->align(TD::ALIGN_RIGHT)
                 ->defaultHidden()
                 ->sort(),
 
-            TD::make('updated_at', __('Updated'))
+            TD::make('updated_at', __('translations.Last edit'))
                 ->usingComponent(DateTimeSplit::class)
                 ->align(TD::ALIGN_RIGHT)
                 ->defaultHidden()

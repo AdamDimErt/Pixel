@@ -22,17 +22,15 @@ class RoleEditLayout extends Rows
                 ->type('text')
                 ->max(255)
                 ->required()
-                ->title(__('Name'))
-                ->placeholder(__('Name'))
-                ->help(__('Role display name')),
+                ->title(__('translations.Name'))
+                ->help(__('translations.Role display name')),
 
             Input::make('role.slug')
                 ->type('text')
                 ->max(255)
                 ->required()
-                ->title(__('Slug'))
-                ->placeholder(__('Slug'))
-                ->help(__('Actual name in the system')),
+                ->title(__('translations.Slug'))
+                ->help(__('translations.Actual name in the system')),
         ];
     }
 }

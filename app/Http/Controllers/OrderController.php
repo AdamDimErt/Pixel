@@ -109,7 +109,7 @@ class OrderController extends Controller
         $client = \App\Models\Client::query()->find(Auth::guard('clients')->id());
 
         $response = sendTelegramMessage(
-            "*НОВЫЙ ЗАКАЗ*
+            "*НОВЫЙ ЗАКАЗ* $order->id
 Покупатель: [$client->phone](https://wa.me/$client->phone)
 Имя: $client->name
 Электронный адрес: $client->email
@@ -121,7 +121,7 @@ class OrderController extends Controller
 
         if (! $response->ok()) {
             sendTelegramMessage(
-                "*НОВЫЙ ЗАКАЗ*
+                "*НОВЫЙ ЗАКАЗ* $order->id
 Покупатель: [$client->phone](https://wa.me/$client->phone)
 Имя: $client->name
 Электронный адрес: $client->email

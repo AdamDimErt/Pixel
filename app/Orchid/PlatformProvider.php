@@ -27,54 +27,53 @@ class PlatformProvider extends OrchidServiceProvider
     public function menu(): array
     {
         return [
-            Menu::make('Get Started')
+            Menu::make(__('translations.Get Started'))
                 ->icon('bs.book')
-                ->title('Navigation')
+                ->title(__('translations.Navigation'))
                 ->route(config('platform.index')),
 
-            Menu::make(__('Users'))
+            Menu::make(__('translations.Users'))
                 ->icon('bs.people')
                 ->route('platform.systems.users')
-                ->permission('platform.systems.users')
-                ->title(__('Access Controls')),
+                ->permission('platform.systems.users'),
 
-            Menu::make(__('Roles'))
+            Menu::make(__('translations.Roles'))
                 ->icon('bs.shield')
                 ->route('platform.systems.roles')
                 ->permission('platform.systems.roles'),
 
-            Menu::make(__('Goods'))
+            Menu::make(__('translations.Goods'))
                 ->icon('bs.box')
                 ->route('platform.goods.list')
                 ->permission('platform.goods.list'),
 
-            Menu::make(__('GoodTypes'))
+            Menu::make(__('translations.GoodTypes'))
                 ->icon('bs.type')
                 ->route('platform.goodTypes.list')
                 ->permission('platform.goodTypes.list'),
 
-            Menu::make(__('Items'))
+            Menu::make(__('translations.Items'))
                 ->icon('bs.archive')
                 ->route('platform.items.list')
                 ->permission('platform.items.list'),
 
-            Menu::make(__('Orders'))
+            Menu::make(__('translations.Orders'))
                 ->icon('bs.coin')
                 ->route('platform.orders.list')
                 ->permission('platform.orders.list'),
 
-            Menu::make(__('Clients'))
+            Menu::make(__('translations.Clients'))
                 ->icon('bs.file-earmark-person')
                 ->route('platform.clients.list')
                 ->permission('platform.clients.list'),
 
-            Menu::make(__('Additionals'))
+            Menu::make(__('translations.Additionals'))
                 ->icon('bs.plus-circle-fill')
                 ->route('platform.additionals.list')
                 ->permission('platform.additionals.list'),
 
-            Menu::make(__('OrderItems'))
-                ->icon('bs.plus-circle-fill')
+            Menu::make(__('translations.OrderItems'))
+                ->icon('bs.bag-plus')
                 ->route('platform.orderItems.list')
                 ->permission('platform.orderItems.list'),
 

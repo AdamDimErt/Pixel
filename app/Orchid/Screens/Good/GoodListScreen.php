@@ -25,7 +25,7 @@ class GoodListScreen extends Screen
      */
     public function name(): ?string
     {
-        return 'Good';
+        return __('translations.Good');
     }
 
     /**
@@ -33,7 +33,7 @@ class GoodListScreen extends Screen
      */
     public function description(): ?string
     {
-        return 'All goods';
+        return __('translations.Goods');
     }
 
     /**
@@ -44,7 +44,7 @@ class GoodListScreen extends Screen
     public function commandBar(): array
     {
         return [
-            Link::make('Create new')
+            Link::make(__('translations.Create'))
                 ->icon('pencil')
                 ->route('platform.goods.create'),
         ];

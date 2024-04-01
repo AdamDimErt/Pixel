@@ -46,23 +46,23 @@ class OrderItemEditScreen extends Screen
      */
     public function description(): ?string
     {
-        return 'OrderItems';
+        return __('translations.OrderItems');
     }
 
     public function commandBar(): array
     {
         return [
-            Button::make('Create orderItem')
+            Button::make(__('translations.Create'))
                 ->icon('pencil')
                 ->method('createOrUpdate')
                 ->canSee(! $this->orderItem->exists),
 
-            Button::make('Update')
+            Button::make(__('translations.Update'))
                 ->icon('note')
                 ->method('createOrUpdate')
                 ->canSee($this->orderItem->exists),
 
-            Button::make('Remove')
+            Button::make(__('translations.Delete'))
                 ->icon('trash')
                 ->method('remove')
                 ->canSee($this->orderItem->exists),
@@ -82,7 +82,7 @@ class OrderItemEditScreen extends Screen
                 Relation::make('orderItem.item_id')
                     ->fromModel(Item::class, 'id')
                     ->displayAppend('name')
-                    ->help('Begin to enter a name to find an order you need')
+                    ->help(__('translations.Name'))
                     ->title('Choose a item for that order'),
 
                 Relation::make('orderItem.additionals')
@@ -99,7 +99,7 @@ class OrderItemEditScreen extends Screen
                         'cancelled'=>'Cancelled'
                     ])
                     ->title('status')
-                    ->help('status itema'),
+                    ->help(__('translations.Name')),
 
                 DateTimer::make('orderItem.rent_start_date')
                     ->title('Opening date')
@@ -108,7 +108,7 @@ class OrderItemEditScreen extends Screen
                 Select::make('orderItem.rent_start_time')
                     ->options($this->generateTimeSpans())
                     ->title('status')
-                    ->help('status itema'),
+                    ->help(__('translations.Name')),
 
                 DateTimer::make('orderItem.rent_end_date')
                     ->title('Opening date')
@@ -117,7 +117,7 @@ class OrderItemEditScreen extends Screen
                 Select::make('orderItem.rent_end_time')
                     ->options($this->generateTimeSpans())
                     ->title('status')
-                    ->help('status itema'),
+                    ->help(__('translations.Name')),
             ]),
         ];
     }

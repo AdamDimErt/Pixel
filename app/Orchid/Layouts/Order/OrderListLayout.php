@@ -4,7 +4,6 @@ namespace App\Orchid\Layouts\Order;
 
 use App\Models\Client;
 use App\Models\Order;
-use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Orchid\Screen\Actions\Button;
 use Orchid\Screen\Actions\DropDown;
@@ -38,14 +37,14 @@ class OrderListLayout extends Table
     protected function columns(): iterable
     {
         return [
-            TD::make('id', __('OrderID'))
+            TD::make('id', __('translations.OrderID'))
                 ->filter(Input::make())
 
                 ->render(function (Order $order) {
                     return Link::make($order->id)
                         ->route('platform.orders.edit', $order->id);
                 }),
-            TD::make('client_id', __('Owner'))
+            TD::make('client_id', __('translations.Client'))
                 ->filter(
                     Relation::make()
                         ->fromModel(Client::class, 'name')
@@ -54,45 +53,47 @@ class OrderListLayout extends Table
                     return Link::make($order->owner->name)
                         ->route('platform.clients.edit', $order->owner);
                 }),
-            TD::make('amount_paid', __('Amount paid'))
+            TD::make('amount_paid', __('translations.Amount paid'))
                 ->filter(
                     NumberRange::make()
                 ),
+            TD::make('agreement_id', __('translations.Agreement id'))
+                ->filter(Input::make()),
 
-            TD::make('status')
+            TD::make('status', __('translations.Status'))
                 ->sort()
                 ->filter(
                     Select::make('status')
                         ->options([
-                            'returned'=>'Returned',
-                            'in_rent'=>'In rent',
-                            'waiting'=>'Waiting',
-                            'confirmed'=>'Confirmed',
-                            'cancelled'=>'Cancelled'
+                            'returned' => 'Returned',
+                            'in_rent' => 'In rent',
+                            'waiting' => 'Waiting',
+                            'confirmed' => 'Confirmed',
+                            'cancelled' => 'Cancelled',
                         ])
                         ->title('status')
-                        ->help('status itema')
+                        ->help(__('translations.Name'))
                 )
                 ->render(function (Order $order) {
                     return $order->status;
                 }),
 
-            TD::make('first_order_date', __('Начало аренды'))
+            TD::make('first_order_date', __('translations.Rent start'))
                 ->usingComponent(DateTimeSplit::class)
                 ->align(TD::ALIGN_RIGHT)
                 ->sort(),
 
-            TD::make('last_order_date', __('Конец аренды'))
+            TD::make('last_order_date', __('translations.Rent end'))
                 ->usingComponent(DateTimeSplit::class)
                 ->align(TD::ALIGN_RIGHT)
                 ->sort(),
 
-            TD::make('created_at', __('Создан'))
+            TD::make('created_at', __('translations.Created'))
                 ->usingComponent(DateTimeSplit::class)
                 ->align(TD::ALIGN_RIGHT)
                 ->sort(),
 
-            TD::make('updated_at', __('Изменён'))
+            TD::make('updated_at', __('translations.Last edit'))
                 ->usingComponent(DateTimeSplit::class)
                 ->align(TD::ALIGN_RIGHT)
                 ->sort(),
@@ -102,7 +103,7 @@ class OrderListLayout extends Table
                 ->width('100px')
                 ->render(function (\App\Models\Order $order) {
                     $btnsList = [
-                        Link::make(__('Look at items'))
+                        Link::make(__('translations.Look at items'))
                             ->route('platform.items.list',
                                 [
                                     'filter[id]' => $order
@@ -115,7 +116,7 @@ class OrderListLayout extends Table
                     ];
 
                     if ($order->status === 'in_rent') {
-                        $btnsList[] = Button::make(__('Return'))
+                        $btnsList[] = Button::make(__('translations.Return'))
                             ->icon('bs.arrow-return-left')
                             ->confirm(__('If you return this order, you will not be available to use it again'))
                             ->method('return', [
@@ -124,16 +125,16 @@ class OrderListLayout extends Table
                     }
 
                     if ($order->status === 'waiting') {
-                        $btnsList[] = Link::make(__('Edit'))
+                        $btnsList[] = Link::make(__('translations.Edit'))
                             ->route('platform.orders.edit', $order->id)
                             ->icon('bs.pencil');
-                        $btnsList[] = Button::make(__('Confirm'))
+                        $btnsList[] = Button::make(__('translations.Confirm'))
                             ->icon('bs.check2')
                             ->confirm(__('Would you like to confirm this order?'))
                             ->method('confirm', [
                                 'id' => $order->id,
                             ]);
-                        $btnsList[] = Button::make(__('Cancel'))
+                        $btnsList[] = Button::make(__('translations.Cancel'))
                             ->icon('bs.x')
                             ->confirm(__('If you cancel this order, you will not be available to use it again'))
                             ->method('cancel', [

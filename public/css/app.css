@@ -22,10 +22,6 @@ header, .main {
     padding-left: 300px;
 }
 
-.card.hoverable {
-    box-shadow: 0 0 0 0 darkorange, 0 0 0 0 darkorange, 0 0 0 0 darkorange;
-}
-
 .card.hoverable:hover {
     box-shadow: 0 0 20px 2px darkorange;
     cursor: pointer;

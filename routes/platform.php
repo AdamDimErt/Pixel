@@ -45,7 +45,7 @@ Route::screen('profile', UserProfileScreen::class)
     ->name('platform.profile')
     ->breadcrumbs(fn (Trail $trail) => $trail
         ->parent('platform.index')
-        ->push(__('Profile'), route('platform.profile')));
+        ->push(__('translations.Profile'), route('platform.profile')));
 
 // Platform > System > Users > User
 Route::screen('users/{user}/edit', UserEditScreen::class)
@@ -59,14 +59,14 @@ Route::screen('users/create', UserEditScreen::class)
     ->name('platform.systems.users.create')
     ->breadcrumbs(fn (Trail $trail) => $trail
         ->parent('platform.systems.users')
-        ->push(__('Create'), route('platform.systems.users.create')));
+        ->push(__('translations.Create'), route('platform.systems.users.create')));
 
 // Platform > System > Users
 Route::screen('users', UserListScreen::class)
     ->name('platform.systems.users')
     ->breadcrumbs(fn (Trail $trail) => $trail
         ->parent('platform.index')
-        ->push(__('Users'), route('platform.systems.users')));
+        ->push(__('translations.Users'), route('platform.systems.users')));
 
 // Platform > System > Roles > Role
 Route::screen('roles/{role}/edit', RoleEditScreen::class)
@@ -80,14 +80,14 @@ Route::screen('roles/create', RoleEditScreen::class)
     ->name('platform.systems.roles.create')
     ->breadcrumbs(fn (Trail $trail) => $trail
         ->parent('platform.systems.roles')
-        ->push(__('Create'), route('platform.systems.roles.create')));
+        ->push(__('translations.Create'), route('platform.systems.roles.create')));
 
 // Platform > System > Roles
 Route::screen('roles', RoleListScreen::class)
     ->name('platform.systems.roles')
     ->breadcrumbs(fn (Trail $trail) => $trail
         ->parent('platform.index')
-        ->push(__('Roles'), route('platform.systems.roles')));
+        ->push(__('translations.Roles'), route('platform.systems.roles')));
 
 // Platform > System > Goods > Good
 Route::screen('goods/{good}/edit', GoodEditScreen::class)
@@ -101,14 +101,14 @@ Route::screen('goods/create', GoodEditScreen::class)
     ->name('platform.goods.create')
     ->breadcrumbs(fn (Trail $trail) => $trail
         ->parent('platform.goods.list')
-        ->push(__('Create'), route('platform.goods.create')));
+        ->push(__('translations.Create'), route('platform.goods.create')));
 
 // Platform > System > Goods
 Route::screen('goods', GoodListScreen::class)
     ->name('platform.goods.list')
     ->breadcrumbs(fn (Trail $trail) => $trail
         ->parent('platform.index')
-        ->push(__('Goods'), route('platform.goods.list')));
+        ->push(__('translations.Goods'), route('platform.goods.list')));
 
 // Platform > System > GoodTypes > GoodType
 Route::screen('good-types/{goodType}/edit', GoodTypeEditScreen::class)
@@ -122,14 +122,14 @@ Route::screen('good-types/create', GoodTypeEditScreen::class)
     ->name('platform.goodTypes.create')
     ->breadcrumbs(fn (Trail $trail) => $trail
         ->parent('platform.goodTypes.list')
-        ->push(__('Create'), route('platform.goodTypes.create')));
+        ->push(__('translations.Create'), route('platform.goodTypes.create')));
 
 // Platform > System > Goods
 Route::screen('good-types', GoodTypeListScreen::class)
     ->name('platform.goodTypes.list')
     ->breadcrumbs(fn (Trail $trail) => $trail
         ->parent('platform.index')
-        ->push(__('GoodTypes'), route('platform.goodTypes.list')));
+        ->push(__('translations.GoodTypes'), route('platform.goodTypes.list')));
 
 // Platform > System > Items > Item
 Route::screen('items/{item}/edit', ItemEditScreen::class)
@@ -143,14 +143,14 @@ Route::screen('items/create', ItemEditScreen::class)
     ->name('platform.items.create')
     ->breadcrumbs(fn (Trail $trail) => $trail
         ->parent('platform.items.list')
-        ->push(__('Create'), route('platform.items.create')));
+        ->push(__('translations.Create'), route('platform.items.create')));
 
 // Platform > System > Items
 Route::screen('items', ItemListScreen::class)
     ->name('platform.items.list')
     ->breadcrumbs(fn (Trail $trail) => $trail
         ->parent('platform.index')
-        ->push(__('Items'), route('platform.items.list')));
+        ->push(__('translations.Items'), route('platform.items.list')));
 
 // Platform > System > Orders > Order
 Route::screen('orders/{order}/edit', OrderEditScreen::class)
@@ -164,14 +164,14 @@ Route::screen('orders/create', OrderEditScreen::class)
     ->name('platform.orders.create')
     ->breadcrumbs(fn (Trail $trail) => $trail
         ->parent('platform.orders.list')
-        ->push(__('Create'), route('platform.orders.create')));
+        ->push(__('translations.Create'), route('platform.orders.create')));
 
 // Platform > System > Orders
 Route::screen('orders', OrderListScreen::class)
     ->name('platform.orders.list')
     ->breadcrumbs(fn (Trail $trail) => $trail
         ->parent('platform.index')
-        ->push(__('Orders'), route('platform.orders.list')));
+        ->push(__('translations.Orders'), route('platform.orders.list')));
 
 // Platform > System > clients > client
 Route::screen('clients/{client}/edit', ClientEditScreen::class)
@@ -185,7 +185,7 @@ Route::screen('clients/create', ClientEditScreen::class)
     ->name('platform.clients.create')
     ->breadcrumbs(fn (Trail $trail) => $trail
         ->parent('platform.clients.list')
-        ->push(__('Create'), route('platform.clients.create')));
+        ->push(__('translations.Create'), route('platform.clients.create')));
 
 // Platform > System > clients
 Route::screen('clients', ClientListScreen::class)

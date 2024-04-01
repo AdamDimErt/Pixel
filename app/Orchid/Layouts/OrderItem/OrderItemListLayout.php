@@ -57,7 +57,7 @@ class OrderItemListLayout extends Table
                             'cancelled'=>'Cancelled'
                         ])
                         ->title('status')
-                        ->help('status itema')
+                        ->help(__('translations.Name'))
                 )
                 ->render(function (OrderItem $orderItemItem) {
                     return $orderItemItem->status;
@@ -91,7 +91,7 @@ class OrderItemListLayout extends Table
                 ->defaultHidden()
                 ->sort(),
 
-            TD::make('updated_at', __('Updated'))
+            TD::make('updated_at', __('translations.Last edit'))
                 ->usingComponent(DateTimeSplit::class)
                 ->align(TD::ALIGN_RIGHT)
                 ->defaultHidden()

@@ -41,7 +41,7 @@ class RoleEditScreen extends Screen
      */
     public function name(): ?string
     {
-        return 'Edit Role';
+        return $this->role->exists ? __('translations.Edit role') : __('translations.Create a new role');
     }
 
     /**
@@ -49,7 +49,7 @@ class RoleEditScreen extends Screen
      */
     public function description(): ?string
     {
-        return 'Modify the privileges and permissions associated with a specific role.';
+        return __('translations.Modify the privileges and permissions associated with a specific role');
     }
 
     public function permission(): ?iterable
@@ -67,11 +67,11 @@ class RoleEditScreen extends Screen
     public function commandBar(): iterable
     {
         return [
-            Button::make(__('Save'))
+            Button::make(__('translations.Save'))
                 ->icon('bs.check-circle')
                 ->method('save'),
 
-            Button::make(__('Remove'))
+            Button::make(__('translations.Remove'))
                 ->icon('bs.trash3')
                 ->method('remove')
                 ->canSee($this->role->exists),
@@ -121,7 +121,7 @@ class RoleEditScreen extends Screen
 
         $role->save();
 
-        Toast::info(__('Role was saved'));
+        Toast::info(__('translations.Role was saved'));
 
         return redirect()->route('platform.systems.roles');
     }
@@ -135,7 +135,7 @@ class RoleEditScreen extends Screen
     {
         $role->delete();
 
-        Toast::info(__('Role was removed'));
+        Toast::info(__('translations.Role was removed'));
 
         return redirect()->route('platform.systems.roles');
     }

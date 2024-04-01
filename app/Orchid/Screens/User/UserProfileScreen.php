@@ -38,7 +38,7 @@ class UserProfileScreen extends Screen
      */
     public function name(): ?string
     {
-        return 'My Account';
+        return __('translations.My Account');
     }
 
     /**
@@ -46,7 +46,7 @@ class UserProfileScreen extends Screen
      */
     public function description(): ?string
     {
-        return 'Update your account details such as name, email address and password';
+        return __('translations.Update your account details such as name, email address and password');
     }
 
     /**
@@ -77,20 +77,20 @@ class UserProfileScreen extends Screen
     {
         return [
             Layout::block(UserEditLayout::class)
-                ->title(__('Profile Information'))
+                ->title(__('translations.Profile Information'))
                 ->description(__("Update your account's profile information and email address."))
                 ->commands(
-                    Button::make(__('Save'))
+                    Button::make(__('translations.Save'))
                         ->type(Color::BASIC())
                         ->icon('bs.check-circle')
                         ->method('save')
                 ),
 
             Layout::block(ProfilePasswordLayout::class)
-                ->title(__('Update Password'))
-                ->description(__('Ensure your account is using a long, random password to stay secure.'))
+                ->title(__('translations.Update Password'))
+                ->description(__('translations.Ensure your account is using a long, random password to stay secure.'))
                 ->commands(
-                    Button::make(__('Update password'))
+                    Button::make(__('translations.Update password'))
                         ->type(Color::BASIC())
                         ->icon('bs.check-circle')
                         ->method('changePassword')
@@ -112,7 +112,7 @@ class UserProfileScreen extends Screen
             ->fill($request->get('user'))
             ->save();
 
-        Toast::info(__('Profile updated.'));
+        Toast::info(__('translations.Profile updated.'));
     }
 
     public function changePassword(Request $request): void
@@ -127,6 +127,6 @@ class UserProfileScreen extends Screen
             $user->password = Hash::make($request->get('password'));
         })->save();
 
-        Toast::info(__('Password changed.'));
+        Toast::info(__('translations.Password changed.'));
     }
 }

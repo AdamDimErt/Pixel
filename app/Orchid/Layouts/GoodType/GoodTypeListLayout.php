@@ -29,7 +29,7 @@ class GoodTypeListLayout extends Table
     protected function columns(): iterable
     {
         return [
-            TD::make('name')
+            TD::make('name', __('translations.Name'))
                 ->sort()
                 ->filter(Input::make())
                 ->render(function (GoodType $goodType) {
@@ -37,14 +37,24 @@ class GoodTypeListLayout extends Table
                         ->route('platform.goodTypes.edit', $goodType);
                 }),
 
-            TD::make('description')
+            TD::make('description', __('translations.Description'))
                 ->sort()
+                ->defaultHidden()
+                ->width('250px')
                 ->filter(Input::make())
                 ->render(function (GoodType $goodType) {
                     return $goodType->description;
                 }),
 
-            TD::make('code', __('Route'))
+
+            TD::make('icon', __('translations.Icon'))
+                ->sort()
+                ->filter(Input::make())
+                ->render(function (GoodType $goodType) {
+                    return $goodType->icon;
+                }),
+
+            TD::make('code', __('translations.Route'))
                 ->sort()
                 ->filter(Input::make())
                 ->render(function (GoodType $goodType) {
@@ -57,7 +67,7 @@ class GoodTypeListLayout extends Table
                 ->defaultHidden()
                 ->sort(),
 
-            TD::make('updated_at', __('Updated'))
+            TD::make('updated_at', __('translations.Last edit'))
                 ->usingComponent(DateTimeSplit::class)
                 ->align(TD::ALIGN_RIGHT)
                 ->defaultHidden()

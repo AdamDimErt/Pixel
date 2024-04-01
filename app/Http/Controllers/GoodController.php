@@ -15,7 +15,7 @@ class GoodController extends Controller
     {
         $goods = Good::query()->get();
 
-        $goodTypeDesc = 'Все товары';
+        $goodTypeDesc = __('translations.All goods');
 
         return view('good', compact('goods', 'goodTypeDesc'));
     }

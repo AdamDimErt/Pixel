@@ -34,7 +34,7 @@ class ItemEditScreen extends Screen
      */
     public function name(): ?string
     {
-        return $this->item->exists ? 'Edit item' : 'Creating a new item';
+        return $this->item->exists ? __('translations.Edit item') : __('translations.Creating a new item');
     }
 
     /**
@@ -42,23 +42,23 @@ class ItemEditScreen extends Screen
      */
     public function description(): ?string
     {
-        return 'Items';
+        return __('translations.Items');
     }
 
     public function commandBar(): array
     {
         return [
-            Button::make('Create item')
+            Button::make(__('translations.Create'))
                 ->icon('pencil')
                 ->method('createOrUpdate')
                 ->canSee(! $this->item->exists),
 
-            Button::make('Update')
+            Button::make(__('translations.Update'))
                 ->icon('note')
                 ->method('createOrUpdate')
                 ->canSee($this->item->exists),
 
-            Button::make('Remove')
+            Button::make(__('translations.Delete'))
                 ->icon('trash')
                 ->method('remove')
                 ->canSee($this->item->exists),
@@ -77,17 +77,8 @@ class ItemEditScreen extends Screen
 
                 Relation::make('item.good_id')
                     ->fromModel(Good::class, 'name')
-                    ->help('Begin to enter a name to find a good that you need ')
-                    ->title('Choose a good for that item'),
-
-                Select::make('item.status')
-                    ->options([
-                        'Available' => 'available',
-                        'Rented' => 'rented',
-                        'Pre ordered' => 'pre-ordered',
-                    ])
-                    ->title('status')
-                    ->help('status itema'),
+                    ->help(__('translations.Item good help'))
+                    ->title(__('translations.Good')),
             ]),
         ];
     }

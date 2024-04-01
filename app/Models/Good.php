@@ -17,7 +17,7 @@ use Orchid\Screen\AsSource;
 
 class Good extends Model
 {
-    use AsSource, Attachable, Filterable, HasFactory;
+    use AsSource, Filterable, HasFactory, Attachable;
 
     protected $guarded = [];
 

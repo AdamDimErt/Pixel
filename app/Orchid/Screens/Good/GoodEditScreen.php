@@ -40,7 +40,7 @@ class GoodEditScreen extends Screen
      */
     public function name(): ?string
     {
-        return $this->good->exists ? 'Edit good' : 'Creating a new good';
+        return $this->good->exists ? __('translations.Edit good') : __('translations.Creating a new good');
     }
 
     /**
@@ -48,23 +48,23 @@ class GoodEditScreen extends Screen
      */
     public function description(): ?string
     {
-        return 'Goods';
+        return __('translations.Goods');
     }
 
     public function commandBar(): array
     {
         return [
-            Button::make('Create good')
+            Button::make(__('translations.Create'))
                 ->icon('pencil')
                 ->method('createOrUpdate')
                 ->canSee(! $this->good->exists),
 
-            Button::make('Update')
+            Button::make(__('translations.Update'))
                 ->icon('note')
                 ->method('createOrUpdate')
                 ->canSee($this->good->exists),
 
-            Button::make('Remove')
+            Button::make(__('translations.Delete'))
                 ->icon('trash')
                 ->method('remove')
                 ->canSee($this->good->exists),
@@ -81,54 +81,55 @@ class GoodEditScreen extends Screen
         return [
             Layout::rows([
                 Input::make('good.name')
-                    ->title('Title')
-                    ->placeholder('Attractive but mysterious title')
-                    ->help('Specify a short descriptive title for this good.')
+                    ->title(__('translations.Name'))
+                    ->help(__('translations.Good name help'))
                     ->required(),
 
                 Input::make('good.cost')
-                    ->title('Cost')
-                    ->placeholder('Define a cost for a good')
-                    ->help('Specify a cost for a good')
+                    ->title(__('translations.Cost'))
+                    ->help(__('translations.Good cost help'))
                     ->type('number')
                     ->required(),
 
                 Input::make('good.discount_cost')
-                    ->title('Discount_cost')
-                    ->placeholder('Define a discount_cost for a good')
-                    ->help('Specify a discount_cost for a good')
+                    ->title(__('translations.Discount cost'))
+                    ->help(__('translations.Good discount_cost help'))
                     ->type('number'),
 
                 Input::make('good.damage_cost')
-                    ->title('Damage_cost')
-                    ->placeholder('Define a damage_cost for a good')
-                    ->help('Specify a damage_cost for a good')
+                    ->title(__('translations.Damage cost'))
+                    ->help(__('translations.Good damage_cost help'))
                     ->type('number')
                     ->required(),
 
                 Relation::make('good.good_type_id')
                     ->fromModel(GoodType::class, 'name')
-                    ->title('Choose a category for that good'),
+                    ->help(__('translations.Good goodType help'))
+                    ->required()
+                    ->title(__('translations.GoodType')),
 
                 Relation::make('good.related_goods')
                     ->fromModel(Good::class, 'name')
+                    ->help(__('translations.Good related_goods help'))
                     ->multiple()
-                    ->title('Choose a category for that good'),
+                    ->title(__('translations.Related goods')),
 
                 Relation::make('good.additionals')
                     ->fromModel(Additional::class, 'name')
+                    ->help(__('translations.Good additionals help'))
                     ->multiple()
-                    ->title('Choose a category for that good'),
+                    ->title(__('translations.Additional')),
 
                 TextArea::make('good.description')
-                    ->title('Description')
+                    ->title(__('translations.Description'))
+                    ->help(__('translations.Good description help'))
                     ->rows(3)
                     ->maxlength(200)
-                    ->placeholder('Brief description for preview')
                     ->required(),
 
                 Upload::make('good.attachment')
-                    ->title('All files')
+                    ->help(__('translations.Good attachment help'))
+                    ->title(__('translations.Images'))
                     ->acceptedFiles('image/*'),
             ]),
         ];

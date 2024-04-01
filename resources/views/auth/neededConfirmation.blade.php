@@ -17,7 +17,8 @@
             <h5 class="white-text">Профиль успешно создан!</h5>
             <p class="white-text">Проверьте свой почтовый ящик для подтверждения электронного адреса</p>
             <hr>
-            <a href="{{route('login')}}" class="btn btn-large orange darken-4 white-text confirmation-btn z-depth-5">Войти</a>
+            <a href="{{route('login')}}" class="btn btn-large orange darken-4 white-text confirmation-btn z-depth-5">                    {{__('translations.Log in')}}
+            </a>
         </div>
     </div>
 </div>

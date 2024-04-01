@@ -34,7 +34,7 @@ class AdditionalListLayout extends Table
     protected function columns(): iterable
     {
         return [
-            TD::make('name')
+            TD::make('name', __('translations.Name'))
                 ->sort()
                 ->filter(
                     Input::make()
@@ -44,7 +44,7 @@ class AdditionalListLayout extends Table
                         ->route('platform.additionals.edit', $additional);
                 }),
 
-            TD::make('cost')
+            TD::make('cost', __('translations.Cost'))
                 ->sort()
                 ->filter(
                     Input::make()
@@ -56,7 +56,7 @@ class AdditionalListLayout extends Table
                 ->defaultHidden()
                 ->sort(),
 
-            TD::make('updated_at', __('Updated'))
+            TD::make('updated_at', __('Last edit'))
                 ->usingComponent(DateTimeSplit::class)
                 ->align(TD::ALIGN_RIGHT)
                 ->defaultHidden()

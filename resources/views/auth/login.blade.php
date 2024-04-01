@@ -30,7 +30,7 @@
                         </div>
                         <div class="input-field col s12">
                             <button type="submit" class="btn orange darken-4 authorization-link">
-                                Войти
+                                {{__('translations.Log in')}}
                             </button>
                         </div>
                         @if ($errors->any())

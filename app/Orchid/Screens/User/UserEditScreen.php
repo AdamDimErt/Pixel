@@ -48,7 +48,7 @@ class UserEditScreen extends Screen
      */
     public function name(): ?string
     {
-        return $this->user->exists ? 'Edit User' : 'Create User';
+        return $this->user->exists ? __('translations.Edit user') : __('translations.Create a new user');
     }
 
     /**
@@ -56,7 +56,7 @@ class UserEditScreen extends Screen
      */
     public function description(): ?string
     {
-        return 'User profile and privileges, including their associated role.';
+        return __('translations.User profile and privileges, including their associated role');
     }
 
     public function permission(): ?iterable
@@ -74,19 +74,19 @@ class UserEditScreen extends Screen
     public function commandBar(): iterable
     {
         return [
-            Button::make(__('Impersonate user'))
+            Button::make(__('translations.Impersonate user'))
                 ->icon('bg.box-arrow-in-right')
-                ->confirm(__('You can revert to your original state by logging out.'))
+                ->confirm(__('translations.You can revert to your original state by logging out.'))
                 ->method('loginAs')
                 ->canSee($this->user->exists && $this->user->id !== \request()->user()->id),
 
-            Button::make(__('Remove'))
+            Button::make(__('translations.Remove'))
                 ->icon('bs.trash3')
-                ->confirm(__('Once the account is deleted, all of its resources and data will be permanently deleted. Before deleting your account, please download any data or information that you wish to retain.'))
+                ->confirm(__('translations.Once the account is deleted, all of its resources and data will be permanently deleted. Before deleting your account, please download any data or information that you wish to retain.'))
                 ->method('remove')
                 ->canSee($this->user->exists),
 
-            Button::make(__('Save'))
+            Button::make(__('translations.Save'))
                 ->icon('bs.check-circle')
                 ->method('save'),
         ];
@@ -100,7 +100,7 @@ class UserEditScreen extends Screen
         return [
 
             Layout::block(UserEditLayout::class)
-                ->title(__('Profile Information'))
+                ->title(__('translations.Profile Information'))
                 ->description(__('Update your account\'s profile information and email address.'))
                 ->commands(
                     Button::make(__('Save'))

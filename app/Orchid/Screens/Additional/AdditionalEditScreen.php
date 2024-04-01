@@ -43,7 +43,8 @@ class AdditionalEditScreen extends Screen
      */
     public function name(): ?string
     {
-        return $this->additional->exists ? 'Edit additional' : 'Creating a new additional';
+        return $this->additional->exists ? __('translations.Edit additional') : __('translations.Creating a new additional');
+
     }
 
     /**
@@ -51,23 +52,23 @@ class AdditionalEditScreen extends Screen
      */
     public function description(): ?string
     {
-        return 'Additionals';
+        return __('translations.Additionals');
     }
 
     public function commandBar(): array
     {
         return [
-            Button::make('Create additional')
+            Button::make(__('translations.Create'))
                 ->icon('pencil')
                 ->method('createOrUpdate')
                 ->canSee(!$this->additional->exists),
 
-            Button::make('Update')
+            Button::make(__('translations.Update'))
                 ->icon('note')
                 ->method('createOrUpdate')
                 ->canSee($this->additional->exists),
 
-            Button::make('Remove')
+            Button::make(__('translations.Delete'))
                 ->icon('trash')
                 ->method('remove')
                 ->canSee($this->additional->exists),
@@ -84,15 +85,13 @@ class AdditionalEditScreen extends Screen
         return [
             Layout::rows([
                 Input::make('additional.name')
-                    ->title('Name')
-                    ->placeholder('Attractive but mysterious title')
-                    ->help('Specify a short descriptive title for this additional.')
+                    ->title(__('translations.Name'))
+                    ->help(__('translations.Additional name help'))
                     ->required(),
 
                 Input::make('additional.cost')
-                    ->title('Cost')
-                    ->placeholder('Define a cost for a good')
-                    ->help('Specify a cost for a good')
+                    ->title(__('translations.Cost'))
+                    ->help(__('translations.Additional cost help'))
                     ->type('number')
                     ->required(),
 
