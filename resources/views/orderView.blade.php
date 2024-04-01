@@ -6,18 +6,18 @@
         <div class="col s12 order-view-wrapper z-depth-5">
             @if(count($order->orderItems) > 0)
                 <h5 class="white-text">
-                    Ваш заказ состоит из следующих товаров:
+                    {{__('translations.Your order consists of the following goods')}}:
                 </h5>
                 @foreach($order->orderItems as $index => $item)
                     <div class="order-item-wrapper z-depth-5">
                         <div class="row">
                             <div class="col s12 m9">
-                                <p class="white-text">{{$index + 1}}. Наименование товара: <span class="orange-text">{{$item->item->good->name}}</span></p>
-                                <p class="white-text">Цена товара: <span class="orange-text">{{$item->item->good->discount_cost ?? $item->item->good->cost}}</span></p>
-                                <p class="white-text">Статус: <span class="orange-text">{{$item->status}}</span></p>
-                                <p class="white-text">Категория товара: <a href="{{route('goodList', $item->item->good->goodType->code)}}" class="orange-text">{{$item->item->good->goodType->name}}</a></p>
-                                <p class="white-text">Время начала аренды: <span class="orange-text">{{$item->rent_start_date}} {{$item->rent_start_time}}</span></p>
-                                <p class="white-text">Время конца аренды: <span class="orange-text">{{$item->rent_end_date}} {{$item->rent_end_time}}</span></p>
+                                <p class="white-text">{{$index + 1}}. {{__('translations.Good name')}}: <span class="orange-text">{{$item->item->good->name}}</span></p>
+                                <p class="white-text">{{__('translations.Good cost')}}: <span class="orange-text">{{$item->item->good->discount_cost ?? $item->item->good->cost}}</span></p>
+                                <p class="white-text">{{__('translations.Status')}}: <span class="orange-text">{{$item->status}}</span></p>
+                                <p class="white-text">{{__('translations.Good type')}}: <a href="{{route('goodList', $item->item->good->goodType->code)}}" class="orange-text">{{$item->item->good->goodType->name}}</a></p>
+                                <p class="white-text">{{__('translations.Rent start time')}}: <span class="orange-text">{{$item->rent_start_date}} {{$item->rent_start_time}}</span></p>
+                                <p class="white-text">{{__('translations.Rent end time')}}: <span class="orange-text">{{$item->rent_end_date}} {{$item->rent_end_time}}</span></p>
                                 @if (count(json_decode($item->additionals)) > 0)
                                     <p class="white-text">Дополнительные товары:</p>
                                     <ul>
@@ -45,13 +45,13 @@
         </div>
         @include('confirmModal', [
             'modalClass' => 'order-canceling-modal',
-            'title' => 'Вы действительно хотите отменить заказ?',
+            'title' => __('translations.Are you sure you want to cancel the order?'),
             'subTitle' => null,
             'link' => null,
             'linkCaption' => null,
-            'downTitle' => 'После отмены данный заказ не будет более доступен',
+            'downTitle' => __('translations.After the cancellation this order will be no longer available'),
             'btnAction' => 'cancelOrder',
-            'btnCaption' => 'Отменить заказ',
+            'btnCaption' => __('translations.Cancel order'),
         ])
     </div>
     @push('scripts')

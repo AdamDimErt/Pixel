@@ -42,14 +42,14 @@
                     <span class="chip red white-text large">
                         <b>{{$good->discount_cost}}</b>
                     </span>
-                тг/сутки
+                {{__('translations.Tenge per day')}}
                 </span>
             @else
                 <span class="cost-label">
                     <span class="chip">
                         <b>{{$good->cost}}</b>
                     </span>
-                тг/сутки
+                {{__('translations.Tenge per day')}}
                 </span>
             @endif
             @if($good->discount_cost)

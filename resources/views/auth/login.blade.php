@@ -15,18 +15,18 @@
     <div class="valign-wrapper">
         <div class="main-color center auth-inner">
             <a href="/" class="back-auth-button"><i class="material-icons orange-text text-lighten-3">cancel</i></a>
-            <h5 class="white-text">Войдите в свой аккаунт</h5>
+            <h5 class="white-text">{{__('translations.Log into your account')}}</h5>
             <div class="row">
                 <form class="col s12" method="POST" action="{{route('authenticate')}}">
                     {{csrf_field()}}
                     <div class="row">
                         <div class="input-field col s12">
                             <i class="material-icons prefix white-text">phone</i>
-                            <input name="phone" type="tel" placeholder="Номер телефона" class="white-text">
+                            <input name="phone" type="tel" placeholder="{{__('translations.Phone')}}" class="white-text">
                         </div>
                         <div class="input-field col s12">
                             <i class="material-icons prefix white-text">lock</i>
-                            <input name="password" type="password" placeholder="Пароль" class="white-text">
+                            <input name="password" type="password" placeholder="{{__('translations.Password')}}" class="white-text">
                         </div>
                         <div class="input-field col s12">
                             <button type="submit" class="btn orange darken-4 authorization-link">
@@ -46,7 +46,7 @@
                     <hr>
                 </form>
             </div>
-            <span class="white-text">Ещё нет аккаунта? <a href="{{route('register')}}" class="orange-text"><u>Зарегистрироваться</u></a></span>
+            <span class="white-text">{{__('translations.Still do not have an account?')}} <a href="{{route('register')}}" class="orange-text"><u>{{__('translations.Register')}}</u></a></span>
         </div>
     </div>
 </div>

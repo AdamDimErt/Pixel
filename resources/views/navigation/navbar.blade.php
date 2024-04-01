@@ -8,7 +8,7 @@
                     <div class="search-wrapper valign-wrapper hide-on-small-only input-field">
                         <input id="search" type="text"
                                class="validate browser-default text-white center-align autocomplete"
-                               placeholder="Поиск">
+                               placeholder="{{__('translations.Search')}}">
                         <i class="material-icons">
                             search
                         </i>
@@ -39,7 +39,7 @@
                                     favorite_border
                                 </i>
                                 <span class="hide-on-med-and-down">
-                                Любимое
+                                {{__('translations.Favorites')}}
                             </span>
                             </a>
                         </li>
@@ -49,16 +49,16 @@
                                     account_circle
                                 </i>
                                 <span class="hide-on-med-and-down">
-                                Профиль
+                                {{__('translations.Profile')}}
                             </span>
                             </a>
 
                             <ul id='profile-options' class='dropdown-content main-color white-text'>
-                                <li><a href="{{route('getMyOrders')}}" class="profile-dropdown-link white-text">Мои заказы</a></li>
-                                <li><a href="{{route('viewProfile')}}" class="profile-dropdown-link white-text">Просмотреть профиль</a></li>
+                                <li><a href="{{route('getMyOrders')}}" class="profile-dropdown-link white-text">{{__('translations.My orders')}}</a></li>
+                                <li><a href="{{route('viewProfile')}}" class="profile-dropdown-link white-text">{{__('translations.Check profile')}}</a></li>
                                 <li class="divider" tabindex="-1"></li>
                                 <li><a href="{{route('logout')}}" class="white-text profile-dropdown-link"><i
-                                            class="material-icons orange-text">cancel</i>Выйти</a></li>
+                                            class="material-icons orange-text">cancel</i>{{__('translations.Logout')}}</a></li>
                             </ul>
                         </li>
                     @endauth

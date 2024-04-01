@@ -9,7 +9,7 @@
         <div class="col s12 m6 detailed-info white-text">
             <div class="detailed-info-wrapper">
                 <h4 class="center no-margin">{{$good->name}}</h4>
-                <span class="flow-text">Описание:</span>
+                <span class="flow-text">{{__('translations.Description')}}:</span>
                 @if(count(explode('-', $good->description)) > 0)
                     @foreach(explode('-', $good->description) as $desc)
                         <li>{{$desc}}</li>
@@ -25,20 +25,20 @@
                     <span class="chip red white-text large item-cost-holder">
                         {{$good->discount_cost}}
                     </span>
-                тг/сутки
+                {{__('translations.Tenge per day')}}
                 </span>
                 @else
                     <span class="right">
                         <span class="chip item-cost-holder">
                             {{$good->cost}}
                         </span>
-                    тг/сутки
+                    {{__('translations.Tenge per day')}}
                     </span>
                 @endif
             </div>
             <div class="info-btns-wrapper">
                 @if(count($good->getAdditionals()) > 0)
-                    <h5>В дополнение к комплекту берут: </h5>
+                    <h5>{{__('translations.In addition with this good people usually rent')}}: </h5>
                     @foreach($good->getAdditionals() as $additional)
                         <p>
                             <label>
@@ -51,7 +51,7 @@
                 @endif
             </div>
             <hr>
-            <p class="grey-text text-darken-2">Стоимость при повреждении:
+            <p class="grey-text text-darken-2">{{__('translations.Damage cost')}}:
                     {{$good->damage_cost}}
                 тг
             </p>
@@ -62,7 +62,7 @@
                 <div class="col s6 center">
                     <a class="btn-large orange darken-4 auth-link confirm-order-btn no-margin add-to-cart-btn"
                        data-product-id="{{ $good->id }}">
-                        <span class="hide-on-med-and-down good-view-action-btn">В корзину</span>
+                        <span class="hide-on-med-and-down good-view-action-btn">{{__('translations.To cart')}}</span>
                         <i class="material-icons">add_shopping_cart</i>
                     </a>
                 </div>
@@ -71,7 +71,7 @@
                         @if (in_array($good->id, App\Models\Client::query()->find(Auth::guard('clients')->id())->favorites()->pluck('good_id')->toArray()))
                             <a class="btn-large orange remove-from-favorites-btn darken-4 auth-link confirm-order-btn no-margin"
                                data-product-id="{{$good->id}}">
-                                <span class="hide-on-med-and-down good-view-action-btn">Удалить из любимого</span>
+                                <span class="hide-on-med-and-down good-view-action-btn">{{__('translations.Delete from favorites')}}</span>
                                 <i class="material-icons">
                                     favorite
                                 </i>
@@ -79,7 +79,7 @@
                         @else
                             <a class="btn-large orange add-to-favorites-btn darken-4 auth-link confirm-order-btn no-margin"
                                data-product-id="{{$good->id}}">
-                                <span class="hide-on-med-and-down good-view-action-btn">В любимое</span>
+                                <span class="hide-on-med-and-down good-view-action-btn">{{__('translations.Add to favorites')}}</span>
                                 <i class="large material-icons">
                                     favorite_border
                                 </i>
@@ -89,7 +89,7 @@
                     @guest('clients')
                         <a href="#auth-modal"
                            class="btn-large orange darken-4 auth-link confirm-order-btn no-margin modal-trigger">
-                            <span class="hide-on-med-and-down good-view-action-btn">В любимое</span>
+                            <span class="hide-on-med-and-down good-view-action-btn">{{__('translations.Add to favorites')}}</span>
                             <i class="material-icons">
                                 favorite_border
                             </i>
@@ -100,7 +100,7 @@
         </div>
     </div>
     @if(count($good->getRelatedGoods()) > 0)
-        <h4 class="white-text">Похожие товары:</h4>
+        <h4 class="white-text">{{__('translations.Similar goods')}}:</h4>
         <div class="carousel">
             @foreach($good->getRelatedGoods() as $relatedGood)
                 <div class="carousel-item">
@@ -109,8 +109,7 @@
             @endforeach
         </div>
     @endif
-
-    @include('auth.modal', ['icon' => 'favorite_border', 'title' => 'Необходима аутентификация', 'content' => 'Для добавления товара в "любимые" необходимо аутентифицироваться'])
+    @include('auth.modal', ['icon' => 'favorite_border', 'title' => __('translations.Authorization required'), 'content' => __('translations.To add a product to your favorites, you must be authenticated')])
     @push('scripts')
         <script src="{{asset('js/cart.js')}}"></script>
         <script src="{{asset('js/favoriteActions.js')}}"></script>

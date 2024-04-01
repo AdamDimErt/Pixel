@@ -1,26 +1,19 @@
 @extends('app')
 @section('content')
     @if (count($goodsInCart) > 0)
-        <h5 class="white-text">Корзина</h5>
-        <p class="grey-text">Общее количество: {{$totalCount}}</p>
-        {{--        <a href="#" class="btn waves-ripple clean-cart-btn waves-orange waves-effect orange darken-4 valign-wrapper">--}}
-        {{--            <i class="material-icons">delete_forever</i>--}}
-        {{--            Очистить корзину--}}
-        {{--        </a>--}}
+        <h5 class="white-text">{{__('translations.Cart')}}</h5>
+        <p class="grey-text">{{__('translations.Total amount')}}: {{$totalCount}}</p>
         <div class="row">
             <div class="col s12 m3 additional-info white-text hide-on-med-and-up">
-                <span class="grey-text"><u>Выберите промежутки аренды для товаров</u></span>
-                <p>Тут перечислены все товары, которые вы добавляли к себе в корзину.</p>
-                <p>Проверьте каждый из них на соответствие, и, в случае надобности, уберите ненужные.</p>
-                <p>Если вдруг, вы захотите добавить что-то ещё, не стесняйтесь переходить на <a
-                        class="orange-text text-darken-4" href="/"><b><u>главную</u></b></a>.</p>
+                <span class="grey-text"><u>{{__('translations.Select rental periods for goods')}}</u></span>
+                <p>{{__('translations.All items that you have added to your cart are listed here.')}}</p>
+                <p>{{__('translations.Check each of them for compliance, and, if necessary, remove unnecessary ones.')}}</p>
+                <p> <a
+                        class="orange-text text-darken-4" href="/"><b><u>{{__('translations.to main page')}}</u></b></a>.</p>
                 <hr>
-                <p><b>ВАЖНО!</b></p>
-                <p>Обязательно имейте в виду, что при аренде оборудования и его поломке, следует дополнительная оплата,
-                    исходя из условий договора</p>
-                <p>Примите к сведению: За просрочку выплаты платежей, указанных в договоре, Арендодатель в праве
-                    требовать от Арендатора выплатить пеню в размере 5% от не выплаченного платежа за каждый день
-                    просрочки</p>
+                <p><b>{{__('translations.IMPORTANT!')}}</b></p>
+                <p>{{__('translations.Be sure to keep in mind that if you rent equipment and it breaks down, an additional payment will apply, Based on the terms of the contract')}}</p>
+                <p>{{__('translations.Please note: For late payment of payments specified in the agreement, the Lessor has the right require the Tenant to pay a penalty in the amount of 5% of the unpaid payment for each day delays')}}</p>
                 <hr>
             </div>
             <div class="col s12 m9 goods-list">
@@ -37,18 +30,18 @@
                                 <img src="{{$item->good->attachment()?->first()?->url}}" alt="" class="good-image">
                             </div>
                             <div class="col s12 m9 good-cart-additional-info white-text">
-                                <p>Наименование: <a href="/{{$item->good->id}}"><b
+                                <p>{{__('translations.Name')}}: <a href="/{{$item->good->id}}"><b
                                             class="orange-text text-darken-4"><u>{{$item->good->name}}</u></b></a></p>
                                 @if($item->good->discount_cost && $item->good->discount_cost != 0)
-                                    <p>Цена (за сутки): <s>{{$item->good->cost}}</s> <b
+                                    <p>{{__('translations.Cost for day')}}: <s>{{$item->good->cost}}</s> <b
                                             class="orange-text text-darken-4">{{$item->good->discount_cost}}</b></p>
                                 @else
-                                    <p>Цена (за сутки): <b>{{$item->good->cost}}</b></p>
+                                    <p>{{__('translations.Cost for day')}}: <b>{{$item->good->cost}}</b></p>
                                 @endif
-                                <p>Цена за поломку во время аренды: <b>{{$item->good->damage_cost}}</b></p>
-                                <p>Описание: <b class="truncate">{{$item->good->description}}</b></p>
+                                <p>{{__('translations.Price for breakdown during rental')}}: <b>{{$item->good->damage_cost}}</b></p>
+                                <p>{{__('translations.Description')}}: <b class="truncate">{{$item->good->description}}</b></p>
                                 @if(count($item->good->getAdditionals()) > 0)
-                                    <p><u>Доп. аксессуары: </u></p>
+                                    <p><u>{{__('translations.Additional accessories')}}: </u></p>
                                     @foreach($item->good->getAdditionals() as $additional)
                                         <p>
                                             <label>
@@ -64,37 +57,37 @@
                                 @endif
                                 <div class="col s12 input-field">
                                     <input name="{{$item->good->id . 'pixelrental' . $item->id}}[rent_start_date]" data-item-id="{{$item->id}}" type="text" class="datepicker white-text begining-date" required>
-                                    <label for="rent_start_date">Дата начала аренды: </label>
+                                    <label for="rent_start_date">{{__('translations.Rent start')}}: </label>
                                 </div>
                                 <div class="col s12 input-field white-text hide">
                                     <select name="{{$item->good->id . 'pixelrental' . $item->id}}[start_time]" class="white-text left rent-start-time" required>
-                                        <option value="" disabled selected>Выберите время:</option>
+                                        <option value="" disabled selected>{{__('translations.Choose time')}}:</option>
                                     </select>
-                                    <label>Время начала аренды</label>
+                                    <label>{{__('translations.Rent start time')}}</label>
                                 </div>
                                 <div class="col s12 input-field hide">
                                     <input name="{{$item->good->id . 'pixelrental' . $item->id}}[rent_end_date]" type="text" class="datepicker white-text ending-date" required>
-                                    <label for="rent_end_date">Дата конца аренды:</label>
+                                    <label for="rent_end_date">{{__('translations.Rend end')}}:</label>
                                 </div>
                                 <div class="col s12 input-field white-text hide">
                                     <select name="{{$item->good->id . 'pixelrental' . $item->id}}[end_time]" class="white-text left rent-end-time" required>
-                                        <option value="" disabled selected>Выберите время:</option>
+                                        <option value="" disabled selected>{{__('translations.Rent end')}}:</option>
                                     </select>
-                                    <label>Время конца аренды</label>
+                                    <label>{{__('translations.Rent end time')}}</label>
                                 </div>
                                 <hr>
                                 <div class="control-sum right">
-                                    <h5 class="inline">Итог:
+                                    <h5 class="inline">{{__('translations.Total')}}:
                                         @if($item->good->discount_cost && $item->good->discount_cost != 0)
                                             <span
                                                 class="good-cost-holder orange-text text-darken-4">{{$item->totalCost}}
                                         </span>
-                                            тг
+                                            {{__('translations.KZT')}}
                                         @else
                                             <span
                                                 class="good-cost-holder">{{$item->totalCost}}
                                         </span>
-                                            тг
+                                            {{__('translations.KZT')}}
                                         @endif
                                     </h5>
                                 </div>
@@ -104,49 +97,46 @@
                 </form>
             </div>
             <div class="col s12 m3 additional-info white-text hide-on-med-and-down">
-                <span class="grey-text"><u>Выберите промежутки аренды для товаров</u></span>
-                <p>Тут перечислены все товары, которые вы добавляли к себе в корзину.</p>
-                <p>Проверьте каждый из них на соответствие, и, в случае надобности, уберите ненужные.</p>
-                <p>Если вдруг, вы захотите добавить что-то ещё, не стесняйтесь переходить на <a
-                        class="orange-text text-darken-4" href="/"><b><u>главную</u></b></a>.</p>
+                <span class="grey-text"><u>{{__('translations.Select rental periods for goods')}}</u></span>
+                <p>{{__('translations.All items that you have added to your cart are listed here.')}}</p>
+                <p>{{__('translations.Check each of them for compliance, and, if necessary, remove unnecessary ones.')}}</p>
+                <p> <a
+                        class="orange-text text-darken-4" href="/"><b><u>{{__('translations.to main page')}}</u></b></a>.</p>
                 <hr>
-                <p><b>ВАЖНО!</b></p>
-                <p>Обязательно имейте в виду, что при аренде оборудования и его поломке, следует дополнительная оплата,
-                    исходя из условий договора</p>
-                <p>Примите к сведению: За просрочку выплаты платежей, указанных в договоре, Арендодатель в праве
-                    требовать от Арендатора выплатить пеню в размере 5% от не выплаченного платежа за каждый день
-                    просрочки</p>
+                <p><b>{{__('translations.IMPORTANT!')}}</b></p>
+                <p>{{__('translations.Be sure to keep in mind that if you rent equipment and it breaks down, an additional payment will apply, Based on the terms of the contract')}}</p>
+                <p>{{__('translations.Please note: For late payment of payments specified in the agreement, the Lessor has the right require the Tenant to pay a penalty in the amount of 5% of the unpaid payment for each day delays')}}</p>
             </div>
         </div>
         @auth('clients')
             <div class="col s12 right-align">
                 <a href="#order-placement-modal" class="btn orange darken-4 auth-link valign-wrapper next-step-btn modal-trigger">
-                    Оформить заказ
+                    {{__('translations.Place order')}}
                 </a>
             </div>
         @endauth
         @guest('clients')
             <div class="col s12 right-align">
                 <a href="#auth-modal" class="btn orange darken-4 auth-link valign-wrapper next-step-btn modal-trigger">
-                    Оформить заказ
+                    {{__('translations.Place order')}}
                 </a>
-                @include('auth.modal', ['icon' => 'favorite_border', 'title' => "Необходима авторизация", 'content' => "Пожалуйста, войдите в аккаунт для продолжения оформления заказа"])
+                @include('auth.modal', ['icon' => 'favorite_border', 'title' => __('translations.Authorization required'), 'content' => __('translations.Please enter to your account to continue order settlement')])
             </div>
         @endguest
         @include('confirmModal', [
     'modalClass' => 'order-placement-modal',
-    'title' => 'Вы действительно готовы оформить заказ?',
-    'subTitle' => 'После подтверждения оформления заказа ваш заказ будет передан менеджеру и вы сможете получить свой товар в пункте выдачи по адресу:',
+    'title' => __('translations.Are you sure you are ready to place an order?'),
+    'subTitle' => __('translations.After confirming your order, your order will be transferred to the manager and you will be able to receive your goods at the pick-up point at') . ":",
     'link' => 'https://2gis.kz/almaty/firm/70000001069136996',
-    'linkCaption' => 'Улица Толе БИ, 176.',
-    'downTitle' => 'Менеджер ещё раз перепроверит ваши контактные данные и фотографии удостоверения, после чего будет подписан договор об аренде оборудования.',
+    'linkCaption' => __('translations.Tole BI street, 176'). '.',
+    'downTitle' => __('translations.The manager will double-check your contact details and photographs of your ID, after which an equipment rental agreement will be signed').'.',
     'btnAction' => 'placeOrder',
-    'btnCaption' => 'Оформить заказ',
+    'btnCaption' => __('translations.Place order'),
 ])
     @else
-        <h4 class="white-text center">Тут пока ничего нет :(</h4>
-        <h5 class="white-text center">Возвращайтесь на <a href="/" class="orange-text"><b><u>главную</u></b></a>, и
-            добавьте в корзину что-нибудь, что вам приглянётся</h5>
+        <h4 class="white-text center">{{__('translations.There is nothing here yet')}} :(</h4>
+        <h5 class="white-text center">{{__('translations.Get back to')}} <a href="/" class="orange-text"><b><u>{{__('translations.to main page')}}</u></b></a>, и
+            {{__('translations.add anything you like to your cart')}}</h5>
     @endif
     @push('scripts')
         <script src="{{asset('js/cartActions.js')}}"></script>

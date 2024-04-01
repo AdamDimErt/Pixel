@@ -22,16 +22,19 @@
                     <div class="row">
                         <div class="input-field col s12">
                             <i class="material-icons prefix white-text">account_circle</i>
-                            <input name="name" id="name" type="text" placeholder="ФИО" class="white-text" required>
+                            <input name="name" id="name" type="text" placeholder="{{__('translations.Full name')}}"
+                                   class="white-text" required>
                         </div>
                         <div class="input-field col s12">
                             <i class="material-icons prefix white-text">phone</i>
-                            <input name="phone" id="phone" type="tel" placeholder="Номер телефона" class="white-text"
+                            <input name="phone" id="phone" type="tel" placeholder="{{__('translations.Phone')}}"
+                                   class="white-text"
                                    required>
                         </div>
                         <div class="input-field col s12">
                             <i class="material-icons prefix white-text">email</i>
-                            <input name="email" id="email" type="email" placeholder="Адрес почты" class="white-text"
+                            <input name="email" id="email" type="email" placeholder="{{__('translations.Email')}}"
+                                   class="white-text"
                                    required>
                         </div>
                         <div class="input-field col s12">
@@ -39,7 +42,7 @@
                                 <img src="{{asset('/img/instagram.svg')}}" height="35px" alt="">
                             </i>
                             <input name="instagram" id="email" type="text"
-                                   placeholder="Ваш instagram (только тег без @)" class="white-text" required>
+                                   placeholder="{{__('translations.Your instagram')}}" class="white-text" required>
                         </div>
                         <div class="file-field input-field col s12">
                             <div>
@@ -48,21 +51,23 @@
                             <div class="file-path-wrapper">
                                 <i class="material-icons prefix white-text">attach_file</i>
                                 <input id="file-path" class="file-path" type="text"
-                                       placeholder="Удостоверение личности (с двух сторон)">
+                                       placeholder="{{__('translations.Id card help register')}}">
                             </div>
                         </div>
                         <div class="input-field col s12">
                             <i class="material-icons prefix white-text">lock</i>
-                            <input name="password" type="password" placeholder="Пароль" class="white-text" required>
+                            <input name="password" type="password" placeholder="{{__('translations.Password')}}"
+                                   class="white-text" required>
                         </div>
                         <div class="input-field col s12">
                             <i class="material-icons prefix white-text">done</i>
-                            <input name="password_confirmation" type="password" placeholder="Подтвердите пароль"
+                            <input name="password_confirmation" type="password"
+                                   placeholder="{{__('translations.Password confirm')}}"
                                    class="white-text" required>
                         </div>
                         <div class="input-field col s12">
                             <button type="submit" class="btn orange darken-4 authorization-link">
-                                Зарегистрироваться
+                                {{__('translations.Register')}}
                             </button>
                         </div>
                         @if ($errors->any())
@@ -78,9 +83,13 @@
                     <hr>
                 </form>
             </div>
-            <span class="white-text">Уже есть аккаунт? <a href="{{route('login')}}" class="orange-text"><u>
+            <span class="white-text">{{__('translations.Already have an account?')}}
+                <a href="{{route('login')}}"
+                   class="orange-text"><u>
                         {{__('translations.Log in')}}
-</u></a></span>
+</u>
+                </a>
+            </span>
         </div>
     </div>
 </div>

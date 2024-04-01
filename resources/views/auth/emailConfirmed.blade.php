@@ -14,7 +14,7 @@
 <div class="container valign-wrapper auth-container">
     <div class="valign-wrapper">
         <div class="main-color center auth-inner">
-            <h5 class="white-text">Электронный адрес успешно подтверждён!</h5>
+            <h5 class="white-text">{{__('translations.Your email has been confirmed')}}</h5>
             <hr>
             <a href="{{route('login')}}" class="btn btn-large orange darken-4 white-text confirmation-btn z-depth-5">                    {{__('translations.Log in')}}
             </a>

@@ -139,13 +139,13 @@
 </nav>
 <div class="container valign-wrapper auth-container center">
     <div class="main-color center auth-inner message-wrapper">
-        <h5 class="white-text">Вас приветствует прокат аудио и видео девайсов <a href="https://pixelrental.kz"
+        <h5 class="white-text">{{__('translations.You are welcomed by the device rental')}} <a href="https://pixelrental.kz"
                                                                                  class="orange-text"><u>Pixelrental.kz</u></a>
         </h5>
-        <h5 class="white-text">Спасибо, что выбираете нас!</h5>
-        <p class="white-text">Подтвердите свой адрес электронной почты, перейдя по ссылке ниже</p>
+        <h5 class="white-text">{{__('translations.Thank you for your loyalty!')}}</h5>
+        <p class="white-text">{{__('translations.Confirm your email address by clicking on the link below')}}</p>
         <a href="{{route('confirmEmail', $clientEmail . 'pixelrental' . $confirmationCode)}}"
-           class="btn btn-large orange darken-4 white-text">Подтвердить адрес</a>
+           class="btn btn-large orange darken-4 white-text">{{__('translations.Confirm email')}}</a>
     </div>
 </div>
 </body>

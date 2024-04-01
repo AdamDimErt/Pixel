@@ -13,12 +13,12 @@
                 </div>
             @endforeach
         @else
-            <h5 class="white-text center">Тут пока ничего нет :(</h5>
+            <h5 class="white-text center">{{__('translations.There is nothing here yet')}} :(</h5>
         @endif
     </div>
     @push('scripts')
         <script src="{{asset('js/favoriteActions.js')}}"></script>
         <script src="{{asset('js/cart.js')}}"></script>
     @endpush
-    @include('auth.modal', ['icon' => 'favorite_border', 'title' => 'Необходима аутентификация', 'content' => 'Для добавления товара в "любимые" необходимо аутентифицироваться'])
+    @include('auth.modal', ['icon' => 'favorite_border', 'title' => __('translations.Authorization required'), 'content' => __('translations.To add a product to your favorites, you must be authenticated')])
 @endsection

@@ -15,12 +15,12 @@ class LocaleMiddleware
      */
     public function handle($request, Closure $next)
     {
-        if (session()->has('locale')) {
-            App::setlocale(session()->get('locale'));
-        } else {
-            App::setlocale('ru');
-            session()->put('locale', 'ru');
-        }
+//        if (session()->has('locale')) {
+//            App::setlocale(session()->get('locale'));
+//        } else {
+            App::setlocale('kz');
+            session()->put('locale', 'kz');
+//        }
 
         return $next($request);
     }

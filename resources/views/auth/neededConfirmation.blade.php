@@ -14,8 +14,8 @@
 <div class="container valign-wrapper auth-container">
     <div class="valign-wrapper">
         <div class="main-color center auth-inner">
-            <h5 class="white-text">Профиль успешно создан!</h5>
-            <p class="white-text">Проверьте свой почтовый ящик для подтверждения электронного адреса</p>
+            <h5 class="white-text">{{__('translations.Your profile has been successfully created!')}}</h5>
+            <p class="white-text">{{__('translations.Check your inbox')}}</p>
             <hr>
             <a href="{{route('login')}}" class="btn btn-large orange darken-4 white-text confirmation-btn z-depth-5">                    {{__('translations.Log in')}}
             </a>
