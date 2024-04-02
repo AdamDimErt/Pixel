@@ -243,6 +243,7 @@ return [
     'Please note: For late payment of payments specified in the agreement, the Lessor has the right require the Tenant to pay a penalty in the amount of 5% of the unpaid payment for each day delays' => 'Please note: For late payment of the payments specified in the contract, the Lessor has the right to demand from the Lessee a penalty of 5% of the unpaid payment for each day of delay',
     'Be sure to keep in mind that if you rent equipment and it breaks down, an additional payment will apply based on the terms of the contract' => 'Be sure to keep in mind that in case of equipment rental and its breakdown, additional payment is due based on the terms and conditions of the contract',
     'IMPORTANT!' => 'IMPORTANT!',
+    'Be sure to keep in mind that if you rent equipment and it breaks down, an additional payment will apply, Based on the terms of the contract' => 'Be sure to keep in mind that if you rent equipment and it breaks down, an additional payment will apply, Based on the terms of the contract',
     'add anything you like to your cart' => 'Add anything you like to your cart',
     'to main page' => 'main',
     'If suddenly you want to add something else, feel free to go to' => 'If you want to add anything else, feel free to go to',

@@ -244,6 +244,7 @@ return [
     'IMPORTANT!' => 'МҰҢАЙЛЫ!',
     'add anything you like to your cart' => 'сіздің себетке ұнамды бірнеше несілді жаңадан қосыңыз',
     'to main page' => 'басты бетке',
+    'Be sure to keep in mind that if you rent equipment and it breaks down, an additional payment will apply, Based on the terms of the contract' => 'Жабдықты жалға алсаңыз және ол істен шықса, келісімшарт талаптарының негізінде қосымша төлем алынатынын есте сақтаңыз.',
     'If suddenly you want to add something else, feel free to go to' => 'Әйтсеніз, егер сіз басқа не біреу екінші қосу керек болса, өтінемін',
     'Check each of them for compliance, and, if necessary, remove unnecessary ones.' => 'Таңдамаға келсе, сіздер өздеріңізді тексеріңіз және қажет болса, қалпына келтірмейсіз.',
     'All items that you have added to your cart are listed here.' => 'Сіздің себетке қосқан барлық элементтер бұл жерде көрсетілген.',

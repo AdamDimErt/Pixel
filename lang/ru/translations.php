@@ -245,6 +245,7 @@ return [
     'IMPORTANT!' => 'ВАЖНО!',
     'add anything you like to your cart' => 'добавьте в корзину что-нибудь, что вам приглянётся',
     'to main page' => 'главную',
+    'Be sure to keep in mind that if you rent equipment and it breaks down, an additional payment will apply, Based on the terms of the contract' => 'Обязательно имейте в виду, что если вы арендуете технику и она сломается, взимается дополнительная плата, исходя из условий договора.',
     'If suddenly you want to add something else, feel free to go to' => 'Если вдруг, вы захотите добавить что-то ещё, не стесняйтесь переходить на',
     'Check each of them for compliance, and, if necessary, remove unnecessary ones.' => 'Проверьте каждый из них на соответствие, и, в случае надобности, уберите ненужные.',
     'All items that you have added to your cart are listed here.' => 'Тут перечислены все товары, которые вы добавляли к себе в корзину.',
