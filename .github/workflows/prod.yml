@@ -16,4 +16,6 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 22
           script:
-            echo 'test'
+            cd tech-shop
+            git pull origin main
+            sudo docker compose up -d
