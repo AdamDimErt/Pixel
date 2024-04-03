@@ -8,7 +8,7 @@ RUN apk add --update \
     && apk add git vim curl zip openssl ffmpeg bash imap-dev krb5-dev mc
 
 # Install & Configure PHP extensions
-RUN docker-php-ext-install -j$(nproc) gd zip pdo pdo_mysql opcache intl
+RUN docker-php-ext-install -j$(nproc) gd zip pdo pdo_sqlite opcache intl
 
 RUN docker-php-ext-configure imap --with-kerberos --with-imap-ssl \
     && docker-php-ext-install imap \
