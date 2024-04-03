@@ -19,6 +19,5 @@ jobs:
               cd tech-shop
             && git reset --hard HEAD && git clean -fd && git pull origin main -f
             && sudo docker compose -f deployment-docker-compose.yml up -d
-            && sudo docker exec -it pixelrental-php-1 bash
-            && php artisan orchid:publish
+            && sudo docker exec -it pixelrental-php-1 php artisan orchid:publish
 
