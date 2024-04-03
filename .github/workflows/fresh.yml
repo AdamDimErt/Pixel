@@ -4,11 +4,11 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
+  fresh:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Deploy via SSH
+      - name: Fresh database
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.HOST }}
