@@ -17,6 +17,6 @@ jobs:
           port: 22
           script:
               cd tech-shop
-            && git pull origin main -f
+            && git reset --hard HEAD && git clean -fd && git pull origin main -f
             && sudo docker compose -f deployment-docker-compose.yml up -d
 
