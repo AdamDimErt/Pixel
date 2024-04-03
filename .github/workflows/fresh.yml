@@ -19,5 +19,6 @@ jobs:
               cd tech-shop
             && sudo docker exec pixelrental-php-1
             php artisan migrate:fresh
-            && php artisan db:seed
+            && sudo docker exec pixelrental-php-1
+            php artisan db:seed
 
