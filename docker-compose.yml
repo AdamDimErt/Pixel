@@ -57,6 +57,7 @@ services:
             - "${COMPOSE_GATEWAY}:9000:9000"
         volumes:
             - "${COMPOSE_APP_DIR}:${COMPOSE_CONTAINER_DIR}"
+            - "${COMPOSE_APP_DIR}/../database.sqlite:${COMPOSE_CONTAINER_DIR}/database/database.sqlite"
             - "${COMPOSE_APP_DIR}/.development/docker/php/php.ini:/usr/local/etc/php/php.ini"
             - "${COMPOSE_APP_DIR}/.development/docker/php/docker-entrypoint.sh:/docker-entrypoint.sh"
         depends_on:
