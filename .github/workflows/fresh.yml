@@ -17,7 +17,7 @@ jobs:
           port: 22
           script:
               cd tech-shop
-            && sudo docker exec -it pixelrental-php-1 bash
-            && php artisan migrate:fresh
+            && sudo docker exec -it pixelrental-php-1
+            php artisan migrate:fresh
             && php artisan db:seed
 
