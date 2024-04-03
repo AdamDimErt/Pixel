@@ -6,7 +6,7 @@ services:
     deploy:
       resources:
         limits:
-          memory: 512Mb
+          memory: 768Mb
     tty: true
     build:
       context: .
@@ -31,7 +31,7 @@ services:
     deploy:
       resources:
         limits:
-          memory: 512Mb
+          memory: 256Mb
     tty: true
     environment:
       APP_DIR: "${COMPOSE_CONTAINER_DIR}"
