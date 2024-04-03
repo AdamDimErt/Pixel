@@ -19,8 +19,6 @@ services:
       - "${COMPOSE_APP_DIR}/../database.sqlite:${COMPOSE_CONTAINER_DIR}/database/database.sqlite"
       - "${COMPOSE_APP_DIR}/.development/docker/php/php.ini:/usr/local/etc/php/php.ini"
       - "${COMPOSE_APP_DIR}/.development/docker/php/docker-entrypoint.sh:/docker-entrypoint.sh"
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
 
 
   nginx:
@@ -38,7 +36,3 @@ services:
       - php
     depends_on:
       - php
-    networks:
-      app-network:
-        aliases:
-          - "${APP_DOMAIN}"
