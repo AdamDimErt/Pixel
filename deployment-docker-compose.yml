@@ -3,6 +3,10 @@ version: "3.8"
 services:
   php:
     restart: always
+    deploy:
+      resources:
+        limits:
+          memory: 512Mb
     tty: true
     build:
       context: .
@@ -24,6 +28,10 @@ services:
   nginx:
     image: nginx:1.23
     restart: always
+    deploy:
+      resources:
+        limits:
+          memory: 512Mb
     tty: true
     environment:
       APP_DIR: "${COMPOSE_CONTAINER_DIR}"
