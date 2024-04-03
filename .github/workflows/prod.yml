@@ -22,18 +22,3 @@ jobs:
             && sudo docker exec -it pixelrental-php-1 bash
             && php artisan orchid:publish
 
-  fresh:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Deploy via SSH
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          port: 22
-          script:
-            && sudo docker exec -it pixelrental-php-1 bash
-            && php artisan migrate:fresh && php artisan db:seed && exit
-
