@@ -2,8 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\Client;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Orchid\Platform\Models\User;
 
 class OrderFactory extends Factory
 {
@@ -15,7 +15,7 @@ class OrderFactory extends Factory
     public function definition(): array
     {
         return [
-            'user_id' => User::query()->inRandomOrder()->first(),
+            'client_id' => Client::query()->inRandomOrder()->first(),
             'status' => ['in_rent', 'returned'][$this->faker->numberBetween(0, 1)],
             'amount_paid' => $this->faker->randomNumber(),
         ];
