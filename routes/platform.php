@@ -22,6 +22,8 @@ use App\Orchid\Screens\Role\RoleListScreen;
 use App\Orchid\Screens\User\UserEditScreen;
 use App\Orchid\Screens\User\UserListScreen;
 use App\Orchid\Screens\User\UserProfileScreen;
+use App\Orchid\Screens\Wanted\WantedEditScreen;
+use App\Orchid\Screens\Wanted\WantedListScreen;
 use Illuminate\Support\Facades\Route;
 use Tabuna\Breadcrumbs\Trail;
 
@@ -193,6 +195,27 @@ Route::screen('clients', ClientListScreen::class)
     ->breadcrumbs(fn (Trail $trail) => $trail
         ->parent('platform.index')
         ->push(__('clients'), route('platform.clients.list')));
+
+// Platform > System > wanteds > wanted
+Route::screen('wanteds/{wanted}/edit', WantedEditScreen::class)
+    ->name('platform.wanteds.edit')
+    ->breadcrumbs(fn (Trail $trail, $wanted) => $trail
+        ->parent('platform.wanteds.list')
+        ->push('wanted #    '.$wanted->id, route('platform.wanteds.edit', $wanted)));
+
+// Platform > System > wanteds > wanted
+Route::screen('wanteds/create', WantedEditScreen::class)
+    ->name('platform.wanteds.create')
+    ->breadcrumbs(fn (Trail $trail) => $trail
+        ->parent('platform.wanteds.list')
+        ->push(__('translations.Create'), route('platform.wanteds.create')));
+
+// Platform > System > wanteds
+Route::screen('wanteds', WantedListScreen::class)
+    ->name('platform.wanteds.list')
+    ->breadcrumbs(fn (Trail $trail) => $trail
+        ->parent('platform.index')
+        ->push(__('wanteds'), route('platform.wanteds.list')));
 
 // Platform > System > additionals > additional
 Route::screen('additionals/{additional}/edit', AdditionalEditScreen::class)

@@ -20,4 +20,6 @@ jobs:
             && git reset --hard HEAD && git clean -fd && git pull origin main -f
             && sudo docker compose -f deployment-docker-compose.yml up -d
             && sudo docker exec pixelrental-php-1 php artisan orchid:publish
-
+            && sudo docker exec pixelrental-php-1 php artisan migrate
+            && cd ./storage/app/public
+            && sudo chmod -R ugo+rwx .

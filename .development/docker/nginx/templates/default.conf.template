@@ -44,7 +44,7 @@ server {
 
     # New location block to allow access to files within the storage directory and its subdirectories
     location ^~ /storage/ {
-        root ${APP_DIR};
+        alias ${APP_DIR}/storage/app/public/;
         try_files $uri $uri/ =404;
         access_log on;
         expires 30d;

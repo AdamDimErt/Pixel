@@ -30,6 +30,10 @@ class PermissionServiceProvider extends ServiceProvider
             ->addPermission('platform.clients.list', 'Clients view')
             ->addPermission('platform.clients.create', 'Clients create')
             ->addPermission('platform.clients.edit', 'Clients edit');
+        $wantedsPermissions = ItemPermission::group('Wanteds')
+            ->addPermission('platform.wanteds.list', 'Wanteds view')
+            ->addPermission('platform.wanteds.create', 'Wanteds create')
+            ->addPermission('platform.wanteds.edit', 'Wanteds edit');
         $additionalsPermissions = ItemPermission::group('Additionals')
             ->addPermission('platform.additionals.list', 'Additionals view')
             ->addPermission('platform.additionals.create', 'Additionals create')
@@ -44,6 +48,7 @@ class PermissionServiceProvider extends ServiceProvider
         $dashboard->registerPermissions($itemsPermissions);
         $dashboard->registerPermissions($ordersPermissions);
         $dashboard->registerPermissions($clientsPermissions);
+        $dashboard->registerPermissions($wantedsPermissions);
         $dashboard->registerPermissions($additionalsPermissions);
         $dashboard->registerPermissions($orderItemsPermissions);
     }
