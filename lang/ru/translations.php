@@ -271,4 +271,6 @@ return [
     'Total good rent amount' => 'Общее количество арендованных товаров',
     'Delete from favorites' => 'Удалить из любимого',
     'Add to favorites' => 'В любимое',
+    'EN' => 'Англ.',
+    'RU' => 'Рус.'
 ];

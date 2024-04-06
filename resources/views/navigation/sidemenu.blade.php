@@ -4,11 +4,16 @@
     </div>
     <div class="container">
         <hr>
-        <li class="menu-item">
+        <li class="menu-item center">
+            <div class="language-wrapper">
+                <a href="{{route('changeLang', 'en')}}" class="btn language-btn white-text @if(session()->get('locale') === 'en') orange darken-4 @else grey darken-2 @endif">{{__('translations.EN')}}</a>
+                <a href="{{route('changeLang', 'ru')}}" class="btn language-btn white-text @if(session()->get('locale') === 'ru') orange darken-4 @else grey darken-2 @endif">{{__('translations.RU')}}</a>
+            </div>
+            <hr>
             <div class="hide-on-med-and-up search-wrapper valign-wrapper hide-on-med-and-up input-field">
                 <input id="search" type="text"
                        class="validate browser-default text-white center-align autocomplete"
-                       placeholder="Поиск">
+                       placeholder="{{__('translations.Search')}}">
                 <i class="material-icons white-text">
                     search
                 </i>

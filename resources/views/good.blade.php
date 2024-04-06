@@ -4,7 +4,7 @@
         @if(isset($goodType))
             <h5 class="white-text page-presenter-header">{{$goodType->description}}</h5>
         @else
-            <h5 class="white-text page-presenter-header">Все товары</h5>
+            <h5 class="white-text page-presenter-header">{{__('translations.All goods')}}</h5>
         @endif
         @if(count($goods) != 0)
             @foreach($goods as $good)

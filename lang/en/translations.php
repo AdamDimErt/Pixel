@@ -258,4 +258,6 @@ return [
     'Total good rent amount' => 'Total number of leased items',
     'Delete from favorites' => 'Remove from favorite',
     'Add to favorites' => 'To favorite',
+    'EN' => 'EN',
+    'RU' => 'RU',
 ];

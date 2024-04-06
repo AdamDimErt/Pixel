@@ -20,7 +20,7 @@ Route::prefix('/')->group(function () {
     Route::get('/category/{goodType}', [HttpControllers\GoodController::class, 'goodList'])
         ->whereIn('goodType', GoodType::all()->pluck('code')->toArray())
         ->name('goodList');
-    Route::post('/change-lang', [HttpControllers\LocalizationController::class, 'changeLang']);
+    Route::get('/change-lang/{lang}', [HttpControllers\LocalizationController::class, 'changeLang'])->name('changeLang');
 
     Route::post('/add-to-cart', [HttpControllers\CartController::class, 'addToCart']);
     Route::post('/remove-from-cart', [HttpControllers\CartController::class, 'removeFromCart']);

@@ -1,5 +1,5 @@
 <a href="/{{$good->id}}">
-    <div class="card hoverable z-depth-5">
+    <div class="card good-card hoverable z-depth-5">
         <div class="card-image">
             <img src="{{$good->attachment()?->first()?->url()}}" class="card-presenter-image">
             @auth('clients')
@@ -30,8 +30,9 @@
                 <i class="large material-icons">add_shopping_cart</i>
             </a>
         </div>
+        <a href="{{route('viewGood', $good)}}">
         <div class="card-content">
-            <span class="card-title flow-text">
+            <span class="card-title black-text">
                 <b>{{$good->name}}</b>
             </span>
             @if($good->discount_cost)
@@ -45,7 +46,7 @@
                 {{__('translations.Tenge per day')}}
                 </span>
             @else
-                <span class="cost-label">
+                <span class="cost-label black-text">
                     <span class="chip">
                         <b>{{$good->cost}}</b>
                     </span>
@@ -58,5 +59,6 @@
                 </a>
             @endif
         </div>
+        </a>
     </div>
 </a>

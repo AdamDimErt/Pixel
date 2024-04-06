@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Session;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
 
@@ -15,12 +16,8 @@ class LocaleMiddleware
      */
     public function handle($request, Closure $next)
     {
-        if (session()->has('locale')) {
-            App::setlocale(session()->get('locale'));
-        } else {
-            App::setlocale('ru');
-            session()->put('locale', 'ru');
-        }
+        $locale = Session::get('locale');
+        App::setLocale($locale);
 
         return $next($request);
     }

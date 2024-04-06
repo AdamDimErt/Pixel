@@ -39,6 +39,9 @@ header, .main {
     header, .main, .page-footer, .nav-inner-wrapper {
         padding-left: 0 !important;
     }
+    .card-title {
+        font-size: calc(1vw + 1em) !important;
+    }
     .container {
         padding: 2% !important;
     }
@@ -184,10 +187,17 @@ header, .main {
 .card-content {
     padding: 25px 14px !important;
     position: relative;
+    height: 125px
 }
 
 .item-cost-holder {
     font-size: 15px !important;
+}
+
+.cost-label {
+    position: absolute;
+    right: 15px;
+    bottom: 0px;
 }
 
 .view-btns-holder {
@@ -652,4 +662,13 @@ input[type="checkbox"]:checked + span:not(.lever)::before {
 
 .cancel-order-btn {
     margin: 5% 2%;
+}
+
+.language-wrapper {
+    display: flex;
+    justify-content: space-around;
+    margin: 2%;
+    padding: 1%;
+    background-color: #1f1f1f;
+    border-radius: 5px;
 }
