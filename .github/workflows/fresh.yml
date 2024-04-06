@@ -20,5 +20,6 @@ jobs:
             && sudo docker exec pixelrental-php-1 php artisan migrate:fresh
             && sudo docker exec pixelrental-php-1 php artisan db:seed
             && sudo docker exec pixelrental-php-1 chmod -R 777 ./storage/app/public/
+            && sudo docker exec pixelrental-php-1 chmod -R 777 database/
 
 
