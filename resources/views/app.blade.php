@@ -7,8 +7,8 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>PixelRental</title>
     @stack('styles')
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="{{asset('css/materialize.css')}}">
+    <link href="{{asset('css/material-icons.css')}}" rel="stylesheet">
     <link href="{{  asset('css/app.css') }}" rel="stylesheet">
 </head>
 <body>
@@ -32,7 +32,7 @@
     </div>
 </div>
 <script src="{{asset('js/script.js')}}"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<script src="{{asset('js/materialize.js')}}"></script>
 @stack('scripts')
 </body>
 </html>

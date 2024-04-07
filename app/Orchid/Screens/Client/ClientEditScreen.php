@@ -93,6 +93,11 @@ class ClientEditScreen extends Screen
                     ->help(__('translations.Client email help'))
                     ->required(),
 
+                Input::make('client.iin')
+                    ->title(__('translations.Iin'))
+                    ->help(__('translations.Client iin help'))
+                    ->required(),
+
                 Input::make('client.phone')
                     ->title(__('translations.Phone'))
                     ->help(__('translations.Client phone help'))
@@ -144,9 +149,11 @@ class ClientEditScreen extends Screen
         if (($request->input('client')['password1'])){
             $client->password = Hash::make(($request->input('client')['password1']));
         }
-        $client->save();
 
-        Mail::to($client->email)->send(new ConfirmationMail($client->email, $client->confirmation_code));
+        if (!$client->exists){
+            Mail::to($client->email)->send(new ConfirmationMail($client->email, $client->confirmation_code));
+        }
+        $client->save();
 
         $client->attachment()->syncWithoutDetaching(
             $request->input('client.attachment', [])

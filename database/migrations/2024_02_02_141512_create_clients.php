@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('name')->nullable(false);
             $table->string('phone')->nullable(false);
             $table->string('email')->nullable(false);
+            $table->string('iin')->nullable(false);
             $table->string('instagram')->nullable(false);
             $table->string('confirmation_code')->nullable(false);
             $table->boolean('email_confirmed')->nullable(false)->default(false);

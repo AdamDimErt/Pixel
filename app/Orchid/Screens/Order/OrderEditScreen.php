@@ -2,12 +2,14 @@
 
 namespace App\Orchid\Screens\Order;
 
-use App\Models\Item;
+use App\Models\Client;
+use App\Models\GoodType;
 use App\Models\Order;
 use App\Models\User;
+use App\Models\Wanted;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Orchid\Screen\Actions\Button;
-use Orchid\Screen\Fields\DateTimer;
 use Orchid\Screen\Fields\Input;
 use Orchid\Screen\Fields\Relation;
 use Orchid\Screen\Fields\Select;
@@ -28,6 +30,8 @@ class OrderEditScreen extends Screen
      */
     public function query(Order $order): array
     {
+        $order->load('orderItems', 'items');
+
         return [
             'order' => $order,
         ];
@@ -76,16 +80,21 @@ class OrderEditScreen extends Screen
      */
     public function layout(): array
     {
-        return [
+        $fields = [
             Layout::rows([
+                Relation::make('order.client_id')
+                    ->fromModel(Client::class, 'name')
+                    ->help(__('translations.Order client help'))
+                    ->required()
+                    ->title(__('translations.Client')),
 
                 Select::make('order.status')
                     ->options([
-                         'returned'=>'Returned',
-                         'in_rent'=>'In rent',
-                         'waiting'=>'Waiting',
-                         'confirmed'=>'Confirmed',
-                         'cancelled'=>'Cancelled'
+                        'returned' => __('translations.returned'),
+                        'in_rent' => __('translations.in_rent'),
+                        'waiting' => __('translations.waiting'),
+                        'confirmed' => __('translations.confirmed'),
+                        'cancelled' => __('translations.cancelled'),
                     ])
                     ->title('status')
                     ->help(__('translations.Name')),
@@ -103,6 +112,8 @@ class OrderEditScreen extends Screen
 
             ]),
         ];
+
+        return $fields;
     }
 
     /**
@@ -110,13 +121,27 @@ class OrderEditScreen extends Screen
      */
     public function createOrUpdate(Order $order, Request $request)
     {
+        $client = Client::query()->find($request->input('order.client_id'));
+
+        $wanted = Wanted::query()
+            ->where('name', '=', $client->name)
+            ->orWhere('iin', '=', $client->iin)
+            ->orWhere('instagram', '=', $client->instagram)
+            ->first();
+
+        if ($wanted) {
+            return redirect()->back()->withErrors(['authentication' => 'Клиент находится в списке подозреваемых']);
+        }
+
         $order->fill($request->except('order.attachment')['order']);
+
+        $order->amount_paid = 0;
+
+        $order->save();
 
         $order->attachment()->syncWithoutDetaching(
             $request->input('order.attachment', [])
         );
-
-        $order->save();
 
         Alert::info('You have successfully created an order.');
 

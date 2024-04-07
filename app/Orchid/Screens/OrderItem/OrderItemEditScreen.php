@@ -3,7 +3,9 @@
 namespace App\Orchid\Screens\OrderItem;
 
 use App\Models\Additional;
+use App\Models\GoodType;
 use App\Models\Item;
+use App\Models\Order;
 use App\Models\OrderItem;
 use DateTime;
 use Illuminate\Http\RedirectResponse;
@@ -38,7 +40,7 @@ class OrderItemEditScreen extends Screen
      */
     public function name(): ?string
     {
-        return $this->orderItem->exists ? 'Edit orderItem' : 'Creating a new orderItem';
+        return $this->orderItem->exists ? __('translations.Edit orderItem') : __('translations.Creating a new orderItem');
     }
 
     /**
@@ -69,55 +71,61 @@ class OrderItemEditScreen extends Screen
         ];
     }
 
-    /**
-     * Views.
-     *
-     * @return Layout[]
-     */
     public function layout(): array
     {
         return [
+
             Layout::rows([
 
                 Relation::make('orderItem.item_id')
                     ->fromModel(Item::class, 'id')
                     ->displayAppend('name')
-                    ->help(__('translations.Name'))
-                    ->title('Choose a item for that order'),
+                    ->help(__('translations.OrderItem item help'))
+                    ->title(__('translations.Item')),
 
                 Relation::make('orderItem.additionals')
                     ->fromModel(Additional::class, 'name')
                     ->multiple()
-                    ->title('Choose a category for that good'),
+                    ->help(__('translations.OrderItem additionals help'))
+                    ->title(__('translations.Additionals')),
+
+                Relation::make('orderItem.order_id')
+                    ->fromModel(Order::class, 'id')
+                    ->help(__('translations.OrderItem order help'))
+                    ->title(__('translations.Order')),
 
                 Select::make('orderItem.status')
                     ->options([
-                        'returned'=>'Returned',
-                        'in_rent'=>'In rent',
-                        'waiting'=>'Waiting',
-                        'confirmed'=>'Confirmed',
-                        'cancelled'=>'Cancelled'
+                        'returned' => __('translations.returned'),
+                        'in_rent' => __('translations.in_rent'),
+                        'waiting' => __('translations.waiting'),
+                        'confirmed' => __('translations.confirmed'),
+                        'cancelled' => __('translations.cancelled'),
                     ])
-                    ->title('status')
-                    ->help(__('translations.Name')),
+                    ->title(__('translations.Status'))
+                    ->help(__('translations.OrderItem status help')),
 
                 DateTimer::make('orderItem.rent_start_date')
-                    ->title('Opening date')
+                    ->title(__('translations.Rent start date'))
+                    ->placeholder(__('translations.OrderItem rent_start help'))
+                    ->help(__('translations.OrderItem rent_start help'))
                     ->format('Y-m-d'),
 
                 Select::make('orderItem.rent_start_time')
                     ->options($this->generateTimeSpans())
-                    ->title('status')
-                    ->help(__('translations.Name')),
+                    ->title(__('translations.Rent start time'))
+                    ->help(__('translations.OrderItem rent_start_time help')),
 
                 DateTimer::make('orderItem.rent_end_date')
-                    ->title('Opening date')
+                    ->title(__('translations.Rent end date'))
+                    ->placeholder(__('translations.OrderItem rent_end help'))
+                    ->help(__('translations.OrderItem rent_end help'))
                     ->format('Y-m-d'),
 
                 Select::make('orderItem.rent_end_time')
                     ->options($this->generateTimeSpans())
-                    ->title('status')
-                    ->help(__('translations.Name')),
+                    ->title(__('translations.Rent end time'))
+                    ->help(__('translations.OrderItem rent_end_time help')),
             ]),
         ];
     }

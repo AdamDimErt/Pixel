@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Mail\ConfirmationMail;
 use App\Models\Client;
+use App\Models\Wanted;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -26,8 +27,21 @@ class AuthController extends Controller
     public function authenticate(Request $request): RedirectResponse
     {
         $credentials = $request->only('phone', 'password');
-        $isConfirmed = Client::query()->where('phone', '=', $credentials['phone'])->firstOrFail()->email_confirmed;
-        $isBlocked = Client::query()->where('phone', '=', $credentials['phone'])->firstOrFail()->blocked;
+        $client = Client::query()->where('phone', '=', $credentials['phone'])->firstOrFail();
+        $isConfirmed = $client->email_confirmed;
+        $isBlocked = $client->blocked;
+
+        $wanted = Wanted::query()
+            ->where('name', '=', $client->name)
+            ->orWhere('iin', '=', $client->iin)
+            ->orWhere('instagram', '=', $client->instagram)
+            ->first();
+
+        if ($wanted) {
+            Auth::guard('clients')->logout();
+            return redirect()->back()->withErrors(['authentication' => 'Профиль был заблокирован']);
+        }
+
         if ($isBlocked) {
             return redirect()->back()->withErrors(['authentication' => 'Профиль был заблокирован']);
         }
@@ -57,21 +71,35 @@ class AuthController extends Controller
             'name' => 'required|string|max:255',
             'phone' => 'required|string|max:15|unique:clients',
             'email' => 'required|string|email|unique:clients',
+            'iin' => 'required|string|digits:12',
             'instagram' => 'required|string|unique:clients',
             'password' => 'required|string|min:8|confirmed',
             'files' => 'required|array|size:2',
         ]);
 
-        $client = Client::create([
+        $client = Client::query()->make([
             'name' => $request->input('name'),
             'phone' => $request->input('phone'),
             'email' => $request->input('email'),
+            'iin' => $request->input('iin'),
             'instagram' => $request->input('instagram'),
             'password' => Hash::make($request->input('password')),
             'confirmation_code' => Str::random(10),
         ]);
 
+        $wanted = Wanted::query()
+            ->where('name', '=', $client->name)
+            ->orWhere('iin', '=', $client->iin)
+            ->orWhere('instagram', '=', $client->instagram)
+            ->first();
+
+        if ($wanted) {
+            return redirect()->back()->withErrors(['authentication' => 'Профиль был заблокирован']);
+        }
+
         $attachmentIds = [];
+
+        $client->save();
 
         foreach ($request->file('files') as $fileData) {
             $file = new File($fileData);

@@ -32,6 +32,12 @@
                                    required>
                         </div>
                         <div class="input-field col s12">
+                            <i class="material-icons prefix white-text">credit_card</i>
+                            <input name="iin" id="iin" type="tel" placeholder="{{__('translations.Iin')}}"
+                                   class="white-text"
+                                   required>
+                        </div>
+                        <div class="input-field col s12">
                             <i class="material-icons prefix white-text">email</i>
                             <input name="email" id="email" type="email" placeholder="{{__('translations.Email')}}"
                                    class="white-text"

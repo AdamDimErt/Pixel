@@ -9,7 +9,7 @@
                     <hr>
                     <p class="white-text">{{__('translations.Amount of goods')}}: <span class="orange-text">{{count($order->orderItems)}}</span></p>
                     <p class="white-text">{{__('translations.Order status')}}: <span class="orange-text">{{$order->status}}</span></p>
-                    <p class="white-text">{{__('translations.Total sum')}}: <span class="orange-text">{{$order->amount_paid}} тг</span></p>
+                    <p class="white-text">{{__('translations.Total sum')}}: <span class="orange-text">{{$order->amountPaid}} тг</span></p>
                 </div>
             @endforeach
         </div>

@@ -35,7 +35,7 @@ class OrderItemListLayout extends Table
     protected function columns(): iterable
     {
         return [
-            TD::make('name')
+            TD::make('name', __('translations.Name'))
                 ->sort()
                 ->filter(
                     Input::make()
@@ -45,16 +45,16 @@ class OrderItemListLayout extends Table
                         ->route('platform.orderItems.edit', $orderItemItem);
                 }),
 
-            TD::make('status')
+            TD::make('status', __('translations.Status'))
                 ->sort()
                 ->filter(
                     Select::make('status')
                         ->options([
-                            'returned'=>'Returned',
-                            'in_rent'=>'In rent',
-                            'waiting'=>'Waiting',
-                            'confirmed'=>'Confirmed',
-                            'cancelled'=>'Cancelled'
+                            'returned' => __('translations.returned'),
+                            'in_rent' => __('translations.in_rent'),
+                            'waiting' => __('translations.waiting'),
+                            'confirmed' => __('translations.confirmed'),
+                            'cancelled' => __('translations.cancelled'),
                         ])
                         ->title('status')
                         ->help(__('translations.Name'))
@@ -63,25 +63,25 @@ class OrderItemListLayout extends Table
                     return $orderItemItem->status;
                 }),
 
-            TD::make('amount_paid')
+            TD::make('amount_paid', __('translations.Amount paid'))
                 ->sort()
                 ->filter(
                     Input::make()
                 ),
 
-            TD::make('rent_start_date', __('Rent start date'))
+            TD::make('rent_start_date', __('translations.Rent start date'))
                 ->align(TD::ALIGN_RIGHT)
                 ->sort(),
 
-            TD::make('rent_start_time', __('Rent start time'))
+            TD::make('rent_start_time', __('translations.Rent start time'))
                 ->align(TD::ALIGN_RIGHT)
                 ->sort(),
 
-            TD::make('rent_end_date', __('Rent start date'))
+            TD::make('rent_end_date', __('translations.Rent end date'))
                 ->align(TD::ALIGN_RIGHT)
                 ->sort(),
 
-            TD::make('rent_end_time', __('Rent end time'))
+            TD::make('rent_end_time', __('translations.Rent end time'))
                 ->align(TD::ALIGN_RIGHT)
                 ->sort(),
 
@@ -96,44 +96,6 @@ class OrderItemListLayout extends Table
                 ->align(TD::ALIGN_RIGHT)
                 ->defaultHidden()
                 ->sort(),
-
-            TD::make(__('Actions'))
-                ->align(TD::ALIGN_CENTER)
-                ->width('100px')
-                ->render(function (\App\Models\OrderItem $orderItem) {
-                    $btnsList = [Link::make(__('Edit'))
-                        ->route('platform.orderItems.edit', $orderItem->id)
-                        ->icon('bs.pencil')];
-
-                    if ($orderItem->status === 'in_rent') {
-                        $btnsList[] = Button::make(__('Return'))
-                            ->icon('bs.arrow-return-left')
-                            ->confirm(__('If you return this order, you will not be available to use it again'))
-                            ->method('return', [
-                                'id' => $orderItem->id,
-                            ]);
-                    }
-
-                    if ($orderItem->status === 'waiting') {
-
-                        $btnsList[] = Button::make(__('Confirm'))
-                            ->icon('bs.check2')
-                            ->confirm(__('Would you like to confirm this order?'))
-                            ->method('confirm', [
-                                'id' => $orderItem->id,
-                            ]);
-                        $btnsList[] = Button::make(__('Cancel'))
-                            ->icon('bs.x')
-                            ->confirm(__('If you cancel this order, you will not be available to use it again'))
-                            ->method('cancel', [
-                                'id' => $orderItem->id,
-                            ]);
-                    }
-
-                    return DropDown::make()
-                        ->icon('bs.three-dots-vertical')
-                        ->list($btnsList);
-                })
         ];
     }
 }

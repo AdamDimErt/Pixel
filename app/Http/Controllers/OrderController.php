@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Additional;
+use App\Models\Client;
 use App\Models\Good;
 use App\Models\Item;
 use App\Models\Order;
 use App\Models\OrderItem;
+use App\Models\Wanted;
 use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -20,6 +22,19 @@ class OrderController extends Controller
 
     public function settleOrder(Request $request)
     {
+        $client = Client::query()->find(Auth::guard('clients')->id());
+
+        $wanted = Wanted::query()
+            ->where('name', '=', $client->name)
+            ->orWhere('iin', '=', $client->iin)
+            ->orWhere('instagram', '=', $client->instagram)
+            ->first();
+
+        if ($wanted) {
+            Auth::guard('clients')->logout();
+            return redirect()->back()->withErrors(['authentication' => 'Профиль был заблокирован']);
+        }
+
         $requestData = $request->all();
 
         $cartData = json_decode($request->cookie('cart', '{}'), true);
@@ -34,7 +49,6 @@ class OrderController extends Controller
             $goodId = $itemKeySeparated[0];
             $itemId = $itemKeySeparated[1];
             $good = Good::query()->find($goodId);
-            $item = Item::query()->find($itemId);
 
             $requestParticularGood = $requestData[$itemKey];
 
@@ -95,7 +109,7 @@ class OrderController extends Controller
 
         }
         $order = Order::query()->create([
-            'client_id' => Auth::guard('clients')->id(),
+            'client_id' => $client->id,
             'amount_paid' => $totalSum,
             'status' => 'waiting',
         ]);

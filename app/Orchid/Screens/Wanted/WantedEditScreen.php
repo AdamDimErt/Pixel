@@ -97,8 +97,8 @@ class WantedEditScreen extends Screen
                     ->required(),
 
                 Upload::make('wanted.attachment')
-                    ->title(__('translations.ID card'))
-                    ->help(__('translations.Wanted id card help'))
+                    ->title(__('translations.Pictures'))
+                    ->help(__('translations.Wanted pictures help'))
                     ->acceptedFiles('image/*'),
             ]),
         ];

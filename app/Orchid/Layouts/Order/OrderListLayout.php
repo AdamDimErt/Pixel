@@ -65,17 +65,17 @@ class OrderListLayout extends Table
                 ->filter(
                     Select::make('status')
                         ->options([
-                            'returned' => 'Returned',
-                            'in_rent' => 'In rent',
-                            'waiting' => 'Waiting',
-                            'confirmed' => 'Confirmed',
-                            'cancelled' => 'Cancelled',
+                            'returned' => __('translations.returned'),
+                            'in_rent' => __('translations.in_rent'),
+                            'waiting' => __('translations.waiting'),
+                            'confirmed' => __('translations.confirmed'),
+                            'cancelled' => __('translations.cancelled'),
                         ])
                         ->title('status')
-                        ->help(__('translations.Name'))
+                        ->help(__('translations.Status'))
                 )
                 ->render(function (Order $order) {
-                    return $order->status;
+                    return __('translations.'. $order->status);
                 }),
 
             TD::make('first_order_date', __('translations.Rent start'))
@@ -104,11 +104,11 @@ class OrderListLayout extends Table
                 ->render(function (\App\Models\Order $order) {
                     $btnsList = [
                         Link::make(__('translations.Look at items'))
-                            ->route('platform.items.list',
+                            ->route('platform.orderItems.list',
                                 [
                                     'filter[id]' => $order
-                                        ->items()
-                                        ->pluck('items.id')
+                                        ->orderItems()
+                                        ->pluck('order_items.id')
                                         ->implode(','),
                                 ]
                             )
