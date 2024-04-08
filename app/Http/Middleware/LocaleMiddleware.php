@@ -21,7 +21,7 @@ class LocaleMiddleware
             App::setLocale($locale);
         } else {
             App::setLocale('ru');
-            session()->setLocale('ru');
+            session()->put('locale', 'ru');
         }
 
         return $next($request);
