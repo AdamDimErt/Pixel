@@ -1,7 +1,11 @@
 <a href="/{{$good->id}}">
     <div class="card good-card hoverable z-depth-5">
         <div class="card-image">
-            <img src="{{$good->attachment()?->first()?->url()}}" class="card-presenter-image">
+            @if($good->attachment()?->first()?->url())
+                <img src="{{$good->attachment()?->first()?->url()}}" class="card-presenter-image">
+            @else
+                <img src="{{asset('img/no-image.jpg')}}" class="card-presenter-image">
+            @endif
             @auth('clients')
                 @if (in_array($good->id, App\Models\Client::query()->find(Auth::guard('clients')->id())->favorites()->pluck('good_id')->toArray()))
                     <a class="btn-floating remove-from-favorites-btn btn-large halfway-fab waves-effect waves-light orange darken-4" data-product-id="{{$good->id}}">
@@ -33,7 +37,7 @@
         <a href="{{route('viewGood', $good)}}">
         <div class="card-content">
             <span class="card-title black-text">
-                <b>{{$good->name}}</b>
+                {{$good->name}}
             </span>
             @if($good->discount_cost)
                 <span class="cost-label">

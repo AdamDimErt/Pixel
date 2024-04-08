@@ -35,13 +35,21 @@ header, .main {
     padding: 3%;
 }
 
+.card-title {
+    font-size: calc(0.6vw + 0.6em) !important;
+}
+
+@media only screen and (max-width: 580px) {
+    .card-title {
+        font-size: 3.3vw !important;
+        text-overflow: ellipsis !important;
+    }
+}
 @media only screen and (max-width: 992px) {
     header, .main, .page-footer, .nav-inner-wrapper {
         padding-left: 0 !important;
     }
-    .card-title {
-        font-size: calc(1vw + 1em) !important;
-    }
+
     .container {
         padding: 2% !important;
     }

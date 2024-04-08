@@ -3,8 +3,12 @@
     <h4 class="white-text">{{$good->name}}</h4>
     <div class="row">
         <div class="col s12 m6">
-            <img class="materialboxed good-image z-depth-5" width="100%"
-                 src="{{$good->attachment()?->first()?->url()}}">
+            @if($good->attachment()?->first()?->url())
+                <img class="materialboxed good-image z-depth-5" width="100%"
+                     src="{{$good->attachment()?->first()?->url()}}">
+            @else
+                <img src="{{asset('img/no-image.jpg')}}" class="materialboxed good-image z-depth-5" width="100%">
+            @endif
         </div>
         <div class="col s12 m6 detailed-info white-text">
             <div class="detailed-info-wrapper">
@@ -52,7 +56,7 @@
             </div>
             <hr>
             <p class="grey-text text-darken-2">{{__('translations.Damage cost')}}:
-                    {{$good->damage_cost}}
+                {{$good->damage_cost}}
                 тг
             </p>
         </div>
@@ -71,7 +75,8 @@
                         @if (in_array($good->id, App\Models\Client::query()->find(Auth::guard('clients')->id())->favorites()->pluck('good_id')->toArray()))
                             <a class="btn-large orange remove-from-favorites-btn darken-4 auth-link confirm-order-btn no-margin"
                                data-product-id="{{$good->id}}">
-                                <span class="hide-on-med-and-down good-view-action-btn">{{__('translations.Delete from favorites')}}</span>
+                                <span
+                                    class="hide-on-med-and-down good-view-action-btn">{{__('translations.Delete from favorites')}}</span>
                                 <i class="material-icons">
                                     favorite
                                 </i>
@@ -79,7 +84,8 @@
                         @else
                             <a class="btn-large orange add-to-favorites-btn darken-4 auth-link confirm-order-btn no-margin"
                                data-product-id="{{$good->id}}">
-                                <span class="hide-on-med-and-down good-view-action-btn">{{__('translations.Add to favorites')}}</span>
+                                <span
+                                    class="hide-on-med-and-down good-view-action-btn">{{__('translations.Add to favorites')}}</span>
                                 <i class="large material-icons">
                                     favorite_border
                                 </i>
@@ -89,7 +95,8 @@
                     @guest('clients')
                         <a href="#auth-modal"
                            class="btn-large orange darken-4 auth-link confirm-order-btn no-margin modal-trigger">
-                            <span class="hide-on-med-and-down good-view-action-btn">{{__('translations.Add to favorites')}}</span>
+                            <span
+                                class="hide-on-med-and-down good-view-action-btn">{{__('translations.Add to favorites')}}</span>
                             <i class="material-icons">
                                 favorite_border
                             </i>

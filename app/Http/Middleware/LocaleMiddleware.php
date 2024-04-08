@@ -17,7 +17,12 @@ class LocaleMiddleware
     public function handle($request, Closure $next)
     {
         $locale = Session::get('locale');
-        App::setLocale($locale);
+        if ($locale) {
+            App::setLocale($locale);
+        } else {
+            App::setLocale('ru');
+            session()->setLocale('ru');
+        }
 
         return $next($request);
     }
