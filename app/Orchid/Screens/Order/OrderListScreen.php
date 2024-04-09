@@ -81,7 +81,6 @@ class OrderListScreen extends Screen
         $order->save();
 
         $order->items()->each(function (Item $item) {
-            $item->status = 'available';
             $item->save();
         });
 

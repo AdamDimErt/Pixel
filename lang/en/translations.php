@@ -294,4 +294,5 @@ return [
     'Name ru' => 'Name on russian',
     'Description en' => 'Description on english',
     'Description ru' => 'Description on russian',
+    'Your orders' => 'Your orders',
 ];

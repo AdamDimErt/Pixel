@@ -14,7 +14,7 @@ async function cancelOrder(e) {
             } else {
                 if (data.success) {
                     M.toast({html: 'Заказ успешно отменён'});
-
+                    window.location.replace('/profile/orders')
                 }
             }
         })
