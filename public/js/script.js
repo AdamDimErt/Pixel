@@ -38,6 +38,6 @@ document.addEventListener('DOMContentLoaded', function() {
         indicators: false,
         noWrap: true,
         numVisible: 15,
-        padding: 125
+        padding: 55
     });
 });

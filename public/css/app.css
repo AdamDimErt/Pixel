@@ -39,6 +39,8 @@ header, .main {
     font-size: calc(0.6vw + 0.6em) !important;
 }
 
+
+
 @media only screen and (max-width: 580px) {
     .card-title {
         font-size: 3.3vw !important;
@@ -593,6 +595,7 @@ hr {
     width: auto !important;
     max-width: 300px !important;
     height: 450px !important;
+    opacity: 1 !important;
 }
 
 .indicators {
