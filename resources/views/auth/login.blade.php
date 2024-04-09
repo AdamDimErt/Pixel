@@ -17,7 +17,7 @@
             <a href="/" class="back-auth-button"><i class="material-icons orange-text text-lighten-3">cancel</i></a>
             <h5 class="white-text">{{__('translations.Log into your account')}}</h5>
             <div class="row">
-                <form class="col s12" method="POST" action="{{route('authenticate')}}">
+                <form class="col s12" method="POST" action="">
                     {{csrf_field()}}
                     <div class="row">
                         <div class="input-field col s12">

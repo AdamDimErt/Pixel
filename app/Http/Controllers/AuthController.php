@@ -27,7 +27,11 @@ class AuthController extends Controller
     public function authenticate(Request $request): RedirectResponse
     {
         $credentials = $request->only('phone', 'password');
-        $client = Client::query()->where('phone', '=', $credentials['phone'])->firstOrFail();
+        $client = Client::query()->where('phone', '=', $credentials['phone'])->first();
+        if (is_null($client)){
+            return redirect()->back()->withErrors(['phone' => 'Неверно введены данные']);
+        }
+
         $isConfirmed = $client->email_confirmed;
         $isBlocked = $client->blocked;
 
