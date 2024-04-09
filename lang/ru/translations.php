@@ -68,7 +68,7 @@ return [
     'Confirm email' => 'Подтвердить адрес',
     'Confirm your email address by clicking on the link below' => 'Подтвердите свой адрес электронной почты, перейдя по ссылке ниже',
     'Thank you for your loyalty!' => 'Спасибо, что выбираете нас!',
-    'You are welcomed by the device rental' => 'Вас приветствует прокат аудио и видео девайсов',
+    'You are welcomed by the device rental' => 'Вас приветствует прокат фото и видео оборудования',
     'Developed by the company' => 'Разработано компанией',
     'Check your inbox' => 'Проверьте свой почтовый ящик для подтверждения электронного адреса',
     'Your profile has been successfully created!' => 'Профиль успешно создан!',
