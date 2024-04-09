@@ -131,7 +131,7 @@ class ItemSeeder extends Seeder
             GoodEnum::TILTA_ADVANCED_FX6->value => 1,
             GoodEnum::TILTA_ADVANCED_KIT_FX3->value => 1,
             GoodEnum::FEELWORLD_LUT_7_4K_HDMI->value => 1,
-            GoodEnum::LILIPUT_4K->value => 1,
+            GoodEnum::LILLIPUT_4K->value => 1,
             GoodEnum::FEELWORLD_4K_ULTRA->value => 1,
             GoodEnum::VIDEOSENDERS_HOLLYLAND_MARS_400S_PRO->value => 1,
             GoodEnum::TELEPROMPTER_FEELWORLD_TP10->value => 1,

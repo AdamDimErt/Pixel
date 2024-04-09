@@ -117,7 +117,7 @@ enum GoodEnum: string
     case TILTA_ADVANCED_KIT_FX3 = 'Tilta advanced kit Fx3';
     // Мониторы
     case FEELWORLD_LUT_7_4K_HDMI = 'Feelworld LUT 7 4k HDMI';
-    case LILIPUT_4K = 'Liliput 4K';
+    case LILLIPUT_4K = 'Lilliput 4K';
     case FEELWORLD_4K_ULTRA = 'Feelworld 4K ultra';
     // Разное
     case VIDEOSENDERS_HOLLYLAND_MARS_400S_PRO = 'Видео сендеры Hollyland Mars 400s pro';

@@ -1356,8 +1356,8 @@ CCT: 1800К-20000К
                 ],
                 'image' => '57.png',
             ],
-            GoodEnum::LILIPUT_4K->name => [
-                'name' => GoodEnum::LILIPUT_4K->value,
+            GoodEnum::LILLIPUT_4K->name => [
+                'name' => GoodEnum::LILLIPUT_4K->value,
                 'cost' => 2500,
                 'damage_cost' => 100000,
                 'description' => 'Оцените все возможности своей камеры при помощи этого 4K монитора. Full HD с разрешением 1920х1200 пикселей и высокой контрастностью 1000:1 передают невероятно красочную и качественную картинку.',
