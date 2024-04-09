@@ -67,7 +67,7 @@
                                 </div>
                                 <div class="col s12 input-field hide">
                                     <input name="{{$item->good->id . 'pixelrental' . $item->id}}[rent_end_date]" type="text" class="datepicker white-text ending-date" required>
-                                    <label for="rent_end_date">{{__('translations.Rend end')}}:</label>
+                                    <label for="rent_end_date">{{__('translations.Rent end')}}:</label>
                                 </div>
                                 <div class="col s12 input-field white-text hide">
                                     <select name="{{$item->good->id . 'pixelrental' . $item->id}}[end_time]" class="white-text left rent-end-time" required>
