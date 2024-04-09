@@ -61,10 +61,12 @@
                             </div>
                         </div>
                         <div class="input-field col s12">
+                            <i class="material-icons prefix white-text">lock</i>
                             <input name="password" type="password" placeholder="{{__('translations.Password')}}"
                                    class="white-text password-field" required>
                         </div>
                         <div class="input-field col s12">
+                            <i class="material-icons prefix white-text">done</i>
                             <input name="password_confirmation" type="password"
                                    placeholder="{{__('translations.Password confirm')}}"
                                    class="white-text password-field" required>
