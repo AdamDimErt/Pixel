@@ -80,8 +80,13 @@ class GoodEditScreen extends Screen
     {
         return [
             Layout::rows([
-                Input::make('good.name')
-                    ->title(__('translations.Name'))
+                Input::make('good.name_ru')
+                    ->title(__('translations.Name ru'))
+                    ->help(__('translations.Good name help'))
+                    ->required(),
+
+                Input::make('good.name_en')
+                    ->title(__('translations.Name en'))
                     ->help(__('translations.Good name help'))
                     ->required(),
 
@@ -115,13 +120,20 @@ class GoodEditScreen extends Screen
                     ->title(__('translations.Related goods')),
 
                 Relation::make('good.additionals')
-                    ->fromModel(Additional::class, 'name')
+                    ->fromModel(Additional::class, 'name_' . session()->get('locale', 'ru'))
                     ->help(__('translations.Good additionals help'))
                     ->multiple()
                     ->title(__('translations.Additional')),
 
-                TextArea::make('good.description')
-                    ->title(__('translations.Description'))
+                TextArea::make('good.description_ru')
+                    ->title(__('translations.Description ru'))
+                    ->help(__('translations.Good description help'))
+                    ->rows(3)
+                    ->maxlength(200)
+                    ->required(),
+
+                TextArea::make('good.description_en')
+                    ->title(__('translations.Description en'))
                     ->help(__('translations.Good description help'))
                     ->rows(3)
                     ->maxlength(200)

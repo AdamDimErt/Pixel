@@ -96,7 +96,7 @@ Route::screen('goods/{good}/edit', GoodEditScreen::class)
     ->name('platform.goods.edit')
     ->breadcrumbs(fn (Trail $trail, $good) => $trail
         ->parent('platform.goods.list')
-        ->push($good->name, route('platform.goods.edit', $good)));
+        ->push($good['name_' . session()->get('locale', 'ru')], route('platform.goods.edit', $good)));
 
 // Platform > System > Goods > Create
 Route::screen('goods/create', GoodEditScreen::class)
@@ -138,7 +138,7 @@ Route::screen('items/{item}/edit', ItemEditScreen::class)
     ->name('platform.items.edit')
     ->breadcrumbs(fn (Trail $trail, $item) => $trail
         ->parent('platform.items.list')
-        ->push($item->good->name, route('platform.items.edit', $item)));
+        ->push($item->good['name_' . session()->get('locale', 'ru')], route('platform.items.edit', $item)));
 
 // Platform > System > Items > Item
 Route::screen('items/create', ItemEditScreen::class)

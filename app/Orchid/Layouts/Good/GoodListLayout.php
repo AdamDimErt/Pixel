@@ -32,23 +32,44 @@ class GoodListLayout extends Table
     protected function columns(): iterable
     {
         return [
-            TD::make('name', __('translations.Name'))
+            TD::make('name_ru', __('translations.Name'))
                 ->sort()
                 ->filter(
                     Input::make()
                 )
                 ->render(function (Good $good) {
-                    return Link::make($good->name)
+                    return Link::make($good->name_ru)
                         ->route('platform.goods.edit', $good);
                 }),
 
-            TD::make('description', __('translations.Description'))
+            TD::make('name_en', __('translations.Name en'))
                 ->sort()
+                ->defaultHidden()
+                ->filter(
+                    Input::make()
+                )
+                ->render(function (Good $good) {
+                    return $good->name_en;
+                }),
+
+            TD::make('description_ru', __('translations.Description'))
+                ->sort()
+                ->defaultHidden()
                 ->filter(
                     Input::make()
                 )->width('100px')
                 ->render(function (Good $good) {
-                    return $good->description;
+                    return $good->description_ru;
+                }),
+
+            TD::make('description', __('translations.Description en'))
+                ->sort()
+                ->defaultHidden()
+                ->filter(
+                    Input::make()
+                )->width('100px')
+                ->render(function (Good $good) {
+                    return $good->description_en;
                 }),
 
             TD::make('cost', __('translations.Cost'))

@@ -37,7 +37,7 @@
         <a href="{{route('viewGood', $good)}}">
         <div class="card-content">
             <span class="card-title black-text">
-                {{$good->name}}
+                {{$good['name_' . session()->get('locale', 'ru')]}}
             </span>
             @if($good->discount_cost)
                 <span class="cost-label">

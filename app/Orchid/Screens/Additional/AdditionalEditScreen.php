@@ -84,8 +84,13 @@ class AdditionalEditScreen extends Screen
     {
         return [
             Layout::rows([
-                Input::make('additional.name')
-                    ->title(__('translations.Name'))
+                Input::make('additional.name_ru')
+                    ->title(__('translations.Name ru'))
+                    ->help(__('translations.Additional name help'))
+                    ->required(),
+
+                Input::make('additional.name_en')
+                    ->title(__('translations.Name en'))
                     ->help(__('translations.Additional name help'))
                     ->required(),
 

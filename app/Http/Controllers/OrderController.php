@@ -57,7 +57,7 @@ class OrderController extends Controller
             $interval = $dateObj1->diff($dateObj2);
             $diffInDays = $interval->days === 0 ? 1 : $interval->days;
 
-            $orderItemMessageData = $orderItemMessageData.'Товар: '.$good->name.'
+            $orderItemMessageData = $orderItemMessageData.'Товар: '.$good->name_ru.'
 ';
 
             if ($good->discount_cost) {

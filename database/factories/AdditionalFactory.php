@@ -14,7 +14,8 @@ class AdditionalFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake()->colorName(),
+            'name_ru' => fake()->colorName(),
+            'name_en' => fake()->colorName(),
             'cost' => fake()->numberBetween(10000, 50000),
         ];
     }

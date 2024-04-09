@@ -22,23 +22,27 @@ class Good extends Model
     protected $guarded = [];
 
     protected $allowedFilters = [
-        'name' => Like::class,
+        'name_ru' => Like::class,
+        'name_en' => Like::class,
         'cost' => WhereMaxMin::class,
         'discount_cost' => WhereMaxMin::class,
         'damage_cost' => WhereMaxMin::class,
         'good_type_id' => Where::class,
-        'description' => Like::class,
+        'description_ru' => Like::class,
+        'description_en' => Like::class,
         'created_at' => WhereDateStartEnd::class,
         'deleted_at' => WhereDateStartEnd::class,
     ];
 
     protected $allowedSorts = [
-        'name',
+        'name_ru',
+        'name_en',
         'cost',
         'discount_cost',
         'damage_cost',
         'good_type_id',
-        'description',
+        'description_ru',
+        'description_en',
         'created_at',
         'deleted_at',
     ];

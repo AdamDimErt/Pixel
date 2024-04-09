@@ -52,7 +52,7 @@
             <a href="{{route('viewGood', $good)}}" class="breadcrumb">
                 <span class="breadcrumb-item chip orange darken-4 white-text">
                     <b>
-                        {{$good->name}}
+                        {{$good['name_' . session()->get('locale', 'ru')]}}
                     </b>
                 </span>
             </a>

@@ -40,7 +40,7 @@ class AdditionalListLayout extends Table
                     Input::make()
                 )
                 ->render(function (Additional $additional) {
-                    return Link::make($additional->name)
+                    return Link::make($additional['name_' . session()->get('locale', 'ru')])
                         ->route('platform.additionals.edit', $additional);
                 }),
 

@@ -14,7 +14,7 @@
                 </a>
             </div>
             <div class="col s12 center">
-                <a href="{{route('register')}}" class="btn-large modal-btn grey black white-text register-link">Зарегистрироваться</a>
+                <a href="{{route('register')}}" class="btn-large modal-btn grey black white-text register-link">{{__('translations.Register')}}</a>
             </div>
         </div>
     </div>

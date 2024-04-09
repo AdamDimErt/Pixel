@@ -1,6 +1,6 @@
 @extends('app')
 @section('content')
-    <h4 class="white-text">{{$good->name}}</h4>
+    <h4 class="white-text">{{$good['name_' . session()->get('locale', 'ru')]}}</h4>
     <div class="row">
         <div class="col s12 m6">
             @if($good->attachment()?->first()?->url())
@@ -12,13 +12,14 @@
         </div>
         <div class="col s12 m6 detailed-info white-text">
             <div class="detailed-info-wrapper">
-                <h4 class="center no-margin">{{$good->name}}</h4>
+                <h4 class="center no-margin">{{$good['name_' . session()->get('locale', 'ru')]}}</h4>
+                @if(count(explode('-', $good['description_' . session()->get('locale', 'ru')])) > 0)
                 <span class="flow-text">{{__('translations.Description')}}:</span>
-                @if(count(explode('-', $good->description)) > 0)
-                    @foreach(explode('-', $good->description) as $desc)
+                    @foreach(explode('-', $good['description_' . session()->get('locale', 'ru')]) as $desc)
                         <li>{{$desc}}</li>
                     @endforeach
                 @else
+                <span class="flow-text">{{__('translations.Description')}}:</span>
                     <p>{{$good->desc}}</p>
                 @endif
                 @if($good->discount_cost)
@@ -48,7 +49,7 @@
                             <label>
                                 <input type="checkbox" class="orange-text additional-checkbox"
                                        data-additional-id="{{$additional->id}}"/>
-                                <span>{{$additional->name}} <span class="white-text">(+ {{$additional->cost}}тг)</span></span>
+                                <span>{{$additional['name_' . session()->get('locale', 'ru')]}} <span class="white-text">(+ {{$additional->cost}}тг)</span></span>
                             </label>
                         </p>
                     @endforeach

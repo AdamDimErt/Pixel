@@ -17,8 +17,10 @@ class GoodFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake()->colorName(),
-            'description' => fake()->unique()->safeEmail(),
+            'name_ru' => fake()->colorName(),
+            'name_en' => fake()->colorName(),
+            'description_ru' => fake()->unique()->safeEmail(),
+            'description_en' => fake()->unique()->safeEmail(),
             'cost' => fake()->numberBetween(10000, 50000),
             'discount_cost' => rand(0, 1) ? fake()->numberBetween(10000, 50000) : null,
             'related_goods' => json_encode(Good::query()->inRandomOrder()->pluck('id')),

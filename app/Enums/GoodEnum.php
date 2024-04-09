@@ -4,7 +4,6 @@ namespace App\Enums;
 
 enum GoodEnum: string
 {
-    // Камеры
     case CINEMA_CAMERA_SONY_FX6 = 'Кинокамера Sony FX6';
     case CINEMA_CAMERA_BLACKMAGIC_6K_PRO = 'Кинокамера Blackmagic 6k pro';
     case CINEMA_CAMERA_SONY_FX3 = 'Кинокамера Sony Fx3';
@@ -19,7 +18,6 @@ enum GoodEnum: string
     case PHOTO_CAMERA_FUJIFILM_T4 = 'Фотоаппарат Fujifilm T4';
     case PHOTO_CAMERA_FUJIFILM_T3 = 'Фотоаппарат Fujifilm T3';
     case ACTION_CAMERA_GO_PRO_11 = 'Экшн камера Go pro 11';
-    // Объективы
     case OBJECTIVE_SONY_16_50MM_F3_5_5_6_OSS = 'Объектив Sony 16-50mm f3.5-5.6 oss';
     case OBJECTIVE_SONY_28_70MM_F3_5_5_6_OSS = 'Объектив Sony 28-70mm f3.5-5.6 oss';
     case OBJECTIVE_SONY_28_60MM_F4_5_6_OSS = 'Объектив Sony 28-60mm f4-5.6 oss';
@@ -50,7 +48,6 @@ enum GoodEnum: string
     case SAMYANG_35MM_CANON = 'Samyang 35mm canon';
     case SIGMA_ART_18_35_MM_DC_CANON = 'Sigma art 18-35 mm Dc Canon';
     case SIGMA_ART_24_70MM_DG_CANON = 'Sigma art 24-70mm DG Canon';
-    // Свет
     case APUTURE_300X = 'Aputure 300x';
     case APUTURE_600X = 'Aputure 600x';
     case APUTURE_NOVA_P300_KIT = 'Aputure Nova p300 kit';
@@ -66,7 +63,6 @@ enum GoodEnum: string
     case GODOX_V860_FLASH = 'Вспышка Godox V860';
     case NANLITE_DJEDAIKA_30CM = 'Nanlite джедайка 30см';
     case APUTURE_AMARAN_P60C = 'Aputure Amaran p60c';
-    // Звук
     case DJI_MIC_DUO = 'Dji mic duo';
     case DJI_MIC_2_DUO = 'Dji Mic 2 duo';
     case HOLLYLAND_LARK_MAX = 'Hollyland  Lark Max';
@@ -76,11 +72,9 @@ enum GoodEnum: string
     case MICROPHONE_RODE_VIDEOMIC_PRO = 'Микрофон Rode videomic pro';
     case WALKIE_TALKIE_LUITON_316 = 'Рация luiton 316';
     case AUDIO_RECORDER_ZOOM_H6 = 'Рекордер Zoom H6';
-    // Стабилизаторы
     case RONIN_RS_2 = 'Ronin Rs 2';
     case RONIN_SC = 'Ronin Sc';
     case OSMO_4 = 'Osmo 4';
-    // Аккумуляторы
     case SONY_NP_FZ100 = 'Sony NP-fz100';
     case SONY_NP_FW50 = 'Sony NP-fw50';
     case FUJIFILM_NP_W126 = 'Fujifilm Np-w126';
@@ -96,9 +90,7 @@ enum GoodEnum: string
     case NPF_750_SET_OF_1 = 'Npf 750 (1 шт)';
     case SMALL_RIG_V_MOUNT_99WH = 'Small Rig V mount 99wh';
     case AIR_2_BATTERIES = 'Аккумуляторы для Air 2';
-    // Дроны
     case DJI_AIR_2 = 'Dji Air 2';
-    // Карты памяти
     case SANDISK_64GB = 'Sandisk 64gb';
     case SANDISK_128GB_170MB_S = 'Sandisk 128gb 170mb/s';
     case MICRO_SANDISK_64_GB = 'Micro sandisk 64 gb';
@@ -108,18 +100,15 @@ enum GoodEnum: string
     case SAMSUNG_EVO_PLUS_256GB = 'Samsung Evo plus 256gb';
     case MICRO_64GB_ADATA = 'Micro 64gb Adata';
     case SAMSUNG_T7_1TB = 'Samsung T7 1tb';
-    // Клетки
     case UURIG_HAND_FOR_SONY_A7_3 = 'UUrig + hand for Sony a7 3';
     case UURIG_FOR_FUJIFILM_T4 = 'UUrig for Fujifilm T4';
     case SMALLRIG_FOR_A7C = 'Smallrig for A7c';
     case SMALLRIG_HAND_AND_HANDLE_A6600 = 'Smarig + рукоятка и ручка a6600';
     case TILTA_ADVANCED_FX6 = 'Tilta Advanced Fx6';
     case TILTA_ADVANCED_KIT_FX3 = 'Tilta advanced kit Fx3';
-    // Мониторы
     case FEELWORLD_LUT_7_4K_HDMI = 'Feelworld LUT 7 4k HDMI';
     case LILLIPUT_4K = 'Lilliput 4K';
     case FEELWORLD_4K_ULTRA = 'Feelworld 4K ultra';
-    // Разное
     case VIDEOSENDERS_HOLLYLAND_MARS_400S_PRO = 'Видео сендеры Hollyland Mars 400s pro';
     case TELEPROMPTER_FEELWORLD_TP10 = 'Телесуфлер Feelworld Tp10';
     case REFLECTOR = 'Отражатель';
@@ -128,20 +117,17 @@ enum GoodEnum: string
     case MONOPOD = 'Монопод';
     case COMPENDIUM_SMALLRIG = 'Компендиум SmallRig';
     case SMOKE_MACHINE_900W = 'Дым Машина 900ват';
-    // Софтбоксы
     case SOFTBOX_LATERN_90 = 'Софтбокс Latern 90';
     case SOFTBOX_OCTADOME_120 = 'Софтбокс Octadome 120';
     case SOFTBOX_LIGHT_DOME_150 = 'Софтбокс Light Dome 150';
     case SOFTBOX_GODOX_60_60 = 'Софтбокс Godox 60/60';
     case FLASH_SOFTBOX = 'Софтбокс для вспышки';
-    // Фильтры
     case ND_FREEWELL_67MM = 'Nd Freewell 67mm';
     case ND_77MM = 'Nd 77 mm';
     case ND_58MM = 'Nd 58mm';
     case ND_72MM = 'Nd 72 mm';
     case TIFFEN_MIST_FILTER_67MM = 'Tiffen mist filter 67mm';
     case POLARIZED_77MM = 'Polarized 77mm';
-    // Штативы\стойки
     case LIGHT_STAND_GODOX_213B = 'Стойка Godox 213b';
     case LIGHT_STAND_GODOX_380 = 'Стойка Godox 380';
     case LIGHT_STAND_GODOX_SL = 'Стойка Godox sl';
@@ -152,7 +138,6 @@ enum GoodEnum: string
     case ALUMINUM_TRIPOD = 'Штатив Алюминиевый';
     case WEIFENG_TRIPOD = 'Штатив Weifeng';
     case CONTINENTAL_TRIPOD_DAMAGED = 'Штатив continental (поврежденный)';
-    // Наборы
     case SONY_FX6_V_MOUNT_SET = 'Набор Sony FX6 V-mount';
     case BLACKMAGIC_6K_PRO_FULL_SET = 'Полный набор Blackmagic 6k pro';
     case APUTURE_300X_LED_LIGHTS_SET = 'Комплект светодиодных осветителей Aputure 300x';

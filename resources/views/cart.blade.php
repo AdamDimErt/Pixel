@@ -31,7 +31,7 @@
                             </div>
                             <div class="col s12 m9 good-cart-additional-info white-text">
                                 <p>{{__('translations.Name')}}: <a href="/{{$item->good->id}}"><b
-                                            class="orange-text text-darken-4"><u>{{$item->good->name}}</u></b></a></p>
+                                            class="orange-text text-darken-4"><u>{{$item->good['name_' . session()->get('locale', 'ru')]}}</u></b></a></p>
                                 @if($item->good->discount_cost && $item->good->discount_cost != 0)
                                     <p>{{__('translations.Cost for day')}}: <s>{{$item->good->cost}}</s> <b
                                             class="orange-text text-darken-4">{{$item->good->discount_cost}}</b></p>
@@ -39,7 +39,7 @@
                                     <p>{{__('translations.Cost for day')}}: <b>{{$item->good->cost}}</b></p>
                                 @endif
                                 <p>{{__('translations.Price for breakdown during rental')}}: <b>{{$item->good->damage_cost}}</b></p>
-                                <p>{{__('translations.Description')}}: <b class="truncate">{{$item->good->description}}</b></p>
+                                <p>{{__('translations.Description')}}: <b class="truncate">{{$item->good['description_' . session()->get('locale', 'ru')]}}</b></p>
                                 @if(count($item->good->getAdditionals()) > 0)
                                     <p><u>{{__('translations.Additional accessories')}}: </u></p>
                                     @foreach($item->good->getAdditionals() as $additional)
@@ -50,7 +50,7 @@
                                                        data-additional-id="{{$additional->id}}"
                                                        data-additional-cost="{{$additional->cost}}"
                                                        @if(in_array($additional->id, $cartData[$item->good->id . 'pixelrental' .$item->id])) checked @endif/>
-                                                <span>{{$additional->name}} <span class="white-text">(+ {{$additional->cost}}тг)</span></span>
+                                                <span>{{$additional['name_' . session()->get('locale', 'ru')]}} <span class="white-text">(+ {{$additional->cost}}тг)</span></span>
                                             </label>
                                         </p>
                                     @endforeach

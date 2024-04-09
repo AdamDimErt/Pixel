@@ -16,7 +16,7 @@ class ItemSeeder extends Seeder
     {
         Item::query()->delete();
         foreach ($this->goodsAmount() as $goodName => $amount) {
-            $goodId = Good::query()->where('name', '=', $goodName)->firstOrFail();
+            $goodId = Good::query()->where('name_ru', '=', $goodName)->firstOrFail();
             for ($i = 0; $i < $amount; $i++) {
                 Item::factory()->create([
                     'good_id' => $goodId,

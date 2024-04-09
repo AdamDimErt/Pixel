@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('additionals', function (Blueprint $table) {
             $table->id();
             $table->integer('cost')->nullable(false);
-            $table->string('name')->nullable(false);
+            $table->string('name_ru')->nullable(false);
+            $table->string('name_en')->nullable(false);
             $table->timestamps();
         });
     }

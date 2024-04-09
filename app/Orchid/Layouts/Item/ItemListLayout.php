@@ -40,7 +40,7 @@ class ItemListLayout extends Table
                         ->fromModel(Good::class, 'name')
                 )
                 ->render(function (Item $item) {
-                    return Link::make($item->good->name)
+                    return Link::make($item->good['name_' . session()->get('locale', 'ru')])
                         ->route('platform.items.edit', $item);
                 }),
 

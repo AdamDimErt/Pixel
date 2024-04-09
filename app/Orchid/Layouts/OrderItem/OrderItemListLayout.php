@@ -41,7 +41,7 @@ class OrderItemListLayout extends Table
                     Input::make()
                 )
                 ->render(function (OrderItem $orderItemItem) {
-                    return Link::make($orderItemItem->item->name)
+                    return Link::make($orderItemItem->item->good['name_' . session()->get('locale', 'ru')])
                         ->route('platform.orderItems.edit', $orderItemItem);
                 }),
 

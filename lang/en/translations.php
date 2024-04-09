@@ -15,7 +15,7 @@ return [
     'Good' => 'Goods',
     'Good was removed' => 'Item has been deleted',
     'Creating a new good' => 'Create new Goods',
-    'Edit good' => 'Edit Item',
+    'Edit good' => 'Edit Good',
     'Additionals' => 'Product additions',
     'Additional' => 'Product add-on',
     'Additional was removed' => 'Product add-on has been deleted',
@@ -290,4 +290,8 @@ return [
     'Wanted pictures help' => 'Upload wanted person\'s pictures',
     'Pictures' => 'Pictures',
     'Client iin help' => 'Enter id number of wanted',
+    'Name en' => 'Name on english',
+    'Name ru' => 'Name on russian',
+    'Description en' => 'Description on english',
+    'Description ru' => 'Description on russian',
 ];
