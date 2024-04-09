@@ -429,13 +429,10 @@ hr {
 }
 
 .auth-inner {
-    max-width: 500px;
-}
-
-.auth-inner {
     border-radius: 15px;
     position: relative;
     padding: 5%;
+    max-width: 550px;
 }
 
 .back-auth-button {
@@ -472,6 +469,10 @@ hr {
 
 .file-path {
     color: white !important;
+}
+
+.file-field {
+    padding-left: 0% !important;
 }
 
 .profile-form-wrapper {

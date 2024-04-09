@@ -27,13 +27,13 @@
                         </div>
                         <div class="input-field col s12">
                             <i class="material-icons prefix white-text">phone</i>
-                            <input name="phone" id="phone" type="tel" placeholder="{{__('translations.Phone')}}"
+                            <input name="phone" id="phone" type="tel" maxlength="12" placeholder="{{__('translations.Phone')}}"
                                    class="white-text"
                                    required>
                         </div>
                         <div class="input-field col s12">
                             <i class="material-icons prefix white-text">credit_card</i>
-                            <input name="iin" id="iin" type="tel" placeholder="{{__('translations.Iin')}}"
+                            <input name="iin" id="iin" type="tel" maxlength="12" placeholder="{{__('translations.Iin')}}"
                                    class="white-text"
                                    required>
                         </div>
@@ -63,13 +63,13 @@
                         <div class="input-field col s12">
                             <i class="material-icons prefix white-text">lock</i>
                             <input name="password" type="password" placeholder="{{__('translations.Password')}}"
-                                   class="white-text" required>
+                                   class="white-text password-field" required>
                         </div>
                         <div class="input-field col s12">
                             <i class="material-icons prefix white-text">done</i>
                             <input name="password_confirmation" type="password"
                                    placeholder="{{__('translations.Password confirm')}}"
-                                   class="white-text" required>
+                                   class="white-text password-field" required>
                         </div>
                         <div class="input-field col s12">
                             <button type="submit" class="btn orange darken-4 authorization-link">
