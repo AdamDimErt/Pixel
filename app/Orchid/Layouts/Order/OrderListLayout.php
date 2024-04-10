@@ -9,6 +9,7 @@ use Orchid\Screen\Actions\Button;
 use Orchid\Screen\Actions\DropDown;
 use Orchid\Screen\Actions\Link;
 use Orchid\Screen\Components\Cells\DateTimeSplit;
+use Orchid\Screen\Fields\DateRange;
 use Orchid\Screen\Fields\Input;
 use Orchid\Screen\Fields\NumberRange;
 use Orchid\Screen\Fields\Relation;
@@ -75,18 +76,8 @@ class OrderListLayout extends Table
                         ->help(__('translations.Status'))
                 )
                 ->render(function (Order $order) {
-                    return __('translations.'. $order->status);
+                    return __('translations.'.$order->status);
                 }),
-
-            TD::make('first_order_date', __('translations.Rent start'))
-                ->usingComponent(DateTimeSplit::class)
-                ->align(TD::ALIGN_RIGHT)
-                ->sort(),
-
-            TD::make('last_order_date', __('translations.Rent end'))
-                ->usingComponent(DateTimeSplit::class)
-                ->align(TD::ALIGN_RIGHT)
-                ->sort(),
 
             TD::make('created_at', __('translations.Created'))
                 ->usingComponent(DateTimeSplit::class)

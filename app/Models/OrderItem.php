@@ -33,8 +33,11 @@ final class OrderItem extends Model
     ];
 
     protected $allowedSorts = [
-        'item_id' => Where::class,
-        'order_id' => Where::class,
+        'item_id',
+        'order_id',
+        'amount_paid',
+        'rent_start_date',
+        'rent_end_date'
     ];
 
     public function item(): BelongsTo

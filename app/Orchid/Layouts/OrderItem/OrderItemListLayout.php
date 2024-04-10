@@ -8,6 +8,7 @@ use Orchid\Screen\Actions\Button;
 use Orchid\Screen\Actions\DropDown;
 use Orchid\Screen\Actions\Link;
 use Orchid\Screen\Components\Cells\DateTimeSplit;
+use Orchid\Screen\Fields\DateRange;
 use Orchid\Screen\Fields\Input;
 use Orchid\Screen\Fields\NumberRange;
 use Orchid\Screen\Fields\Relation;
@@ -56,21 +57,24 @@ class OrderItemListLayout extends Table
                             'confirmed' => __('translations.confirmed'),
                             'cancelled' => __('translations.cancelled'),
                         ])
-                        ->title('status')
-                        ->help(__('translations.Name'))
+                        ->title(__('translations.Status'))
                 )
                 ->render(function (OrderItem $orderItemItem) {
-                    return $orderItemItem->status;
+                    return __('translations.' . $orderItemItem->status);
                 }),
 
             TD::make('amount_paid', __('translations.Amount paid'))
                 ->sort()
                 ->filter(
-                    Input::make()
+                    NumberRange::make('amount_paid')
                 ),
 
             TD::make('rent_start_date', __('translations.Rent start date'))
                 ->align(TD::ALIGN_RIGHT)
+                ->filter(
+                    DateRange::make('rent_start_date')
+                        ->title(__('translations.Rent start'))
+                )
                 ->sort(),
 
             TD::make('rent_start_time', __('translations.Rent start time'))
@@ -79,6 +83,10 @@ class OrderItemListLayout extends Table
 
             TD::make('rent_end_date', __('translations.Rent end date'))
                 ->align(TD::ALIGN_RIGHT)
+                ->filter(
+                    DateRange::make('rent_end_date')
+                        ->title(__('translations.Rent end'))
+                )
                 ->sort(),
 
             TD::make('rent_end_time', __('translations.Rent end time'))
