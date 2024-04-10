@@ -47,6 +47,12 @@ class ClientListLayout extends Table
                     Input::make()
                 ),
 
+            TD::make('discount', __('translations.Discount'))
+                ->sort()
+                ->filter(
+                    Input::make()
+                ),
+
             TD::make('instagram', 'Instagram')
                 ->sort()
                 ->filter(

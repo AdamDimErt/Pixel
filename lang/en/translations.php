@@ -48,6 +48,7 @@ return [
     'Edit orderItem' => 'Edit Product Object by Order',
     'Add' => 'Add',
     'Name' => 'Name',
+    'Discount' => 'Discount',
     'Email' => 'Postal address',
     'Last edit' => 'Last modified',
     'Created' => 'Creation date',
@@ -103,6 +104,7 @@ return [
     'Not blocked' => 'Not blocked',
     'Client name help' => 'Enter customer\'s full name',
     'Client email help' => 'Enter client\'s email',
+    'Client discount help' => 'Enter client\'s disount (in percent)',
     'Client phone help' => 'Enter customer number (+7XXXXXXXXXXXXXXXXXXX)',
     'Additional name help' => 'Enter name of add-on',
     'My Account' => 'My Profile',
@@ -295,4 +297,6 @@ return [
     'Description en' => 'Description on english',
     'Description ru' => 'Description on russian',
     'Your orders' => 'Your orders',
+    'With mention of personal discount' => 'With mention of personal discount',
+    'Order client help' => 'Choose a client for that order'
 ];

@@ -23,6 +23,7 @@ class Client extends Authenticatable
         'id' => Where::class,
         'name' => Like::class,
         'phone' => Like::class,
+        'discount' => WhereMaxMin::class,
         'email' => Like::class,
         'instagram' => Like::class,
         'email_confirmed' => Where::class,
@@ -31,11 +32,13 @@ class Client extends Authenticatable
     ];
 
     protected $allowedSorts = [
-        'user_id',
-        'amount_paid',
-        'status',
-        'rent_start_at',
-        'rent_end_at',
+        'id',
+        'name',
+        'phone',
+        'discount',
+        'email',
+        'instagram',
+        'email_confirmed',
         'created_at',
         'deleted_at',
     ];

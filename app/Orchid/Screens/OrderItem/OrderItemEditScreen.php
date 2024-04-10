@@ -84,7 +84,7 @@ class OrderItemEditScreen extends Screen
                     ->title(__('translations.Item')),
 
                 Relation::make('orderItem.additionals')
-                    ->fromModel(Additional::class, 'name')
+                    ->fromModel(Additional::class, 'name_' . session()->get('locale', 'ru'))
                     ->multiple()
                     ->help(__('translations.OrderItem additionals help'))
                     ->title(__('translations.Additionals')),
@@ -135,6 +135,12 @@ class OrderItemEditScreen extends Screen
      */
     public function createOrUpdate(OrderItem $orderItem, Request $request)
     {
+        $orderId = $request->input('orderItem')['order_id'];
+
+        $order = Order::query()->find($orderId);
+
+        $client = $order->owner;
+
         $orderItem->fill($request->input('orderItem'));
 
         if (! $request->input('orderItem.additionals')) {
@@ -158,9 +164,15 @@ class OrderItemEditScreen extends Screen
             $totalAmount += $additional->cost * $diffInDays;
         }
 
+        $totalAmount = $totalAmount / 100 * (100 - $client->discount);
+
         $orderItem->amount_paid = $totalAmount;
 
         $orderItem->save();
+
+        $order->amount_paid = $order->amount_paid + $totalAmount;
+
+        $order->save();
 
         Alert::info('You have successfully created a orderItem.');
 

@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Client;
 use App\Models\Good;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CartController extends Controller
 {
@@ -61,6 +63,12 @@ class CartController extends Controller
     {
         $cartData = json_decode($request->cookie('cart', '{}'), true);
 
+        if (Auth::guard('clients')->id()){
+            $client = Client::query()->find(Auth::guard('clients')->id())->toArray();
+        } else {
+            $client = null;
+        }
+
         $idCounts = $this->countDistinctKeys($cartData);
         $keys = [];
         foreach ($cartData as $subArray) {
@@ -92,7 +100,7 @@ class CartController extends Controller
             return $good;
         });
 
-        return view('cart', compact('goodsInCart', 'totalCount', 'items', 'cartData'));
+        return view('cart', compact('goodsInCart', 'totalCount', 'items', 'cartData', 'client'));
     }
 
     public function countDistinctKeys($array)

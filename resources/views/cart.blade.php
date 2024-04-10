@@ -3,7 +3,11 @@
     @if (count($goodsInCart) > 0)
         <h5 class="white-text">{{__('translations.Cart')}}</h5>
         <p class="grey-text">{{__('translations.Total amount')}}: {{$totalCount}}</p>
-        <div class="row">
+        @if($client)
+            <div class="row client-discount-holder" data-discount-percent="{{$client['discount']}}">
+        @else
+            <div class="row client-discount-holder">
+        @endif
             <div class="col s12 m3 additional-info white-text hide-on-med-and-up">
                 <span class="grey-text"><u>{{__('translations.Select rental periods for goods')}}</u></span>
                 <p>{{__('translations.All items that you have added to your cart are listed here.')}}</p>
@@ -83,11 +87,19 @@
                                                 class="good-cost-holder orange-text text-darken-4">{{$item->totalCost}}
                                         </span>
                                             {{__('translations.KZT')}}
+                                            @if($client['discount'])
+                                                <br>
+                                                <span>({{__('translations.With mention of personal discount')}}): {{$client['discount']}}%</span>
+                                            @endif
                                         @else
                                             <span
                                                 class="good-cost-holder">{{$item->totalCost}}
                                         </span>
                                             {{__('translations.KZT')}}
+                                            @if($client['discount'])
+                                                <br>
+                                                <span>({{__('translations.With mention of personal discount')}}): {{$client['discount']}}%</span>
+                                            @endif
                                         @endif
                                     </h5>
                                 </div>

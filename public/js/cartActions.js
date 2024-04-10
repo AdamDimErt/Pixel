@@ -315,7 +315,14 @@ beginingDatepickers.forEach(async item => {
                             differenceDays--;
                         }
                         const sumHolder= e.target.parentNode.parentNode.parentNode.parentNode.querySelector('.good-cost-holder')
-                        sumHolder.innerHTML = +sumHolder.innerHTML * differenceDays;
+
+                        const discount = +document.querySelector('.client-discount-holder').dataset.discountPercent
+
+                        sumHolder.innerHTML = (+sumHolder.innerHTML * differenceDays) / 100 * (100 - discount);
+
+                        if (discount) {
+
+                        }
                     }
                 }
             });

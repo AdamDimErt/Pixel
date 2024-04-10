@@ -54,6 +54,6 @@ final class OrderItem extends Model
 
     public function getAdditionals(): Collection
     {
-        return Additional::whereIn('id', $this->additionals)->get();
+        return Additional::whereIn('id', json_decode($this->additionals))->get();
     }
 }

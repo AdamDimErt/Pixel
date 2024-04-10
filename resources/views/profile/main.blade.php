@@ -19,6 +19,8 @@
                     class="orange-text"><b>{{$client->order_amount}}</b></span></p></li>
         <li class="collection-item grey darken-3 white-text"><p>{{__('translations.Total good rent amount')}}: <span
                     class="orange-text"><b>{{$client->order_item_amount}}</b></span></p></li>
+        <li class="collection-item grey darken-3 white-text"><p>{{__('translations.Discount')}}: <span
+                    class="orange-text"><b>{{$client->discount}}%</b></span></p></li>
     </ul>
     <h5 class="white-text">{{__('translations.Id card pics')}}: </h5>
     <div class="id-image-wrapper row">

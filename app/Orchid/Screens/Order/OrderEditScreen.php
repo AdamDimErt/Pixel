@@ -96,8 +96,8 @@ class OrderEditScreen extends Screen
                         'confirmed' => __('translations.confirmed'),
                         'cancelled' => __('translations.cancelled'),
                     ])
-                    ->title('status')
-                    ->help(__('translations.Name')),
+                    ->title(__('translations.Status'))
+                    ->help(__('translations.Order status help')),
 
                 Input::make('order.agreement_id')
                     ->title(__('translations.Agreement id'))

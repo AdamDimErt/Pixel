@@ -87,10 +87,14 @@ class OrderController extends Controller
 ';
                 $orderItemMessageData = $orderItemMessageData.'       Цена: '.$additional->cost.'
 ';
-                $orderItemMessageData = $orderItemMessageData.'       Общая сумма за дополнение: *'.$additional->cost * $diffInDays.'*
+                $orderItemMessageData = $orderItemMessageData.'       Общая сумма за дополнение: *' . ($additional->cost * $diffInDays) / 100 * (100 - $client->discount) . '*
 ';
 
                 $currentItemCost += $additional->cost * $diffInDays;
+
+                if ($client->discount){
+                    $currentItemCost = $currentItemCost / 100 * (100 - $client->discount);
+                }
             }
 
             $orderItemData[] = [
@@ -120,14 +124,13 @@ class OrderController extends Controller
             OrderItem::query()->create($itemToCreate);
         }
 
-        $client = \App\Models\Client::query()->find(Auth::guard('clients')->id());
-
         $response = sendTelegramMessage(
             "*НОВЫЙ ЗАКАЗ* $order->id
 Покупатель: [$client->phone](https://wa.me/$client->phone)
 Имя: $client->name
 Электронный адрес: $client->email
 Инстаграм: [$client->instagram](https://www.instagram.com/$client->instagram/)
+Скидка: $client->discount процентов
 Общая сумма: $totalSum тг
 
 Список товаров:
@@ -140,6 +143,7 @@ class OrderController extends Controller
 Имя: $client->name
 Электронный адрес: $client->email
 Инстаграм: [$client->instagram](https://www.instagram.com/$client->instagram/)
+Скидка: $client->discount процентов
 Общая сумма: $totalSum тг
 
 Список товаров слишком большой для отображения в боте.");
