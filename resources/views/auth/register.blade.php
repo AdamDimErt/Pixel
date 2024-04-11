@@ -27,13 +27,15 @@
                         </div>
                         <div class="input-field col s12">
                             <i class="material-icons prefix white-text">phone</i>
-                            <input name="phone" id="phone" type="tel" maxlength="12" placeholder="{{__('translations.Phone')}}"
+                            <input name="phone" id="phone" type="tel" maxlength="12"
+                                   placeholder="{{__('translations.Phone')}}"
                                    class="white-text"
                                    required>
                         </div>
                         <div class="input-field col s12">
                             <i class="material-icons prefix white-text">credit_card</i>
-                            <input name="iin" id="iin" type="tel" maxlength="12" placeholder="{{__('translations.Iin')}}"
+                            <input name="iin" id="iin" type="tel" maxlength="12"
+                                   placeholder="{{__('translations.Iin')}}"
                                    class="white-text"
                                    required>
                         </div>
@@ -47,7 +49,7 @@
                             <i class="material-icons prefix white-text">
                                 <img src="{{asset('/img/instagram.svg')}}" height="35px" alt="">
                             </i>
-                            <input name="instagram" id="email" type="text"
+                            <input name="instagram" id="instagram" type="text"
                                    placeholder="{{__('translations.Your instagram')}}" class="white-text" required>
                         </div>
                         <div class="file-field input-field col s12">
@@ -99,5 +101,6 @@
         </div>
     </div>
 </div>
+<script src="{{asset('js/materialize.js')}}"></script>
 </body>
 </html>
