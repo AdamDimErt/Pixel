@@ -4,8 +4,10 @@ namespace App\Orchid\Screens\Client;
 
 use App\Mail\ConfirmationMail;
 use App\Models\Client;
+use App\Models\Wanted;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
@@ -163,6 +165,16 @@ class ClientEditScreen extends Screen
         $client->attachment()->syncWithoutDetaching(
             $request->input('client.attachment', [])
         );
+
+        $wanted = Wanted::query()
+            ->where('name', '=', $client->name)
+            ->orWhere('iin', '=', $client->iin)
+            ->orWhere('instagram', '=', $client->instagram)
+            ->first();
+
+        if ($wanted) {
+            return redirect()->back()->withErrors(['authentication' => 'Клиент находится в списке подозреваемых']);
+        }
 
         Alert::info('You have successfully created a client.');
 
