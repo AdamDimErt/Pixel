@@ -14,9 +14,9 @@ server {
 
     client_max_body_size 128M;
 
-    ssl_certificate /path/to/pixelrental_kz.crt;
-    ssl_certificate_key /path/to/!_PRIVATE_KEY_INFO_!.txt;
-    ssl_trusted_certificate /path/to/AAA_Certificate_Services.crt /path/to/Sectigo_RSA_Domain_Validation_Secure_Server_CA.crt /path/to/USERTrust_RSA_Certification_Authority.crt;
+    ssl_certificate /etc/nginx/pixelrental_kz.crt;
+    ssl_certificate_key /etc/nginx/!_PRIVATE_KEY_INFO_!.txt;
+    ssl_trusted_certificate /etc/nginx/AAA_Certificate_Services.crt /etc/nginx/Sectigo_RSA_Domain_Validation_Secure_Server_CA.crt /etc/nginx/USERTrust_RSA_Certification_Authority.crt;
 
     location = /favicon.ico { access_log off; log_not_found off; }
     location = /robots.txt  { access_log off; log_not_found off; }
