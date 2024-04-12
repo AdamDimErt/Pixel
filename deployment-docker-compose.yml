@@ -24,7 +24,6 @@ services:
       - "${COMPOSE_APP_DIR}/.development/docker/php/php.ini:/usr/local/etc/php/php.ini"
       - "${COMPOSE_APP_DIR}/.development/docker/php/docker-entrypoint.sh:/docker-entrypoint.sh"
 
-
   nginx:
     image: nginx:1.23
     restart: always
@@ -37,9 +36,15 @@ services:
       APP_DIR: "${COMPOSE_CONTAINER_DIR}"
     ports:
       - "${COMPOSE_GATEWAY}:80:80"
+      - "${COMPOSE_GATEWAY}:443:443"
     volumes:
       - ".development/docker/nginx/templates:/etc/nginx/templates"
       - "${COMPOSE_APP_DIR}:${COMPOSE_CONTAINER_DIR}"
+      - "./development/docker/nginx/certs/pixelrental_kz.crt:/etc/nginx/pixelrental_kz.crt"
+      - "./development/docker/nginx/certs/!_PRIVATE_KEY_INFO_!.txt:/etc/nginx/private.key"
+      - "./development/docker/nginx/certs/AAA_Certificate_Services.crt:/etc/nginx/AAA_Certificate_Services.crt"
+      - "./development/docker/nginx/certs/Sectigo_RSA_Domain_Validation_Secure_Server_CA.crt:/etc/nginx/Sectigo_RSA_Domain_Validation_Secure_Server_CA.crt"
+      - "./development/docker/nginx/certs/USERTrust_RSA_Certification_Authority.crt:/etc/nginx/USERTrust_RSA_Certification_Authority.crt"
     links:
       - php
     depends_on:
