@@ -161,8 +161,10 @@ class OrderItemEditScreen extends Screen
 
         $totalAmount *= $diffInDays;
 
-        foreach ($orderItem->getAdditionals() as $additional) {
-            $totalAmount += $additional->cost * $diffInDays;
+        if (count($orderItem->additionals()->get()) != 0){
+            foreach ($orderItem->getAdditionals() as $additional) {
+                $totalAmount += $additional->cost * $diffInDays;
+            }
         }
 
         $totalAmount = $totalAmount / 100 * (100 - $client->discount);
