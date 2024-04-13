@@ -32,7 +32,7 @@
                             </div>
                             <div class="col s12 m3 center">
                                 <a href="{{route('viewGood', $item->item->good)}}">
-                                    <img src="{{$item->item->good->attachment->first()->url}}" alt="" class="order-item-image-wrapper z-depth-5">
+                                    <img loading="lazy" src="{{$item->item->good->attachment->first()->url}}" alt="" class="order-item-image-wrapper z-depth-5">
                                 </a>
                                 @if ((new DateTime())->format('Y-m-d H:i:s') < (new DateTime($item->rent_start_date . ' ' .$item->rent_start_time))->format('Y-m-d H:i:s') && $order->status === 'waiting')
                                     <a href="#order-canceling-modal" class="large-btn btn orange darken-4 white-text cancel-order-btn modal-trigger">Отменить заказ</a>

@@ -18,7 +18,7 @@
             </div>
             <div class="input-field">
                 <i class="material-icons prefix white-text">
-                    <img src="{{asset('/img/instagram.svg')}}" height="35px" alt="">
+                    <img loading="lazy" src="{{asset('/img/instagram.svg')}}" height="35px" alt="">
                 </i>
                 <input name="instagram" id="instagram"
                        value={{$client->instagram}} type="text" placeholder="{{__('translations.Your instagram')}}" class="white-text" required>

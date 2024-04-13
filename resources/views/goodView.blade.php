@@ -4,10 +4,10 @@
     <div class="row">
         <div class="col s12 m6">
             @if($good->attachment()?->first()?->url())
-                <img class="materialboxed good-image z-depth-5" width="100%"
+                <img loading="lazy" class="materialboxed good-image z-depth-5" width="100%"
                      src="{{$good->attachment()?->first()?->url()}}">
             @else
-                <img src="{{asset('img/no-image.jpg')}}" class="materialboxed good-image z-depth-5" width="100%">
+                <img loading="lazy" src="{{asset('img/no-image.jpg')}}" class="materialboxed good-image z-depth-5" width="100%">
             @endif
         </div>
         <div class="col s12 m6 detailed-info white-text">

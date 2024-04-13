@@ -2,9 +2,9 @@
     <div class="card good-card hoverable z-depth-5">
         <div class="card-image">
             @if($good->attachment()?->first()?->url())
-                <img src="{{$good->attachment()?->first()?->url()}}" class="card-presenter-image">
+                <img loading="lazy" src="{{$good->attachment()?->first()?->url()}}" class="card-presenter-image">
             @else
-                <img src="{{asset('img/no-image.jpg')}}" class="card-presenter-image">
+                <img loading="lazy" src="{{asset('img/no-image.jpg')}}" class="card-presenter-image">
             @endif
             @auth('clients')
                 @if (in_array($good->id, App\Models\Client::query()->find(Auth::guard('clients')->id())->favorites()->pluck('good_id')->toArray()))

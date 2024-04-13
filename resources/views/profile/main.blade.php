@@ -25,7 +25,7 @@
     <h5 class="white-text">{{__('translations.Id card pics')}}: </h5>
     <div class="id-image-wrapper row">
         @foreach($client->attachment()->get() as $idPicture)
-            <img class="materialboxed id-image z-depth-5" src="{{$idPicture->url}}">
+            <img loading="lazy" class="materialboxed id-image z-depth-5" src="{{$idPicture->url}}">
         @endforeach
     </div>
 @endsection
