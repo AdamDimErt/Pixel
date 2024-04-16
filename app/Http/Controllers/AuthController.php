@@ -36,9 +36,7 @@ class AuthController extends Controller
         $isBlocked = $client->blocked;
 
         $wanted = Wanted::query()
-            ->where('name', '=', $client->name)
             ->orWhere('iin', '=', $client->iin)
-            ->orWhere('instagram', '=', $client->instagram)
             ->first();
 
         if ($wanted) {
@@ -92,9 +90,7 @@ class AuthController extends Controller
         ]);
 
         $wanted = Wanted::query()
-            ->where('name', '=', $client->name)
             ->orWhere('iin', '=', $client->iin)
-            ->orWhere('instagram', '=', $client->instagram)
             ->first();
 
         if ($wanted) {

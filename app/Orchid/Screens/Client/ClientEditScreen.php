@@ -167,9 +167,7 @@ class ClientEditScreen extends Screen
         );
 
         $wanted = Wanted::query()
-            ->where('name', '=', $client->name)
             ->orWhere('iin', '=', $client->iin)
-            ->orWhere('instagram', '=', $client->instagram)
             ->first();
 
         if ($wanted) {

@@ -25,9 +25,7 @@ class OrderController extends Controller
         $client = Client::query()->find(Auth::guard('clients')->id());
 
         $wanted = Wanted::query()
-            ->where('name', '=', $client->name)
             ->orWhere('iin', '=', $client->iin)
-            ->orWhere('instagram', '=', $client->instagram)
             ->first();
 
         if ($wanted) {

@@ -124,9 +124,7 @@ class OrderEditScreen extends Screen
         $client = Client::query()->find($request->input('order.client_id'));
 
         $wanted = Wanted::query()
-            ->where('name', '=', $client->name)
             ->orWhere('iin', '=', $client->iin)
-            ->orWhere('instagram', '=', $client->instagram)
             ->first();
 
         if ($wanted) {
