@@ -76,7 +76,7 @@ class ItemEditScreen extends Screen
             Layout::rows([
 
                 Relation::make('item.good_id')
-                    ->fromModel(Good::class, 'name')
+                    ->fromModel(Good::class, 'name_' . session()->get('locale', 'ru'))
                     ->help(__('translations.Item good help'))
                     ->title(__('translations.Good')),
             ]),
