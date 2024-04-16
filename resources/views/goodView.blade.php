@@ -42,9 +42,9 @@
                 @endif
             </div>
             <div class="info-btns-wrapper">
-                @if(count(json_decode($good->additionals)) > 0)
+                @if($good->additionals != '[]' && count($good->getAdditionals()) > 0)
                     <h5>{{__('translations.In addition with this good people usually rent')}}: </h5>
-                    @foreach($good->additionals as $additional)
+                    @foreach($good->getAdditionals() as $additional)
                         <p>
                             <label>
                                 <input type="checkbox" class="orange-text additional-checkbox"
@@ -107,7 +107,7 @@
             </div>
         </div>
     </div>
-    @if(count($good->RelatedGoods) > 0)
+    @if($good->related_goods != '[]' && count($good->getRelatedGoods()) > 0)
         <h4 class="white-text">{{__('translations.Similar goods')}}:</h4>
         <div class="carousel">
             @foreach($good->getRelatedGoods() as $relatedGood)
