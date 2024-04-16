@@ -93,8 +93,7 @@ class WantedEditScreen extends Screen
 
                 Input::make('wanted.instagram')
                     ->title('Instagram')
-                    ->help(__('translations.Wanted instagram help'))
-                    ->required(),
+                    ->help(__('translations.Wanted instagram help')),
 
                 Upload::make('wanted.attachment')
                     ->title(__('translations.Pictures'))
