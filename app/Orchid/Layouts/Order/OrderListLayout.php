@@ -97,7 +97,7 @@ class OrderListLayout extends Table
                         Link::make(__('translations.Look at items'))
                             ->route('platform.orderItems.list',
                                 [
-                                    'filter[id]' => $order
+                                    'filter[order_id]' => $order
                                         ->orderItems()
                                         ->pluck('order_items.id')
                                         ->implode(','),
