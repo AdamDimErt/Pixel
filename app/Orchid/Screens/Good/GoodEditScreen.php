@@ -114,7 +114,7 @@ class GoodEditScreen extends Screen
                     ->title(__('translations.GoodType')),
 
                 Relation::make('good.related_goods')
-                    ->fromModel(Good::class, 'name')
+                    ->fromModel(Good::class, 'name_' . session()->get('locale', 'ru'))
                     ->help(__('translations.Good related_goods help'))
                     ->multiple()
                     ->title(__('translations.Related goods')),
