@@ -300,4 +300,9 @@ return [
     'With mention of personal discount' => 'С учётом персональной скидки',
     'Order client help' => 'Выберите клиента для оформления заказа',
     'Return' => 'Пометить как возвращённый',
+    'Signature help register' => 'Загрузите свою подпись в pdf формате',
+    'Client signature help' => 'Ваша подпись в pdf формате',
+    'Signature file' => 'Ваша подпись в pdf формате',
+    'Client signature file' => 'Подпись клиента в PDF формате',
+    'Client signature file help' => 'Загрузите PDF файл с подписью клиента'
 ];

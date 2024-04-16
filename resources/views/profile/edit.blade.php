@@ -33,6 +33,16 @@
                            placeholder="{{__('translations.Client id card help')}}">
                 </div>
             </div>
+            <div class="file-field input-field">
+                <div>
+                    <input type="file" name="signature" multiple="multiple" accept=".pdf">
+                </div>
+                <div class="file-path-wrapper">
+                    <i class="material-icons prefix white-text">assignment</i>
+                    <input id="file-path" class="file-path" type="text"
+                           placeholder="{{__('translations.Client signature help')}}">
+                </div>
+            </div>
 
             <hr>
             <button type="submit" class="btn btn-medium save-profile-btn orange darken-4 white-text">{{__('translations.Save')}} <i class="material-icons">save</i></button>
