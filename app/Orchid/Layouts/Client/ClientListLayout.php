@@ -111,10 +111,7 @@ class ClientListLayout extends Table
                         Link::make(__('translations.Look at orders'))
                             ->route('platform.orders.list',
                                 [
-                                    'filter[client_id]' => $client
-                                        ->orders()
-                                        ->pluck('id')
-                                        ->implode(','),
+                                    'filter[client_id]' => $client->id
                                 ]
                             )
                             ->icon('bs.search'),
