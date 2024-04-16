@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name')->nullable(false);
             $table->string('iin')->nullable(false);
-            $table->string('instagram');
+            $table->string('instagram')->nullable();
             $table->timestamps();
         });
     }
