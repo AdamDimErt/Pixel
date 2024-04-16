@@ -2,11 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\Access\Authorizable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Mail\Attachment;
 use Orchid\Attachment\Attachable;
 use Orchid\Filters\Filterable;
 use Orchid\Filters\Types\Like;
@@ -50,20 +48,8 @@ class Client extends Authenticatable
         return $this->hasMany(Favorite::class);
     }
 
-    public function orders(): \Illuminate\Database\Eloquent\Relations\HasMany
+    public function orders()
     {
         return $this->hasMany(Order::class);
-    }
-
-    public function signature()
-    {
-        $this->load('attachment');
-        return $this->attachment()->where('group', '=', 'signatures')->first();
-    }
-
-    public function idCards(): Collection
-    {
-        $this->load('attachment');
-        return $this->attachment()->where('group', '=', 'idCards')->get();
     }
 }
