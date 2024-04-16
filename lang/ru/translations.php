@@ -298,5 +298,6 @@ return [
     'Description ru' => 'Описание на русском',
     'Your orders' => 'Ваши заказы',
     'With mention of personal discount' => 'С учётом персональной скидки',
-    'Order client help' => 'Выберите клиента для оформления заказа'
+    'Order client help' => 'Выберите клиента для оформления заказа',
+    'Return' => 'Пометить как возвращённый',
 ];

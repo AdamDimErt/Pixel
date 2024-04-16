@@ -298,5 +298,6 @@ return [
     'Description ru' => 'Description on russian',
     'Your orders' => 'Your orders',
     'With mention of personal discount' => 'With mention of personal discount',
-    'Order client help' => 'Choose a client for that order'
+    'Order client help' => 'Choose a client for that order',
+    'Return' => 'Mark as returned',
 ];
