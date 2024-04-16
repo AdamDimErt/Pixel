@@ -44,7 +44,8 @@
                                 @endif
                                 <p>{{__('translations.Price for breakdown during rental')}}: <b>{{$item->good->damage_cost}}</b></p>
                                 <p>{{__('translations.Description')}}: <b class="truncate">{{$item->good['description_' . session()->get('locale', 'ru')]}}</b></p>
-                                @if(count($item->good->getAdditionals()) > 0)
+
+                                @if($item->good->additionals != '[]' && count($item->good->getAdditionals()) > 0)
                                     <p><u>{{__('translations.Additional accessories')}}: </u></p>
                                     @foreach($item->good->getAdditionals() as $additional)
                                         <p>
@@ -87,7 +88,7 @@
                                                 class="good-cost-holder orange-text text-darken-4">{{$item->totalCost}}
                                         </span>
                                             {{__('translations.KZT')}}
-                                            @if($client['discount'])
+                                            @if(Auth::guard('clients')->id() && $client['discount'])
                                                 <br>
                                                 <span>({{__('translations.With mention of personal discount')}}): {{$client['discount']}}%</span>
                                             @endif
@@ -96,7 +97,7 @@
                                                 class="good-cost-holder">{{$item->totalCost}}
                                         </span>
                                             {{__('translations.KZT')}}
-                                            @if($client['discount'])
+                                            @if(Auth::guard('clients')->id() && $client['discount'])
                                                 <br>
                                                 <span>({{__('translations.With mention of personal discount')}}): {{$client['discount']}}%</span>
                                             @endif

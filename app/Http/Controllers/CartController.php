@@ -154,9 +154,11 @@ class CartController extends Controller
     public function countCostWithAdditionals($item, $cartData)
     {
         $cost = $item->good->discount_cost ?? $item->good->cost;
-        foreach ($item->good->getAdditionals() as $additional) {
-            if (in_array($additional->id, $cartData[$item->good->id.'pixelrental'.$item->id])) {
-                $cost += $additional->cost;
+        if ($item->good->additionals != '[]'){
+            foreach ($item->good->getAdditionals() as $additional) {
+                if (in_array($additional->id, $cartData[$item->good->id.'pixelrental'.$item->id])) {
+                    $cost += $additional->cost;
+                }
             }
         }
 
