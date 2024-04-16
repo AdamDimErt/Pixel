@@ -157,7 +157,7 @@ class ClientEditScreen extends Screen
             $client->password = Hash::make(($request->input('client')['password1']));
         }
 
-        if (!$client->exists){
+        if (!$client->exists || !$client->email_confirmed){
             Mail::to($client->email)->send(new ConfirmationMail($client->email, $client->confirmation_code));
         }
         $client->save();
