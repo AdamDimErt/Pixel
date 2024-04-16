@@ -39,7 +39,7 @@ class GoodController extends Controller
 
     public function autofill(string $goodName)
     {
-        $good = Good::query()->where('name', '=', $goodName)->first();
+        $good = Good::query()->where('name_ru', '=', $goodName)->first();
 
         return redirect(route('viewGood', ['good' => $good]));
     }
