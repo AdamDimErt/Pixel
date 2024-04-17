@@ -62,7 +62,6 @@ class ProfileController extends Controller
                 Rule::unique('clients')->ignore(Auth::guard('clients')->id()),
             ],
             'files' => 'required|array|size:2',
-            'signature' => 'required|extensions:pdf|file',
         ]);
 
         $client = Client::query()->find(Auth::guard('clients')->id());
@@ -85,17 +84,8 @@ class ProfileController extends Controller
         foreach ($request->file('files') as $fileData) {
             $file = new File($fileData);
             $attachment = $file->path('idCards')->load();
-            $attachment->group = 'idCards';
-            $attachment->save();
             $attachmentIds[] = $attachment->id;
         }
-
-        $signature = new File($request->file('signature'));
-        $attachment = $signature->path('signatures')->load();
-        $attachment->group = 'signatures';
-        $attachment->save();
-
-        $attachmentIds[] = $attachment->id;
 
         $client->attachment()->syncWithoutDetaching($attachmentIds);
 

@@ -37,7 +37,7 @@ class ItemListLayout extends Table
                 ->sort()
                 ->filter(
                     Relation::make()
-                        ->fromModel(Good::class, 'name_' . session()->get('locale', 'ru'))
+                        ->fromModel(Good::class, 'name')
                 )
                 ->render(function (Item $item) {
                     return Link::make($item->good['name_' . session()->get('locale', 'ru')])
