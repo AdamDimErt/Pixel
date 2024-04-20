@@ -318,10 +318,11 @@ beginingDatepickers.forEach(async item => {
 
                         const discount = +document.querySelector('.client-discount-holder').dataset.discountPercent
 
-                        sumHolder.innerHTML = (+sumHolder.innerHTML * differenceDays) / 100 * (100 - discount);
 
                         if (discount) {
-
+                            sumHolder.innerHTML = (+sumHolder.innerHTML * differenceDays) / 100 * (100 - discount);
+                        } else {
+                            sumHolder.innerHTML = +sumHolder.innerHTML * differenceDays;
                         }
                     }
                 }
