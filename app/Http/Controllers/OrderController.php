@@ -127,6 +127,7 @@ class OrderController extends Controller
 Покупатель: [$client->phone](https://wa.me/$client->phone)
 Имя: $client->name
 Электронный адрес: $client->email
+ИИН: $client->iin
 Инстаграм: [$client->instagram](https://www.instagram.com/$client->instagram/)
 Скидка: $client->discount процентов
 Общая сумма: $totalSum тг
@@ -140,6 +141,7 @@ class OrderController extends Controller
 Покупатель: [$client->phone](https://wa.me/$client->phone)
 Имя: $client->name
 Электронный адрес: $client->email
+ИИН: $client->iin
 Инстаграм: [$client->instagram](https://www.instagram.com/$client->instagram/)
 Скидка: $client->discount процентов
 Общая сумма: $totalSum тг
