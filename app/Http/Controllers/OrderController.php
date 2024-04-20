@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Additional;
 use App\Models\Client;
 use App\Models\Good;
-use App\Models\Item;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Wanted;
@@ -30,6 +29,7 @@ class OrderController extends Controller
 
         if ($wanted) {
             Auth::guard('clients')->logout();
+
             return redirect()->back()->withErrors(['authentication' => 'Профиль был заблокирован']);
         }
 
@@ -85,12 +85,12 @@ class OrderController extends Controller
 ';
                 $orderItemMessageData = $orderItemMessageData.'       Цена: '.$additional->cost.'
 ';
-                $orderItemMessageData = $orderItemMessageData.'       Общая сумма за дополнение: *' . ($additional->cost * $diffInDays) / 100 * (100 - $client->discount) . '*
+                $orderItemMessageData = $orderItemMessageData.'       Общая сумма за дополнение: *'.($additional->cost * $diffInDays) / 100 * (100 - $client->discount).'*
 ';
 
                 $currentItemCost += $additional->cost * $diffInDays;
 
-                if ($client->discount){
+                if ($client->discount) {
                     $currentItemCost = $currentItemCost / 100 * (100 - $client->discount);
                 }
             }
@@ -132,7 +132,7 @@ class OrderController extends Controller
 Общая сумма: $totalSum тг
 
 Список товаров:
-" . $orderItemMessageData);
+".$orderItemMessageData);
 
         if (! $response->ok()) {
             sendTelegramMessage(
