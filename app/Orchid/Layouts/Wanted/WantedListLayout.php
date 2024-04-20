@@ -51,7 +51,6 @@ class WantedListLayout extends Table
                     Input::make()
                 ),
 
-
             TD::make('created_at', __('Created'))
                 ->usingComponent(DateTimeSplit::class, tz: 'UTC')
                 ->align(TD::ALIGN_RIGHT)

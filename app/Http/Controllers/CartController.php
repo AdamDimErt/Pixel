@@ -63,7 +63,7 @@ class CartController extends Controller
     {
         $cartData = json_decode($request->cookie('cart', '{}'), true);
 
-        if (Auth::guard('clients')->id()){
+        if (Auth::guard('clients')->id()) {
             $client = Client::query()->find(Auth::guard('clients')->id())->toArray();
         } else {
             $client = null;
@@ -154,7 +154,7 @@ class CartController extends Controller
     public function countCostWithAdditionals($item, $cartData)
     {
         $cost = $item->good->discount_cost ?? $item->good->cost;
-        if ($item->good->additionals != '[]'){
+        if ($item->good->additionals != '[]') {
             foreach ($item->good->getAdditionals() as $additional) {
                 if (in_array($additional->id, $cartData[$item->good->id.'pixelrental'.$item->id])) {
                     $cost += $additional->cost;

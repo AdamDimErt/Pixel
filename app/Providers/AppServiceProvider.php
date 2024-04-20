@@ -49,7 +49,7 @@ class AppServiceProvider extends ServiceProvider
     {
         return Good::with('attachment')->get()->map(function ($good) {
             return [
-                'name' => $good['name_' . session()->get('locale', 'ru')],
+                'name' => $good['name_'.session()->get('locale', 'ru')],
                 'url' => optional($good->attachment->first())->url,
                 'id' => $good->id,
             ];

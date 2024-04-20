@@ -7,15 +7,12 @@ use App\Models\Client;
 use App\Models\Wanted;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use Orchid\Screen\Actions\Button;
 use Orchid\Screen\Fields\Input;
-use Orchid\Screen\Fields\Relation;
 use Orchid\Screen\Fields\Select;
-use Orchid\Screen\Fields\TextArea;
 use Orchid\Screen\Fields\Upload;
 use Orchid\Screen\Screen;
 use Orchid\Support\Facades\Alert;
@@ -62,7 +59,7 @@ class ClientEditScreen extends Screen
             Button::make(__('translations.Create'))
                 ->icon('pencil')
                 ->method('createOrUpdate')
-                ->canSee(!$this->client->exists),
+                ->canSee(! $this->client->exists),
 
             Button::make(__('translations.Update'))
                 ->icon('note')
@@ -153,11 +150,11 @@ class ClientEditScreen extends Screen
         $client->fill($request->except('client.attachment', 'client.password1')['client']);
 
         $client->confirmation_code = Str::random(10);
-        if (($request->input('client')['password1'])){
+        if (($request->input('client')['password1'])) {
             $client->password = Hash::make(($request->input('client')['password1']));
         }
 
-        if (!$client->exists || !$client->email_confirmed){
+        if (! $client->exists || ! $client->email_confirmed) {
             Mail::to($client->email)->send(new ConfirmationMail($client->email, $client->confirmation_code));
         }
         $client->save();

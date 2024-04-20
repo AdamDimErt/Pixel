@@ -114,13 +114,13 @@ class GoodEditScreen extends Screen
                     ->title(__('translations.GoodType')),
 
                 Relation::make('good.related_goods')
-                    ->fromModel(Good::class, 'name_' . session()->get('locale', 'ru'))
+                    ->fromModel(Good::class, 'name_'.session()->get('locale', 'ru'))
                     ->help(__('translations.Good related_goods help'))
                     ->multiple()
                     ->title(__('translations.Related goods')),
 
                 Relation::make('good.additionals')
-                    ->fromModel(Additional::class, 'name_' . session()->get('locale', 'ru'))
+                    ->fromModel(Additional::class, 'name_'.session()->get('locale', 'ru'))
                     ->help(__('translations.Good additionals help'))
                     ->multiple()
                     ->title(__('translations.Additional')),
@@ -154,11 +154,11 @@ class GoodEditScreen extends Screen
     {
         $good->fill($request->except('good.attachment')['good']);
 
-        if (!$request->input('good.related_goods')){
+        if (! $request->input('good.related_goods')) {
             $good->related_goods = '[]';
         }
 
-        if (!$request->input('good.additionals')){
+        if (! $request->input('good.additionals')) {
             $good->additionals = '[]';
         }
 

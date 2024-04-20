@@ -37,7 +37,7 @@ final class OrderItem extends Model
         'order_id',
         'amount_paid',
         'rent_start_date',
-        'rent_end_date'
+        'rent_end_date',
     ];
 
     public function item(): BelongsTo

@@ -2,8 +2,6 @@
 
 namespace App\Orchid\Screens\OrderItem;
 
-use App\Models\Item;
-use App\Models\Order;
 use App\Models\OrderItem;
 use App\Orchid\Layouts\OrderItem\OrderItemListLayout;
 use Illuminate\Http\Request;

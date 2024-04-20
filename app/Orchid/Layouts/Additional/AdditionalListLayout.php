@@ -3,14 +3,9 @@
 namespace App\Orchid\Layouts\Additional;
 
 use App\Models\Additional;
-use Orchid\Screen\Actions\Button;
-use Orchid\Screen\Actions\DropDown;
 use Orchid\Screen\Actions\Link;
 use Orchid\Screen\Components\Cells\DateTimeSplit;
 use Orchid\Screen\Fields\Input;
-use Orchid\Screen\Fields\NumberRange;
-use Orchid\Screen\Fields\Relation;
-use Orchid\Screen\Fields\Select;
 use Orchid\Screen\Layouts\Table;
 use Orchid\Screen\TD;
 
@@ -40,7 +35,7 @@ class AdditionalListLayout extends Table
                     Input::make()
                 )
                 ->render(function (Additional $additional) {
-                    return Link::make($additional['name_' . session()->get('locale', 'ru')])
+                    return Link::make($additional['name_'.session()->get('locale', 'ru')])
                         ->route('platform.additionals.edit', $additional);
                 }),
 

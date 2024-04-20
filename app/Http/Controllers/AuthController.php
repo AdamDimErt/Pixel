@@ -28,7 +28,7 @@ class AuthController extends Controller
     {
         $credentials = $request->only('phone', 'password');
         $client = Client::query()->where('phone', '=', $credentials['phone'])->first();
-        if (is_null($client)){
+        if (is_null($client)) {
             return redirect()->back()->withErrors(['phone' => 'Неверно введены данные']);
         }
 
@@ -41,6 +41,7 @@ class AuthController extends Controller
 
         if ($wanted) {
             Auth::guard('clients')->logout();
+
             return redirect()->back()->withErrors(['authentication' => 'Профиль был заблокирован']);
         }
 

@@ -2,16 +2,11 @@
 
 namespace App\Orchid\Screens\Wanted;
 
-use App\Mail\ConfirmationMail;
 use App\Models\Wanted;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Str;
 use Orchid\Screen\Actions\Button;
 use Orchid\Screen\Fields\Input;
-use Orchid\Screen\Fields\Select;
 use Orchid\Screen\Fields\Upload;
 use Orchid\Screen\Screen;
 use Orchid\Support\Facades\Alert;
@@ -58,7 +53,7 @@ class WantedEditScreen extends Screen
             Button::make(__('translations.Create'))
                 ->icon('pencil')
                 ->method('createOrUpdate')
-                ->canSee(!$this->wanted->exists),
+                ->canSee(! $this->wanted->exists),
 
             Button::make(__('translations.Update'))
                 ->icon('note')

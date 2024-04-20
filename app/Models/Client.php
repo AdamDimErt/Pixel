@@ -15,7 +15,7 @@ use Orchid\Screen\AsSource;
 
 class Client extends Authenticatable
 {
-    use AsSource, Attachable, Authorizable, HasFactory, Filterable;
+    use AsSource, Attachable, Authorizable, Filterable, HasFactory;
 
     protected $guarded = [];
 

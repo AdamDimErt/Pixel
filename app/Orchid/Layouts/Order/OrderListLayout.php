@@ -9,7 +9,6 @@ use Orchid\Screen\Actions\Button;
 use Orchid\Screen\Actions\DropDown;
 use Orchid\Screen\Actions\Link;
 use Orchid\Screen\Components\Cells\DateTimeSplit;
-use Orchid\Screen\Fields\DateRange;
 use Orchid\Screen\Fields\Input;
 use Orchid\Screen\Fields\NumberRange;
 use Orchid\Screen\Fields\Relation;

@@ -2,19 +2,11 @@
 
 namespace App\Orchid\Screens\Additional;
 
-use App\Mail\ConfirmationMail;
 use App\Models\Additional;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Str;
 use Orchid\Screen\Actions\Button;
 use Orchid\Screen\Fields\Input;
-use Orchid\Screen\Fields\Relation;
-use Orchid\Screen\Fields\Select;
-use Orchid\Screen\Fields\TextArea;
-use Orchid\Screen\Fields\Upload;
 use Orchid\Screen\Screen;
 use Orchid\Support\Facades\Alert;
 use Orchid\Support\Facades\Layout;
@@ -61,7 +53,7 @@ class AdditionalEditScreen extends Screen
             Button::make(__('translations.Create'))
                 ->icon('pencil')
                 ->method('createOrUpdate')
-                ->canSee(!$this->additional->exists),
+                ->canSee(! $this->additional->exists),
 
             Button::make(__('translations.Update'))
                 ->icon('note')

@@ -36,8 +36,8 @@ class GoodSeeder extends Seeder
                     'related_goods' => Good::query()->inRandomOrder()->limit(5)->pluck('id'),
                 ]);
 
-                if (!is_null($value['image'])) {
-                    $file = new UploadedFile('resources/img/' . $value['image'], $value['image']);
+                if (! is_null($value['image'])) {
+                    $file = new UploadedFile('resources/img/'.$value['image'], $value['image']);
 
                     $attachment = (new File($file))->load();
 

@@ -3,12 +3,10 @@
 namespace App\Orchid\Screens\Order;
 
 use App\Models\Client;
-use App\Models\GoodType;
 use App\Models\Order;
 use App\Models\User;
 use App\Models\Wanted;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Orchid\Screen\Actions\Button;
 use Orchid\Screen\Fields\Input;
 use Orchid\Screen\Fields\Relation;

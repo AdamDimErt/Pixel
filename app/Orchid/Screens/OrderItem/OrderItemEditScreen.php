@@ -3,14 +3,12 @@
 namespace App\Orchid\Screens\OrderItem;
 
 use App\Models\Additional;
-use App\Models\GoodType;
 use App\Models\Item;
 use App\Models\Order;
 use App\Models\OrderItem;
 use DateTime;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Carbon;
 use Orchid\Screen\Actions\Button;
 use Orchid\Screen\Fields\DateTimer;
 use Orchid\Screen\Fields\Relation;
@@ -85,7 +83,7 @@ class OrderItemEditScreen extends Screen
                     ->title(__('translations.Item')),
 
                 Relation::make('orderItem.additionals')
-                    ->fromModel(Additional::class, 'name_' . session()->get('locale', 'ru'))
+                    ->fromModel(Additional::class, 'name_'.session()->get('locale', 'ru'))
                     ->multiple()
                     ->help(__('translations.OrderItem additionals help'))
                     ->title(__('translations.Additionals')),
@@ -161,7 +159,7 @@ class OrderItemEditScreen extends Screen
 
         $totalAmount *= $diffInDays;
 
-        if (count($orderItem->additionals()->get()) != 0){
+        if (count($orderItem->additionals()->get()) != 0) {
             foreach ($orderItem->getAdditionals() as $additional) {
                 $totalAmount += $additional->cost * $diffInDays;
             }

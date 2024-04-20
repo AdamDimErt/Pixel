@@ -15,7 +15,7 @@ use Orchid\Screen\AsSource;
 
 class Order extends Model
 {
-    use AsSource, Filterable, HasFactory, Attachable;
+    use AsSource, Attachable, Filterable, HasFactory;
 
     protected $guarded = [];
 

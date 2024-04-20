@@ -2,16 +2,12 @@
 
 namespace App\Orchid\Layouts\OrderItem;
 
-use App\Models\Order;
 use App\Models\OrderItem;
-use Orchid\Screen\Actions\Button;
-use Orchid\Screen\Actions\DropDown;
 use Orchid\Screen\Actions\Link;
 use Orchid\Screen\Components\Cells\DateTimeSplit;
 use Orchid\Screen\Fields\DateRange;
 use Orchid\Screen\Fields\Input;
 use Orchid\Screen\Fields\NumberRange;
-use Orchid\Screen\Fields\Relation;
 use Orchid\Screen\Fields\Select;
 use Orchid\Screen\Layouts\Table;
 use Orchid\Screen\TD;
@@ -42,7 +38,7 @@ class OrderItemListLayout extends Table
                     Input::make()
                 )
                 ->render(function (OrderItem $orderItemItem) {
-                    return Link::make($orderItemItem->item->good['name_' . session()->get('locale', 'ru')])
+                    return Link::make($orderItemItem->item->good['name_'.session()->get('locale', 'ru')])
                         ->route('platform.orderItems.edit', $orderItemItem);
                 }),
 
@@ -60,7 +56,7 @@ class OrderItemListLayout extends Table
                         ->title(__('translations.Status'))
                 )
                 ->render(function (OrderItem $orderItemItem) {
-                    return __('translations.' . $orderItemItem->status);
+                    return __('translations.'.$orderItemItem->status);
                 }),
 
             TD::make('amount_paid', __('translations.Amount paid'))

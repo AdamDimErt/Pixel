@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\Access\Authorizable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Orchid\Attachment\Attachable;
 use Orchid\Filters\Filterable;
@@ -14,7 +13,7 @@ use Orchid\Screen\AsSource;
 
 class Wanted extends Authenticatable
 {
-    use AsSource, Attachable, HasFactory, Filterable;
+    use AsSource, Attachable, Filterable, HasFactory;
 
     protected $guarded = [];
 

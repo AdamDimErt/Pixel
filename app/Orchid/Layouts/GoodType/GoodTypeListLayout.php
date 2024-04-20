@@ -46,7 +46,6 @@ class GoodTypeListLayout extends Table
                     return $goodType->description;
                 }),
 
-
             TD::make('icon', __('translations.Icon'))
                 ->sort()
                 ->filter(Input::make())

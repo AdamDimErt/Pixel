@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 use Orchid\Attachment\Attachable;
 use Orchid\Filters\Filterable;
 use Orchid\Filters\Types\Like;
-use Orchid\Filters\Types\Where;
 use Orchid\Filters\Types\WhereDateStartEnd;
 use Orchid\Filters\Types\WhereMaxMin;
 use Orchid\Screen\AsSource;

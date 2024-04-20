@@ -20,11 +20,12 @@ if (! function_exists('sendTelegramMessage')) {
         return $response;
     }
 
-    function escapeCharacters($text): string {
-        $includedChars = array('_', '~', '`', '>', '#', '+', '-', '=', '|', '{', '}', '.', '!');
+    function escapeCharacters($text): string
+    {
+        $includedChars = ['_', '~', '`', '>', '#', '+', '-', '=', '|', '{', '}', '.', '!'];
 
         foreach ($includedChars as $char) {
-            $text = str_replace($char, '\\' . $char, $text);
+            $text = str_replace($char, '\\'.$char, $text);
         }
 
         return $text;

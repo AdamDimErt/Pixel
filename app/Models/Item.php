@@ -43,7 +43,7 @@ class Item extends Model
 
     public function getNameAttribute(): string
     {
-        return $this->good['name_' . session()->get('locale', 'ru')]." ($this->id)";
+        return $this->good['name_'.session()->get('locale', 'ru')]." ($this->id)";
     }
 
     public function scopeAvailable($query)
