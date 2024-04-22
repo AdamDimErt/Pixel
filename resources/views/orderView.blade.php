@@ -21,8 +21,8 @@
                                 @if (count(json_decode($item->additionals)) > 0)
                                     <p class="white-text">Дополнительные товары:</p>
                                     <ul>
-                                        @foreach(\App\Models\Additional::query()->whereIn('id', json_decode($item->additionals))->get() as $additional)
-                                            <li class="white-text">{{$additional['name_' . session()->get('locale', 'ru')]}} <span class="grey-text"> (+{{$additional->cost * $item->amount_of_days}} тг)</span></li>
+                                        @foreach(\App\Models\Good::query()->whereIn('id', json_decode($item->additionals))->get() as $additional)
+                                            <li class="white-text">{{$additional['name_' . session()->get('locale', 'ru')]}} <span class="grey-text"> (+{{($additional->additional_cost ?? $additional->cost) * $item->amount_of_days}} тг)</span></li>
                                         @endforeach
                                     </ul>
                                 @endif

@@ -19,10 +19,6 @@ final class OrderItem extends Model
 
     protected $guarded = [];
 
-    protected $casts = [
-        'additionals' => 'json',
-    ];
-
     protected $allowedFilters = [
         'item_id' => Where::class,
         'order_id' => Where::class,
@@ -48,15 +44,5 @@ final class OrderItem extends Model
     public function order(): BelongsTo
     {
         return $this->belongsTo(Order::class, 'order_id', 'id');
-    }
-
-    public function additionals(): HasMany
-    {
-        return $this->hasMany(Additional::class, 'id', 'additionals');
-    }
-
-    public function getAdditionals(): Collection
-    {
-        return Additional::whereIn('id', $this->additionals)->get();
     }
 }

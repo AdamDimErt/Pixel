@@ -29,6 +29,7 @@ Route::prefix('/')->group(function () {
     Route::post('/additional-remove', [HttpControllers\CartController::class, 'additionalRemove']);
     Route::get('/get-cart-count', [HttpControllers\CartController::class, 'getCartCount']);
     Route::get('/cart', [HttpControllers\CartController::class, 'cart'])->name('cart');
+    Route::post('/get-available-additions', [HttpControllers\CartController::class, 'getAvailableAdditionals']);
 });
 
 Route::prefix('/auth')->group(function () {

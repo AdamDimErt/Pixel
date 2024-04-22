@@ -300,4 +300,6 @@ return [
     'With mention of personal discount' => 'With mention of personal discount',
     'Order client help' => 'Choose a client for that order',
     'Return' => 'Mark as returned',
+    'Additional cost' => 'Additional cost',
+    'Good additional_cost help' => 'Enter a cost for a good, that will be used, when the good is rented as an additional',
 ];

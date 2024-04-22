@@ -2,7 +2,6 @@
 
 namespace App\Orchid\Screens\OrderItem;
 
-use App\Models\Additional;
 use App\Models\Item;
 use App\Models\Order;
 use App\Models\OrderItem;
@@ -82,12 +81,6 @@ class OrderItemEditScreen extends Screen
                     ->help(__('translations.OrderItem item help'))
                     ->title(__('translations.Item')),
 
-                Relation::make('orderItem.additionals')
-                    ->fromModel(Additional::class, 'name_'.session()->get('locale', 'ru'))
-                    ->multiple()
-                    ->help(__('translations.OrderItem additionals help'))
-                    ->title(__('translations.Additionals')),
-
                 Relation::make('orderItem.order_id')
                     ->fromModel(Order::class, 'id')
                     ->help(__('translations.OrderItem order help'))
@@ -161,7 +154,7 @@ class OrderItemEditScreen extends Screen
 
         if (count($orderItem->additionals()->get()) != 0) {
             foreach ($orderItem->getAdditionals() as $additional) {
-                $totalAmount += $additional->cost * $diffInDays;
+                $totalAmount += ($additional->additional_cost ?? $additional->cost) * $diffInDays;
             }
         }
 

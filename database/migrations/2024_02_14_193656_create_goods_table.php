@@ -18,12 +18,13 @@ return new class extends Migration
             $table->text('description_ru');
             $table->text('description_en');
             $table->integer('cost');
+            $table->integer('additional_cost')->nullable();
             $table->integer('discount_cost')->nullable();
-            $table->integer('damage_cost')->nullable();
+            $table->integer('damage_cost');
             $table->json('related_goods')->nullable();
             $table->json('additionals')->nullable();
 
-            $table->unsignedBigInteger('good_type_id');
+            $table->unsignedBigInteger('good_type_id')->nullable(false);
             $table->foreign('good_type_id')->references('id')->on('good_types');
 
             $table->timestamps();

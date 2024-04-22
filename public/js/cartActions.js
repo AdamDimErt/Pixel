@@ -13,7 +13,6 @@ function removeFromCart(e) {
         })
             .then(response => {
                 e.target.parentNode.parentNode.remove()
-                console.log(response.json())
             })
             .catch(error => {
                 console.error('Error:', error);
@@ -190,6 +189,8 @@ beginingDatepickers.forEach(async item => {
         })
         M.FormSelect.init(selector, {});
         selector.onchange = async (e) => {
+            const additionalsWrapper = e.target.parentNode.parentNode.parentNode.parentNode.querySelector('.additionals-wrapper');
+            additionalsWrapper.innerHTML = ''
             const rentStartTime = e.target.value;
             const secondDatepicker = e.target.parentNode.parentNode.parentNode.querySelector('.ending-date');
             secondDatepicker.parentNode.classList.remove('hide')
@@ -303,7 +304,10 @@ beginingDatepickers.forEach(async item => {
                         endTimeSelector.innerHTML += `<option value="${time}" class="black-text">${time}</option>`
                     })
                     M.FormSelect.init(endTimeSelector, {});
-                    endTimeSelector.onchange = (e) => {
+                    endTimeSelector.onchange = async (e) => {
+                        const additionalsWrapper = e.target.parentNode.parentNode.parentNode.parentNode.querySelector('.additionals-wrapper');
+                        additionalsWrapper.innerHTML = ''
+
                         const rentEndTime = e.target.value
                         var startDate = new Date(rentStartDate + ' ' + rentStartTime);
                         var endDate = new Date(rentEndDate + ' ' + rentEndTime);
@@ -311,34 +315,53 @@ beginingDatepickers.forEach(async item => {
                         var differenceMs = Math.abs(endDate.getTime() - startDate.getTime());
 
                         var differenceDays = Math.ceil(differenceMs / (1000 * 60 * 60 * 24)) ?? 1;
-                        if (differenceDays >= 2){
+                        if (differenceDays >= 2) {
                             differenceDays--;
                         }
-                        const sumHolder= e.target.parentNode.parentNode.parentNode.parentNode.querySelector('.good-cost-holder')
+                        const sumHolder = e.target.parentNode.parentNode.parentNode.parentNode.querySelector('.good-cost-holder')
 
                         const discount = +document.querySelector('.client-discount-holder').dataset.discountPercent
-
 
                         if (discount) {
                             sumHolder.innerHTML = (+sumHolder.innerHTML * differenceDays) / 100 * (100 - discount);
                         } else {
                             sumHolder.innerHTML = +sumHolder.innerHTML * differenceDays;
                         }
+
+                        const additionalsResponse = await fetch('/get-available-additions', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-TOKEN': csrfToken,
+                            },
+                            body: JSON.stringify({
+                                startDate: startDate,
+                                endDate: endDate,
+                                goodId: e.target.parentNode.parentNode.parentNode.parentNode.dataset.goodId
+                            }),
+                        })
+                            .then(resp => resp.json())
+
+                        additionalsResponse.additionals.forEach(additional => {
+                            additionalsWrapper.innerHTML += `<p>
+                                <label>
+                                    <input type="checkbox"
+                                           className="orange-text additional-checkbox"
+                                           data-cart-key="${e.target.parentNode.parentNode.parentNode.parentNode.dataset.goodId} . 'pixelrental' . ${additional.id}"
+                                           data-additional-id="${additional.good_id}"
+                                           data-additional-cost="${additional.good.additional_cost ?? additional.good.cost}"/>
+                                    <span>${additional.good.name_ru} <span
+                                        className="white-text">(+ ${additional.good.additional_cost ?? additional.good.cost}тг)</span></span>
+                                </label>
+                            </p>`
+                        })
+
+                        additionalsWrapper.classList.remove('hide')
+
                     }
                 }
             });
         }
-    }
-})
-
-document.querySelectorAll('.control-sum').forEach(item => {
-    const changeFunc = (e) => {
-        const sumHolder = document.querySelector('#total-sum-holder')
-        document.querySelectorAll('.control-sum').forEach(el => {
-            sumHolder.innerHTML = +sumHolder.innterHTML + +el.innerHTML
-        }
-    )
-    item.addEventListener('DOMSubtreeModified', changeFunc)
     }
 })
 
@@ -347,12 +370,12 @@ function placeOrder() {
     errorTextHolder.innerHTML = '';
     var flag = true;
     document.querySelectorAll('[required]').forEach(field => {
-        if (!field.value){
+        if (!field.value) {
             flag = false;
             return null;
         }
     })
-    if (flag){
+    if (flag) {
         document.querySelector('#order-placement-form').submit()
     } else {
         errorTextHolder.innerHTML = 'Не все даты и время заполнены!'

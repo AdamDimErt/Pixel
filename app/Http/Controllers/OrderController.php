@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Additional;
 use App\Models\Client;
 use App\Models\Good;
 use App\Models\Order;
@@ -79,16 +78,16 @@ class OrderController extends Controller
 ';
 
             foreach ($cartData[$itemKey] as $additionalId) {
-                $additional = Additional::query()->find($additionalId);
+                $additional = Good::query()->find($additionalId);
 
                 $orderItemMessageData = $orderItemMessageData.'   Наименование: '.$additional->name.'
 ';
-                $orderItemMessageData = $orderItemMessageData.'       Цена: '.$additional->cost.'
+                $orderItemMessageData = $orderItemMessageData.'       Цена: '.$additional->additional_cost ?? $additional->cost.'
 ';
-                $orderItemMessageData = $orderItemMessageData.'       Общая сумма за дополнение: *'.($additional->cost * $diffInDays) / 100 * (100 - $client->discount).'*
+                $orderItemMessageData = $orderItemMessageData.'       Общая сумма за дополнение: *'.(($additional->additional_cost ?? $additional->cost) * $diffInDays) / 100 * (100 - $client->discount).'*
 ';
 
-                $currentItemCost += $additional->cost * $diffInDays;
+                $currentItemCost += ($additional->additional_cost ?? $additional->cost) * $diffInDays;
 
                 if ($client->discount) {
                     $currentItemCost = $currentItemCost / 100 * (100 - $client->discount);

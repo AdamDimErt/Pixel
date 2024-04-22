@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Client;
 use App\Models\Good;
+use App\Models\Item;
+use App\Models\OrderItem;
+use Carbon\Carbon;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
@@ -119,6 +122,46 @@ class CartController extends Controller
         return $counts;
     }
 
+    public function getAvailableAdditionals(Request $request)
+    {
+        $startDateTimeString = $request->input('startDate');
+        $endDateTimeString = $request->input('endDate');
+        $goodId = $request->input('goodId');
+        $good = Good::query()->find($goodId);
+
+        $additionalIds = $good->additionals;
+        $additionalItemsIds = Item::query()->whereIn('good_id', $additionalIds)->pluck('id')->toArray();
+
+        $startDateTime = Carbon::parse($startDateTimeString, 'Asia/Almaty');
+
+        $startDate = $startDateTime->toDateString();
+
+        $endDateTime = Carbon::parse($endDateTimeString, 'Asia/Almaty');
+
+        $endDate = $endDateTime->toDateString();
+
+        $unavailableOrderItemsIds = OrderItem::query()
+            ->whereIn('item_id', $additionalItemsIds)
+            ->whereIn('status', ['in_rent', 'waiting', 'confirmed'])
+            ->whereBetween('rent_start_date', [$startDate, $endDate])
+            ->whereBetween('rent_end_date', [$startDate, $endDate])
+            ->pluck('item_id');
+
+        $unavailableAdditionalIds = Item::query()
+            ->whereIn('id', $unavailableOrderItemsIds)
+            ->pluck('good_id')->toArray();
+
+        $availableAdditionalIds = array_diff($good->additionals, $unavailableAdditionalIds);
+
+        $availableGoods = Item::query()->whereIn('good_id', $availableAdditionalIds)->with('good')->get()->toArray();
+
+        return response()
+            ->json([
+                'success' => true,
+                'additionals' => $availableGoods
+                ]);
+    }
+
     public function additionalAdd(Request $request)
     {
         $cartData = json_decode($request->cookie('cart', '{}'), true);
@@ -157,7 +200,7 @@ class CartController extends Controller
         if ($item->good->additionals != '[]') {
             foreach ($item->good->getAdditionals() as $additional) {
                 if (in_array($additional->id, $cartData[$item->good->id.'pixelrental'.$item->id])) {
-                    $cost += $additional->cost;
+                    $cost += $additional->additional_cost ?? $additional->cost;
                 }
             }
         }

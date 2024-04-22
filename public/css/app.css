@@ -10,6 +10,11 @@ body {
     background-color: black !important;
 }
 
+.collapsible {
+    border: none;
+    box-shadow: none;
+}
+
 .no-margin {
     margin: 0 !important;
 }

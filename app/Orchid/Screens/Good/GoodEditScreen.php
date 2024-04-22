@@ -2,7 +2,6 @@
 
 namespace App\Orchid\Screens\Good;
 
-use App\Models\Additional;
 use App\Models\Good;
 use App\Models\GoodType;
 use Illuminate\Http\RedirectResponse;
@@ -107,6 +106,12 @@ class GoodEditScreen extends Screen
                     ->type('number')
                     ->required(),
 
+                Input::make('good.additional_cost')
+                    ->title(__('translations.Additional cost'))
+                    ->help(__('translations.Good additional_cost help'))
+                    ->type('number')
+                    ->required(),
+
                 Relation::make('good.good_type_id')
                     ->fromModel(GoodType::class, 'name')
                     ->help(__('translations.Good goodType help'))
@@ -120,7 +125,7 @@ class GoodEditScreen extends Screen
                     ->title(__('translations.Related goods')),
 
                 Relation::make('good.additionals')
-                    ->fromModel(Additional::class, 'name_'.session()->get('locale', 'ru'))
+                    ->fromModel(Good::class, 'name_'.session()->get('locale', 'ru'))
                     ->help(__('translations.Good additionals help'))
                     ->multiple()
                     ->title(__('translations.Additional')),

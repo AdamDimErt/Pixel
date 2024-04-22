@@ -28,9 +28,6 @@ return new class extends Migration
                 ->cascadeOnUpdate()
                 ->cascadeOnDelete();
 
-            $table->json('additionals')
-                ->nullable(false);
-
             $table->enum('status', ['returned', 'in_rent', 'waiting', 'confirmed', 'cancelled']);
 
             $table->integer('amount_of_days')

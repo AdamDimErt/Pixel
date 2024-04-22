@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use App\Enums\GoodEnum;
 use App\Enums\GoodTypeEnum;
-use App\Models\Additional;
 use App\Models\Good;
 use App\Models\GoodType;
 use Illuminate\Database\Seeder;
@@ -30,7 +29,7 @@ class GoodSeeder extends Seeder
                     'description_en' => $value['description_en'],
                     'cost' => $value['cost'],
                     'damage_cost' => $value['damage_cost'],
-                    'additionals' => Additional::query()->whereIn('name_ru', $value['additionals'])->pluck('id'),
+                    'additionals' => Good::query()->whereIn('name_ru', $value['additionals'])->pluck('id'),
                     'good_type_id' => $goodTypeId,
                     'discount_cost' => null,
                     'related_goods' => Good::query()->inRandomOrder()->limit(5)->pluck('id'),

@@ -47,9 +47,9 @@
                     @foreach($good->getAdditionals() as $additional)
                         <p>
                             <label>
-                                <input type="checkbox" class="orange-text additional-checkbox"
+                                <input type="checkbox" class="orange-text"
                                        data-additional-id="{{$additional->id}}"/>
-                                <span>{{$additional['name_' . session()->get('locale', 'ru')]}} <span class="white-text">(+ {{$additional->cost}}тг)</span></span>
+                                <span>{{$additional['name_' . session()->get('locale', 'ru')]}} <span class="white-text">(+ {{$additional->additional_cost ?? $additional->cost}}тг)</span></span>
                             </label>
                         </p>
                     @endforeach

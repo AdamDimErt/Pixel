@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-use App\Orchid\Screens\Additional\AdditionalEditScreen;
-use App\Orchid\Screens\Additional\AdditionalListScreen;
 use App\Orchid\Screens\Client\ClientEditScreen;
 use App\Orchid\Screens\Client\ClientListScreen;
 use App\Orchid\Screens\Good\GoodEditScreen;
@@ -216,27 +214,6 @@ Route::screen('wanteds', WantedListScreen::class)
     ->breadcrumbs(fn (Trail $trail) => $trail
         ->parent('platform.index')
         ->push(__('wanteds'), route('platform.wanteds.list')));
-
-// Platform > System > additionals > additional
-Route::screen('additionals/{additional}/edit', AdditionalEditScreen::class)
-    ->name('platform.additionals.edit')
-    ->breadcrumbs(fn (Trail $trail, $additional) => $trail
-        ->parent('platform.additionals.list')
-        ->push('additional #    '.$additional->id, route('platform.additionals.edit', $additional)));
-
-// Platform > System > additionals > additional
-Route::screen('additionals/create', AdditionalEditScreen::class)
-    ->name('platform.additionals.create')
-    ->breadcrumbs(fn (Trail $trail) => $trail
-        ->parent('platform.additionals.list')
-        ->push(__('Create'), route('platform.additionals.create')));
-
-// Platform > System > additionals
-Route::screen('additionals', AdditionalListScreen::class)
-    ->name('platform.additionals.list')
-    ->breadcrumbs(fn (Trail $trail) => $trail
-        ->parent('platform.index')
-        ->push(__('additionals'), route('platform.additionals.list')));
 
 // Platform > System > orderItems > orderItem
 Route::screen('orderItems/{orderItem}/edit', OrderItemEditScreen::class)

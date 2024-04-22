@@ -69,12 +69,12 @@ class Good extends Model
 
     public function additionals(): HasMany
     {
-        return $this->hasMany(Additional::class, 'id', 'additionals');
+        return $this->hasMany(Good::class, 'id', 'additionals');
     }
 
     public function getAdditionals(): Collection
     {
-        return Additional::whereIn('id', $this->additionals)->get();
+        return Good::whereIn('id', $this->additionals)->get();
     }
 
     public function getRelatedGoods(): Collection
