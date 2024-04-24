@@ -187,6 +187,14 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+        'name' => 'ФИО',
+        'phone' => 'Номер телефона',
+        'email' => 'Почтовый адрес',
+        'iin' => 'ИИН',
+        'instagram' => 'Instagram',
+        'password' => 'Пароль',
+        'files' => 'Удостоверение личности',
+    ],
 
 ];

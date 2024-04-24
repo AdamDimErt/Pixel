@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Client;
 use App\Models\Good;
+use App\Models\Item;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Wanted;
@@ -34,6 +35,10 @@ class OrderController extends Controller
 
         $requestData = $request->all();
 
+        if ($request->cookie('cart', '{}') === '{}'){
+            return redirect()->back()->withErrors(['cart' => 'Пожалуйста, выберите товары и оформите по ним заказ']);
+        }
+
         $cartData = json_decode($request->cookie('cart', '{}'), true);
 
         $totalSum = 0;
@@ -49,49 +54,55 @@ class OrderController extends Controller
 
             $requestParticularGood = $requestData[$itemKey];
 
-            $dateObj1 = DateTime::createFromFormat('d/m/Y H:i', $requestParticularGood['rent_start_date'].' '.$requestParticularGood['start_time']);
-            $dateObj2 = DateTime::createFromFormat('d/m/Y H:i', $requestParticularGood['rent_end_date'].' '.$requestParticularGood['end_time']);
+            $dateObj1 = DateTime::createFromFormat('d/m/Y H:i', $requestParticularGood['rent_start_date'] . ' ' . $requestParticularGood['start_time']);
+            $dateObj2 = DateTime::createFromFormat('d/m/Y H:i', $requestParticularGood['rent_end_date'] . ' ' . $requestParticularGood['end_time']);
             $interval = $dateObj1->diff($dateObj2);
             $diffInDays = $interval->days === 0 ? 1 : $interval->days;
 
-            $orderItemMessageData = $orderItemMessageData.'Товар: '.$good->name_ru.'
+            $orderItemMessageData = $orderItemMessageData . 'Товар: ' . $good->name_ru . '
 ';
 
             if ($good->discount_cost) {
-                $orderItemMessageData = $orderItemMessageData.'Цена: '.$good->discount_cost.'(скидка)
+                $orderItemMessageData = $orderItemMessageData . 'Цена: ' . $good->discount_cost . '(скидка)
 ';
             } else {
-                $orderItemMessageData = $orderItemMessageData.'Цена: '.$good->cost.'
+                $orderItemMessageData = $orderItemMessageData . 'Цена: ' . $good->cost . '
 ';
             }
 
-            $orderItemMessageData = $orderItemMessageData.'Дата начала аренды: *'.$dateObj1->format('d/m/Y H:i').'*
+            $orderItemMessageData = $orderItemMessageData . 'Дата начала аренды: *' . $dateObj1->format('d/m/Y H:i') . '*
 ';
-            $orderItemMessageData = $orderItemMessageData.'Дата конца аренды: *'.$dateObj2->format('d/m/Y H:i').'*
+            $orderItemMessageData = $orderItemMessageData . 'Дата конца аренды: *' . $dateObj2->format('d/m/Y H:i') . '*
 ';
-            $orderItemMessageData = $orderItemMessageData.'Количество дней: *'.$diffInDays.'*
+            $orderItemMessageData = $orderItemMessageData . 'Количество дней: *' . $diffInDays . '*
 ';
             $currentItemCost = $diffInDays * ($good->discount_cost ?? $good->cost);
-            $orderItemMessageData = $orderItemMessageData.'Общая сумма за товар: *'.$currentItemCost.'*
+            $orderItemMessageData = $orderItemMessageData . 'Общая сумма за товар: *' . $currentItemCost . '*
 ';
-            $orderItemMessageData = $orderItemMessageData.'Дополнения к товару:
+            $orderItemMessageData = $orderItemMessageData . 'Дополнения к товару:
 ';
 
             foreach ($cartData[$itemKey] as $additionalId) {
-                $additional = Good::query()->find($additionalId);
+                $additional = Item::query()->find($additionalId)->load('good');
 
-                $orderItemMessageData = $orderItemMessageData.'   Наименование: '.$additional->name.'
+                $orderItemMessageData = $orderItemMessageData . '   Наименование: ' . $additional->good->name_ru . '
 ';
-                $orderItemMessageData = $orderItemMessageData.'       Цена: '.$additional->additional_cost ?? $additional->cost.'
+                $orderItemMessageData = $orderItemMessageData . '       Цена: ' . (($additional->good->additional_cost !== null && $additional->good->additional_cost > 0) ? $additional->good->additional_cost : $additional->good->cost) . '
 ';
-                $orderItemMessageData = $orderItemMessageData.'       Общая сумма за дополнение: *'.(($additional->additional_cost ?? $additional->cost) * $diffInDays) / 100 * (100 - $client->discount).'*
-';
+                $additionalCost = (($additional->good->additional_cost !== null && $additional->good->additional_cost > 0) ? $additional->good->additional_cost : $additional->good->cost) * $diffInDays;
 
-                $currentItemCost += ($additional->additional_cost ?? $additional->cost) * $diffInDays;
+                $totalSum += $additionalCost;
 
-                if ($client->discount) {
-                    $currentItemCost = $currentItemCost / 100 * (100 - $client->discount);
-                }
+                $orderItemData[] = [
+                    'item_id' => $additionalId,
+                    'status' => 'waiting',
+                    'amount_of_days' => $diffInDays,
+                    'amount_paid' => $additionalCost / 100 * (100 - $client->discount),
+                    'rent_start_date' => $dateObj1->format('Y-m-d'),
+                    'rent_start_time' => $dateObj1->format('H:i'),
+                    'rent_end_date' => $dateObj2->format('Y-m-d'),
+                    'rent_end_time' => $dateObj2->format('H:i'),
+                ];
             }
 
             $orderItemData[] = [
@@ -99,7 +110,6 @@ class OrderController extends Controller
                 'status' => 'waiting',
                 'amount_of_days' => $diffInDays,
                 'amount_paid' => $currentItemCost,
-                'additionals' => json_encode(array_values($cartData[$itemKey])),
                 'rent_start_date' => $dateObj1->format('Y-m-d'),
                 'rent_start_time' => $dateObj1->format('H:i'),
                 'rent_end_date' => $dateObj2->format('Y-m-d'),
@@ -108,6 +118,10 @@ class OrderController extends Controller
 
             $totalSum += $currentItemCost;
 
+        }
+
+        if ($client->discount) {
+            $totalSum = $totalSum / 100 * (100 - $client->discount);
         }
         $order = Order::query()->create([
             'client_id' => $client->id,
@@ -132,9 +146,9 @@ class OrderController extends Controller
 Общая сумма: $totalSum тг
 
 Список товаров:
-".$orderItemMessageData);
+" . $orderItemMessageData);
 
-        if (! $response->ok()) {
+        if (!$response->ok()) {
             sendTelegramMessage(
                 "*НОВЫЙ ЗАКАЗ* $order->id
 Покупатель: [$client->phone](https://wa.me/$client->phone)

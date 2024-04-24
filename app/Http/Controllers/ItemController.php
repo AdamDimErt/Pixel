@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Item;
+use App\Models\OrderItem;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
@@ -12,8 +13,8 @@ class ItemController extends Controller
 {
     public function getUnavailableDates(Request $request, Item $item)
     {
-        $relatedOrderStamps = DB::table('order_items')
-            ->whereIn('status', ['in_rent', 'confirmed'])
+        $relatedOrderStamps = OrderItem::query()
+            ->whereIn('status', ['in_rent', 'confirmed', 'waiting'])
             ->select(['rent_start_date', 'rent_end_date'])
             ->where('item_id', '=', $item->id)
             ->get();
@@ -31,7 +32,7 @@ class ItemController extends Controller
     {
         $startDate = $request->input('start_date');
         $relatedOrderTimeStamps = DB::table('order_items')
-            ->whereIn('status', ['in_rent', 'confirmed'])
+            ->whereIn('status', ['in_rent', 'confirmed', 'waiting'])
             ->where('item_id', '=', $item->id)
             ->get();
 
@@ -51,7 +52,7 @@ class ItemController extends Controller
         $finishDate = $request->input('finish_date');
         $finishTime = $request->input('finish_time');
         $relatedOrderTimeStamps = DB::table('order_items')
-            ->whereIn('status', ['in_rent', 'confirmed'])
+            ->whereIn('status', ['in_rent', 'confirmed', 'waiting'])
             ->where('item_id', '=', $item->id)
             ->get();
 

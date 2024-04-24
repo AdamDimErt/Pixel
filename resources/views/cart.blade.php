@@ -25,7 +25,9 @@
                             <form action="{{route('settleOrder')}}" method="POST" id="order-placement-form">
                                 {{csrf_field()}}
                                 @foreach($items as $item)
-                                    <div class="row no-margin good-wrapper" data-good-id="{{$item->good->id}}">
+                                    <div class="row no-margin good-wrapper" data-good-id="{{$item->good->id}}"
+                                         data-good-item-id="{{$item->id}}"
+                                        data-good-cost="{{$item->good->discount_cost ?? $item->good->cost}}">
                                         <a href="#" class="cancel-btn"
                                            data-product-id="{{$item->good->id . 'pixelrental' . $item->id}}">
                                             <i class="material-icons white-text ">clear</i>
@@ -84,38 +86,27 @@
                                                 <label>{{__('translations.Rent end time')}}</label>
                                             </div>
                                             @if($item->good->additionals != '[]' && count($item->good->getAdditionals()) > 0)
-                                                <ul class="collapsible grey darken-4 hide additionals-wrapper">
+                                                <ul class="collapsible grey darken-4 hide additionals-outer-wrapper">
                                                     <li>
                                                         <div class="collapsible-header grey darken-4">
                                                             <p>
                                                                 {{__('translations.Additional accessories')}}:
                                                             </p>
                                                         </div>
-                                                        <div class="collapsible-body grey darken-4">
-{{--                                                            <p>--}}
-{{--                                                                <label>--}}
-{{--                                                                    <input type="checkbox"--}}
-{{--                                                                           class="orange-text additional-checkbox"--}}
-{{--                                                                           data-cart-key="{{$item->good->id . 'pixelrental' . $item->id}}"--}}
-{{--                                                                           data-additional-id="{{$additional->id}}"--}}
-{{--                                                                           data-additional-cost="{{$additional->additional_cost ?? $additional->cost}}"--}}
-{{--                                                                           @if(in_array($additional->id, $cartData[$item->good->id . 'pixelrental' .$item->id])) checked @endif/>--}}
-{{--                                                                    <span>{{$additional['name_' . session()->get('locale', 'ru')]}} <span--}}
-{{--                                                                            class="white-text">(+ {{$additional->additional_cost ?? $additional->cost}}тг)</span></span>--}}
-{{--                                                                </label>--}}
-{{--                                                            </p>--}}
+                                                        <div class="collapsible-body grey darken-4 additionals-wrapper">
+
                                                         </div>
                                                     </li>
                                                 </ul>
                                             @endif
                                             <hr>
                                             <div class="control-sum right"
-                                                data-good-cost="{{$item->good->discount_cost ?? $item->good->cost}}">
+                                                 data-good-cost="{{$item->good->discount_cost ?? $item->good->cost}}">
                                                 <h5 class="inline">{{__('translations.Total')}}:
                                                     @if($item->good->discount_cost && $item->good->discount_cost != 0)
                                                         <span
-                                                            class="good-cost-holder orange-text text-darken-4">{{$item->totalCost}}
-                                        </span>
+                                                            class="good-cost-holder orange-text text-darken-4">{{$item->totalCost / 100 * (100 - $client['discount'])}}
+                                                        </span>
                                                         {{__('translations.KZT')}}
                                                         @if(Auth::guard('clients')->id() && $client['discount'])
                                                             <br>
@@ -123,8 +114,8 @@
                                                         @endif
                                                     @else
                                                         <span
-                                                            class="good-cost-holder">{{$item->totalCost}}
-                                        </span>
+                                                            class="good-cost-holder">{{$item->totalCost / 100 * (100 - $client['discount'])}}
+                                                        </span>
                                                         {{__('translations.KZT')}}
                                                         @if(Auth::guard('clients')->id() && $client['discount'])
                                                             <br>

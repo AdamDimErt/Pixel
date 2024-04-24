@@ -186,6 +186,14 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+        'name' => 'name',
+        'phone' => 'phone',
+        'email' => 'email',
+        'iin' => 'iin',
+        'instagram' => 'instagram',
+        'password' => 'password',
+        'files' => 'files',
+    ],
 
 ];

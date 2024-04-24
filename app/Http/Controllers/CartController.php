@@ -7,12 +7,10 @@ use App\Models\Good;
 use App\Models\Item;
 use App\Models\OrderItem;
 use Carbon\Carbon;
-use Illuminate\Contracts\View\Factory;
-use Illuminate\Contracts\View\View;
-use Illuminate\Foundation\Application;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class CartController extends Controller
 {
@@ -34,7 +32,7 @@ class CartController extends Controller
         }
 
         return response()->json(['error' => 'На данный момент такой товар имеется в количестве: '.
-            count(Good::query()->find($goodId)->items)], 400);
+            count(Good::query()->find($goodId)->items) . '<br> Обратитесь к менеджеру для уточнения нужного количества.'], 400);
     }
 
     public function removeFromCart(Request $request): JsonResponse
@@ -62,9 +60,13 @@ class CartController extends Controller
             ->cookie('cart', json_encode([]), 60 * 24 * 30);
     }
 
-    public function cart(Request $request): \Illuminate\Contracts\Foundation\Application|Factory|View|Application
+    public function cart(Request $request)
     {
         $cartData = json_decode($request->cookie('cart', '{}'), true);
+
+        foreach ($cartData as $key => $value) {
+            $cartData[$key] = [];
+        }
 
         if (Auth::guard('clients')->id()) {
             $client = Client::query()->find(Auth::guard('clients')->id())->toArray();
@@ -103,7 +105,7 @@ class CartController extends Controller
             return $good;
         });
 
-        return view('cart', compact('goodsInCart', 'totalCount', 'items', 'cartData', 'client'));
+        return response(view('cart', compact('goodsInCart', 'totalCount', 'items', 'cartData', 'client')))->cookie('cart', json_encode($cartData), 60 * 24 * 30);
     }
 
     public function countDistinctKeys($array)
@@ -153,7 +155,14 @@ class CartController extends Controller
 
         $availableAdditionalIds = array_diff($good->additionals, $unavailableAdditionalIds);
 
-        $availableGoods = Item::query()->whereIn('good_id', $availableAdditionalIds)->with('good')->get()->toArray();
+        $availableGoods = Item::query()
+            ->select('good_id', DB::raw('MAX(id) as id'))
+            ->whereIn('good_id', $availableAdditionalIds)
+            ->groupBy('good_id')
+            ->with('good')
+            ->get()
+            ->toArray();
+
 
         return response()
             ->json([

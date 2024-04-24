@@ -38,11 +38,12 @@ function changeCart(e) {
             }),
         })
             .then(() => {
-                const controlSumNode = e.target.parentNode.parentNode.parentNode.parentNode.querySelector('.good-cost-holder');
+                const discount = +document.querySelector('.client-discount-holder').dataset.discountPercent
+                const controlSumNode = e.target.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.querySelector('.good-cost-holder');
                 if (e.target.checked){
-                    controlSumNode.innerHTML = +controlSumNode.innerHTML + +this.dataset.additionalCost
+                    controlSumNode.innerHTML = +controlSumNode.innerHTML + (+this.dataset.additionalCost / 100 * (100 - discount))
                 } else {
-                    controlSumNode.innerHTML = +controlSumNode.innerHTML - +this.dataset.additionalCost
+                    controlSumNode.innerHTML = +controlSumNode.innerHTML - (+this.dataset.additionalCost / 100 * (100 - discount))
                 }
             })
         .catch(error => {
@@ -53,10 +54,6 @@ function changeCart(e) {
 
 document.querySelectorAll('.cancel-btn').forEach(btn => {
     btn.onclick = removeFromCart
-})
-
-document.querySelectorAll('.additional-checkbox').forEach(el => {
-    el.onchange = changeCart
 })
 
 document.querySelectorAll('.start_date').forEach(el => {
@@ -189,8 +186,11 @@ beginingDatepickers.forEach(async item => {
         })
         M.FormSelect.init(selector, {});
         selector.onchange = async (e) => {
-            const additionalsWrapper = e.target.parentNode.parentNode.parentNode.parentNode.querySelector('.additionals-wrapper');
-            additionalsWrapper.innerHTML = ''
+            try {
+                const additionalsWrapper = e.target.parentNode.parentNode.parentNode.parentNode.querySelector('.additionals-wrapper');
+                additionalsWrapper.innerHTML = ''
+            } catch (e) {
+            }
             const rentStartTime = e.target.value;
             const secondDatepicker = e.target.parentNode.parentNode.parentNode.querySelector('.ending-date');
             secondDatepicker.parentNode.classList.remove('hide')
@@ -305,8 +305,10 @@ beginingDatepickers.forEach(async item => {
                     })
                     M.FormSelect.init(endTimeSelector, {});
                     endTimeSelector.onchange = async (e) => {
-                        const additionalsWrapper = e.target.parentNode.parentNode.parentNode.parentNode.querySelector('.additionals-wrapper');
-                        additionalsWrapper.innerHTML = ''
+                        try {
+                            const additionalsWrapper = e.target.parentNode.parentNode.parentNode.parentNode.querySelector('.additionals-wrapper');
+                            additionalsWrapper.innerHTML = ''
+                        } catch (e){}
 
                         const rentEndTime = e.target.value
                         var startDate = new Date(rentStartDate + ' ' + rentStartTime);
@@ -322,42 +324,53 @@ beginingDatepickers.forEach(async item => {
 
                         const discount = +document.querySelector('.client-discount-holder').dataset.discountPercent
 
+                        const cost = +e.target.parentNode.parentNode.parentNode.parentNode.dataset.goodCost
+
                         if (discount) {
-                            sumHolder.innerHTML = (+sumHolder.innerHTML * differenceDays) / 100 * (100 - discount);
+                            sumHolder.innerHTML = (+cost * differenceDays) / 100 * (100 - discount);
                         } else {
-                            sumHolder.innerHTML = +sumHolder.innerHTML * differenceDays;
+                            sumHolder.innerHTML = +cost * differenceDays;
                         }
 
-                        const additionalsResponse = await fetch('/get-available-additions', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json',
-                                'X-CSRF-TOKEN': csrfToken,
-                            },
-                            body: JSON.stringify({
-                                startDate: startDate,
-                                endDate: endDate,
-                                goodId: e.target.parentNode.parentNode.parentNode.parentNode.dataset.goodId
-                            }),
-                        })
-                            .then(resp => resp.json())
+                        try {
+                            const additionalsWrapper = e.target.parentNode.parentNode.parentNode.parentNode.querySelector('.additionals-wrapper');
+                            const additionalsOuterWrapper = e.target.parentNode.parentNode.parentNode.parentNode.querySelector('.additionals-outer-wrapper');
+                            const additionalsResponse = await fetch('/get-available-additions', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'X-CSRF-TOKEN': csrfToken,
+                                },
+                                body: JSON.stringify({
+                                    startDate: startDate,
+                                    endDate: endDate,
+                                    goodId: e.target.parentNode.parentNode.parentNode.parentNode.dataset.goodId
+                                }),
+                            })
+                                .then(resp => resp.json())
 
-                        additionalsResponse.additionals.forEach(additional => {
-                            additionalsWrapper.innerHTML += `<p>
+                            additionalsResponse.additionals.forEach(additional => {
+                                additionalsWrapper.innerHTML += `<p>
                                 <label>
                                     <input type="checkbox"
-                                           className="orange-text additional-checkbox"
-                                           data-cart-key="${e.target.parentNode.parentNode.parentNode.parentNode.dataset.goodId} . 'pixelrental' . ${additional.id}"
-                                           data-additional-id="${additional.good_id}"
-                                           data-additional-cost="${additional.good.additional_cost ?? additional.good.cost}"/>
+                                           class="orange-text additional-checkbox"
+                                           data-cart-key="${e.target.parentNode.parentNode.parentNode.parentNode.dataset.goodId}pixelrental${e.target.parentNode.parentNode.parentNode.parentNode.dataset.goodItemId}"
+                                           data-additional-id="${additional.id}"
+                                           data-additional-cost="${(additional.good.additional_cost > 0 && additional.good.additional_cost != null) ? additional.good.additional_cost : additional.good.cost}"/>
                                     <span>${additional.good.name_ru} <span
-                                        className="white-text">(+ ${additional.good.additional_cost ?? additional.good.cost}тг)</span></span>
+                                        class="white-text">(+ ${(additional.good.additional_cost > 0 && additional.good.additional_cost != null) ? additional.good.additional_cost : additional.good.cost}тг)</span></span>
                                 </label>
                             </p>`
-                        })
+                            })
 
-                        additionalsWrapper.classList.remove('hide')
+                            additionalsOuterWrapper.classList.remove('hide')
 
+                            additionalsWrapper.querySelectorAll('.additional-checkbox').forEach(el => {
+                                el.onchange = changeCart
+                            })
+                        } catch (e) {
+                            console.log(e)
+                        }
                     }
                 }
             });
