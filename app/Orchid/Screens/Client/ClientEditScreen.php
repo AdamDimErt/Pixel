@@ -136,8 +136,15 @@ class ClientEditScreen extends Screen
 
                 Upload::make('client.attachment')
                     ->title(__('translations.ID card'))
+                    ->groups('idCards')
                     ->help(__('translations.Client id card help'))
                     ->acceptedFiles('image/*'),
+
+                Upload::make('client.attachment')
+                    ->title(__('translations.Client signature file'))
+                    ->groups('signatures')
+                    ->help(__('translations.Client signature file help'))
+                    ->acceptedFiles('.pdf'),
             ]),
         ];
     }

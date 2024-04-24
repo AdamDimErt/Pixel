@@ -100,8 +100,7 @@ class OrderEditScreen extends Screen
                 Input::make('order.agreement_id')
                     ->title(__('translations.Agreement id'))
                     ->help(__('translations.Order agreement id help'))
-                    ->type('number')
-                    ->required(),
+                    ->type('number'),
 
                 Upload::make('order.attachment')
                     ->help(__('translations.Order Agreement help'))

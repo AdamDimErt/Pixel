@@ -22,10 +22,19 @@
         <li class="collection-item grey darken-3 white-text"><p>{{__('translations.Discount')}}: <span
                     class="orange-text"><b>{{$client->discount}}%</b></span></p></li>
     </ul>
+    @if($client->idCards())
     <h5 class="white-text">{{__('translations.Id card pics')}}: </h5>
     <div class="id-image-wrapper row">
-        @foreach($client->attachment()->get() as $idPicture)
+        @foreach($client->idCards() as $idPicture)
             <img loading="lazy" class="materialboxed id-image z-depth-5" src="{{$idPicture->url}}">
         @endforeach
     </div>
+    <hr>
+    @endif
+    @if($client->signature())
+    <h5 class="white-text">{{__('translations.Signature file')}}: </h5>
+        <div class="">
+            <a href="{{$client->signature()->url}}"><p class="flow-text orange-text"><u>Перейдите по ссылке для просмотра</u></p></a>
+        </div>
+    @endif
 @endsection
