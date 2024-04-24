@@ -300,6 +300,11 @@ return [
     'With mention of personal discount' => 'With mention of personal discount',
     'Order client help' => 'Choose a client for that order',
     'Return' => 'Mark as returned',
+    'Signature help register' => 'Upload your signature in pdf extension',
+    'Client signature help' => 'Your signature in pdf format',
+    'Signature file' => 'Your signature in pdf format',
+    'Client signature file' => 'Client\'s signature in pdf format',
+    'Client signature file help' => 'Upload client\'s signature in PDF file',
     'Additional cost' => 'Additional cost',
     'Good additional_cost help' => 'Enter a cost for a good, that will be used, when the good is rented as an additional',
 ];
