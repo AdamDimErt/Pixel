@@ -194,6 +194,7 @@ return [
         'instagram' => 'instagram',
         'password' => 'password',
         'files' => 'files',
+        'signature' => 'signature in pdf format'
     ],
 
 ];

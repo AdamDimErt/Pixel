@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name')->nullable(false);
             $table->string('phone')->nullable(false);
-            $table->integer('discount')->default(0);
+            $table->integer('discount')->nullable(false)->default(0);
             $table->string('email')->nullable(false);
             $table->string('iin')->nullable(false);
             $table->string('instagram')->nullable(false);

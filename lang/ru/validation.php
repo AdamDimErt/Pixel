@@ -195,6 +195,7 @@ return [
         'instagram' => 'Instagram',
         'password' => 'Пароль',
         'files' => 'Удостоверение личности',
+        'signature' => 'Подпись в PDF формате'
     ],
 
 ];
