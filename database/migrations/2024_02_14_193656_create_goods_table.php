@@ -18,7 +18,7 @@ return new class extends Migration
             $table->text('description_ru');
             $table->text('description_en');
             $table->integer('cost');
-            $table->integer('additional_cost')->nullable(false)->default(0);
+            $table->integer('additional_cost')->nullable(true)->default(0);
             $table->integer('discount_cost')->nullable();
             $table->integer('damage_cost');
             $table->json('related_goods')->nullable();
