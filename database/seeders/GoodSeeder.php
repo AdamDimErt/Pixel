@@ -22,7 +22,7 @@ class GoodSeeder extends Seeder
             $goodTypeId = GoodType::query()->where('name', '=', $goodTypeName)->firstOrFail()->id;
 
             foreach ($good as $key => $value) {
-                $good = Good::factory()->create([
+                $good = Good::query()->create([
                     'name_ru' => $value['name_ru'],
                     'name_en' => $value['name_en'],
                     'description_ru' => $value['description_ru'],
@@ -33,7 +33,7 @@ class GoodSeeder extends Seeder
                     'good_type_id' => $goodTypeId,
                     'discount_cost' => null,
                     'additional_cost' => isset($value['additional_cost']) ? $value['additional_cost'] : $value['cost'],
-                    'related_goods' => Good::query()->inRandomOrder()->limit(5)->pluck('id'),
+                    'related_goods' => json_encode([]),
                 ]);
 
                 if (! is_null($value['image'])) {
