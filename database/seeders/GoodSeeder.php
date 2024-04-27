@@ -32,7 +32,7 @@ class GoodSeeder extends Seeder
                     'additionals' => Good::query()->whereIn('name_ru', $value['additionals'])->pluck('id'),
                     'good_type_id' => $goodTypeId,
                     'discount_cost' => null,
-                    'additional_cost' => $value['additional_cost'] ?? $value['cost'],
+                    'additional_cost' => isset($value['additional_cost']) ? $value['additional_cost'] : $value['cost'],
                     'related_goods' => Good::query()->inRandomOrder()->limit(5)->pluck('id'),
                 ]);
 
