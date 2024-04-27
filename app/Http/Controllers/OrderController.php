@@ -141,7 +141,7 @@ class OrderController extends Controller
         $aggreementFile = makeOrderAgreement($order->fresh(['orderItems', 'owner']));
 
         $order->attachment()->syncWithoutDetaching($aggreementFile->id);
-        $order->agreement_id = $aggreementFile->id;
+        $order->agreement_id = $order->id;
 
         $order->save();
 
