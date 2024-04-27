@@ -18,8 +18,6 @@ jobs:
           script:
               cd tech-shop
             && git reset --hard HEAD && git clean -fd && git pull origin main -f
-            && sudo docker compose down
-            && sudo docker compose -f deployment-docker-compose.yml up -d
             && sudo docker exec pixelrental-php-1 php artisan orchid:publish
             && sudo docker exec pixelrental-php-1 php artisan migrate
             && sudo docker exec pixelrental-php-1 chmod -R 777 database/
