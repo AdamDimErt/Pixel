@@ -2,8 +2,11 @@
 
 use GuzzleHttp\Promise\PromiseInterface;
 use Illuminate\Http\Client\Response;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
+use Orchid\Attachment\File;
 
 if (! function_exists('sendTelegramMessage')) {
     function sendTelegramMessage($text): PromiseInterface|Response
@@ -29,5 +32,21 @@ if (! function_exists('sendTelegramMessage')) {
         }
 
         return $text;
+    }
+}
+if (! function_exists('makeOrderAgreement')) {
+    function makeOrderAgreement(\Illuminate\Database\Eloquent\Model $order)
+    {
+        $aggremeentName = 'aggreement_' . $order->id . '.pdf' ;
+
+        /** @var \Barryvdh\DomPDF\PDF $pdf */
+        $pdf = App::make('dompdf.wrapper');
+        $pdf->loadView('pdfs.aggreement', compact('order'));
+
+        $pdf->save($aggremeentName, 'public');
+        $file = new UploadedFile(storage_path('app/public') . '/' . $aggremeentName, $aggremeentName);
+        $attachment = (new File($file))->load();
+
+        return $attachment;
     }
 }

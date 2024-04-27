@@ -97,6 +97,7 @@ class OrderController extends Controller
                     'item_id' => $additionalId,
                     'status' => 'waiting',
                     'amount_of_days' => $diffInDays,
+                    'is_additional' => true,
                     'amount_paid' => $additionalCost / 100 * (100 - $client->discount),
                     'rent_start_date' => $dateObj1->format('Y-m-d'),
                     'rent_start_time' => $dateObj1->format('H:i'),
@@ -109,6 +110,8 @@ class OrderController extends Controller
                 'item_id' => $itemId,
                 'status' => 'waiting',
                 'amount_of_days' => $diffInDays,
+                'is_additional' => false,
+                'additionals' => json_encode($cartData[$itemKey]),
                 'amount_paid' => $currentItemCost,
                 'rent_start_date' => $dateObj1->format('Y-m-d'),
                 'rent_start_time' => $dateObj1->format('H:i'),
@@ -134,6 +137,13 @@ class OrderController extends Controller
 
             OrderItem::query()->create($itemToCreate);
         }
+
+        $aggreementFile = makeOrderAgreement($order->fresh(['orderItems', 'owner']));
+
+        $order->attachment()->syncWithoutDetaching($aggreementFile->id);
+        $order->agreement_id = $aggreementFile->id;
+
+        $order->save();
 
         $response = sendTelegramMessage(
             "*НОВЫЙ ЗАКАЗ* $order->id
@@ -161,6 +171,7 @@ class OrderController extends Controller
 
 Список товаров слишком большой для отображения в боте.");
         }
+
 
         return redirect(route('confirmOrder'));
     }

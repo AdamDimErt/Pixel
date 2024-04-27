@@ -36,9 +36,18 @@ final class OrderItem extends Model
         'rent_end_date',
     ];
 
+    protected $casts = [
+        'additionals' => 'json',
+    ];
+
     public function item(): BelongsTo
     {
         return $this->belongsTo(Item::class, 'item_id', 'id');
+    }
+
+    public function getAdditionals(): Collection
+    {
+        return Good::whereIn('id', json_decode($this->additionals))->get();
     }
 
     public function order(): BelongsTo

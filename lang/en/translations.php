@@ -307,4 +307,7 @@ return [
     'Client signature file help' => 'Upload client\'s signature in PDF file',
     'Additional cost' => 'Additional cost',
     'Good additional_cost help' => 'Enter a cost for a good, that will be used, when the good is rented as an additional',
+    'Make agreement' => 'Make agreement',
+    'Is additional' => 'Is good being taken as an additional',
+    'OrderItem is_additional help' => 'If the good is taken as an additional, then all operations with it will be applied as if it is an additional',
 ];

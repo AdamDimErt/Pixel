@@ -94,4 +94,17 @@ class OrderListScreen extends Screen
         $order->save();
         Toast::info(__('Order was confirmed'));
     }
+
+    public function makeAgreement(Request $request)
+    {
+        $order = Order::findOrFail($request->get('id'));
+
+        $aggreementFile = makeOrderAgreement($order->fresh(['orderItems', 'owner']));
+
+        $order->attachment()->syncWithoutDetaching($aggreementFile->id);
+        $order->agreement_id = $aggreementFile->id;
+
+        $order->save();
+        Toast::info('Договор был успешно сформирован');
+    }
 }

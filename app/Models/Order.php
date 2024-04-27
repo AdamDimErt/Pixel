@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -55,5 +56,17 @@ class Order extends Model
     public function items(): BelongsToMany
     {
         return $this->belongsToMany(Item::class, 'order_items');
+    }
+
+    public function rentStartDate()
+    {
+        $date = Carbon::parse($this->orderItems()->orderBy('rent_start_date', 'ASC')->first()->rent_start_date);
+        return '«' . $date->day . '» ' . str_pad($date->month, 2, '0', STR_PAD_LEFT) . ' ' . $date->year;
+    }
+
+    public function rentEndDate()
+    {
+        $date = Carbon::parse($this->orderItems()->orderBy('rent_start_date', 'DESC')->first()->rent_end_date);
+        return '«' . $date->day . '» ' . str_pad($date->month, 2, '0', STR_PAD_LEFT) . ' ' . $date->year;
     }
 }

@@ -97,6 +97,14 @@ class OrderItemEditScreen extends Screen
                     ->title(__('translations.Status'))
                     ->help(__('translations.OrderItem status help')),
 
+                Select::make('orderItem.is_additional')
+                    ->options([
+                        true => 'Да',
+                        false => 'Нет',
+                    ])
+                    ->title(__('translations.Is additional'))
+                    ->help(__('translations.OrderItem is_additional help')),
+
                 DateTimer::make('orderItem.rent_start_date')
                     ->title(__('translations.Rent start date'))
                     ->placeholder(__('translations.OrderItem rent_start help'))
