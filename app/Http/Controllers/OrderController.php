@@ -145,11 +145,14 @@ class OrderController extends Controller
 
         $order->save();
 
+        $aggreementUrl = $aggreementFile->url();
+
         $response = sendTelegramMessage(
             "*НОВЫЙ ЗАКАЗ* $order->id
 Покупатель: [$client->phone](https://wa.me/$client->phone)
 Имя: $client->name
 Электронный адрес: $client->email
+Ссылка на договор: $aggreementUrl
 ИИН: $client->iin
 Инстаграм: [$client->instagram](https://www.instagram.com/$client->instagram/)
 Скидка: $client->discount процентов
@@ -164,6 +167,7 @@ class OrderController extends Controller
 Покупатель: [$client->phone](https://wa.me/$client->phone)
 Имя: $client->name
 Электронный адрес: $client->email
+Ссылка на договор: $aggreementUrl
 ИИН: $client->iin
 Инстаграм: [$client->instagram](https://www.instagram.com/$client->instagram/)
 Скидка: $client->discount процентов
