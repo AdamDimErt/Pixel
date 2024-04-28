@@ -113,14 +113,22 @@
                                                             <span>({{__('translations.With mention of personal discount')}}): {{$client['discount']}}%</span>
                                                         @endif
                                                     @else
-                                                        <span
-                                                            class="good-cost-holder">{{$item->totalCost / 100 * (100 - $client['discount'])}}
-                                                        </span>
-                                                        {{__('translations.KZT')}}
-                                                        @if(Auth::guard('clients')->id() && $client['discount'])
-                                                            <br>
-                                                            <span>({{__('translations.With mention of personal discount')}}): {{$client['discount']}}%</span>
-                                                        @endif
+                                                        @auth('clients')
+                                                            <span
+                                                                class="good-cost-holder">{{$item->totalCost / 100 * (100 - $client['discount'])}}
+                                                            </span>
+                                                            {{__('translations.KZT')}}
+                                                            @if(Auth::guard('clients')->id() && $client['discount'])
+                                                                <br>
+                                                                <span>({{__('translations.With mention of personal discount')}}): {{$client['discount']}}%</span>
+                                                            @endif
+                                                        @endauth
+                                                        @guest('clients')
+                                                            <span
+                                                                    class="good-cost-holder">{{$item->totalCost}}
+                                                            </span>
+                                                                {{__('translations.KZT')}}
+                                                        @endguest
                                                     @endif
                                                 </h5>
                                             </div>
