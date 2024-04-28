@@ -14,6 +14,10 @@ class ProfileController extends Controller
 {
     public function viewProfile(Request $request)
     {
+        if (!Auth::guard('clients')->check()) {
+            return redirect()->route('logout');
+        }
+
         $client = Client::query()->find(Auth::guard('clients')->id());
 
         $client->order_amount = Order::query()
