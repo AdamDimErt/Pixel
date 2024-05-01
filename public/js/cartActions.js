@@ -412,7 +412,7 @@ beginingDatepickers.forEach(async item => {
     }
 })
 
-function placeOrder() {
+function placeOrder(e) {
     const errorTextHolder = document.querySelector('.error-text')
     errorTextHolder.innerHTML = '';
     var flag = true;
@@ -424,6 +424,7 @@ function placeOrder() {
     })
     if (flag) {
         document.querySelector('#order-placement-form').submit()
+        e.target.onclick = () => {}
     } else {
         errorTextHolder.innerHTML = 'Не все даты и время заполнены!'
     }

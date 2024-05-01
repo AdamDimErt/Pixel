@@ -9,11 +9,17 @@
     <div class="modal-footer">
         <div class="row center">
             <p><b class="error-text red-text"></b></p>
-            <button class="btn-large nav-link orange darken-4 auth-link confirm-order-btn"
-            onclick="{{$btnAction}}()">
+            <button class="btn-large nav-link orange darken-4 auth-link confirm-order-btn">
             {{$btnCaption}}
             <i class="material-icons">done</i>
             </button>
         </div>
     </div>
+    @push('scripts')
+        <script>
+            document.querySelector('.confirm-order-btn').onclick = e =>{
+                {{$btnAction}}(e)
+            }
+        </script>
+    @endpush
 </div>
