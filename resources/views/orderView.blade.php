@@ -32,7 +32,7 @@
                             </div>
                             <div class="col s12 m3 center">
                                 <a href="{{route('viewGood', $item->item->good)}}">
-                                    @if($good->attachment()?->first()?->url())
+                                    @if($item->item->good->attachment()?->first()?->url())
                                         <img loading="lazy" src="{{$item->item->good->attachment->first()->url}}" alt="" class="order-item-image-wrapper z-depth-5">
                                     @else
                                         <img loading="lazy" src="{{asset('img/no-image.jpg')}}" class="materialboxed good-image z-depth-5" width="100%">
