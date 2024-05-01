@@ -83,6 +83,7 @@
                                        placeholder="{{__('translations.Signature help register')}}">
                             </div>
                         </div>
+                        <span class="orange-text">*{{__('translations.Scan your signature on a white background')}}</span>
                         <div class="input-field col s12 auth-form-element">
                             <button type="submit" class="btn orange darken-4 authorization-link">
                                 {{__('translations.Register')}}

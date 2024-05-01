@@ -126,19 +126,23 @@ class CartController extends Controller
 
     public function getAvailableAdditionals(Request $request)
     {
-        $startDateTimeString = $request->input('startDate');
-        $endDateTimeString = $request->input('endDate');
+        $startDateString = $request->input('startDate');
+        $startTimeString = $request->input('startTime');
+        $endDateString = $request->input('endDate');
+        $endTimeString = $request->input('endTime');
+        $startDateTimeString = $startDateString . ' ' . $startTimeString;
+        $endDateTimeString = $endDateString . ' ' . $endTimeString;
         $goodId = $request->input('goodId');
         $good = Good::query()->find($goodId);
 
         $additionalIds = $good->additionals;
         $additionalItemsIds = Item::query()->whereIn('good_id', $additionalIds)->pluck('id')->toArray();
 
-        $startDateTime = Carbon::parse($startDateTimeString, 'Asia/Almaty');
+        $startDateTime = Carbon::parse($startDateTimeString);
 
         $startDate = $startDateTime->toDateString();
 
-        $endDateTime = Carbon::parse($endDateTimeString, 'Asia/Almaty');
+        $endDateTime = Carbon::parse($endDateTimeString);
 
         $endDate = $endDateTime->toDateString();
 
@@ -153,16 +157,18 @@ class CartController extends Controller
             ->whereIn('id', $unavailableOrderItemsIds)
             ->pluck('good_id')->toArray();
 
-        $availableAdditionalIds = array_diff($good->additionals, $unavailableAdditionalIds);
-
         $availableGoods = Item::query()
             ->select('good_id', DB::raw('MAX(id) as id'))
-            ->whereIn('good_id', $availableAdditionalIds)
+            ->whereIn('good_id', $good->additionals)
             ->groupBy('good_id')
             ->with('good')
-            ->get()
-            ->toArray();
+            ->get();
 
+        $availableGoods->each(function ($availableGood) use ($unavailableAdditionalIds) {
+            $availableGood->available = !in_array($availableGood->good_id, $unavailableAdditionalIds);
+        });
+
+        $availableGoods = $availableGoods->toArray();
 
         return response()
             ->json([

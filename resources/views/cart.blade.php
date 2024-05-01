@@ -58,7 +58,7 @@
                                                     name="{{$item->good->id . 'pixelrental' . $item->id}}[rent_start_date]"
                                                     data-item-id="{{$item->id}}" type="text"
                                                     class="datepicker white-text begining-date" required>
-                                                <label for="rent_start_date">{{__('translations.Rent start')}}: </label>
+                                                <label class="field-label" for="rent_start_date">{{__('translations.Rent start')}}: </label>
                                             </div>
                                             <div class="col s12 input-field white-text hide">
                                                 <select
@@ -74,7 +74,7 @@
                                                 <input
                                                     name="{{$item->good->id . 'pixelrental' . $item->id}}[rent_end_date]"
                                                     type="text" class="datepicker white-text ending-date" required>
-                                                <label for="rent_end_date">{{__('translations.Rent end')}}:</label>
+                                                <label class="field-label" for="rent_end_date">{{__('translations.Rent end')}}:</label>
                                             </div>
                                             <div class="col s12 input-field white-text hide">
                                                 <select name="{{$item->good->id . 'pixelrental' . $item->id}}[end_time]"
@@ -85,20 +85,18 @@
                                                 </select>
                                                 <label>{{__('translations.Rent end time')}}</label>
                                             </div>
-                                            @if($item->good->additionals != '[]' && count($item->good->getAdditionals()) > 0)
-                                                <ul class="collapsible grey darken-4 hide additionals-outer-wrapper">
-                                                    <li>
-                                                        <div class="collapsible-header grey darken-4">
-                                                            <p>
-                                                                {{__('translations.Additional accessories')}}:
-                                                            </p>
-                                                        </div>
-                                                        <div class="collapsible-body grey darken-4 additionals-wrapper">
+                                            <ul class="grey darken-4 additionals-outer-wrapper hide">
+                                                <li>
+                                                    <div class="grey darken-4">
+                                                        <p>
+                                                            {{__('translations.Additional accessories')}}:
+                                                        </p>
 
-                                                        </div>
-                                                    </li>
-                                                </ul>
-                                            @endif
+                                                    </div>
+                                                    <div class="grey darken-4 additionals-wrapper">
+                                                    </div>
+                                                </li>
+                                            </ul>
                                             <hr>
                                             <div class="control-sum right"
                                                  data-good-cost="{{$item->good->discount_cost ?? $item->good->cost}}">

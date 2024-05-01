@@ -693,3 +693,11 @@ input[type="checkbox"]:checked + span:not(.lever)::before {
     background-color: #1f1f1f;
     border-radius: 5px;
 }
+
+.datepicker {
+    cursor: pointer;
+}
+
+.field-label {
+    cursor: pointer !important;
+}

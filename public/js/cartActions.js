@@ -25,7 +25,8 @@ function changeCart(e) {
         e.preventDefault()
         const cartKey = this.dataset.cartKey;
         const additionalId = this.dataset.additionalId;
-        const url = e.target.checked ?  '/additional-add' : '/additional-remove'
+        const url = e.target.checked ? '/additional-add' : '/additional-remove'
+        e.target.disabled = true
         fetch(url, {
             method: 'POST',
             headers: {
@@ -38,22 +39,30 @@ function changeCart(e) {
             }),
         })
             .then(() => {
+                const amountOfDays = e.target.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.dataset.amountOfDays ?? 1
                 const discount = +document.querySelector('.client-discount-holder').dataset.discountPercent
                 const controlSumNode = e.target.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.querySelector('.good-cost-holder');
-                if (e.target.checked){
-                    controlSumNode.innerHTML = +controlSumNode.innerHTML + (+this.dataset.additionalCost / 100 * (100 - discount))
+                if (e.target.checked) {
+                    controlSumNode.innerHTML = (+controlSumNode.innerHTML + (+this.dataset.additionalCost / 100 * (100 - discount)) * amountOfDays)
                 } else {
-                    controlSumNode.innerHTML = +controlSumNode.innerHTML - (+this.dataset.additionalCost / 100 * (100 - discount))
+                    controlSumNode.innerHTML = (+controlSumNode.innerHTML - (+this.dataset.additionalCost / 100 * (100 - discount)) * amountOfDays)
                 }
+                e.target.disabled = false
             })
-        .catch(error => {
-            console.error('Error:', error);
-        });
+            .catch(error => {
+                console.error('Error:', error);
+            });
     }
 }
 
 document.querySelectorAll('.cancel-btn').forEach(btn => {
     btn.onclick = removeFromCart
+})
+
+document.querySelectorAll('.field-label').forEach(el => {
+    el.onclick = e => {
+        e.target.previousSibling.previousSibling.click()
+    }
 })
 
 document.querySelectorAll('.start_date').forEach(el => {
@@ -130,7 +139,6 @@ beginingDatepickers.forEach(async item => {
             done: 'ОК'
         },
         firstDay: 1,
-        autoClose: true,
         format: 'dd/mm/yyyy',
         minDate: new Date()
     });
@@ -262,11 +270,10 @@ beginingDatepickers.forEach(async item => {
                     done: 'ОК'
                 },
                 firstDay: 1,
-                autoClose: true,
                 format: 'dd/mm/yyyy',
                 minDate: new Date(rentStartDate),
                 disableDayFn: (date => {
-                    if (nextUnavailableDate){
+                    if (nextUnavailableDate) {
                         const day = date.getDate().toString().padStart(2, '0');
                         const month = (date.getMonth() + 1).toString().padStart(2, '0');
                         const year = date.getFullYear();
@@ -308,7 +315,8 @@ beginingDatepickers.forEach(async item => {
                         try {
                             const additionalsWrapper = e.target.parentNode.parentNode.parentNode.parentNode.querySelector('.additionals-wrapper');
                             additionalsWrapper.innerHTML = ''
-                        } catch (e){}
+                        } catch (e) {
+                        }
 
                         const rentEndTime = e.target.value
                         var startDate = new Date(rentStartDate + ' ' + rentStartTime);
@@ -320,6 +328,8 @@ beginingDatepickers.forEach(async item => {
                         if (differenceDays >= 2) {
                             differenceDays--;
                         }
+                        e.target.parentNode.parentNode.parentNode.parentNode.dataset.amountOfDays = differenceDays;
+
                         const sumHolder = e.target.parentNode.parentNode.parentNode.parentNode.querySelector('.good-cost-holder')
 
                         const discount = +document.querySelector('.client-discount-holder').dataset.discountPercent
@@ -333,8 +343,10 @@ beginingDatepickers.forEach(async item => {
                         }
 
                         try {
+
                             const additionalsWrapper = e.target.parentNode.parentNode.parentNode.parentNode.querySelector('.additionals-wrapper');
                             const additionalsOuterWrapper = e.target.parentNode.parentNode.parentNode.parentNode.querySelector('.additionals-outer-wrapper');
+
                             const additionalsResponse = await fetch('/get-available-additions', {
                                 method: 'POST',
                                 headers: {
@@ -342,32 +354,52 @@ beginingDatepickers.forEach(async item => {
                                     'X-CSRF-TOKEN': csrfToken,
                                 },
                                 body: JSON.stringify({
-                                    startDate: startDate,
-                                    endDate: endDate,
+                                    startDate: rentStartDate,
+                                    startTime: rentStartTime,
+                                    endDate: rentEndDate,
+                                    endTime: rentEndTime,
                                     goodId: e.target.parentNode.parentNode.parentNode.parentNode.dataset.goodId
                                 }),
                             })
                                 .then(resp => resp.json())
 
                             additionalsResponse.additionals.forEach(additional => {
-                                additionalsWrapper.innerHTML += `<p>
-                                <label>
-                                    <input type="checkbox"
-                                           class="orange-text additional-checkbox"
-                                           data-cart-key="${e.target.parentNode.parentNode.parentNode.parentNode.dataset.goodId}pixelrental${e.target.parentNode.parentNode.parentNode.parentNode.dataset.goodItemId}"
-                                           data-additional-id="${additional.id}"
-                                           data-additional-cost="${(additional.good.additional_cost > 0 && additional.good.additional_cost != null) ? additional.good.additional_cost : additional.good.cost}"/>
-                                    <span>${additional.good.name_ru} <span
-                                        class="white-text">(+ ${(additional.good.additional_cost > 0 && additional.good.additional_cost != null) ? additional.good.additional_cost : additional.good.cost}тг)</span></span>
-                                </label>
-                            </p>`
+                                if (additional.available) {
+                                    additionalsWrapper.innerHTML += `<p>
+                                    <label>
+                                        <input type="checkbox"
+                                               class="orange-text additional-checkbox"
+                                               data-cart-key="${e.target.parentNode.parentNode.parentNode.parentNode.dataset.goodId}pixelrental${e.target.parentNode.parentNode.parentNode.parentNode.dataset.goodItemId}"
+                                               data-additional-id="${additional.id}"
+                                               data-additional-cost="${(additional.good.additional_cost > 0 && additional.good.additional_cost != null) ? additional.good.additional_cost : additional.good.cost}"
+                                               />
+                                        <span>${additional.good.name_ru} <span
+                                            class="white-text">(+ ${(additional.good.additional_cost > 0 && additional.good.additional_cost != null) ? additional.good.additional_cost : additional.good.cost}тг)</span></span>
+                                    </label>
+                                </p>`
+                                } else {
+                                    additionalsWrapper.innerHTML += `<p>
+                                    <label>
+                                        <input type="checkbox"
+                                               class="orange-text additional-checkbox"
+                                               disabled
+                                               data-cart-key="${e.target.parentNode.parentNode.parentNode.parentNode.dataset.goodId}pixelrental${e.target.parentNode.parentNode.parentNode.parentNode.dataset.goodItemId}"
+                                               data-additional-id="${additional.id}"
+                                               data-additional-cost="${(additional.good.additional_cost > 0 && additional.good.additional_cost != null) ? additional.good.additional_cost : additional.good.cost}"
+                                               />
+                                        <span>${additional.good.name_ru} <span
+                                            class="white-text">(Недоступно на выбранные даты и время)</span></span>
+                                    </label>
+                                </p>`
+                                }
                             })
+                            if (additionalsResponse.additionals.length > 0){
+                                additionalsOuterWrapper.classList.remove('hide')
 
-                            additionalsOuterWrapper.classList.remove('hide')
-
-                            additionalsWrapper.querySelectorAll('.additional-checkbox').forEach(el => {
-                                el.onchange = changeCart
-                            })
+                                additionalsWrapper.querySelectorAll('.additional-checkbox').forEach(el => {
+                                    el.onchange = changeCart
+                                })
+                            }
                         } catch (e) {
                             console.log(e)
                         }

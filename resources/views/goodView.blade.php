@@ -46,11 +46,7 @@
                     <h5>{{__('translations.In addition with this good people usually rent')}}: </h5>
                     @foreach($good->getAdditionals() as $additional)
                         <p>
-                            <label>
-                                <input type="checkbox" class="orange-text"
-                                       data-additional-id="{{$additional->id}}"/>
-                                <span>{{$additional['name_' . session()->get('locale', 'ru')]}} <span class="white-text">(+ {{$additional->additional_cost ?? $additional->cost}}тг)</span></span>
-                            </label>
+                            <span>{{$additional['name_' . session()->get('locale', 'ru')]}} <span class="white-text">(+ {{$additional->additional_cost ?? $additional->cost}}тг)</span></span>
                         </p>
                     @endforeach
                 @endif
