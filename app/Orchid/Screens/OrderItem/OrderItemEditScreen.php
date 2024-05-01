@@ -160,7 +160,7 @@ class OrderItemEditScreen extends Screen
 
         $totalAmount *= $diffInDays;
 
-        if (count($orderItem->additionals()->get()) != 0) {
+        if (count($orderItem->getAdditionals()) != 0) {
             foreach ($orderItem->getAdditionals() as $additional) {
                 $totalAmount += ($additional->additional_cost ?? $additional->cost) * $diffInDays;
             }

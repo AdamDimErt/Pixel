@@ -102,15 +102,12 @@ class OrderListLayout extends Table
                             ->icon('bs.search'),
                     ];
 
-                    if ($order->attachment()->count() === 0 ){
-
                     $btnsList[] = Button::make(__('translations.Make agreement'))
                         ->icon('bs.file-text')
                         ->confirm('Вы действительно хотите сформировать договор для этого заказа?')
                         ->method('makeAgreement', [
                             'id' => $order->id,
                         ]);
-                    }
 
                     if ($order->status === 'in_rent') {
                         $btnsList[] = Button::make(__('translations.Return'))

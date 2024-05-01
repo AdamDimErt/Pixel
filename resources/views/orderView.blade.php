@@ -14,7 +14,7 @@
                             <div class="col s12 m9">
                                 <p class="white-text">{{$index + 1}}. {{__('translations.Name')}}: <span class="orange-text">{{$item->item->good['name_' . session()->get('locale', 'ru')]}}</span></p>
                                 <p class="white-text">{{__('translations.Good cost')}}: <span class="orange-text">{{$item->item->good->discount_cost ?? $item->item->good->cost}}</span></p>
-                                <p class="white-text">{{__('translations.Status')}}: <span class="orange-text">{{$item->status}}</span></p>
+                                <p class="white-text">{{__('translations.Status')}}: <span class="orange-text">{{__('translations.'. $item->status)}}</span></p>
                                 <p class="white-text">{{__('translations.Good type')}}: <a href="{{route('goodList', $item->item->good->goodType->code)}}" class="orange-text">{{$item->item->good->goodType->name}}</a></p>
                                 <p class="white-text">{{__('translations.Rent start time')}}: <span class="orange-text">{{$item->rent_start_date}} {{$item->rent_start_time}}</span></p>
                                 <p class="white-text">{{__('translations.Rent end time')}}: <span class="orange-text">{{$item->rent_end_date}} {{$item->rent_end_time}}</span></p>
@@ -38,15 +38,17 @@
                                         <img loading="lazy" src="{{asset('img/no-image.jpg')}}" class="materialboxed good-image z-depth-5" width="100%">
                                     @endif
                                 </a>
-                                @if ((new DateTime())->format('Y-m-d H:i:s') < (new DateTime($item->rent_start_date . ' ' .$item->rent_start_time))->format('Y-m-d H:i:s') && $order->status === 'waiting')
-                                    <a href="#order-canceling-modal" class="large-btn btn orange darken-4 white-text cancel-order-btn modal-trigger">Отменить заказ</a>
-                                @endif
                             </div>
                         </div>
                     </div>
                 @endforeach
             @endif
         </div>
+        @if ($order->orderItems()->where('status', '=', 'in_rent')->count() === 0)
+            <div class="center">
+                <a href="#order-canceling-modal" class="large-btn сутеук btn orange inline darken-4 white-text cancel-order-btn modal-trigger">Отменить заказ</a>
+            </div>
+        @endif
         @include('confirmModal', [
             'modalClass' => 'order-canceling-modal',
             'title' => __('translations.Are you sure you want to cancel the order?'),
