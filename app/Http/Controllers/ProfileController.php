@@ -15,7 +15,7 @@ class ProfileController extends Controller
     public function viewProfile(Request $request)
     {
         try {
-            Client::query()->findOrFail(Auth::guard('client')->id());
+            Client::query()->findOrFail(Auth::guard('clients')->id());
         } catch (\Throwable){
             return redirect()->route('logout');
         }
