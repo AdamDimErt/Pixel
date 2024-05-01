@@ -184,8 +184,6 @@
                     @endif
                     @push('scripts')
                         <script src="{{asset('js/cartActions.js')}}"></script>
-                        <script>
-
-                        </script>
+                        <script src="{{asset('js/select.js')}}"></script>
             @endpush
             @endsection

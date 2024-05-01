@@ -40,8 +40,11 @@ function changeCart(e) {
         })
             .then(() => {
                 const amountOfDays = e.target.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.dataset.amountOfDays ?? 1
-                const discount = +document.querySelector('.client-discount-holder').dataset.discountPercent
+                var discount = +document.querySelector('.client-discount-holder').dataset.discountPercent
                 const controlSumNode = e.target.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.querySelector('.good-cost-holder');
+                if (isNaN(discount)){
+                    discount = 0
+                }
                 if (e.target.checked) {
                     controlSumNode.innerHTML = (+controlSumNode.innerHTML + (+this.dataset.additionalCost / 100 * (100 - discount)) * amountOfDays)
                 } else {
@@ -200,7 +203,7 @@ beginingDatepickers.forEach(async item => {
             } catch (e) {
             }
             const rentStartTime = e.target.value;
-            const secondDatepicker = e.target.parentNode.parentNode.parentNode.querySelector('.ending-date');
+            const secondDatepicker = e.target.parentNode.parentNode.parentNode.parentNode.querySelector('.ending-date');
             secondDatepicker.parentNode.classList.remove('hide')
             const secondDatepickerInstance = M.Datepicker.init(secondDatepicker, {
                 i18n: {
@@ -297,6 +300,7 @@ beginingDatepickers.forEach(async item => {
                         body: JSON.stringify({
                             'finish_date': rentEndDate,
                             'finish_time': rentStartTime,
+                            'start_date': rentStartDate,
                         })
                     })
                         .then(resp => resp.json())
@@ -313,7 +317,7 @@ beginingDatepickers.forEach(async item => {
                     M.FormSelect.init(endTimeSelector, {});
                     endTimeSelector.onchange = async (e) => {
                         try {
-                            const additionalsWrapper = e.target.parentNode.parentNode.parentNode.parentNode.querySelector('.additionals-wrapper');
+                            const additionalsWrapper = e.target.parentNode.parentNode.parentNode.parentNode.parentNode.querySelector('.additionals-wrapper');
                             additionalsWrapper.innerHTML = ''
                         } catch (e) {
                         }
@@ -325,16 +329,13 @@ beginingDatepickers.forEach(async item => {
                         var differenceMs = Math.abs(endDate.getTime() - startDate.getTime());
 
                         var differenceDays = Math.ceil(differenceMs / (1000 * 60 * 60 * 24)) ?? 1;
-                        if (differenceDays >= 2) {
-                            differenceDays--;
-                        }
-                        e.target.parentNode.parentNode.parentNode.parentNode.dataset.amountOfDays = differenceDays;
+                        e.target.parentNode.parentNode.parentNode.parentNode.parentNode.dataset.amountOfDays = differenceDays;
 
-                        const sumHolder = e.target.parentNode.parentNode.parentNode.parentNode.querySelector('.good-cost-holder')
+                        const sumHolder = e.target.parentNode.parentNode.parentNode.parentNode.parentNode.querySelector('.good-cost-holder')
 
                         const discount = +document.querySelector('.client-discount-holder').dataset.discountPercent
 
-                        const cost = +e.target.parentNode.parentNode.parentNode.parentNode.dataset.goodCost
+                        const cost = +e.target.parentNode.parentNode.parentNode.parentNode.parentNode.dataset.goodCost
 
                         if (discount) {
                             sumHolder.innerHTML = (+cost * differenceDays) / 100 * (100 - discount);
@@ -344,8 +345,8 @@ beginingDatepickers.forEach(async item => {
 
                         try {
 
-                            const additionalsWrapper = e.target.parentNode.parentNode.parentNode.parentNode.querySelector('.additionals-wrapper');
-                            const additionalsOuterWrapper = e.target.parentNode.parentNode.parentNode.parentNode.querySelector('.additionals-outer-wrapper');
+                            const additionalsWrapper = e.target.parentNode.parentNode.parentNode.parentNode.parentNode.querySelector('.additionals-wrapper');
+                            const additionalsOuterWrapper = e.target.parentNode.parentNode.parentNode.parentNode.parentNode.querySelector('.additionals-outer-wrapper');
 
                             const additionalsResponse = await fetch('/get-available-additions', {
                                 method: 'POST',
@@ -358,7 +359,8 @@ beginingDatepickers.forEach(async item => {
                                     startTime: rentStartTime,
                                     endDate: rentEndDate,
                                     endTime: rentEndTime,
-                                    goodId: e.target.parentNode.parentNode.parentNode.parentNode.dataset.goodId
+                                    goodId: e.target.parentNode.parentNode.parentNode.parentNode.parentNode.dataset.goodId,
+                                    cartKey: `${e.target.parentNode.parentNode.parentNode.parentNode.parentNode.dataset.goodId}pixelrental${e.target.parentNode.parentNode.parentNode.parentNode.parentNode.dataset.goodItemId}`
                                 }),
                             })
                                 .then(resp => resp.json())
@@ -369,7 +371,7 @@ beginingDatepickers.forEach(async item => {
                                     <label>
                                         <input type="checkbox"
                                                class="orange-text additional-checkbox"
-                                               data-cart-key="${e.target.parentNode.parentNode.parentNode.parentNode.dataset.goodId}pixelrental${e.target.parentNode.parentNode.parentNode.parentNode.dataset.goodItemId}"
+                                               data-cart-key="${e.target.parentNode.parentNode.parentNode.parentNode.parentNode.dataset.goodId}pixelrental${e.target.parentNode.parentNode.parentNode.parentNode.parentNode.dataset.goodItemId}"
                                                data-additional-id="${additional.id}"
                                                data-additional-cost="${(additional.good.additional_cost > 0 && additional.good.additional_cost != null) ? additional.good.additional_cost : additional.good.cost}"
                                                />

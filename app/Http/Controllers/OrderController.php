@@ -57,7 +57,7 @@ class OrderController extends Controller
             $dateObj1 = DateTime::createFromFormat('d/m/Y H:i', $requestParticularGood['rent_start_date'] . ' ' . $requestParticularGood['start_time']);
             $dateObj2 = DateTime::createFromFormat('d/m/Y H:i', $requestParticularGood['rent_end_date'] . ' ' . $requestParticularGood['end_time']);
             $interval = $dateObj1->diff($dateObj2);
-            $diffInDays = $interval->days === 0 ? 1 : $interval->days;
+            $diffInDays = $interval->days + 1;
 
             $orderItemMessageData = $orderItemMessageData . 'Товар: ' . $good->name_ru . '
 ';

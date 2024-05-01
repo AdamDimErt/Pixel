@@ -68,7 +68,7 @@ class CartController extends Controller
             $cartData[$key] = [];
         }
 
-        if (Auth::guard('clients')->id()) {
+        if (Auth::guard('clients')->check()) {
             $client = Client::query()->find(Auth::guard('clients')->id())->toArray();
         } else {
             $client = null;
@@ -133,9 +133,16 @@ class CartController extends Controller
         $startDateTimeString = $startDateString . ' ' . $startTimeString;
         $endDateTimeString = $endDateString . ' ' . $endTimeString;
         $goodId = $request->input('goodId');
-        $good = Good::query()->find($goodId);
+        $good = Good::query()->findOrFail($goodId);
 
         $additionalIds = $good->additionals;
+        if (count($additionalIds) < 0){
+            return response()
+                ->json([
+                    'success' => true,
+                    'additionals' => []
+                ]);
+        }
         $additionalItemsIds = Item::query()->whereIn('good_id', $additionalIds)->pluck('id')->toArray();
 
         $startDateTime = Carbon::parse($startDateTimeString);
@@ -170,11 +177,20 @@ class CartController extends Controller
 
         $availableGoods = $availableGoods->toArray();
 
-        return response()
-            ->json([
-                'success' => true,
-                'additionals' => $availableGoods
-                ]);
+        $responseData = [
+            'success' => true,
+            'additionals' => $availableGoods
+        ];
+
+        $response = response()->json($responseData);
+
+        $cartData = json_decode($request->cookie('cart', '{}'), true);
+
+        $cartData[$request->input('cartKey')] = [];
+
+        $response->withCookie(cookie('cart', json_encode($cartData)));
+
+        return $response;
     }
 
     public function additionalAdd(Request $request)

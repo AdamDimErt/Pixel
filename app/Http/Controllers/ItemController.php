@@ -50,13 +50,14 @@ class ItemController extends Controller
     public function getAvailableRentEndTimespans(Request $request, Item $item)
     {
         $finishDate = $request->input('finish_date');
+        $startDate = $request->input('start_date');
         $finishTime = $request->input('finish_time');
         $relatedOrderTimeStamps = DB::table('order_items')
             ->whereIn('status', ['in_rent', 'confirmed', 'waiting'])
             ->where('item_id', '=', $item->id)
             ->get();
 
-        $timeSpans = $this->getNextRentTimeSpans($relatedOrderTimeStamps, $finishDate, $finishTime);
+        $timeSpans = $this->getNextRentTimeSpans($relatedOrderTimeStamps, $finishDate, $finishTime, $startDate);
 
         return response()
             ->json([
@@ -65,7 +66,7 @@ class ItemController extends Controller
             ]);
     }
 
-    public function getNextRentTimeSpans(Collection $orderItems, $rentStartDate, $rentStartTime)
+    public function getNextRentTimeSpans(Collection $orderItems, $rentStartDate, $rentStartTime, $rentEndDate)
     {
         $selectedDateTime = Carbon::parse("$rentStartDate $rentStartTime");
 
@@ -99,9 +100,13 @@ class ItemController extends Controller
                 $currentTime->addMinutes(5);
             }
         } else {
+
             $rentStartData = explode(':', $rentStartTime);
+            if ($rentStartDate === $rentEndDate){
+                $rentStartData[1] += 5;
+            }
             for ($hours = (int) $rentStartData[0]; $hours < 24; $hours++) {
-                for ($minutes = (int) $rentStartData[1] + 5; $minutes < 60; $minutes += 5) {
+                for ($minutes = (int) $rentStartData[1]; $minutes < 60; $minutes += 5) {
                     $hoursStr = str_pad($hours, 2, '0', STR_PAD_LEFT);
                     $minutesStr = str_pad($minutes, 2, '0', STR_PAD_LEFT);
 
