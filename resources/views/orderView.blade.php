@@ -12,13 +12,13 @@
                     <div class="order-item-wrapper z-depth-5">
                         <div class="row">
                             <div class="col s12 m9">
-                                <p class="white-text">{{$index + 1}}. {{__('translations.Good name')}}: <span class="orange-text">{{$item->item->good['name_' . session()->get('locale', 'ru')]}}</span></p>
+                                <p class="white-text">{{$index + 1}}. {{__('translations.Name')}}: <span class="orange-text">{{$item->item->good['name_' . session()->get('locale', 'ru')]}}</span></p>
                                 <p class="white-text">{{__('translations.Good cost')}}: <span class="orange-text">{{$item->item->good->discount_cost ?? $item->item->good->cost}}</span></p>
                                 <p class="white-text">{{__('translations.Status')}}: <span class="orange-text">{{$item->status}}</span></p>
                                 <p class="white-text">{{__('translations.Good type')}}: <a href="{{route('goodList', $item->item->good->goodType->code)}}" class="orange-text">{{$item->item->good->goodType->name}}</a></p>
                                 <p class="white-text">{{__('translations.Rent start time')}}: <span class="orange-text">{{$item->rent_start_date}} {{$item->rent_start_time}}</span></p>
                                 <p class="white-text">{{__('translations.Rent end time')}}: <span class="orange-text">{{$item->rent_end_date}} {{$item->rent_end_time}}</span></p>
-                                @if (count(json_decode($item->additionals)) > 0)
+                                @if (isset($item->additionals) && count(json_decode($item->additionals)) > 0)
                                     <p class="white-text">Дополнительные товары:</p>
                                     <ul>
                                         @foreach(\App\Models\Good::query()->whereIn('id', json_decode($item->additionals))->get() as $additional)
