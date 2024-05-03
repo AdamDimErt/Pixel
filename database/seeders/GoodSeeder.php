@@ -29,11 +29,11 @@ class GoodSeeder extends Seeder
                     'description_en' => $value['description_en'],
                     'cost' => $value['cost'],
                     'damage_cost' => $value['damage_cost'],
-                    'additionals' => json_encode(Good::query()->whereIn('name_ru', $value['additionals'])->pluck('id')),
+                    'additionals' => Good::query()->whereIn('name_ru', $value['additionals'])->pluck('id'),
                     'good_type_id' => $goodTypeId,
                     'discount_cost' => null,
                     'additional_cost' => isset($value['additional_cost']) ? $value['additional_cost'] : $value['cost'],
-                    'related_goods' => json_encode([]),
+                    'related_goods' => [],
                 ]);
 
                 if (! is_null($value['image'])) {

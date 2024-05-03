@@ -25,7 +25,7 @@ return new class extends Migration
             $table->json('additionals')->nullable();
 
             $table->unsignedBigInteger('good_type_id')->nullable(false);
-            $table->foreign('good_type_id')->references('id')->on('good_types');
+            $table->foreign('good_type_id')->references('id')->on('good_types')->cascadeOnUpdate()->cascadeOnDelete();
 
             $table->timestamps();
         });

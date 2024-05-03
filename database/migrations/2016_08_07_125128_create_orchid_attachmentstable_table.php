@@ -40,8 +40,8 @@ return new class extends Migration
             $table->foreign('attachment_id')
                 ->references('id')
                 ->on('attachments')
-                ->onUpdate('cascade')
-                ->onDelete('cascade');
+                ->cascadeOnDelete()
+                ->cascadeOnUpdate();
         });
     }
 

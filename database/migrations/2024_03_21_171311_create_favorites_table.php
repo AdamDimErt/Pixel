@@ -16,8 +16,8 @@ return new class extends Migration
             $table->unsignedBigInteger('good_id')->nullable(false);
             $table->unsignedBigInteger('client_id')->nullable(false);
 
-            $table->foreign('good_id')->references('id')->on('goods');
-            $table->foreign('client_id')->references('id')->on('clients');
+            $table->foreign('good_id')->references('id')->on('goods')->cascadeOnDelete()->cascadeOnUpdate();
+            $table->foreign('client_id')->references('id')->on('clients')->cascadeOnDelete()->cascadeOnUpdate();
             $table->timestamps();
         });
     }

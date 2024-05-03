@@ -163,7 +163,7 @@ beginingDatepickers.forEach(async item => {
         const day = date.getDate().toString().padStart(2, '0');
         const month = (date.getMonth() + 1).toString().padStart(2, '0');
         const year = date.getFullYear();
-        const dateString = `${day}/${month}/${year}`;
+        const dateString = `${year}-${month}-${day}`;
         return forbiddenDates.includes(dateString);
     }
     instance.options.onSelect = async (e) => {
@@ -205,6 +205,21 @@ beginingDatepickers.forEach(async item => {
             const rentStartTime = e.target.value;
             const secondDatepicker = e.target.parentNode.parentNode.parentNode.parentNode.querySelector('.ending-date');
             secondDatepicker.parentNode.classList.remove('hide')
+            const responseData = await fetch('/item/' + instance.el.dataset.itemId + '/get-rent-end-dates', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': csrfToken,
+                },
+                body: JSON.stringify({
+                    'start_date': rentStartDate,
+                })
+            })
+                .then(resp => resp.json())
+                .then(response => {
+                    return response;
+                })
+            const availableRentEndDates = responseData.availableDates
             const secondDatepickerInstance = M.Datepicker.init(secondDatepicker, {
                 i18n: {
                     months:
@@ -276,12 +291,12 @@ beginingDatepickers.forEach(async item => {
                 format: 'dd/mm/yyyy',
                 minDate: new Date(rentStartDate),
                 disableDayFn: (date => {
-                    if (nextUnavailableDate) {
+                    if (availableRentEndDates.length > 0){
                         const day = date.getDate().toString().padStart(2, '0');
                         const month = (date.getMonth() + 1).toString().padStart(2, '0');
                         const year = date.getFullYear();
                         const dateString = `${year}-${month}-${day}`;
-                        return nextUnavailableDate !== dateString;
+                        return !availableRentEndDates.includes(dateString);
                     }
                     return false;
                 }),
@@ -299,8 +314,8 @@ beginingDatepickers.forEach(async item => {
 
                         body: JSON.stringify({
                             'finish_date': rentEndDate,
-                            'finish_time': rentStartTime,
                             'start_date': rentStartDate,
+                            'start_time': rentStartTime,
                         })
                     })
                         .then(resp => resp.json())

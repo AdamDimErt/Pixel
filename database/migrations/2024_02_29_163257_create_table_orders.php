@@ -17,7 +17,7 @@ return new class extends Migration
             $table->integer('amount_paid')->nullable();
             $table->integer('agreement_id')->nullable();
             $table->enum('status', ['returned', 'in_rent', 'waiting', 'confirmed', 'cancelled'])->default('waiting');
-            $table->foreign('client_id')->references('id')->on('clients');
+            $table->foreign('client_id')->references('id')->on('clients')->cascadeOnDelete()->cascadeOnUpdate();
             $table->timestamps();
         });
     }
