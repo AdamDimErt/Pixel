@@ -11,6 +11,21 @@ use Orchid\Filters\Types\WhereDateStartEnd;
 use Orchid\Filters\Types\WhereIn;
 use Orchid\Screen\AsSource;
 
+/**
+ * Table: items
+*
+* === Columns ===
+ * @property int $id
+ * @property int $good_id
+ * @property \Carbon\Carbon|null $created_at
+ * @property \Carbon\Carbon|null $updated_at
+*
+* === Relationships ===
+ * @property-read Good|null $good
+*
+* === Accessors/Attributes ===
+ * @property-read string $name
+*/
 class Item extends Model
 {
     use AsSource, Filterable, HasFactory;

@@ -4,6 +4,20 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Table: favorites
+*
+* === Columns ===
+ * @property int $id
+ * @property int $good_id
+ * @property int $client_id
+ * @property \Carbon\Carbon|null $created_at
+ * @property \Carbon\Carbon|null $updated_at
+*
+* === Relationships ===
+ * @property-read Good|null $good
+ * @property-read Client|null $client
+*/
 class Favorite extends Model
 {
     /**

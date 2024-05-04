@@ -10,6 +10,21 @@ use Orchid\Filters\Types\Like;
 use Orchid\Filters\Types\WhereDateStartEnd;
 use Orchid\Screen\AsSource;
 
+/**
+ * Table: good_types
+*
+* === Columns ===
+ * @property int $id
+ * @property string $name
+ * @property string $code
+ * @property string $icon
+ * @property string $description
+ * @property \Carbon\Carbon|null $created_at
+ * @property \Carbon\Carbon|null $updated_at
+*
+* === Relationships ===
+ * @property-read Good[]|\Illuminate\Database\Eloquent\Collection $goods
+*/
 class GoodType extends Model
 {
     use AsSource, Filterable, HasFactory;

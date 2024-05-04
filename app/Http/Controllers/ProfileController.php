@@ -16,6 +16,10 @@ class ProfileController extends Controller
     {
         $client = Client::query()->find(Auth::guard('clients')->id());
 
+        if (is_null($client)) {
+            redirect(route('logout'));
+        }
+
         $client->order_amount = Order::query()
             ->where('client_id', '=', $client->id)
             ->whereNotIn('status', ['cancelled', 'waiting'])

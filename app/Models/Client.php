@@ -15,6 +15,29 @@ use Orchid\Filters\Types\WhereDateStartEnd;
 use Orchid\Filters\Types\WhereMaxMin;
 use Orchid\Screen\AsSource;
 
+/**
+ * Table: clients
+*
+* === Columns ===
+ * @property int $id
+ * @property string $name
+ * @property string $phone
+ * @property int $discount
+ * @property string $email
+ * @property string $iin
+ * @property string $instagram
+ * @property string $confirmation_code
+ * @property bool $email_confirmed
+ * @property bool $blocked
+ * @property string $password
+ * @property \Carbon\Carbon|null $created_at
+ * @property \Carbon\Carbon|null $updated_at
+*
+* === Relationships ===
+ * @property-read Favorite|null $favorites
+ * @property-read Order[]|\Illuminate\Database\Eloquent\Collection $orders
+ * @property-read Attachment[]|\Illuminate\Database\Eloquent\Collection $attachment
+*/
 class Client extends Authenticatable
 {
     use AsSource, Attachable, Authorizable, Filterable, HasFactory;

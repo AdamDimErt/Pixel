@@ -15,6 +15,32 @@ use Orchid\Filters\Types\WhereDateStartEnd;
 use Orchid\Filters\Types\WhereMaxMin;
 use Orchid\Screen\AsSource;
 
+/**
+ * Table: goods
+*
+* === Columns ===
+ * @property int $id
+ * @property string $name_ru
+ * @property string $name_en
+ * @property string $description_ru
+ * @property string $description_en
+ * @property int $cost
+ * @property int|null $additional_cost
+ * @property int|null $discount_cost
+ * @property int $damage_cost
+ * @property string|null $related_goods
+ * @property string|null $additionals
+ * @property int $good_type_id
+ * @property \Carbon\Carbon|null $created_at
+ * @property \Carbon\Carbon|null $updated_at
+*
+* === Relationships ===
+ * @property-read GoodType|null $goodType
+ * @property-read Item[]|\Illuminate\Database\Eloquent\Collection $items
+ * @property-read Good[]|\Illuminate\Database\Eloquent\Collection $relatedGoods
+ * @property-read Good[]|\Illuminate\Database\Eloquent\Collection $additionals
+ * @property-read Attachment[]|\Illuminate\Database\Eloquent\Collection $attachment
+*/
 class Good extends Model
 {
     use AsSource, Attachable, Filterable, HasFactory;

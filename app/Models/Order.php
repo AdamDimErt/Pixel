@@ -14,6 +14,24 @@ use Orchid\Filters\Types\WhereDateStartEnd;
 use Orchid\Filters\Types\WhereMaxMin;
 use Orchid\Screen\AsSource;
 
+/**
+ * Table: orders
+*
+* === Columns ===
+ * @property int $id
+ * @property int $client_id
+ * @property int|null $amount_paid
+ * @property int|null $agreement_id
+ * @property string $status
+ * @property \Carbon\Carbon|null $created_at
+ * @property \Carbon\Carbon|null $updated_at
+*
+* === Relationships ===
+ * @property-read Client|null $owner
+ * @property-read OrderItem|null $orderItems
+ * @property-read Item[]|\Illuminate\Database\Eloquent\Collection $items
+ * @property-read Attachment[]|\Illuminate\Database\Eloquent\Collection $attachment
+*/
 class Order extends Model
 {
     use AsSource, Attachable, Filterable, HasFactory;

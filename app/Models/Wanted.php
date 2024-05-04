@@ -11,6 +11,20 @@ use Orchid\Filters\Types\Where;
 use Orchid\Filters\Types\WhereDateStartEnd;
 use Orchid\Screen\AsSource;
 
+/**
+ * Table: wanteds
+*
+* === Columns ===
+ * @property int $id
+ * @property string $name
+ * @property string $iin
+ * @property string|null $instagram
+ * @property \Carbon\Carbon|null $created_at
+ * @property \Carbon\Carbon|null $updated_at
+*
+* === Relationships ===
+ * @property-read Attachment[]|\Illuminate\Database\Eloquent\Collection $attachment
+*/
 class Wanted extends Authenticatable
 {
     use AsSource, Attachable, Filterable, HasFactory;

@@ -8,6 +8,23 @@ use Orchid\Filters\Types\Where;
 use Orchid\Filters\Types\WhereDateStartEnd;
 use Orchid\Platform\Models\User as Authenticatable;
 
+/**
+ * Table: users
+*
+* === Columns ===
+ * @property int $id
+ * @property string $name
+ * @property string $email
+ * @property \Carbon\Carbon|null $email_verified_at
+ * @property string $password
+ * @property string|null $remember_token
+ * @property \Carbon\Carbon|null $created_at
+ * @property \Carbon\Carbon|null $updated_at
+ * @property array|null $permissions
+*
+* === Relationships ===
+ * @property-read Good[]|\Illuminate\Database\Eloquent\Collection $goods
+*/
 class User extends Authenticatable
 {
     /**
