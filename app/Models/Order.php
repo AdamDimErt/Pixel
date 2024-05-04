@@ -16,8 +16,9 @@ use Orchid\Screen\AsSource;
 
 /**
  * Table: orders
-*
-* === Columns ===
+ *
+ * === Columns ===
+ *
  * @property int $id
  * @property int $client_id
  * @property int|null $amount_paid
@@ -25,13 +26,13 @@ use Orchid\Screen\AsSource;
  * @property string $status
  * @property \Carbon\Carbon|null $created_at
  * @property \Carbon\Carbon|null $updated_at
-*
-* === Relationships ===
+ *
+ * === Relationships ===
  * @property-read Client|null $owner
  * @property-read OrderItem|null $orderItems
  * @property-read Item[]|\Illuminate\Database\Eloquent\Collection $items
  * @property-read Attachment[]|\Illuminate\Database\Eloquent\Collection $attachment
-*/
+ */
 class Order extends Model
 {
     use AsSource, Attachable, Filterable, HasFactory;
@@ -79,12 +80,14 @@ class Order extends Model
     public function rentStartDate()
     {
         $date = Carbon::parse($this->orderItems()->orderBy('rent_start_date', 'ASC')->first()->rent_start_date);
-        return '«' . $date->day . '» ' . str_pad($date->month, 2, '0', STR_PAD_LEFT) . ' ' . $date->year;
+
+        return '«'.$date->day.'» '.str_pad($date->month, 2, '0', STR_PAD_LEFT).' '.$date->year;
     }
 
     public function rentEndDate()
     {
         $date = Carbon::parse($this->orderItems()->orderBy('rent_start_date', 'DESC')->first()->rent_end_date);
-        return '«' . $date->day . '» ' . str_pad($date->month, 2, '0', STR_PAD_LEFT) . ' ' . $date->year;
+
+        return '«'.$date->day.'» '.str_pad($date->month, 2, '0', STR_PAD_LEFT).' '.$date->year;
     }
 }

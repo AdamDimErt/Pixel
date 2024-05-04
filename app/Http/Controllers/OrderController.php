@@ -35,7 +35,7 @@ class OrderController extends Controller
 
         $requestData = $request->all();
 
-        if ($request->cookie('cart', '{}') === '{}'){
+        if ($request->cookie('cart', '{}') === '{}') {
             return redirect()->back()->withErrors(['cart' => 'Пожалуйста, выберите товары и оформите по ним заказ']);
         }
 
@@ -54,8 +54,8 @@ class OrderController extends Controller
 
             $requestParticularGood = $requestData[$itemKey];
 
-            $dateObj1 = DateTime::createFromFormat('d/m/Y H:i', $requestParticularGood['rent_start_date'] . ' ' . $requestParticularGood['start_time']);
-            $dateObj2 = DateTime::createFromFormat('d/m/Y H:i', $requestParticularGood['rent_end_date'] . ' ' . $requestParticularGood['end_time']);
+            $dateObj1 = DateTime::createFromFormat('d/m/Y H:i', $requestParticularGood['rent_start_date'].' '.$requestParticularGood['start_time']);
+            $dateObj2 = DateTime::createFromFormat('d/m/Y H:i', $requestParticularGood['rent_end_date'].' '.$requestParticularGood['end_time']);
 
             $diffInSeconds = $dateObj2->getTimestamp() - $dateObj1->getTimestamp();
 
@@ -63,35 +63,35 @@ class OrderController extends Controller
 
             $diffInDays = max(1, $diffInDays);
 
-            $orderItemMessageData = $orderItemMessageData . 'Товар: ' . $good->name_ru . '
+            $orderItemMessageData = $orderItemMessageData.'Товар: '.$good->name_ru.'
 ';
 
             if ($good->discount_cost) {
-                $orderItemMessageData = $orderItemMessageData . 'Цена: ' . $good->discount_cost . '(скидка)
+                $orderItemMessageData = $orderItemMessageData.'Цена: '.$good->discount_cost.'(скидка)
 ';
             } else {
-                $orderItemMessageData = $orderItemMessageData . 'Цена: ' . $good->cost . '
+                $orderItemMessageData = $orderItemMessageData.'Цена: '.$good->cost.'
 ';
             }
 
-            $orderItemMessageData = $orderItemMessageData . 'Дата начала аренды: *' . $dateObj1->format('d/m/Y H:i') . '*
+            $orderItemMessageData = $orderItemMessageData.'Дата начала аренды: *'.$dateObj1->format('d/m/Y H:i').'*
 ';
-            $orderItemMessageData = $orderItemMessageData . 'Дата конца аренды: *' . $dateObj2->format('d/m/Y H:i') . '*
+            $orderItemMessageData = $orderItemMessageData.'Дата конца аренды: *'.$dateObj2->format('d/m/Y H:i').'*
 ';
-            $orderItemMessageData = $orderItemMessageData . 'Количество дней: *' . $diffInDays . '*
+            $orderItemMessageData = $orderItemMessageData.'Количество дней: *'.$diffInDays.'*
 ';
             $currentItemCost = $diffInDays * ($good->discount_cost ?? $good->cost);
-            $orderItemMessageData = $orderItemMessageData . 'Общая сумма за товар: *' . $currentItemCost . '*
+            $orderItemMessageData = $orderItemMessageData.'Общая сумма за товар: *'.$currentItemCost.'*
 ';
-            $orderItemMessageData = $orderItemMessageData . 'Дополнения к товару:
+            $orderItemMessageData = $orderItemMessageData.'Дополнения к товару:
 ';
 
             foreach ($cartData[$itemKey] as $additionalId) {
                 $additional = Item::query()->find($additionalId)->load('good');
 
-                $orderItemMessageData = $orderItemMessageData . '   Наименование: ' . $additional->good->name_ru . '
+                $orderItemMessageData = $orderItemMessageData.'   Наименование: '.$additional->good->name_ru.'
 ';
-                $orderItemMessageData = $orderItemMessageData . '       Цена: ' . (($additional->good->additional_cost !== null && $additional->good->additional_cost > 0) ? $additional->good->additional_cost : $additional->good->cost) . '
+                $orderItemMessageData = $orderItemMessageData.'       Цена: '.(($additional->good->additional_cost !== null && $additional->good->additional_cost > 0) ? $additional->good->additional_cost : $additional->good->cost).'
 ';
                 $additionalCost = (($additional->good->additional_cost !== null && $additional->good->additional_cost > 0) ? $additional->good->additional_cost : $additional->good->cost) * $diffInDays;
 
@@ -163,9 +163,9 @@ class OrderController extends Controller
 Общая сумма: $totalSum тг
 
 Список товаров:
-" . $orderItemMessageData);
+".$orderItemMessageData);
 
-        if (!$response->ok()) {
+        if (! $response->ok()) {
             sendTelegramMessage(
                 "*НОВЫЙ ЗАКАЗ* $order->id
 Покупатель: [$client->phone](https://wa.me/$client->phone)
@@ -179,7 +179,6 @@ class OrderController extends Controller
 
 Список товаров слишком большой для отображения в боте.");
         }
-
 
         return redirect(route('confirmOrder'));
     }

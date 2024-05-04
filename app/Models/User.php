@@ -10,8 +10,9 @@ use Orchid\Platform\Models\User as Authenticatable;
 
 /**
  * Table: users
-*
-* === Columns ===
+ *
+ * === Columns ===
+ *
  * @property int $id
  * @property string $name
  * @property string $email
@@ -21,10 +22,10 @@ use Orchid\Platform\Models\User as Authenticatable;
  * @property \Carbon\Carbon|null $created_at
  * @property \Carbon\Carbon|null $updated_at
  * @property array|null $permissions
-*
-* === Relationships ===
+ *
+ * === Relationships ===
  * @property-read Good[]|\Illuminate\Database\Eloquent\Collection $goods
-*/
+ */
 class User extends Authenticatable
 {
     /**

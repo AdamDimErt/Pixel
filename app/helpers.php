@@ -37,14 +37,14 @@ if (! function_exists('sendTelegramMessage')) {
 if (! function_exists('makeOrderAgreement')) {
     function makeOrderAgreement(\Illuminate\Database\Eloquent\Model $order)
     {
-        $aggremeentName = 'aggreement_' . $order->id . '.pdf' ;
+        $aggremeentName = 'aggreement_'.$order->id.'.pdf';
 
         /** @var \Barryvdh\DomPDF\PDF $pdf */
         $pdf = App::make('dompdf.wrapper');
         $pdf->loadView('pdfs.aggreement', compact('order'));
 
         $pdf->save($aggremeentName, 'public');
-        $file = new UploadedFile(storage_path('app/public') . '/' . $aggremeentName, $aggremeentName);
+        $file = new UploadedFile(storage_path('app/public').'/'.$aggremeentName, $aggremeentName);
         $attachment = (new File($file))->load();
 
         return $attachment;

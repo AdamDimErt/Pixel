@@ -6,18 +6,19 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * Table: favorites
-*
-* === Columns ===
+ *
+ * === Columns ===
+ *
  * @property int $id
  * @property int $good_id
  * @property int $client_id
  * @property \Carbon\Carbon|null $created_at
  * @property \Carbon\Carbon|null $updated_at
-*
-* === Relationships ===
+ *
+ * === Relationships ===
  * @property-read Good|null $good
  * @property-read Client|null $client
-*/
+ */
 class Favorite extends Model
 {
     /**

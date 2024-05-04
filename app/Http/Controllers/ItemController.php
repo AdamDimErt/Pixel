@@ -5,9 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Item;
 use App\Models\OrderItem;
 use Carbon\Carbon;
-use DateTime;
 use Illuminate\Http\Request;
-use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 
 class ItemController extends Controller
@@ -23,14 +21,14 @@ class ItemController extends Controller
         $fullyRentedDates = [];
 
         foreach ($relatedOrderStamps as $rental) {
-            $startDateTime = strtotime($rental->rent_start_date . ' ' . $rental->rent_start_time);
-            $endDateTime = strtotime($rental->rent_end_date . ' ' . $rental->rent_end_time);
+            $startDateTime = strtotime($rental->rent_start_date.' '.$rental->rent_start_time);
+            $endDateTime = strtotime($rental->rent_end_date.' '.$rental->rent_end_time);
 
             $currentDateTime = $startDateTime;
             while ($currentDateTime < $endDateTime) {
                 $currentDate = date('Y-m-d', $currentDateTime);
 
-                if (!isset($fullyRentedDates[$currentDate])) {
+                if (! isset($fullyRentedDates[$currentDate])) {
                     $fullyRentedDates[$currentDate] = [];
                 }
 
@@ -64,31 +62,33 @@ class ItemController extends Controller
         $availableTimes = $this->generateTimeSpans();
 
         foreach ($relatedOrderTimeStamps as $orderItem) {
-            $startRentDate = Carbon::parse($orderItem->rent_start_date . ' ' . $orderItem->rent_start_time);
-            $endRentDate = Carbon::parse($orderItem->rent_end_date . ' ' . $orderItem->rent_end_time);
+            $startRentDate = Carbon::parse($orderItem->rent_start_date.' '.$orderItem->rent_start_time);
+            $endRentDate = Carbon::parse($orderItem->rent_end_date.' '.$orderItem->rent_end_time);
 
-            foreach ($availableTimes as $availableTime){
-                if (Carbon::parse($startDate . ' ' . $availableTime)->between($startRentDate, $endRentDate) && $orderItem->rent_start_date == $startDate && $orderItem->rent_end_date == $startDate){
+            foreach ($availableTimes as $availableTime) {
+                if (Carbon::parse($startDate.' '.$availableTime)->between($startRentDate, $endRentDate) && $orderItem->rent_start_date == $startDate && $orderItem->rent_end_date == $startDate) {
                     unset($availableTimes[array_search($availableTime, $availableTimes)]);
+
                     continue;
                 }
                 if ($orderItem->rent_start_date == $startDate && $orderItem->rent_end_date != $startDate) {
                     $startTimeSplit = explode(':', $orderItem->rent_start_time);
-                    for ($hours = (int)$startTimeSplit[0]; $hours < 24; $hours++){
-                        for ($minutes = (int)$startTimeSplit[1]; $minutes <= 55; $minutes+=5) {
-                            unset($availableTimes[array_search(str_pad($hours,2, '0', STR_PAD_LEFT) . ':' . str_pad($minutes,2, '0', STR_PAD_LEFT), $availableTimes)]);
+                    for ($hours = (int) $startTimeSplit[0]; $hours < 24; $hours++) {
+                        for ($minutes = (int) $startTimeSplit[1]; $minutes <= 55; $minutes += 5) {
+                            unset($availableTimes[array_search(str_pad($hours, 2, '0', STR_PAD_LEFT).':'.str_pad($minutes, 2, '0', STR_PAD_LEFT), $availableTimes)]);
                         }
                     }
+
                     continue;
                 }
                 if ($orderItem->rent_end_date == $startDate && $orderItem->rent_start_date != $startDate) {
                     $endTimeSplit = explode(':', $orderItem->rent_end_time);
-                    for ($minutes = (int)$endTimeSplit[1]; $minutes >= 0; $minutes-=5) {
-                        unset($availableTimes[array_search(str_pad((int)$endTimeSplit[0],2, '0', STR_PAD_LEFT) . ':' . str_pad($minutes,2, '0', STR_PAD_LEFT), $availableTimes)]);
+                    for ($minutes = (int) $endTimeSplit[1]; $minutes >= 0; $minutes -= 5) {
+                        unset($availableTimes[array_search(str_pad((int) $endTimeSplit[0], 2, '0', STR_PAD_LEFT).':'.str_pad($minutes, 2, '0', STR_PAD_LEFT), $availableTimes)]);
                     }
-                    for ($hours = (int)$endTimeSplit[0]-1; $hours >= 0; $hours--){
-                        for ($minutes = 55; $minutes >= 0; $minutes-=5) {
-                            unset($availableTimes[array_search(str_pad($hours,2, '0', STR_PAD_LEFT) . ':' . str_pad($minutes,2, '0', STR_PAD_LEFT), $availableTimes)]);
+                    for ($hours = (int) $endTimeSplit[0] - 1; $hours >= 0; $hours--) {
+                        for ($minutes = 55; $minutes >= 0; $minutes -= 5) {
+                            unset($availableTimes[array_search(str_pad($hours, 2, '0', STR_PAD_LEFT).':'.str_pad($minutes, 2, '0', STR_PAD_LEFT), $availableTimes)]);
                         }
                     }
                 }
@@ -98,19 +98,20 @@ class ItemController extends Controller
         $currentTime = now('Asia/Almaty');
 
         foreach ($availableTimes as $span) {
-            $time = Carbon::parse($startDate . ' ' .$span, 'Asia/Almaty');
+            $time = Carbon::parse($startDate.' '.$span, 'Asia/Almaty');
             if ($time->lt($currentTime)) {
                 unset($availableTimes[array_search($span, $availableTimes)]);
             }
         }
 
-        usort($availableTimes, function($a, $b) {
+        usort($availableTimes, function ($a, $b) {
             $timeA = strtotime($a);
             $timeB = strtotime($b);
 
             if ($timeA == $timeB) {
                 return 0;
             }
+
             return ($timeA < $timeB) ? -1 : 1;
         });
 
@@ -134,7 +135,7 @@ class ItemController extends Controller
 
         $availableDates = [];
 
-        if (!is_null($relatedOrderTimeStamps)) {
+        if (! is_null($relatedOrderTimeStamps)) {
             $startDate = Carbon::parse($rentStartDate);
             $endDate = Carbon::parse($relatedOrderTimeStamps->rent_start_date);
 
@@ -165,14 +166,14 @@ class ItemController extends Controller
 
         $timeSpans = [];
 
-        if (!is_null($relatedOrderTimeStamps)) {
+        if (! is_null($relatedOrderTimeStamps)) {
             $startDateSplitted = explode(':', $relatedOrderTimeStamps->rent_start_time);
-            for ($minutes = (int)$startDateSplitted[1]; $minutes >= 0; $minutes-=5) {
-                $timeSpans[] = (str_pad((int)$startDateSplitted[0],2, '0', STR_PAD_LEFT) . ':' . str_pad($minutes,2, '0', STR_PAD_LEFT));
+            for ($minutes = (int) $startDateSplitted[1]; $minutes >= 0; $minutes -= 5) {
+                $timeSpans[] = (str_pad((int) $startDateSplitted[0], 2, '0', STR_PAD_LEFT).':'.str_pad($minutes, 2, '0', STR_PAD_LEFT));
             }
-            for ($hours = (int)$startDateSplitted[0]-1; $hours >= 0; $hours--){
-                for ($minutes = 55; $minutes >= 0; $minutes-=5) {
-                    $timeSpans[] = (str_pad($hours,2, '0', STR_PAD_LEFT) . ':' . str_pad($minutes,2, '0', STR_PAD_LEFT));
+            for ($hours = (int) $startDateSplitted[0] - 1; $hours >= 0; $hours--) {
+                for ($minutes = 55; $minutes >= 0; $minutes -= 5) {
+                    $timeSpans[] = (str_pad($hours, 2, '0', STR_PAD_LEFT).':'.str_pad($minutes, 2, '0', STR_PAD_LEFT));
                 }
             }
         } else {
@@ -183,20 +184,21 @@ class ItemController extends Controller
             $currentTime = now('Asia/Almaty');
             unset($timeSpans[array_search($startTime, $timeSpans)]);
             foreach ($timeSpans as $span) {
-                $time = Carbon::parse($startDate . ' ' . $span, 'Asia/Almaty');
+                $time = Carbon::parse($startDate.' '.$span, 'Asia/Almaty');
                 if ($time->lt($currentTime)) {
                     unset($timeSpans[array_search($span, $timeSpans)]);
                 }
             }
         }
 
-        usort($timeSpans, function($a, $b) {
+        usort($timeSpans, function ($a, $b) {
             $timeA = strtotime($a);
             $timeB = strtotime($b);
 
             if ($timeA == $timeB) {
                 return 0;
             }
+
             return ($timeA < $timeB) ? -1 : 1;
         });
 
@@ -210,9 +212,9 @@ class ItemController extends Controller
     public function generateTimeSpans()
     {
         $timeSpans = [];
-        for ($hours = 0; $hours < 24; $hours++){
-            for ($minutes = 0; $minutes < 60; $minutes+=5) {
-                $timeSpans[] = str_pad($hours,2, '0', STR_PAD_LEFT) . ':' . str_pad($minutes,2, '0', STR_PAD_LEFT);
+        for ($hours = 0; $hours < 24; $hours++) {
+            for ($minutes = 0; $minutes < 60; $minutes += 5) {
+                $timeSpans[] = str_pad($hours, 2, '0', STR_PAD_LEFT).':'.str_pad($minutes, 2, '0', STR_PAD_LEFT);
             }
         }
 

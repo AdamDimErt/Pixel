@@ -17,8 +17,9 @@ use Orchid\Screen\AsSource;
 
 /**
  * Table: goods
-*
-* === Columns ===
+ *
+ * === Columns ===
+ *
  * @property int $id
  * @property string $name_ru
  * @property string $name_en
@@ -33,14 +34,14 @@ use Orchid\Screen\AsSource;
  * @property int $good_type_id
  * @property \Carbon\Carbon|null $created_at
  * @property \Carbon\Carbon|null $updated_at
-*
-* === Relationships ===
+ *
+ * === Relationships ===
  * @property-read GoodType|null $goodType
  * @property-read Item[]|\Illuminate\Database\Eloquent\Collection $items
  * @property-read Good[]|\Illuminate\Database\Eloquent\Collection $relatedGoods
  * @property-read Good[]|\Illuminate\Database\Eloquent\Collection $additionals
  * @property-read Attachment[]|\Illuminate\Database\Eloquent\Collection $attachment
-*/
+ */
 class Good extends Model
 {
     use AsSource, Attachable, Filterable, HasFactory;

@@ -118,7 +118,6 @@ class AuthController extends Controller
 
         $attachmentIds[] = $attachment->id;
 
-
         $client->attachment()->syncWithoutDetaching($attachmentIds);
         Mail::to($client->email)->send(new ConfirmationMail($client->email, $client->confirmation_code));
 

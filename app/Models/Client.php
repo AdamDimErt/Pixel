@@ -17,8 +17,9 @@ use Orchid\Screen\AsSource;
 
 /**
  * Table: clients
-*
-* === Columns ===
+ *
+ * === Columns ===
+ *
  * @property int $id
  * @property string $name
  * @property string $phone
@@ -32,12 +33,12 @@ use Orchid\Screen\AsSource;
  * @property string $password
  * @property \Carbon\Carbon|null $created_at
  * @property \Carbon\Carbon|null $updated_at
-*
-* === Relationships ===
+ *
+ * === Relationships ===
  * @property-read Favorite|null $favorites
  * @property-read Order[]|\Illuminate\Database\Eloquent\Collection $orders
  * @property-read Attachment[]|\Illuminate\Database\Eloquent\Collection $attachment
-*/
+ */
 class Client extends Authenticatable
 {
     use AsSource, Attachable, Authorizable, Filterable, HasFactory;
@@ -81,12 +82,14 @@ class Client extends Authenticatable
     public function signature()
     {
         $this->load('attachment');
+
         return $this->attachment()->where('group', '=', 'signatures')->first();
     }
 
     public function idCards(): Collection
     {
         $this->load('attachment');
+
         return $this->attachment()->where('group', '=', 'idCards')->get();
     }
 }

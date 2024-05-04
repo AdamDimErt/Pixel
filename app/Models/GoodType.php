@@ -12,8 +12,9 @@ use Orchid\Screen\AsSource;
 
 /**
  * Table: good_types
-*
-* === Columns ===
+ *
+ * === Columns ===
+ *
  * @property int $id
  * @property string $name
  * @property string $code
@@ -21,10 +22,10 @@ use Orchid\Screen\AsSource;
  * @property string $description
  * @property \Carbon\Carbon|null $created_at
  * @property \Carbon\Carbon|null $updated_at
-*
-* === Relationships ===
+ *
+ * === Relationships ===
  * @property-read Good[]|\Illuminate\Database\Eloquent\Collection $goods
-*/
+ */
 class GoodType extends Model
 {
     use AsSource, Filterable, HasFactory;

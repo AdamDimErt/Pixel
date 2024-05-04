@@ -13,19 +13,20 @@ use Orchid\Screen\AsSource;
 
 /**
  * Table: items
-*
-* === Columns ===
+ *
+ * === Columns ===
+ *
  * @property int $id
  * @property int $good_id
  * @property \Carbon\Carbon|null $created_at
  * @property \Carbon\Carbon|null $updated_at
-*
-* === Relationships ===
+ *
+ * === Relationships ===
  * @property-read Good|null $good
-*
-* === Accessors/Attributes ===
+ *
+ * === Accessors/Attributes ===
  * @property-read string $name
-*/
+ */
 class Item extends Model
 {
     use AsSource, Filterable, HasFactory;

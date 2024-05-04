@@ -32,7 +32,7 @@ class CartController extends Controller
         }
 
         return response()->json(['error' => 'На данный момент такой товар имеется в количестве: '.
-            count(Good::query()->find($goodId)->items) . '<br> Обратитесь к менеджеру для уточнения нужного количества.'], 400);
+            count(Good::query()->find($goodId)->items).'<br> Обратитесь к менеджеру для уточнения нужного количества.'], 400);
     }
 
     public function removeFromCart(Request $request): JsonResponse
@@ -130,17 +130,17 @@ class CartController extends Controller
         $startTimeString = $request->input('startTime');
         $endDateString = $request->input('endDate');
         $endTimeString = $request->input('endTime');
-        $startDateTimeString = $startDateString . ' ' . $startTimeString;
-        $endDateTimeString = $endDateString . ' ' . $endTimeString;
+        $startDateTimeString = $startDateString.' '.$startTimeString;
+        $endDateTimeString = $endDateString.' '.$endTimeString;
         $goodId = $request->input('goodId');
         $good = Good::query()->findOrFail($goodId);
 
         $additionalIds = $good->additionals;
-        if (count($additionalIds) < 0){
+        if (count($additionalIds) < 0) {
             return response()
                 ->json([
                     'success' => true,
-                    'additionals' => []
+                    'additionals' => [],
                 ]);
         }
         $additionalItemsIds = Item::query()->whereIn('good_id', $additionalIds)->pluck('id')->toArray();
@@ -172,14 +172,14 @@ class CartController extends Controller
             ->get();
 
         $availableGoods->each(function ($availableGood) use ($unavailableAdditionalIds) {
-            $availableGood->available = !in_array($availableGood->good_id, $unavailableAdditionalIds);
+            $availableGood->available = ! in_array($availableGood->good_id, $unavailableAdditionalIds);
         });
 
         $availableGoods = $availableGoods->toArray();
 
         $responseData = [
             'success' => true,
-            'additionals' => $availableGoods
+            'additionals' => $availableGoods,
         ];
 
         $response = response()->json($responseData);
