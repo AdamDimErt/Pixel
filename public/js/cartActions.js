@@ -177,11 +177,11 @@ beginingDatepickers.forEach(async item => {
     })
         .then(resp => resp.json())
         .then(response => {
-            item.parentNode.parentNode.querySelector('.loader-holder').remove()
-            item.parentNode.classList.remove('hide')
             return response.forbiddenDates;
         })
         .catch(error => {
+            item.parentNode.parentNode.querySelector('.loader-holder').remove()
+            item.parentNode.classList.remove('hide')
             console.error('Error fetching data:', error);
         });
     instance.options.disableDayFn = (date) => {
@@ -211,11 +211,11 @@ beginingDatepickers.forEach(async item => {
             })
         })
             .then(async resp => {
-                item.parentNode.parentNode.querySelector('.loader-holder').remove()
-                selector.parentNode.classList.remove('hide')
                 return await resp.json()
             })
             .then(response => {
+                item.parentNode.parentNode.querySelector('.loader-holder').remove()
+                selector.parentNode.classList.remove('hide')
                 return response;
             })
 
@@ -246,11 +246,11 @@ beginingDatepickers.forEach(async item => {
                 })
             })
                 .then(async resp => {
-                    e.target.parentNode.parentNode.parentNode.parentNode.querySelector('.loader-holder').remove();
-                    secondDatepicker.parentNode.classList.remove('hide')
                     return await resp.json()
                 })
                 .then(response => {
+                    e.target.parentNode.parentNode.parentNode.parentNode.querySelector('.loader-holder').remove();
+                    secondDatepicker.parentNode.classList.remove('hide')
                     return response;
                 })
             const availableRentEndDates = responseData.availableDates
@@ -356,11 +356,11 @@ beginingDatepickers.forEach(async item => {
                         })
                     })
                         .then(async resp => {
-                            secondDatepickerInstance.el.parentNode.parentNode.querySelector('.loader-holder').remove()
-                            endTimeSelector.parentNode.classList.remove('hide')
                             return await resp.json()
                         })
                         .then(response => {
+                            secondDatepickerInstance.el.parentNode.parentNode.querySelector('.loader-holder').remove()
+                            endTimeSelector.parentNode.classList.remove('hide')
                             return response;
                         })
                     const nextAvailableTimes = responseData.nextAvailableTimes;
