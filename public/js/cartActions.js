@@ -11,7 +11,7 @@ function removeFromCart(e) {
             },
             body: JSON.stringify({product_id: productId}),
         })
-            .then(response => {
+            .then(() => {
                 e.target.parentNode.parentNode.remove()
             })
             .catch(error => {
@@ -210,10 +210,10 @@ beginingDatepickers.forEach(async item => {
                 'start_date': rentStartDate
             })
         })
-            .then(resp => {
+            .then(async resp => {
                 item.parentNode.parentNode.querySelector('.loader-holder').remove()
                 selector.parentNode.classList.remove('hide')
-                return resp.json()
+                return await resp.json()
             })
             .then(response => {
                 return response;
@@ -245,10 +245,10 @@ beginingDatepickers.forEach(async item => {
                     'start_date': rentStartDate,
                 })
             })
-                .then(resp => {
+                .then(async resp => {
                     e.target.parentNode.parentNode.parentNode.parentNode.querySelector('.loader-holder').remove();
                     secondDatepicker.parentNode.classList.remove('hide')
-                    return resp.json()
+                    return await resp.json()
                 })
                 .then(response => {
                     return response;
@@ -355,10 +355,10 @@ beginingDatepickers.forEach(async item => {
                             'start_time': rentStartTime,
                         })
                     })
-                        .then(resp => {
+                        .then(async resp => {
                             secondDatepickerInstance.el.parentNode.parentNode.querySelector('.loader-holder').remove()
                             endTimeSelector.parentNode.classList.remove('hide')
-                            return resp.json()
+                            return await resp.json()
                         })
                         .then(response => {
                             return response;
@@ -417,9 +417,9 @@ beginingDatepickers.forEach(async item => {
                                     cartKey: `${e.target.parentNode.parentNode.parentNode.parentNode.parentNode.dataset.goodId}pixelrental${e.target.parentNode.parentNode.parentNode.parentNode.parentNode.dataset.goodItemId}`
                                 }),
                             })
-                                .then(resp => {
+                                .then(async resp => {
                                     e.target.parentNode.parentNode.parentNode.parentNode.querySelector('.loader-holder').remove()
-                                    return resp.json()
+                                    return await resp.json()
                                 })
                                 .catch(e => {
                                     console.log(e)
