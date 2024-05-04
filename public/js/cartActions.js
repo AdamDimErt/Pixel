@@ -175,7 +175,9 @@ beginingDatepickers.forEach(async item => {
             'X-CSRF-TOKEN': csrfToken,
         },
     })
-        .then(resp => resp.json())
+        .then(async resp => {
+            return await resp.json()
+        })
         .then(response => {
             item.parentNode.parentNode.querySelector('.loader-holder').remove()
             item.parentNode.classList.remove('hide')
