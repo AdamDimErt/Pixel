@@ -703,5 +703,5 @@ input[type="checkbox"]:checked + span:not(.lever)::before {
 }
 
 .spinner-orange-only {
-    border-color: #e65100;
+    border-color: #ff8c00;
 }
