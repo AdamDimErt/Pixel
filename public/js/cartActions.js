@@ -177,11 +177,11 @@ beginingDatepickers.forEach(async item => {
     })
         .then(resp => resp.json())
         .then(response => {
+            item.parentNode.parentNode.querySelector('.loader-holder').remove()
+            item.parentNode.classList.remove('hide')
             return response.forbiddenDates;
         })
         .catch(error => {
-            item.parentNode.parentNode.querySelector('.loader-holder').remove()
-            item.parentNode.classList.remove('hide')
             console.error('Error fetching data:', error);
         });
     instance.options.disableDayFn = (date) => {
