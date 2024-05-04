@@ -701,3 +701,7 @@ input[type="checkbox"]:checked + span:not(.lever)::before {
 .field-label {
     cursor: pointer !important;
 }
+
+.spinner-orange-only {
+    border-color: #e65100;
+}

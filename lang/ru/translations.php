@@ -311,4 +311,5 @@ return [
     'Is additional' => 'Товар берут как дополнение?',
     'Scan your signature on a white background' => 'Отсканируйте свою подпись на белой бумаге',
     'OrderItem is_additional help' => 'Если товар берут как дополнение, то к нему будет применена цена дополнения, а не полная',
+    'and' => 'и',
 ];

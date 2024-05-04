@@ -20,6 +20,27 @@ function removeFromCart(e) {
     }
 }
 
+window.onload = function() {
+    document.querySelector('.client-discount-holder').classList.remove('hide')
+    document.querySelector('.main-loader').classList.add('hide')
+};
+
+const loaderElement = `
+                                            <div class="col s12 center loader-holder">
+                                                <div class="preloader-wrapper active">
+                                                    <div class="spinner-layer spinner-orange-only">
+                                                        <div class="circle-clipper left">
+                                                            <div class="circle"></div>
+                                                        </div><div class="gap-patch">
+                                                            <div class="circle"></div>
+                                                        </div><div class="circle-clipper right">
+                                                            <div class="circle"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+`
+
 function changeCart(e) {
     {
         e.preventDefault()
@@ -42,7 +63,7 @@ function changeCart(e) {
                 const amountOfDays = e.target.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.dataset.amountOfDays ?? 1
                 var discount = +document.querySelector('.client-discount-holder').dataset.discountPercent
                 const controlSumNode = e.target.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.querySelector('.good-cost-holder');
-                if (isNaN(discount)){
+                if (isNaN(discount)) {
                     discount = 0
                 }
                 if (e.target.checked) {
@@ -143,8 +164,10 @@ beginingDatepickers.forEach(async item => {
         },
         firstDay: 1,
         format: 'dd/mm/yyyy',
-        minDate: new Date()
+        minDate: new Date(),
+        autoClose: true
     });
+    item.parentNode.insertAdjacentHTML('afterend', loaderElement)
     const forbiddenDates = await fetch('/item/' + instance.el.dataset.itemId + '/get-unavailable-dates', {
         method: 'GET',
         headers: {
@@ -154,6 +177,8 @@ beginingDatepickers.forEach(async item => {
     })
         .then(resp => resp.json())
         .then(response => {
+            item.parentNode.parentNode.querySelector('.loader-holder').remove()
+            item.parentNode.classList.remove('hide')
             return response.forbiddenDates;
         })
         .catch(error => {
@@ -171,6 +196,9 @@ beginingDatepickers.forEach(async item => {
         const month = (e.getMonth() + 1).toString().padStart(2, '0');
         const year = e.getFullYear();
         const rentStartDate = `${year}-${month}-${day}`;
+        item.parentNode.insertAdjacentHTML('afterend', loaderElement)
+        const selector = instance.el.parentNode.parentNode.querySelector('.rent-start-time')
+
         const responseData = await fetch('/item/' + instance.el.dataset.itemId + '/get-available-times', {
             method: 'POST',
             headers: {
@@ -182,21 +210,24 @@ beginingDatepickers.forEach(async item => {
                 'start_date': rentStartDate
             })
         })
-            .then(resp => resp.json())
+            .then(resp => {
+                item.parentNode.parentNode.querySelector('.loader-holder').remove()
+                selector.parentNode.classList.remove('hide')
+                return resp.json()
+            })
             .then(response => {
                 return response;
             })
 
         const availableTimes = responseData.availableTimes;
         const nextUnavailableDate = responseData.nextUnavailableDate;
-        const selector = instance.el.parentNode.parentNode.querySelector('.rent-start-time')
-        selector.parentNode.classList.remove('hide')
         selector.innerHTML = '<option value="" disabled selected>Выберите время:</option>'
         availableTimes.forEach(time => {
             selector.innerHTML += `<option value="${time}" class="black-text">${time}</option>`
         })
         M.FormSelect.init(selector, {});
         selector.onchange = async (e) => {
+            e.target.parentNode.parentNode.parentNode.insertAdjacentHTML('afterend', loaderElement)
             try {
                 const additionalsWrapper = e.target.parentNode.parentNode.parentNode.parentNode.querySelector('.additionals-wrapper');
                 additionalsWrapper.innerHTML = ''
@@ -204,7 +235,6 @@ beginingDatepickers.forEach(async item => {
             }
             const rentStartTime = e.target.value;
             const secondDatepicker = e.target.parentNode.parentNode.parentNode.parentNode.querySelector('.ending-date');
-            secondDatepicker.parentNode.classList.remove('hide')
             const responseData = await fetch('/item/' + instance.el.dataset.itemId + '/get-rent-end-dates', {
                 method: 'POST',
                 headers: {
@@ -215,7 +245,11 @@ beginingDatepickers.forEach(async item => {
                     'start_date': rentStartDate,
                 })
             })
-                .then(resp => resp.json())
+                .then(resp => {
+                    e.target.parentNode.parentNode.parentNode.parentNode.querySelector('.loader-holder').remove();
+                    secondDatepicker.parentNode.classList.remove('hide')
+                    return resp.json()
+                })
                 .then(response => {
                     return response;
                 })
@@ -290,8 +324,9 @@ beginingDatepickers.forEach(async item => {
                 firstDay: 1,
                 format: 'dd/mm/yyyy',
                 minDate: new Date(rentStartDate),
+                autoClose: true,
                 disableDayFn: (date => {
-                    if (availableRentEndDates.length > 0){
+                    if (availableRentEndDates.length > 0) {
                         const day = date.getDate().toString().padStart(2, '0');
                         const month = (date.getMonth() + 1).toString().padStart(2, '0');
                         const year = date.getFullYear();
@@ -305,6 +340,8 @@ beginingDatepickers.forEach(async item => {
                     const month = (e.getMonth() + 1).toString().padStart(2, '0');
                     const year = e.getFullYear();
                     const rentEndDate = `${year}-${month}-${day}`;
+                    secondDatepickerInstance.el.parentNode.insertAdjacentHTML('afterend', loaderElement)
+                    const endTimeSelector = instance.el.parentNode.parentNode.querySelector('.rent-end-time')
                     const responseData = await fetch('/item/' + instance.el.dataset.itemId + '/get-next-rent-times', {
                         method: 'POST',
                         headers: {
@@ -318,13 +355,15 @@ beginingDatepickers.forEach(async item => {
                             'start_time': rentStartTime,
                         })
                     })
-                        .then(resp => resp.json())
+                        .then(resp => {
+                            secondDatepickerInstance.el.parentNode.parentNode.querySelector('.loader-holder').remove()
+                            endTimeSelector.parentNode.classList.remove('hide')
+                            return resp.json()
+                        })
                         .then(response => {
                             return response;
                         })
                     const nextAvailableTimes = responseData.nextAvailableTimes;
-                    const endTimeSelector = instance.el.parentNode.parentNode.querySelector('.rent-end-time')
-                    endTimeSelector.parentNode.classList.remove('hide')
                     endTimeSelector.innerHTML = '<option value="" disabled selected>Выберите время:</option>'
                     nextAvailableTimes.forEach(time => {
                         endTimeSelector.innerHTML += `<option value="${time}" class="black-text">${time}</option>`
@@ -362,7 +401,7 @@ beginingDatepickers.forEach(async item => {
 
                             const additionalsWrapper = e.target.parentNode.parentNode.parentNode.parentNode.parentNode.querySelector('.additionals-wrapper');
                             const additionalsOuterWrapper = e.target.parentNode.parentNode.parentNode.parentNode.parentNode.querySelector('.additionals-outer-wrapper');
-
+                            e.target.parentNode.parentNode.parentNode.insertAdjacentHTML('afterEnd', loaderElement)
                             const additionalsResponse = await fetch('/get-available-additions', {
                                 method: 'POST',
                                 headers: {
@@ -378,7 +417,13 @@ beginingDatepickers.forEach(async item => {
                                     cartKey: `${e.target.parentNode.parentNode.parentNode.parentNode.parentNode.dataset.goodId}pixelrental${e.target.parentNode.parentNode.parentNode.parentNode.parentNode.dataset.goodItemId}`
                                 }),
                             })
-                                .then(resp => resp.json())
+                                .then(resp => {
+                                    e.target.parentNode.parentNode.parentNode.parentNode.querySelector('.loader-holder').remove()
+                                    return resp.json()
+                                })
+                                .catch(e => {
+                                    console.log(e)
+                                })
 
                             additionalsResponse.additionals.forEach(additional => {
                                 if (additional.available) {
@@ -410,7 +455,7 @@ beginingDatepickers.forEach(async item => {
                                 </p>`
                                 }
                             })
-                            if (additionalsResponse.additionals.length > 0){
+                            if (additionalsResponse.additionals.length > 0) {
                                 additionalsOuterWrapper.classList.remove('hide')
 
                                 additionalsWrapper.querySelectorAll('.additional-checkbox').forEach(el => {
@@ -427,6 +472,8 @@ beginingDatepickers.forEach(async item => {
     }
 })
 
+
+
 function placeOrder(e) {
     const errorTextHolder = document.querySelector('.error-text')
     errorTextHolder.innerHTML = '';
@@ -439,7 +486,8 @@ function placeOrder(e) {
     })
     if (flag) {
         document.querySelector('#order-placement-form').submit()
-        e.target.onclick = () => {}
+        e.target.onclick = () => {
+        }
     } else {
         errorTextHolder.innerHTML = 'Не все даты и время заполнены!'
     }

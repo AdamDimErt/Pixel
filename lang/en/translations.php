@@ -310,5 +310,6 @@ return [
     'Make agreement' => 'Make agreement',
     'Is additional' => 'Is good being taken as an additional',
     'Scan your signature on a white background' => 'Scan your signature on a white background',
+    'and' => 'and',
     'OrderItem is_additional help' => 'If the good is taken as an additional, then all operations with it will be applied as if it is an additional',
 ];
