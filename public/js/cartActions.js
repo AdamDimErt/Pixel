@@ -175,13 +175,12 @@ beginingDatepickers.forEach(async item => {
             'X-CSRF-TOKEN': csrfToken,
         },
     })
-        .then(resp => resp.text())
-        .then(text => text.trim())
-        .then(jsonString => {
-            console.log(jsonString);
-            const response = JSON.parse(jsonString);
-            item.parentNode.parentNode.querySelector('.loader-holder').remove();
-            item.parentNode.classList.remove('hide');
+        .then(async resp => {
+            return await resp.json()
+        })
+        .then(response => {
+            item.parentNode.parentNode.querySelector('.loader-holder').remove()
+            item.parentNode.classList.remove('hide')
             return response.forbiddenDates;
         })
         .catch(error => {
