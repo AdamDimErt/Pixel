@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Client;
 use App\Models\Favorite;
 use App\Models\Good;
 use Illuminate\Http\Request;
@@ -11,7 +12,13 @@ class FavoriteController extends Controller
 {
     public function getFavorites(Request $request)
     {
-        $clientId = Auth::guard('clients')->id();
+        $client = Client::query()->find(Auth::guard('clients')->id());
+
+        if (is_null($client)) {
+            return redirect(route('logout'));
+        }
+
+        $clientId = $client->id;
 
         $favoriteGoodIds = Favorite::query()->where('client_id', '=', $clientId)->pluck('good_id')->toArray();
 
@@ -22,7 +29,14 @@ class FavoriteController extends Controller
 
     public function add(Good $good)
     {
-        $clientId = Auth::guard('clients')->id();
+        $client = Client::query()->find(Auth::guard('clients')->id());
+
+        if (is_null($client)) {
+            return redirect(route('logout'));
+        }
+
+        $clientId = $client->id;
+
         Favorite::query()
             ->create([
                 'good_id' => $good->id,
@@ -35,7 +49,13 @@ class FavoriteController extends Controller
 
     public function remove(Good $good)
     {
-        $clientId = Auth::guard('clients')->id();
+        $client = Client::query()->find(Auth::guard('clients')->id());
+
+        if (is_null($client)) {
+            return redirect(route('logout'));
+        }
+
+        $clientId = $client->id;
         Favorite::query()->where('client_id', '=', $clientId)
             ->where('good_id', '=', $good->id)->delete();
 

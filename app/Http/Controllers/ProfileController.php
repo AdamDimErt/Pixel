@@ -5,9 +5,14 @@ namespace App\Http\Controllers;
 use App\Models\Client;
 use App\Models\Order;
 use App\Models\OrderItem;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
+use Illuminate\Validation\ValidationException;
+use League\Flysystem\FilesystemException;
 use Orchid\Attachment\File;
 
 class ProfileController extends Controller
@@ -37,14 +42,22 @@ class ProfileController extends Controller
         return view('profile.main', compact('client'));
     }
 
-    public function editProfile(Request $request)
+    public function editProfile(Request $request): Factory|\Illuminate\Foundation\Application|View|Application
     {
         $client = Client::query()->find(Auth::guard('clients')->id());
+
+        if (is_null($client)) {
+            return redirect(route('logout'));
+        }
 
         return view('profile.edit', compact('client'));
     }
 
-    public function updateProfile(Request $request)
+    /**
+     * @throws FilesystemException
+     * @throws ValidationException
+     */
+    public function updateProfile(Request $request): \Illuminate\Foundation\Application|\Illuminate\Routing\Redirector|Application|\Illuminate\Http\RedirectResponse
     {
         $this->validate($request, [
             'name' => 'required|string|max:255',
@@ -70,6 +83,10 @@ class ProfileController extends Controller
         ]);
 
         $client = Client::query()->find(Auth::guard('clients')->id());
+
+        if (is_null($client)) {
+            return redirect(route('logout'));
+        }
 
         $client->update(
             [
