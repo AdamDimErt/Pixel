@@ -1,7 +1,4 @@
 server {
-    worker_processes 2;
-    worker_connections 2048;
-
     listen 80;
     server_name pixelrental.kz;
     return 301 https://$server_name$request_uri;
@@ -15,9 +12,6 @@ server {
     rewrite_log on;
 
     client_max_body_size 128M;
-
-    worker_processes 2;
-    worker_connections 2048;
 
     ssl_certificate /etc/nginx/ssl/pixelrental_kz.crt;
     ssl_certificate_key /etc/nginx/ssl/pixelrental_kz.key;

@@ -164,7 +164,7 @@ class GoodEditScreen extends Screen
         }
 
         if (! $request->input('good.additionals')) {
-            $good->additionals = [];
+            $good->additionals = '[]';
         }
 
         $good->save();
