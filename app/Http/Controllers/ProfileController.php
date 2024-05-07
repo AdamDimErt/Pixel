@@ -21,6 +21,8 @@ class ProfileController extends Controller
     {
         $client = Client::query()->find(Auth::guard('clients')->id());
 
+        dd(Auth::guard('clients')->id());
+
         if (is_null($client)) {
             return redirect(route('logout'));
         }
