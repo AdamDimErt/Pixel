@@ -1,6 +1,7 @@
 server {
     listen 80;
     server_name pixelrental.kz;
+    proxy_request_buffering off;
     return 301 https://$server_name$request_uri;
 }
 
@@ -8,6 +9,7 @@ server {
     charset utf-8;
     listen 443 ssl;
     server_name pixelrental.kz;
+    proxy_request_buffering off;
     index index.php;
     rewrite_log on;
 
