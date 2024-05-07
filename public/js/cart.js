@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const cartCountContainer = document.querySelector('.in-cart-item-counter');
 
     addToCartButtons.forEach(button => {
-        button.addEventListener('click', function () {
+        button.addEventListener('click', async function () {
             const productId = this.dataset.productId;
             const selectedAdditionals = document.querySelectorAll('.additional-checkbox:checked');
             const additionalIds = [];
@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 additionalIds.push(additional.dataset.additionalId);
             });
 
-            fetch('/add-to-cart', {
+            await fetch('/add-to-cart', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -23,22 +23,24 @@ document.addEventListener('DOMContentLoaded', function () {
                     additional_ids: additionalIds
                 }),
             })
-                .then(response => response.json())
-                .then(data => {
+                .then(async response => {
+                    return await response.json();
+                })
+                .then(async data => {
                     if (data.hasOwnProperty('error')) {
                         M.toast({html: `<i class="material-icons orange-text text-darken-4">error_outline</i>` + data.error});
                     } else {
                         if (data.success) {
                             M.toast({html: 'Продукт успешно добавлен в корзину!'});
-                            fetch('/get-cart-count', {
+                            await fetch('/get-cart-count', {
                                 method: 'GET',
                                 headers: {
                                     'Content-Type': 'application/json',
                                     'X-CSRF-TOKEN': csrfToken,
                                 },
                             })
-                                .then(response => response.json())
-                                .then(cartData => {
+                                .then(async response => await response.json())
+                                .then(async cartData => {
                                     cartCountContainer.innerHTML = cartData.cartCount;
                                 })
                                 .catch(error => {
