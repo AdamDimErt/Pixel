@@ -32,7 +32,7 @@
     </div>
 </div>
 <script src="{{asset('js/script.js')}}"></script>
-<script src="{{asset('js/select.js')}}"></script>
+<script src="{{asset('js/dropdown.js')}}"></script>
 <script src="{{asset('js/materialize.js')}}"></script>
 @stack('scripts')
 </body>

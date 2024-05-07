@@ -702,6 +702,10 @@ input[type="checkbox"]:checked + span:not(.lever)::before {
     cursor: pointer !important;
 }
 
+.dropdown-content {
+    transform: none !important;
+}
+
 .spinner-orange-only {
     border-color: #ff8c00;
 }
