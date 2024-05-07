@@ -22,7 +22,8 @@ class ProfileController extends Controller
         $client = Client::query()->find(Auth::guard('clients')->id());
 
         if (is_null($client)) {
-            return redirect(route('logout'));
+            \Log::info($request->path());
+return redirect(route('logout'));
         }
 
         $client->order_amount = Order::query()
@@ -47,7 +48,8 @@ class ProfileController extends Controller
         $client = Client::query()->find(Auth::guard('clients')->id());
 
         if (is_null($client)) {
-            return redirect(route('logout'));
+            \Log::info($request->path());
+return redirect(route('logout'));
         }
 
         return view('profile.edit', compact('client'));
@@ -85,7 +87,8 @@ class ProfileController extends Controller
         $client = Client::query()->find(Auth::guard('clients')->id());
 
         if (is_null($client)) {
-            return redirect(route('logout'));
+            \Log::info($request->path());
+return redirect(route('logout'));
         }
 
         $client->update(

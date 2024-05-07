@@ -15,7 +15,8 @@ class MyOrderController extends Controller
         $client = Client::query()->find(Auth::guard('clients')->id());
 
         if (is_null($client)) {
-            return redirect(route('logout'));
+            \Log::info($request->path());
+return redirect(route('logout'));
         }
 
         $clientId = $client->id;
@@ -30,7 +31,8 @@ class MyOrderController extends Controller
         $client = Client::query()->find(Auth::guard('clients')->id());
 
         if (is_null($client)) {
-            return redirect(route('logout'));
+            \Log::info($request->path());
+return redirect(route('logout'));
         }
 
         $order->load('orderItems.item.good.goodType');
@@ -43,7 +45,8 @@ class MyOrderController extends Controller
         $client = Client::query()->find(Auth::guard('clients')->id());
 
         if (is_null($client)) {
-            return redirect(route('logout'));
+            \Log::info($request->path());
+return redirect(route('logout'));
         }
 
         DB::beginTransaction();
