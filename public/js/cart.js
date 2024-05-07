@@ -50,6 +50,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     }
                 })
                 .catch(error => {
+                    console.log(error)
                     M.toast({html: 'Не удалось добавить товар в корзину.'});
                 });
         });
