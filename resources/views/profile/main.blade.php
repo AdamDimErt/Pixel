@@ -7,7 +7,7 @@
         </li>
         <li class="collection-item grey darken-3 white-text">{{__('translations.Phone')}}: <span
                 class="orange-text">{{$client->phone}}</span></li>
-        <li class="collection-item grey darken-3 white-text">{{__('translations.Email name')}}: <span
+        <li class="collection-item grey darken-3 white-text">{{__('translations.Email')}}: <span
                 class="orange-text">{{$client->email}}</span></li>
         <li class="collection-item grey darken-3 white-text">Instagram: <span
                 class="orange-text">{{$client->instagram}}</span></li>
