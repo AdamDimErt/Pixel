@@ -199,6 +199,7 @@ itemIdPickers.forEach(async item => {
             firstDay: 1,
             format: 'dd/mm/yyyy',
             minDate: new Date(),
+            defaultDate: new Date(),
             autoClose: true
         });
         item.parentNode.insertAdjacentHTML('afterend', loaderElement)
@@ -360,6 +361,7 @@ itemIdPickers.forEach(async item => {
                     firstDay: 1,
                     format: 'dd/mm/yyyy',
                     minDate: new Date(rentStartDate),
+                    defaultDate: new Date(),
                     autoClose: true,
                     disableDayFn: (date => {
                         if (availableRentEndDates.length > 0) {
