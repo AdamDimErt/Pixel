@@ -619,6 +619,10 @@ input[type="checkbox"]:checked + span:not(.lever)::before {
     background: transparent;
 }
 
+.selects-container {
+    color: black !important;
+}
+
 .discount-btn {
     position: absolute;
     bottom: 0px;
