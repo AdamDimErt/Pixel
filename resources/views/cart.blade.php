@@ -1,8 +1,7 @@
 @extends('app')
 @section('content')
-    @if (count($goodsInCart) > 0)
+    @if (count($items) > 0)
         <h5 class="white-text">{{__('translations.Cart')}}</h5>
-        <p class="grey-text">{{__('translations.Total amount')}}: {{$totalCount}}</p>
         <div class="main-loader center">
             <div class="col s12 center big loader-holder">
                 <div class="preloader-wrapper active">
@@ -64,6 +63,18 @@
                                 <p>{{__('translations.Description')}}: <b
                                         class="truncate">{{$item->good['description_' . session()->get('locale', 'ru')]}}</b>
                                 </p>
+                                <div class="col s12 input-field white-text hide">
+                                    <select
+                                        name="{{$item->good->id . 'pixelrental' . $item->id}}[item-id]"
+                                        data-good-id="{{$item->good->id}}"
+                                        data-old-item-id="{{$item->id}}"
+                                        class="white-text left item-id-selector" required>
+                                        <option value="" disabled
+                                                selected>{{__('translations.Item id select')}}:
+                                        </option>
+                                    </select>
+                                    <label>{{__('translations.Item id')}}</label>
+                                </div>
                                 <div class="col s12 input-field hide">
                                     <input
                                         name="{{$item->good->id . 'pixelrental' . $item->id}}[rent_start_date]"
@@ -116,7 +127,7 @@
                                     <h5 class="inline">{{__('translations.Total')}}:
                                         @if($item->good->discount_cost && $item->good->discount_cost != 0)
                                             <span
-                                                class="good-cost-holder orange-text text-darken-4">{{$item->totalCost / 100 * (100 - $client['discount'])}}
+                                                class="good-cost-holder orange-text text-darken-4">{{$item->good->discount_cost / 100 * (100 - $client['discount'])}}
                                             </span>
                                             {{__('translations.KZT')}}
                                             @if(Auth::guard('clients')->id() && $client['discount'])
@@ -126,7 +137,7 @@
                                         @else
                                             @auth('clients')
                                                 <span
-                                                    class="good-cost-holder">{{$item->totalCost / 100 * (100 - $client['discount'])}}
+                                                    class="good-cost-holder">{{$item->good->cost / 100 * (100 - $client['discount'])}}
                                                 </span>
                                                 {{__('translations.KZT')}}
                                                 @if(Auth::guard('clients')->id() && $client['discount'])
@@ -136,7 +147,7 @@
                                             @endauth
                                             @guest('clients')
                                                 <span
-                                                    class="good-cost-holder">{{$item->totalCost}}
+                                                    class="good-cost-holder">{{$item->good->discount_cost ?? $item->good->cost}}
                                                 </span>
                                                 {{__('translations.KZT')}}
                                             @endguest

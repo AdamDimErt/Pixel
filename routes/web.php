@@ -24,6 +24,7 @@ Route::prefix('/')->group(function () {
 
     Route::post('/add-to-cart', [HttpControllers\CartController::class, 'addToCart']);
     Route::post('/remove-from-cart', [HttpControllers\CartController::class, 'removeFromCart']);
+    Route::post('/change-cart-key', [HttpControllers\CartController::class, 'changeCartKey']);
     Route::post('/cleanup-cart', [HttpControllers\CartController::class, 'cleanupCart']);
     Route::post('/additional-add', [HttpControllers\CartController::class, 'additionalAdd']);
     Route::post('/additional-remove', [HttpControllers\CartController::class, 'additionalRemove']);
@@ -74,3 +75,4 @@ Route::prefix('/profile')->group(function () {
 
 Route::get('{good}', [HttpControllers\GoodController::class, 'view'])->name('viewGood');
 Route::get('autofill/{goodName}', [HttpControllers\GoodController::class, 'autofill'])->name('autofill');
+Route::post('good/{id}/get-items', [HttpControllers\GoodController::class, 'getAvailableItems'])->name('getAvailableItems');

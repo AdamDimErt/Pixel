@@ -312,4 +312,6 @@ return [
     'Scan your signature on a white background' => 'Scan your signature on a white background',
     'and' => 'and',
     'OrderItem is_additional help' => 'If the good is taken as an additional, then all operations with it will be applied as if it is an additional',
+    'Item id' => 'Айди конкретного экземпляра товара',
+    'Item id select' => 'Choose one good object from available ones'
 ];

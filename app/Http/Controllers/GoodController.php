@@ -43,4 +43,18 @@ class GoodController extends Controller
 
         return redirect(route('viewGood', ['good' => $good]));
     }
+
+    public function getAvailableItems(Request $request, int $id)
+    {
+        $good = Good::query()->find($id);
+
+        $items = $good->items()->with('good')->get();
+
+        foreach ($items as $item){
+            $item->good->name = $item->good['name_'.session()->get('locale', 'ru')];
+        }
+
+        return response()
+            ->json(['available_items' => $items]);
+    }
 }

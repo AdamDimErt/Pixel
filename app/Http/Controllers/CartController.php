@@ -46,6 +46,19 @@ class CartController extends Controller
             ->cookie('cart', json_encode($cartData), 60 * 24 * 30);
     }
 
+    public function changeCartKey(Request $request): JsonResponse
+    {
+        $cartData = json_decode($request->cookie('cart', '{}'), true);
+        $keyToRemove = $request->input('key_to_remove');
+        unset($cartData[$keyToRemove]);
+
+        $cartData[$request->input('key_to_set')] = [];
+
+        return response()
+            ->json(['success' => true])
+            ->cookie('cart', json_encode($cartData), 60 * 24 * 30);
+    }
+
     public function getCartCount(Request $request): JsonResponse
     {
         $cartData = json_decode($request->cookie('cart', '{}'), true);
@@ -74,38 +87,14 @@ class CartController extends Controller
             $client = null;
         }
 
-        $idCounts = $this->countDistinctKeys($cartData);
-        $keys = [];
-        foreach ($cartData as $subArray) {
-            $keys = array_merge($keys, array_keys($subArray));
+        $itemIds = [];
+
+        forEach($cartData as $key => $value){
+            $itemIds[] = explode('pixelrental', $key)[1];
         }
 
-        $distinctKeys = [];
-
-        foreach ($cartData as $key => $value) {
-            $distinctKeys[] = explode('pixelrental', $key)[0];
-        }
-
-        $goodsInCart = Good::query()->whereIn('id', $distinctKeys)
-            ->with(['attachment'])
-            ->get();
-
-        $items = [];
-        $totalCount = 0;
-        $goodsInCart->map(function ($good) use (&$totalCount, $idCounts, &$items, &$cartData) {
-            $goodId = $good->id;
-            $count = $idCounts[$goodId] ?? 0;
-            $good->cookie_count = $count;
-            $totalCount += $count;
-            foreach ($good->items()->take($idCounts[$good->id])->get() as $item) {
-                $item->totalCost = $this->countCostWithAdditionals($item, $cartData);
-                $items[] = $item;
-            }
-
-            return $good;
-        });
-
-        return response(view('cart', compact('goodsInCart', 'totalCount', 'items', 'cartData', 'client')))->cookie('cart', json_encode($cartData), 60 * 24 * 30);
+        $items = Item::query()->whereIn('id', $itemIds)->get();
+        return response(view('cart', compact('items', 'cartData', 'client')))->cookie('cart', json_encode($cartData), 60 * 24 * 30);
     }
 
     public function countDistinctKeys($array)

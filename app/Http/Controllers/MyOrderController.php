@@ -46,7 +46,7 @@ return redirect(route('logout'));
 
         if (is_null($client)) {
             \Log::info($request->path());
-return redirect(route('logout'));
+            return redirect(route('logout'));
         }
 
         DB::beginTransaction();
