@@ -115,7 +115,7 @@ itemIdPickers.forEach(async item => {
         .catch(error => {
             console.error('Error fetching data:', error);
         });
-    item.innerHTML = '<option value="" disabled selected>Подберите свободный вариант:</option>'
+    item.innerHTML = '<option value="" disabled selected>Подберите свободный вариант товара:</option>'
     availableItems.forEach(avItem => {
         item.innerHTML += `<option value="${avItem.id}">${avItem.good.name} (${avItem.id})</option>`
     })
