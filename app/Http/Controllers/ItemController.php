@@ -189,6 +189,16 @@ class ItemController extends Controller
                     unset($timeSpans[array_search($span, $timeSpans)]);
                 }
             }
+
+            $startRentTime = Carbon::parse($startDate.' '.$startTime, 'Asia/Almaty');
+            foreach ($timeSpans as $span){
+                foreach ($timeSpans as $span) {
+                    $time = Carbon::parse($finishDate.' '.$span, 'Asia/Almaty');
+                    if ($time->lt($startRentTime)) {
+                        unset($timeSpans[array_search($span, $timeSpans)]);
+                    }
+                }
+            }
         }
 
         usort($timeSpans, function ($a, $b) {
