@@ -619,7 +619,7 @@ input[type="checkbox"]:checked + span:not(.lever)::before {
     background: transparent;
 }
 
-.selects-container {
+.modal-content.datepicker-container .datepicker-calendar-container .select-wrapper .select-dropdown.dropdown-trigger {
     color: black !important;
 }
 
