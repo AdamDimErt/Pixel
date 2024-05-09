@@ -78,7 +78,7 @@
     <br>
     3.1.5. в случае поломки, полной утраты, утери, невозврата оборудования Арендатор обязан в течение 1 (Одного)
     календарного дня предоставить новое аналогичное оборудование, либо выплатить Арендодателю <b>стоимость
-        оборудования {{$order->amount_paid}} тенге</b>, настоящего Договора. В таком случае датой возврата оборудования
+        оборудования {{$order->totalDamageCost()}} тенге</b>, настоящего Договора. В таком случае датой возврата оборудования
     и прекращения действия договора считается дата внесения денежных средств, в размере полной стоимости оборудования и
     оплаты задолженности по договору.
     <br>
@@ -235,13 +235,13 @@
                     <td>1</td>
                     <td>{{$orderItem->rent_start_date . ' ' . $orderItem->rent_start_time}}</td>
                     <td>{{$orderItem->rent_end_date . ' ' . $orderItem->rent_end_time}}</td>
-                    <td>{{$orderItem->amount_paid / $orderItem->amount_of_days}} тенге</td>
-                    <td>{{$orderItem->amount_paid}} тенге</td>
+                    <td>{{$orderItem->item->good->damage_cost}} тенге</td>
+                    <td>{{$orderItem->item->good->damage_cost}} тенге</td>
                 </tr>
             @endforeach
             <tr>
                 <td colspan="6"><b>ИТОГО</b></td>
-                <td><b>{{$order->amount_paid}} тенге</b></td>
+                <td><b>{{$order->totalDamageCost()}} тенге</b></td>
             </tr>
             </tbody>
         </table>

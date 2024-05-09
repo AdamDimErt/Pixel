@@ -90,4 +90,15 @@ class Order extends Model
 
         return '«'.$date->day.'» '.str_pad($date->month, 2, '0', STR_PAD_LEFT).' '.$date->year;
     }
+
+    public function totalDamageCost()
+    {
+        $totalSum = 0;
+
+        foreach ($this->orderItems as $orderItem){
+            $totalSum += $orderItem->item->good->damage_cost;
+        }
+
+        return $totalSum;
+    }
 }
