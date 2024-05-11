@@ -22,6 +22,7 @@ final class OrderItem extends Model
         'item_id' => Where::class,
         'order_id' => Where::class,
         'amount_of_days' => WhereMaxMin::class,
+        'status' => Where::class,
         'amount_paid' => WhereMaxMin::class,
         'rent_start_date' => WhereDateStartEnd::class,
         'rent_end_date' => WhereDateStartEnd::class,
@@ -30,6 +31,7 @@ final class OrderItem extends Model
     protected $allowedSorts = [
         'item_id',
         'order_id',
+        'status',
         'amount_paid',
         'rent_start_date',
         'rent_end_date',
