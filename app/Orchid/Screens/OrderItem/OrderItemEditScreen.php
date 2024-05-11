@@ -178,7 +178,7 @@ class OrderItemEditScreen extends Screen
 
         Alert::info('You have successfully created a orderItem.');
 
-        return redirect()->route('platform.orderItems.list');
+        return redirect()->back();
     }
 
     /**
