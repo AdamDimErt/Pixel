@@ -25,6 +25,9 @@
                             <input name="name" id="name" type="text" placeholder="{{__('translations.Full name')}}"
                                    class="white-text" required>
                         </div>
+                        <div class="col s12">
+                            <span class="orange-text">*{{__('translations.Full name surname patronymic')}}</span>
+                        </div>
                         <div class="input-field col s12 auth-form-element">
                             <i class="material-icons prefix white-text">phone</i>
                             <input name="phone" id="phone" type="tel" maxlength="12"
@@ -62,6 +65,9 @@
                                        placeholder="{{__('translations.Id card help register')}}">
                             </div>
                         </div>
+                        <div class="col s12">
+                            <span class="orange-text">*{{__('translations.ID card (from both sides)')}}</span>
+                        </div>
                         <div class="input-field col s12 auth-form-element">
                             <i class="material-icons prefix white-text">lock</i>
                             <input name="password" type="password" placeholder="{{__('translations.Password')}}"
@@ -83,7 +89,9 @@
                                        placeholder="{{__('translations.Signature help register')}}">
                             </div>
                         </div>
-                        <span class="orange-text">*{{__('translations.Scan your signature on a white background')}}</span>
+                        <div class="col s12">
+                            <span class="orange-text">*{{__('translations.Scan your signature on a white background')}}</span>
+                        </div>
                         <div class="input-field col s12 auth-form-element">
                             <button type="submit" class="btn orange darken-4 authorization-link">
                                 {{__('translations.Register')}}

@@ -104,9 +104,9 @@ class OrderController extends Controller
                     'is_additional' => true,
                     'amount_paid' => $additionalCost / 100 * (100 - $client->discount),
                     'rent_start_date' => $dateObj1->format('Y-m-d'),
-                    'rent_start_time' => $dateObj1->format('H:i'),
+                    'rent_start_time' => $dateObj1->format('H:i:s'),
                     'rent_end_date' => $dateObj2->format('Y-m-d'),
-                    'rent_end_time' => $dateObj2->format('H:i'),
+                    'rent_end_time' => $dateObj2->format('H:i:s'),
                 ];
             }
 
@@ -118,9 +118,9 @@ class OrderController extends Controller
                 'additionals' => json_encode($cartData[$itemKey]),
                 'amount_paid' => $currentItemCost,
                 'rent_start_date' => $dateObj1->format('Y-m-d'),
-                'rent_start_time' => $dateObj1->format('H:i'),
+                'rent_start_time' => $dateObj1->format('H:i:s'),
                 'rent_end_date' => $dateObj2->format('Y-m-d'),
-                'rent_end_time' => $dateObj2->format('H:i'),
+                'rent_end_time' => $dateObj2->format('H:i:s'),
             ];
 
             $totalSum += $currentItemCost;

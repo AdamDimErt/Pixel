@@ -83,7 +83,7 @@ return [
     'Tenge per day' => 'тг/сутки',
     'Already have an account?' => 'Уже есть аккаунт?',
     'Your instagram' => 'Ваш instagram (только тег без @)',
-    'Id card help register' => 'Удостоверение личности (с двух сторон)',
+    'Id card help register' => 'Удостоверение личности',
     'Editing' => 'Редактирование',
     'Favorites' => 'Любимые',
     'Cart' => 'Корзина',
@@ -313,5 +313,7 @@ return [
     'OrderItem is_additional help' => 'Если товар берут как дополнение, то к нему будет применена цена дополнения, а не полная',
     'and' => 'и',
     'Item id' => 'Свободный вариант',
-    'Item id select' => 'Подберите свободный вариант'
+    'Item id select' => 'Подберите свободный вариант',
+    'Full name surname patronymic' => 'Полностью - фамилия, имя, отчество',
+    'ID card (from both sides)' => 'Двумя отдельными файлами с двух сторон'
 ];
