@@ -13,11 +13,10 @@ class GoodController extends Controller
 {
     public function index(Request $request): \Illuminate\Contracts\Foundation\Application|Factory|View|Application
     {
-        $goods = Good::query()->get();
+        $viewedGoodTypes = GoodType::query()
+            ->with('goods.attachment')->get();
 
-        $goodTypeDesc = __('translations.All goods');
-
-        return view('good', compact('goods', 'goodTypeDesc'));
+        return view('good', compact('viewedGoodTypes'));
     }
 
     public function view(Good $good)
@@ -29,12 +28,10 @@ class GoodController extends Controller
 
     public function goodList(string $goodTypeCode, Request $request): \Illuminate\Contracts\Foundation\Application|Factory|View|Application
     {
-        $goodType = GoodType::query()->where('code', '=', $goodTypeCode)->first();
-        $goods = Good::query()->where('good_type_id', '=', $goodType->id)
-            ->with(['attachment'])
-            ->get();
+        $viewedGoodTypes = GoodType::query()->where('code', '=', $goodTypeCode)
+            ->with('goods.attachment')->get();
 
-        return view('good', compact('goods', 'goodType'));
+        return view('good', compact('viewedGoodTypes'));
     }
 
     public function autofill(string $goodName)

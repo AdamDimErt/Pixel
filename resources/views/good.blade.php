@@ -1,21 +1,19 @@
 @extends('app')
 @section('content')
+        @foreach($viewedGoodTypes as $goodType)
     <div class="row">
-        @if(isset($goodType))
-            <h5 class="white-text page-presenter-header">{{$goodType->description}}</h5>
-        @else
-            <h5 class="white-text page-presenter-header">{{__('translations.All goods')}}</h5>
-        @endif
-        @if(count($goods) != 0)
-            @foreach($goods as $good)
-                <div class="col s6 m4 l3">
-                    @include('goodCard', ['good' => $good])
-                </div>
-            @endforeach
-        @else
-            <h5 class="white-text center">{{__('translations.There is nothing here yet')}} :(</h5>
-        @endif
+            <h5 class="white-text page-presenter-header">{{__('translations.' . $goodType->code)}}</h5>
+            @if(count($goodType->goods) != 0)
+                @foreach($goodType->goods as $good)
+                    <div class="col s6 m4 l3">
+                        @include('goodCard', ['good' => $good])
+                    </div>
+                @endforeach
+            @else
+                <h5 class="white-text center">{{__('translations.There is nothing here yet')}} :(</h5>
+            @endif
     </div>
+        @endforeach
     @push('scripts')
         <script src="{{asset('js/favoriteActions.js')}}"></script>
         <script src="{{asset('js/cart.js')}}"></script>
