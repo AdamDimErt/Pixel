@@ -315,5 +315,6 @@ return [
     'Item id' => 'Свободный вариант',
     'Item id select' => 'Подберите свободный вариант',
     'Full name surname patronymic' => 'Полностью - фамилия, имя, отчество',
-    'ID card (from both sides)' => 'Двумя отдельными файлами с двух сторон'
+    'ID card (from both sides)' => 'Двумя отдельными файлами с двух сторон',
+    'not chosen' => 'Не выбран',
 ];

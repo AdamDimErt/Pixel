@@ -313,5 +313,6 @@ return [
     'and' => 'and',
     'OrderItem is_additional help' => 'If the good is taken as an additional, then all operations with it will be applied as if it is an additional',
     'Item id' => 'Unrented variant of good',
-    'Item id select' => 'Choose an unrented good'
+    'Item id select' => 'Choose an unrented good',
+    'not chosen' => 'Not chosen',
 ];
