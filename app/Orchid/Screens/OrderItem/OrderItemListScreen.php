@@ -3,6 +3,8 @@
 namespace App\Orchid\Screens\OrderItem;
 
 use App\Models\OrderItem;
+use App\Orchid\Filters\OrderItemNameFilter;
+use App\Orchid\Layouts\OrderItem\OrderItemFiltersLayout;
 use App\Orchid\Layouts\OrderItem\OrderItemListLayout;
 use Illuminate\Http\Request;
 use Orchid\Screen\Actions\Link;
@@ -18,7 +20,7 @@ class OrderItemListScreen extends Screen
     public function query(): array
     {
         return [
-            'orderItems' => OrderItem::filters()->defaultSort('id')->paginate(),
+            'orderItems' => OrderItem::filters()->filters(OrderItemFiltersLayout::class)->paginate(),
         ];
     }
 
@@ -60,6 +62,7 @@ class OrderItemListScreen extends Screen
     public function layout(): array
     {
         return [
+            OrderItemFiltersLayout::class,
             OrderItemListLayout::class,
         ];
     }

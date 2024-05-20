@@ -6,7 +6,6 @@ use App\Models\OrderItem;
 use Orchid\Screen\Actions\Link;
 use Orchid\Screen\Components\Cells\DateTimeSplit;
 use Orchid\Screen\Fields\DateRange;
-use Orchid\Screen\Fields\Input;
 use Orchid\Screen\Fields\NumberRange;
 use Orchid\Screen\Fields\Select;
 use Orchid\Screen\Layouts\Table;
@@ -34,9 +33,6 @@ class OrderItemListLayout extends Table
         return [
             TD::make('name', __('translations.Name'))
                 ->sort()
-                ->filter(
-                    Input::make()
-                )
                 ->render(function (OrderItem $orderItemItem) {
                     return Link::make($orderItemItem->item->good['name_'.session()->get('locale', 'ru')])
                         ->route('platform.orderItems.edit', $orderItemItem);

@@ -2,6 +2,15 @@
 
 namespace App\Orchid\Layouts\OrderItem;
 
-class OrderItemFiltersLayout
+use App\Orchid\Filters\OrderItemNameFilter;
+use Orchid\Screen\Layouts\Selection;
+
+class OrderItemFiltersLayout extends Selection
 {
+    public function filters(): array
+    {
+        return [
+            OrderItemNameFilter::class,
+        ];
+    }
 }
