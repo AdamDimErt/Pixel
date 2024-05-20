@@ -148,6 +148,9 @@ class OrderItemEditScreen extends Screen
 
         $orderItem->fill($request->input('orderItem'));
 
+        $orderItem->save();
+        $orderItem->fresh()->load('item.good');
+
         if (! $request->input('orderItem.additionals')) {
             $orderItem->additionals = '[]';
         }
