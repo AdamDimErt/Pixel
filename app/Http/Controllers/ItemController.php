@@ -160,7 +160,7 @@ class ItemController extends Controller
             ->whereIn('status', ['in_rent', 'confirmed', 'waiting'])
             ->select(['rent_start_date', 'rent_start_time'])
             ->where('item_id', '=', $item->id)
-            ->where('rent_start_date', '>=', $finishDate)
+            ->where('rent_start_date', '=', $finishDate)
             ->orderBy('rent_start_time', 'ASC')
             ->first();
 
@@ -168,6 +168,7 @@ class ItemController extends Controller
 
         if (! is_null($relatedOrderTimeStamps)) {
             $startDateSplitted = explode(':', $relatedOrderTimeStamps->rent_start_time);
+
             for ($minutes = (int) $startDateSplitted[1]; $minutes >= 0; $minutes -= 5) {
                 $timeSpans[] = (str_pad((int) $startDateSplitted[0], 2, '0', STR_PAD_LEFT).':'.str_pad($minutes, 2, '0', STR_PAD_LEFT));
             }
@@ -192,11 +193,9 @@ class ItemController extends Controller
 
             $startRentTime = Carbon::parse($startDate.' '.$startTime, 'Asia/Almaty');
             foreach ($timeSpans as $span){
-                foreach ($timeSpans as $span) {
-                    $time = Carbon::parse($finishDate.' '.$span, 'Asia/Almaty');
-                    if ($time->lt($startRentTime)) {
-                        unset($timeSpans[array_search($span, $timeSpans)]);
-                    }
+                $time = Carbon::parse($finishDate.' '.$span, 'Asia/Almaty');
+                if ($time->lt($startRentTime)) {
+                    unset($timeSpans[array_search($span, $timeSpans)]);
                 }
             }
         }
