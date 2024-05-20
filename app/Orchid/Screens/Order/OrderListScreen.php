@@ -71,6 +71,11 @@ class OrderListScreen extends Screen
         $order = Order::findOrFail($request->get('id'));
         $order->status = 'cancelled';
         $order->save();
+
+        foreach($order->orderItems as $item){
+            $item->status = 'cancelled';
+            $item->save();
+        }
         Toast::info(__('translations.Order was cancelled'));
     }
 
@@ -92,6 +97,10 @@ class OrderListScreen extends Screen
         $order = Order::findOrFail($request->get('id'));
         $order->status = 'in_rent';
         $order->save();
+        foreach($order->orderItems as $item){
+            $item->status = 'in_rent';
+            $item->save();
+        }
         Toast::info(__('Order was confirmed'));
     }
 
