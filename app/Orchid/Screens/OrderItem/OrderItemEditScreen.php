@@ -73,8 +73,6 @@ class OrderItemEditScreen extends Screen
     {
         $itemOptions = Item::all()->pluck('name', 'id')->toArray();
 
-        array_unshift($itemOptions, __('translations.not chosen'));
-
         return [
 
             Layout::rows([
@@ -84,10 +82,12 @@ class OrderItemEditScreen extends Screen
                         $itemOptions
                     )
                     ->help(__('translations.OrderItem item help'))
+                    ->required()
                     ->title(__('translations.Item')),
 
                 Relation::make('orderItem.order_id')
                     ->fromModel(Order::class, 'id')
+                    ->required()
                     ->help(__('translations.OrderItem order help'))
                     ->title(__('translations.Order')),
 
@@ -100,6 +100,7 @@ class OrderItemEditScreen extends Screen
                         'cancelled' => __('translations.cancelled'),
                     ])
                     ->title(__('translations.Status'))
+                    ->required()
                     ->help(__('translations.OrderItem status help')),
 
                 Select::make('orderItem.is_additional')
@@ -108,27 +109,32 @@ class OrderItemEditScreen extends Screen
                         false => 'Нет',
                     ])
                     ->title(__('translations.Is additional'))
+                    ->required()
                     ->help(__('translations.OrderItem is_additional help')),
 
                 DateTimer::make('orderItem.rent_start_date')
                     ->title(__('translations.Rent start date'))
                     ->placeholder(__('translations.OrderItem rent_start help'))
+                    ->required()
                     ->help(__('translations.OrderItem rent_start help'))
                     ->format('Y-m-d'),
 
                 Select::make('orderItem.rent_start_time')
                     ->options($this->generateTimeSpans())
+                    ->required()
                     ->title(__('translations.Rent start time'))
                     ->help(__('translations.OrderItem rent_start_time help')),
 
                 DateTimer::make('orderItem.rent_end_date')
                     ->title(__('translations.Rent end date'))
+                    ->required()
                     ->placeholder(__('translations.OrderItem rent_end help'))
                     ->help(__('translations.OrderItem rent_end help'))
                     ->format('Y-m-d'),
 
                 Select::make('orderItem.rent_end_time')
                     ->options($this->generateTimeSpans())
+                    ->required()
                     ->title(__('translations.Rent end time'))
                     ->help(__('translations.OrderItem rent_end_time help')),
             ]),
@@ -142,14 +148,23 @@ class OrderItemEditScreen extends Screen
     {
         $orderId = $request->input('orderItem')['order_id'];
 
+        $item = Item::find($request->input('orderItem')['item_id']);
+
         $order = Order::query()->find($orderId);
 
         $client = $order->owner;
 
         $orderItem->fill($request->input('orderItem'));
+        $dateObj1 = DateTime::createFromFormat('Y-m-d H:i:s', $request->all()['orderItem']['rent_start_date'].' '.$request->all()['orderItem']['rent_start_time']);
+        $dateObj2 = DateTime::createFromFormat('Y-m-d H:i:s', $request->all()['orderItem']['rent_end_date'].' '.$request->all()['orderItem']['rent_end_time']);
 
-        $orderItem->save();
-        $orderItem->fresh()->load('item.good');
+        $diffInSeconds = $dateObj2->getTimestamp() - $dateObj1->getTimestamp();
+
+        $diffInDays = ceil($diffInSeconds / (60 * 60 * 24));
+
+        $diffInDays = max(1, $diffInDays);
+
+        $orderItem->amount_of_days = $diffInDays;
 
         if (! $request->input('orderItem.additionals')) {
             $orderItem->additionals = '[]';
@@ -157,14 +172,8 @@ class OrderItemEditScreen extends Screen
 
         $totalAmount = 0;
 
-        $dateObj1 = DateTime::createFromFormat('Y-m-d H:i:s', $orderItem->rent_start_date.' '.$orderItem->rent_start_time);
-        $dateObj2 = DateTime::createFromFormat('Y-m-d H:i:s', $orderItem->rent_end_date.' '.$orderItem->rent_end_time);
-        $interval = $dateObj1->diff($dateObj2);
-        $diffInDays = $interval->days === 0 ? 1 : $interval->days;
 
-        $orderItem->amount_of_days = $diffInDays;
-
-        $totalAmount += $orderItem->item->good->discount_cost ?? $orderItem->item->good->cost;
+        $totalAmount += $item->good->discount_cost ?? $item->good->cost;
 
         $totalAmount *= $diffInDays;
 
