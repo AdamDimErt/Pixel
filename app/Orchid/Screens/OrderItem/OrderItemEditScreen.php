@@ -71,13 +71,18 @@ class OrderItemEditScreen extends Screen
 
     public function layout(): array
     {
+        $itemOptions = Item::all()->pluck('name', 'id')->toArray();
+
+        array_unshift($itemOptions, __('translations.not chosen'));
+
         return [
 
             Layout::rows([
 
-                Relation::make('orderItem.item_id')
-                    ->fromModel(Item::class, 'id')
-                    ->displayAppend('name')
+                Select::make('orderItem.item_id')
+                    ->options(
+                        $itemOptions
+                    )
                     ->help(__('translations.OrderItem item help'))
                     ->title(__('translations.Item')),
 
