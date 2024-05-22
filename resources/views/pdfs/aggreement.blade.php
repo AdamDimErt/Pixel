@@ -291,7 +291,7 @@
                 <tr>
                     <td>
                         {{$orderItem->item->good->name_ru}}
-                        @foreach($orderItem->getAdditionals() as $additional)
+                        @foreach($orderItem->getAdditionals()->load('good') as $additional)
                             <br>
                             +{{$additional->good->name_ru}}
                         @endforeach
