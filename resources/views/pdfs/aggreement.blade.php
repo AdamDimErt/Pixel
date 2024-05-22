@@ -293,7 +293,7 @@
                         {{$orderItem->item->good->name_ru}}
                         @foreach($orderItem->getAdditionals() as $additional)
                             <br>
-                            +{{$additional->name_ru}}
+                            +{{$additional->good->name_ru}}
                         @endforeach
                     </td>
                     <td>{{$orderItem->rent_start_date . ' ' . $orderItem->rent_start_time}}</td>

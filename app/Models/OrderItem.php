@@ -48,7 +48,7 @@ final class OrderItem extends Model
 
     public function getAdditionals(): Collection
     {
-        return Good::whereIn('id', json_decode($this->additionals))->get();
+        return Item::whereIn('id', json_decode($this->additionals))->get();
     }
 
     public function order(): BelongsTo
