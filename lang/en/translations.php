@@ -315,4 +315,5 @@ return [
     'Item id' => 'Unrented variant of good',
     'Item id select' => 'Choose an unrented good',
     'not chosen' => 'Not chosen',
+    'OrderItem additional help' => 'Additionals to a good',
 ];

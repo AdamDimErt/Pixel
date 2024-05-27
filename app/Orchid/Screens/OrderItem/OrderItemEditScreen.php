@@ -91,6 +91,14 @@ class OrderItemEditScreen extends Screen
                     ->help(__('translations.OrderItem order help'))
                     ->title(__('translations.Order')),
 
+                Select::make('orderItem.additionals')
+                    ->options(
+                        $itemOptions
+                    )
+                    ->multiple()
+                    ->help(__('translations.OrderItem additional help'))
+                    ->title(__('translations.Additionals')),
+
                 Select::make('orderItem.status')
                     ->options([
                         null => __('translations.not chosen'),
@@ -167,36 +175,59 @@ class OrderItemEditScreen extends Screen
 
         $orderItem->amount_of_days = $diffInDays;
 
-        if (! $request->input('orderItem.additionals')) {
-            $orderItem->additionals = '[]';
+        $goodAmount = 0;
+
+
+        $goodAmount += $item->good->discount_cost ?? $item->good->cost;
+
+        $goodAmount *= $diffInDays;
+
+        $totalAmount = $goodAmount;
+
+        $orderItem->amount_paid = $goodAmount;
+
+        if ($orderItem->exists && count($orderItem->additionals) != 0) {
+            $totalAmount = 0;
+            $order->amount_paid = $order->amount_paid - OrderItem::query()->where('parent_order_item_id', '=', $orderItem->id)->sum('amount_paid');
+
+            $orderItem->order->save();
+            OrderItem::query()->where('parent_order_item_id', '=', $orderItem->id)->delete();
+
+            $orderItem->additionals = $request->input('orderItem')['additionals'] ?? [];
         }
 
-        $totalAmount = 0;
+        $orderItem->save();
 
-
-        $totalAmount += $item->good->discount_cost ?? $item->good->cost;
-
-        $totalAmount *= $diffInDays;
-
-        if (count($orderItem->getAdditionals()) != 0) {
-            foreach ($orderItem->getAdditionals() as $additional) {
+        if (count($orderItem->additionals) != 0) {
+            $orderItem->is_additional = false;
+            foreach ($orderItem->additionals as $additionalId) {
+                $additional = Item::find($additionalId);
+                OrderItem::query()->create([
+                    'order_id' => $order->id,
+                    'item_id' => $additionalId,
+                    'additionals' => [],
+                    'is_additional' => true,
+                    'status' => $orderItem->status,
+                    'amount_of_days' => $diffInDays,
+                    'parent_order_item_id' => $orderItem->id,
+                    'amount_paid' => ($additional->good->additional_cost ?? $additional->good->cost) * $diffInDays,
+                    'rent_start_date' => $request->input('orderItem')['rent_start_date'],
+                    'rent_start_time' => $request->input('orderItem')['rent_start_time'],
+                    'rent_end_date' => $request->input('orderItem')['rent_end_date'],
+                    'rent_end_time' => $request->input('orderItem')['rent_end_time'],
+                ]);
                 $totalAmount += ($additional->good->additional_cost ?? $additional->good->cost) * $diffInDays;
             }
         }
 
         $totalAmount = $totalAmount / 100 * (100 - $client->discount);
-
-        $orderItem->amount_paid = $totalAmount;
-
-        $orderItem->save();
-
         $order->amount_paid = $order->amount_paid + $totalAmount;
 
         $order->save();
 
         Alert::info('You have successfully created a orderItem.');
 
-        return redirect()->back();
+        return redirect()->route('platform.orderItems.list', ["filter[order_id]" => $orderItem->order->id]);
     }
 
     /**
@@ -206,11 +237,29 @@ class OrderItemEditScreen extends Screen
      */
     public function remove(OrderItem $orderItem)
     {
+        $orderItem->order->amount_paid = $orderItem->order->amount_paid - $orderItem->amount_paid;
+
+        $orderItem->order->save();
+
+        if ($orderItem->is_additional){
+            $parentOrderItem = OrderItem::find($orderItem->parent_order_item_id);
+
+            $newAdditionalIds = $parentOrderItem->additionals;
+
+            unset($newAdditionalIds[array_search($orderItem->id, $parentOrderItem->additionals)]);
+
+            $parentOrderItem->additionals = $newAdditionalIds;
+            $parentOrderItem->save();
+        } else {
+            $orderItem->order->orderItems()->whereIn('item_id', $orderItem->additionals)->delete();
+        }
+
         $orderItem->delete();
 
         Alert::info('You have successfully deleted the orderItem.');
 
-        return redirect()->route('platform.orderItems.list');
+
+        return redirect()->route('platform.orderItems.list', ["filter[order_id]" => $orderItem->order->id]);
     }
 
     public function generateTimeSpans()
