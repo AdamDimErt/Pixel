@@ -85,9 +85,10 @@ class OrderListScreen extends Screen
         $order->status = 'returned';
         $order->save();
 
-        $order->items()->each(function (Item $item) {
+        foreach($order->orderItems as $item){
+            $item->status = 'returned';
             $item->save();
-        });
+        }
 
         Toast::info(__('Order was returned'));
     }
