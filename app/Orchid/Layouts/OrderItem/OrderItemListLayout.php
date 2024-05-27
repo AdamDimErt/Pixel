@@ -2,11 +2,14 @@
 
 namespace App\Orchid\Layouts\OrderItem;
 
+use App\Models\Client;
+use App\Models\Order;
 use App\Models\OrderItem;
 use Orchid\Screen\Actions\Link;
 use Orchid\Screen\Components\Cells\DateTimeSplit;
 use Orchid\Screen\Fields\DateRange;
 use Orchid\Screen\Fields\NumberRange;
+use Orchid\Screen\Fields\Relation;
 use Orchid\Screen\Fields\Select;
 use Orchid\Screen\Layouts\Table;
 use Orchid\Screen\TD;
@@ -40,6 +43,10 @@ class OrderItemListLayout extends Table
 
             TD::make('order_id', __('translations.Order'))
                 ->sort()
+                ->filter(
+                    Relation::make()
+                        ->fromModel(Order::class, 'id')
+                )
                 ->render(function (OrderItem $orderItemItem) {
                     return Link::make($orderItemItem->order->id)
                         ->route('platform.orders.edit', $orderItemItem->order->id);
