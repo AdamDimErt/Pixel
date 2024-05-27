@@ -38,6 +38,13 @@ class OrderItemListLayout extends Table
                         ->route('platform.orderItems.edit', $orderItemItem);
                 }),
 
+            TD::make('order_id', __('translations.Order'))
+                ->sort()
+                ->render(function (OrderItem $orderItemItem) {
+                    return Link::make($orderItemItem->order->id)
+                        ->route('platform.orders.edit', $orderItemItem->order->id);
+                }),
+
             TD::make('status', __('translations.Status'))
                 ->sort()
                 ->filter(
