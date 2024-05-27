@@ -88,6 +88,7 @@ class OrderEditScreen extends Screen
 
                 Select::make('order.status')
                     ->options([
+                        null => __('translations.not chosen'),
                         'returned' => __('translations.returned'),
                         'in_rent' => __('translations.in_rent'),
                         'waiting' => __('translations.waiting'),
