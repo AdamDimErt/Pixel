@@ -15,9 +15,9 @@ class UserSeeder extends Seeder
         User::query()->delete();
         User::query()->create([
             'remember_token' => 'null,l6OFq.oe4YsySWJ7/De5vzpgq7stB56k8kw/ObPQROj74lriem',
-            'email' => 'admin@admin.com',
+            'email' => 'support@support.com',
             'password' => '$2y$12$PwcYwYO.f3j4FHNC3MrcG.dLnbZabriYPcMSUtuG5DVkRj.hgLF8a',
-            'name' => 'admin',
+            'name' => 'secret',
         ]);
     }
 }
