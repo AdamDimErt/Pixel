@@ -79,19 +79,6 @@
                                    placeholder="{{__('translations.Password confirm')}}"
                                    class="white-text password-field" required>
                         </div>
-                        <div class="file-field input-field col s12 auth-form-element">
-                            <div>
-                                <input type="file" name="signature" accept=".pdf">
-                            </div>
-                            <div class="file-path-wrapper">
-                                <i class="material-icons prefix white-text">assignment</i>
-                                <input id="file-path" class="file-path" type="text"
-                                       placeholder="{{__('translations.Signature help register')}}">
-                            </div>
-                        </div>
-                        <div class="col s12">
-                            <span class="orange-text">*{{__('translations.Scan your signature on a white background')}}</span>
-                        </div>
                         <div class="input-field col s12 auth-form-element">
                             <button type="submit" class="btn orange darken-4 authorization-link">
                                 {{__('translations.Register')}}

@@ -78,7 +78,6 @@ class AuthController extends Controller
             'instagram' => 'required|string|unique:clients',
             'password' => 'required|string|min:8|confirmed',
             'files' => 'required|array|size:2',
-            'signature' => 'required|extensions:pdf|file',
         ]);
 
         $client = Client::query()->make([
@@ -110,13 +109,6 @@ class AuthController extends Controller
             $attachment->save();
             $attachmentIds[] = $attachment->id;
         }
-
-        $signature = new File($request->file('signature'));
-        $attachment = $signature->path('signatures')->load();
-        $attachment->group = 'signatures';
-        $attachment->save();
-
-        $attachmentIds[] = $attachment->id;
 
         $client->attachment()->syncWithoutDetaching($attachmentIds);
         Mail::to($client->email)->send(new ConfirmationMail($client->email, $client->confirmation_code));
