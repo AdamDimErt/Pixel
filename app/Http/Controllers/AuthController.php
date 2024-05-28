@@ -77,7 +77,7 @@ class AuthController extends Controller
             'iin' => 'required|string|digits:12',
             'instagram' => 'required|string|unique:clients',
             'password' => 'required|string|min:8|confirmed',
-            'files' => 'required|array|size:2',
+            'files' => 'required|array|min:1|max:2',
         ]);
 
         $client = Client::query()->make([

@@ -80,7 +80,7 @@ return redirect(route('logout'));
                 'string',
                 Rule::unique('clients')->ignore(Auth::guard('clients')->id()),
             ],
-            'files' => 'required|array|size:2',
+            'files' => 'required|array|min:1|max:2',
             'signature' => 'required|extensions:pdf|file',
         ]);
 
