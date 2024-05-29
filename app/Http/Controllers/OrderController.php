@@ -45,8 +45,6 @@ class OrderController extends Controller
 
         $orderItemMessageData = '';
 
-        $orderItemData = [];
-
         $order = Order::query()->create([
             'client_id' => $client->id,
             'amount_paid' => 0,
@@ -98,7 +96,7 @@ class OrderController extends Controller
                 'amount_of_days' => $diffInDays,
                 'order_id' => $order->id,
                 'is_additional' => false,
-                'additionals' => $cartData[$itemKey],
+                'additionals' => $cartData[$itemKey] ?? [],
                 'amount_paid' => $currentItemCost,
                 'rent_start_date' => $dateObj1->format('Y-m-d'),
                 'rent_start_time' => $dateObj1->format('H:i:s'),
