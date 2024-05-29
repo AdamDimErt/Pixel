@@ -46,6 +46,13 @@ class OrderController extends Controller
         $orderItemMessageData = '';
 
         $orderItemData = [];
+
+        $order = Order::query()->create([
+            'client_id' => $client->id,
+            'amount_paid' => 0,
+            'status' => 'waiting',
+        ]);
+
         foreach ($cartData as $itemKey => $itemValue) {
             $itemKeySeparated = explode('pixelrental', $itemKey);
             $goodId = $itemKeySeparated[0];
@@ -85,6 +92,19 @@ class OrderController extends Controller
 ';
             $orderItemMessageData = $orderItemMessageData.'Дополнения к товару:
 ';
+            $parentOrderItem = OrderItem::query()->create([
+                'item_id' => $itemId,
+                'status' => 'waiting',
+                'amount_of_days' => $diffInDays,
+                'order_id' => $order->id,
+                'is_additional' => false,
+                'additionals' => $cartData[$itemKey],
+                'amount_paid' => $currentItemCost,
+                'rent_start_date' => $dateObj1->format('Y-m-d'),
+                'rent_start_time' => $dateObj1->format('H:i:s'),
+                'rent_end_date' => $dateObj2->format('Y-m-d'),
+                'rent_end_time' => $dateObj2->format('H:i:s'),
+            ]);
 
             foreach ($cartData[$itemKey] as $additionalId) {
                 $additional = Item::query()->find($additionalId)->load('good');
@@ -97,8 +117,10 @@ class OrderController extends Controller
 
                 $totalSum += $additionalCost;
 
-                $orderItemData[] = [
+                OrderItem::query()->create([
                     'item_id' => $additionalId,
+                    'order_id' => $order->id,
+                    'parent_order_item_id' => $parentOrderItem->id,
                     'status' => 'waiting',
                     'amount_of_days' => $diffInDays,
                     'is_additional' => true,
@@ -108,21 +130,8 @@ class OrderController extends Controller
                     'rent_start_time' => $dateObj1->format('H:i:s'),
                     'rent_end_date' => $dateObj2->format('Y-m-d'),
                     'rent_end_time' => $dateObj2->format('H:i:s'),
-                ];
+                ]);
             }
-
-            $orderItemData[] = [
-                'item_id' => $itemId,
-                'status' => 'waiting',
-                'amount_of_days' => $diffInDays,
-                'is_additional' => false,
-                'additionals' => $cartData[$itemKey],
-                'amount_paid' => $currentItemCost,
-                'rent_start_date' => $dateObj1->format('Y-m-d'),
-                'rent_start_time' => $dateObj1->format('H:i:s'),
-                'rent_end_date' => $dateObj2->format('Y-m-d'),
-                'rent_end_time' => $dateObj2->format('H:i:s'),
-            ];
 
             $totalSum += $currentItemCost;
 
@@ -131,17 +140,9 @@ class OrderController extends Controller
         if ($client->discount) {
             $totalSum = $totalSum / 100 * (100 - $client->discount);
         }
-        $order = Order::query()->create([
-            'client_id' => $client->id,
-            'amount_paid' => $totalSum,
-            'status' => 'waiting',
-        ]);
 
-        foreach ($orderItemData as $itemToCreate) {
-            $itemToCreate['order_id'] = $order->id;
-
-            OrderItem::query()->create($itemToCreate);
-        }
+        $order->amount_paid = $totalSum;
+        $order->save();
 
         $aggreementFile = makeOrderAgreement($order->fresh(['orderItems', 'owner']));
 

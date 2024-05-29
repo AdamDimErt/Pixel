@@ -190,7 +190,7 @@ class OrderItemEditScreen extends Screen
             $totalAmount = 0;
             $order->amount_paid = $order->amount_paid - OrderItem::query()->where('parent_order_item_id', '=', $orderItem->id)->sum('amount_paid');
 
-            $orderItem->order->save();
+            $order->save();
             OrderItem::query()->where('parent_order_item_id', '=', $orderItem->id)->delete();
 
             $orderItem->additionals = $request->input('orderItem')['additionals'] ?? [];
@@ -198,11 +198,13 @@ class OrderItemEditScreen extends Screen
 
         $orderItem->save();
 
+        $parentOrderItemAdditionalsId = [];
+
         if (count($orderItem->additionals) != 0) {
             $orderItem->is_additional = false;
             foreach ($orderItem->additionals as $additionalId) {
                 $additional = Item::find($additionalId);
-                OrderItem::query()->create([
+                $childOrderItem = OrderItem::query()->create([
                     'order_id' => $order->id,
                     'item_id' => $additionalId,
                     'additionals' => [],
@@ -246,12 +248,12 @@ class OrderItemEditScreen extends Screen
 
             $newAdditionalIds = $parentOrderItem->additionals;
 
-            unset($newAdditionalIds[array_search($orderItem->id, $parentOrderItem->additionals)]);
+            unset($newAdditionalIds[array_search($orderItem->item->id, $parentOrderItem->additionals)]);
 
             $parentOrderItem->additionals = $newAdditionalIds;
             $parentOrderItem->save();
         } else {
-            $orderItem->order->orderItems()->whereIn('item_id', $orderItem->additionals)->delete();
+            $orderItem->order->orderItems()->whereIn('item_id', $orderItem->additionals ?? [])->delete();
         }
 
         $orderItem->delete();
