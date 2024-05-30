@@ -316,4 +316,6 @@ return [
     'Item id select' => 'Choose an unrented good',
     'not chosen' => 'Not chosen',
     'OrderItem additional help' => 'Additionals to a good',
+    'You have already placed an order in the past 15 seconds!' => 'You have already placed an order in the past 15 seconds!',
+    'Try again after few seconds!' => 'Try again after few seconds!',
 ];

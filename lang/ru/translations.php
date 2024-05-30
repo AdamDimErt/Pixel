@@ -318,4 +318,6 @@ return [
     'ID card (from both sides)' => 'Двумя отдельными файлами с двух сторон',
     'not chosen' => 'Не выбран',
     'OrderItem additional help' => 'Дополнения к товару',
+    'You have already placed an order in the past 15 seconds!' => 'Вы уже оформили заказ за прошедшие 15 секунд!',
+    'Try again after few seconds!' => 'Попробуйте ещё раз через несколько секунд...',
 ];

@@ -45,6 +45,7 @@ Route::prefix('/auth')->group(function () {
 
 Route::prefix('/order')->group(function () {
     Route::get('confirm-order', [HttpControllers\OrderController::class, 'confirmOrder'])->name('confirmOrder');
+    Route::get('try-again-later', [HttpControllers\OrderController::class, 'spamGuard'])->name('spamGuard');
     Route::post('settle-order', [HttpControllers\OrderController::class, 'settleOrder'])->name('settleOrder');
 });
 

@@ -13,8 +13,6 @@ services:
       dockerfile: .development/.docker/php/source/Dockerfile
     command: "/docker-entrypoint.sh"
     environment:
-      XDEBUG_CONFIG: client_host=host.docker.internal
-      PHP_IDE_CONFIG: "serverName=${COMPOSE_PROJECT_NAME}"
       APP_DOMAIN: ${APP_DOMAIN}
     volumes:
       - "${COMPOSE_APP_DIR}:${COMPOSE_CONTAINER_DIR}"

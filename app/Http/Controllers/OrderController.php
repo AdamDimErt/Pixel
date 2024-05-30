@@ -11,6 +11,8 @@ use App\Models\Wanted;
 use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Log;
 
 class OrderController extends Controller
 {
@@ -19,9 +21,20 @@ class OrderController extends Controller
         return response(view('ordering.final'))->cookie('cart', '{}', 60 * 30 * 24);
     }
 
+    public function spamGuard()
+    {
+        return response(view('ordering.spamGuard'))->cookie('cart', '{}', 60 * 30 * 24);
+    }
+
     public function settleOrder(Request $request)
     {
         $client = Client::query()->find(Auth::guard('clients')->id());
+
+        if (Cache::get($client->id) !== null){
+            return redirect(route('spamGuard'));
+        }
+
+        Cache::put($client->id, '{}', 15);
 
         $wanted = Wanted::query()
             ->orWhere('iin', '=', $client->iin)
