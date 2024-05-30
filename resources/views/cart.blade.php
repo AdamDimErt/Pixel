@@ -75,7 +75,7 @@
                                     </select>
                                     <label>{{__('translations.Item id')}}</label>
                                 </div>
-                                <div class="col s12 input-field hide">
+                                <div class="col s12 input-field hide begining-date-field">
                                     <input
                                         name="{{$item->good->id . 'pixelrental' . $item->id}}[rent_start_date]"
                                         data-item-id="{{$item->id}}" type="text"
@@ -83,7 +83,7 @@
                                     <label class="field-label"
                                            for="rent_start_date">{{__('translations.Rent start')}}: </label>
                                 </div>
-                                <div class="col s12 input-field white-text hide">
+                                <div class="col s12 input-field white-text hide rent-start-time-field">
                                     <select
                                         name="{{$item->good->id . 'pixelrental' . $item->id}}[start_time]"
                                         class="white-text left rent-start-time" required>
@@ -93,14 +93,14 @@
                                     </select>
                                     <label>{{__('translations.Rent start time')}}</label>
                                 </div>
-                                <div class="col s12 input-field hide">
+                                <div class="col s12 input-field hide ending-date-field">
                                     <input
                                         name="{{$item->good->id . 'pixelrental' . $item->id}}[rent_end_date]"
                                         type="text" class="datepicker white-text ending-date" required>
                                     <label class="field-label"
                                            for="rent_end_date">{{__('translations.Rent end')}}:</label>
                                 </div>
-                                <div class="col s12 input-field white-text hide">
+                                <div class="col s12 input-field white-text hide rent-end-time-field">
                                     <select name="{{$item->good->id . 'pixelrental' . $item->id}}[end_time]"
                                             class="white-text left rent-end-time" required>
                                         <option value="" disabled selected>{{__('translations.Rent end')}}

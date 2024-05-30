@@ -131,6 +131,27 @@ itemIdPickers.forEach(async item => {
         await disableAllOtherOptions(e.target.dataset.goodId, e.target.value)
         e.target.dataset.oldItemId = selectedItemId;
         const item = e.target.parentNode.parentNode.parentNode.parentNode.querySelector('.begining-date')
+        e.target.parentNode.parentNode.parentNode.parentNode.querySelector('.begining-date-field').classList.remove('hide')
+        item.value = null
+        try {
+            const rentStartItem = e.target.parentNode.parentNode.parentNode.parentNode.querySelector('.rent-start-time')
+            rentStartItem.value = null
+            e.target.parentNode.parentNode.parentNode.parentNode.querySelector('.rent-start-time-field').classList.add('hide')
+        } catch (e){
+        }
+        try {
+            const endingDateItem = e.target.parentNode.parentNode.parentNode.parentNode.querySelector('.ending-date')
+            endingDateItem.value = null
+            e.target.parentNode.parentNode.parentNode.parentNode.querySelector('.ending-date-field').classList.add('hide')
+        } catch (e) {}
+        try {
+            const rentEndItem = e.target.parentNode.parentNode.parentNode.parentNode.querySelector('.rent-end-time')
+            rentEndItem.value = null
+            e.target.parentNode.parentNode.parentNode.parentNode.querySelector('.rent-end-time-field').classList.add('hide')
+        } catch (e) {}
+        try {
+            e.target.parentNode.parentNode.parentNode.parentNode.querySelector('.additionals-outer-wrapper').classList.add('hide')
+        } catch (e) {}
         var instance = M.Datepicker.init(item, {
             i18n: {
                 months:
@@ -229,6 +250,20 @@ itemIdPickers.forEach(async item => {
             return forbiddenDates.includes(dateString);
         }
         instance.options.onSelect = async (e) => {
+            const rentStartItem = instance.el.parentNode.parentNode.querySelector('.rent-start-time')
+            rentStartItem.value = null;
+            instance.el.parentNode.parentNode.querySelector('.rent-start-time-field').classList.remove('hide')
+            try {
+                instance.el.parentNode.parentNode.querySelector('.ending-date-field').classList.add('hide')
+                instance.el.parentNode.parentNode.querySelector('.ending-date').value = null
+            } catch (e) {}
+            try {
+                instance.el.parentNode.parentNode.querySelector('.rent-end-time-field').classList.add('hide')
+                instance.el.parentNode.parentNode.querySelector('.rent-end-time').value = null
+            } catch (e) {}
+            try {
+                instance.el.parentNode.parentNode.querySelector('.additionals-outer-wrapper').classList.add('hide')
+            } catch (e) {}
             const day = e.getDate().toString().padStart(2, '0');
             const month = (e.getMonth() + 1).toString().padStart(2, '0');
             const year = e.getFullYear();
@@ -265,13 +300,16 @@ itemIdPickers.forEach(async item => {
             M.FormSelect.init(selector, {});
             selector.onchange = async (e) => {
                 e.target.parentNode.parentNode.parentNode.insertAdjacentHTML('afterend', loaderElement)
-                try {
-                    const additionalsWrapper = e.target.parentNode.parentNode.parentNode.parentNode.querySelector('.additionals-wrapper');
-                    additionalsWrapper.innerHTML = ''
-                } catch (e) {
-                }
                 const rentStartTime = e.target.value;
                 const secondDatepicker = e.target.parentNode.parentNode.parentNode.parentNode.querySelector('.ending-date');
+                secondDatepicker.value = null
+                e.target.parentNode.parentNode.parentNode.parentNode.querySelector('.ending-date-field').classList.remove('hide')
+                try {
+                    e.target.parentNode.parentNode.parentNode.parentNode.querySelector('.rent-end-time-field').classList.add('hide')
+                } catch (e) {}
+                try {
+                    instance.el.parentNode.parentNode.querySelector('.additionals-outer-wrapper').classList.add('hide')
+                } catch (e) {}
                 const responseData = await fetch('/item/' + selectedItemId + '/get-rent-end-dates', {
                     method: 'POST',
                     headers: {
@@ -380,6 +418,13 @@ itemIdPickers.forEach(async item => {
                         const rentEndDate = `${year}-${month}-${day}`;
                         secondDatepickerInstance.el.parentNode.insertAdjacentHTML('afterend', loaderElement)
                         const endTimeSelector = instance.el.parentNode.parentNode.querySelector('.rent-end-time')
+                        endTimeSelector.value = null
+                        try {
+                            instance.el.parentNode.parentNode.querySelector('.rent-end-time-field').classList.remove('hide')
+                        } catch (e) {}
+                        try {
+                            instance.el.parentNode.parentNode.querySelector('.additionals-outer-wrapper').classList.add('hide')
+                        } catch (e) {}
                         const responseData = await fetch('/item/' + selectedItemId + '/get-next-rent-times', {
                             method: 'POST',
                             headers: {
