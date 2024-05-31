@@ -186,6 +186,8 @@ class OrderItemEditScreen extends Screen
 
         $orderItem->amount_paid = $goodAmount;
 
+        $orderItem->additionals = $request->input('orderItem.additionals', []);
+
         if ($orderItem->exists && count($orderItem->additionals) != 0) {
             $totalAmount = 0;
             $order->amount_paid = $order->amount_paid - OrderItem::query()->where('parent_order_item_id', '=', $orderItem->id)->sum('amount_paid');
