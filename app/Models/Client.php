@@ -53,6 +53,7 @@ class Client extends Authenticatable
         'email' => Like::class,
         'instagram' => Like::class,
         'email_confirmed' => Where::class,
+        'blocked' => Where::class,
         'created_at' => WhereDateStartEnd::class,
         'deleted_at' => WhereDateStartEnd::class,
     ];
@@ -65,6 +66,7 @@ class Client extends Authenticatable
         'email',
         'instagram',
         'email_confirmed',
+        'blocked',
         'created_at',
         'deleted_at',
     ];

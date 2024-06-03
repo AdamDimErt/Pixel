@@ -64,6 +64,7 @@ class ClientListLayout extends Table
                 ->filter(
                     Select::make('email_confirmed')
                         ->options([
+                            null => __('translations.not chosen'),
                             1 => __('translations.Confirmed'),
                             0 => __('translations.Not confirmed'),
                         ])
@@ -80,6 +81,7 @@ class ClientListLayout extends Table
                 ->filter(
                     Select::make('email_confirmed')
                         ->options([
+                            null => __('translations.not chosen'),
                             1 => __('translations.Blocked'),
                             0 => __('translations.Not blocked'),
                         ])

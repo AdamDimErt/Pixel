@@ -101,7 +101,6 @@ class OrderItemEditScreen extends Screen
 
                 Select::make('orderItem.status')
                     ->options([
-                        null => __('translations.not chosen'),
                         'returned' => __('translations.returned'),
                         'in_rent' => __('translations.in_rent'),
                         'waiting' => __('translations.waiting'),
@@ -114,8 +113,8 @@ class OrderItemEditScreen extends Screen
 
                 Select::make('orderItem.is_additional')
                     ->options([
-                        true => 'Да',
                         false => 'Нет',
+                        true => 'Да',
                     ])
                     ->title(__('translations.Is additional'))
                     ->required()
@@ -164,6 +163,12 @@ class OrderItemEditScreen extends Screen
         $client = $order->owner;
 
         $orderItem->fill($request->input('orderItem'));
+
+        if ($orderItem->exists && !$orderItem->is_additional){
+            $order->amount_paid = $order->amount_paid - $orderItem->amount_paid;
+            $order->save();
+        }
+
         $dateObj1 = DateTime::createFromFormat('Y-m-d H:i:s', $request->all()['orderItem']['rent_start_date'].' '.$request->all()['orderItem']['rent_start_time']);
         $dateObj2 = DateTime::createFromFormat('Y-m-d H:i:s', $request->all()['orderItem']['rent_end_date'].' '.$request->all()['orderItem']['rent_end_time']);
 
@@ -176,7 +181,6 @@ class OrderItemEditScreen extends Screen
         $orderItem->amount_of_days = $diffInDays;
 
         $goodAmount = 0;
-
 
         $goodAmount += $item->good->discount_cost ?? $item->good->cost;
 
@@ -229,6 +233,11 @@ class OrderItemEditScreen extends Screen
 
         $order->save();
 
+        $order->rent_end_date = $order->orderItems()->max('rent_end_date');
+        $order->rent_start_date = $order->orderItems()->min('rent_start_date');
+
+        $order->save();
+
         Alert::info('You have successfully created a orderItem.');
 
         return redirect()->route('platform.orderItems.list', ["filter[order_id]" => $orderItem->order->id]);
@@ -261,6 +270,11 @@ class OrderItemEditScreen extends Screen
         $orderItem->delete();
 
         Alert::info('You have successfully deleted the orderItem.');
+
+        $orderItem->order->rent_end_date = $orderItem->order->orderItems()->max('rent_end_date');
+        $orderItem->order->rent_start_date = $orderItem->order->orderItems()->min('rent_start_date');
+
+        $orderItem->order->save();
 
 
         return redirect()->route('platform.orderItems.list', ["filter[order_id]" => $orderItem->order->id]);

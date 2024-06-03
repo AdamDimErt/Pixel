@@ -50,7 +50,10 @@ class Order extends Model
         'amount_paid' => WhereMaxMin::class,
         'status' => Where::class,
         'created_at' => WhereDateStartEnd::class,
+        'updated_at' => WhereDateStartEnd::class,
         'deleted_at' => WhereDateStartEnd::class,
+        'rent_start_date' => WhereDateStartEnd::class,
+        'rent_end_date' => WhereDateStartEnd::class,
     ];
 
     protected $allowedSorts = [
@@ -59,7 +62,10 @@ class Order extends Model
         'amount_paid',
         'status',
         'created_at',
+        'updated_at',
         'deleted_at',
+        'rent_start_date',
+        'rent_end_date',
     ];
 
     public function owner(): HasOne
