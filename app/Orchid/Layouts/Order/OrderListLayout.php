@@ -89,6 +89,16 @@ class OrderListLayout extends Table
                 ->align(TD::ALIGN_RIGHT)
                 ->sort(),
 
+            TD::make('rent_start_date', __('translations.Rent start date'))
+                ->usingComponent(DateTimeSplit::class)
+                ->align(TD::ALIGN_RIGHT)
+                ->sort(),
+
+            TD::make('rent_end_date', __('translations.Rent end date'))
+                ->usingComponent(DateTimeSplit::class)
+                ->align(TD::ALIGN_RIGHT)
+                ->sort(),
+
             TD::make(__('Actions'))
                 ->align(TD::ALIGN_CENTER)
                 ->width('100px')

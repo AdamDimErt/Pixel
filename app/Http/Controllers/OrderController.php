@@ -160,6 +160,9 @@ class OrderController extends Controller
         $order->attachment()->syncWithoutDetaching($aggreementFile->id);
         $order->agreement_id = $order->id;
 
+        $order->rent_end_date = $order->orderItems()->max('rent_end_date');
+        $order->rent_start_date = $order->orderItems()->min('rent_start_date');
+
         $order->save();
 
         $aggreementUrl = $aggreementFile->url();
