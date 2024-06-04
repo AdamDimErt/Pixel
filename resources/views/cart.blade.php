@@ -172,10 +172,13 @@
                 <p>{{__('translations.Please note: For late payment of payments specified in the agreement, the Lessor has the right require the Tenant to pay a penalty in the amount of 5% of the unpaid payment for each day delays')}}</p>
             </div>
         </div>
+        <div class="col s12 right-align" id="total-sum-of-items" hidden>
+            <h3>Итого: </h3>
+        </div>
         @auth('clients')
             <div class="col s12 right-align">
                 <a href="#order-placement-modal"
-                   class="btn orange darken-4 auth-link valign-wrapper next-step-btn modal-trigger">
+                   class="btn orange darken-4 auth-link valign-wrapper next-step-btn modal-trigger" disabled>
                     {{__('translations.Place order')}}
                 </a>
             </div>
@@ -183,7 +186,7 @@
         @guest('clients')
             <div class="col s12 right-align">
                 <a href="#auth-modal"
-                   class="btn orange darken-4 auth-link valign-wrapper next-step-btn modal-trigger">
+                   class="btn orange darken-4 auth-link valign-wrapper next-step-btn modal-trigger" disabled>
                     {{__('translations.Place order')}}
                 </a>
                 @include('auth.modal', ['icon' => 'favorite_border', 'title' => __('translations.Authorization required'), 'content' => __('translations.Please enter to your account to continue order settlement')])

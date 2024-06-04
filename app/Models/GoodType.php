@@ -57,6 +57,6 @@ class GoodType extends Model
 
     public function goods(): HasMany
     {
-        return $this->hasMany(Good::class);
+        return $this->hasMany(Good::class)->orderByDesc('priority');
     }
 }

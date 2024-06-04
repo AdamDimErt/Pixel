@@ -43,6 +43,7 @@ class Client extends Authenticatable
 {
     use AsSource, Attachable, Authorizable, Filterable, HasFactory;
 
+    public const RESET_PASSWORD_CACHE_KEY = 'client-reset-password';
     protected $guarded = [];
 
     protected $allowedFilters = [

@@ -320,4 +320,11 @@ return [
     'OrderItem additional help' => 'Дополнения к товару',
     'You have already placed an order in the past 15 seconds!' => 'Вы уже оформили заказ за прошедшие 15 секунд!',
     'Try again after few seconds!' => 'Попробуйте ещё раз через несколько секунд...',
+    'Restore password' => 'Восстановление пароля',
+    'Forgot password' => 'Забыли пароль',
+    'No user iin exists' => 'Пользователь с таким иином не существует',
+    'We sent a link to reset password' => 'Мы отправили на ваш почтовый адрес ссылку со сбросом пароля. Внимание! Ссылка действительна 20 минут',
+    'Click link below to reset password' => 'Перейдите по ссылке для сброса пароля',
+    'restore password mail subject' => 'Сброс пароля. Pixelrental',
+    'user not found' => 'Пользователь не был найден',
 ];

@@ -41,6 +41,10 @@ Route::prefix('/auth')->group(function () {
     Route::post('/login', [HttpControllers\AuthController::class, 'authenticate'])->name('authenticate');
     Route::get('/register', [HttpControllers\AuthController::class, 'register'])->name('register');
     Route::post('/register', [HttpControllers\AuthController::class, 'storeUser'])->name('storeUser');
+    Route::get('/forgot-password', [HttpControllers\AuthController::class, 'forgotPassword'])->name('forgotPassword');
+    Route::post('/forgot-password', [HttpControllers\AuthController::class, 'forgotPasswordPost'])->name('forgotPasswordPost');
+    Route::get('reset-password/{token}', [HttpControllers\AuthController::class, 'resetPassword'])->name('resetPassword');
+    Route::post('reset-password', [HttpControllers\AuthController::class, 'resetPasswordPost'])->name('resetPasswordPost');
 });
 
 Route::prefix('/order')->group(function () {

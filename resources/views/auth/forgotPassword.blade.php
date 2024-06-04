@@ -15,26 +15,32 @@
     <div class="valign-wrapper">
         <div class="main-color center auth-inner">
             <a href="/" class="back-auth-button"><i class="material-icons orange-text text-lighten-3">cancel</i></a>
-            <h5 class="white-text">{{__('translations.Log into your account')}}</h5>
+            <h5 class="white-text">{{__('translations.Restore password')}}</h5>
             <div class="row">
-                <form class="col s12" method="POST" action="">
+                <form class="col s12 auth-form-element" method="POST" action="{{route('forgotPasswordPost')}}" enctype="multipart/form-data">
                     {{csrf_field()}}
                     <div class="row">
-                        <div class="input-field col s12">
-                            <i class="material-icons prefix white-text">phone</i>
-                            <input name="phone" type="tel" placeholder="{{__('translations.Phone')}}" class="white-text">
+                        <div class="input-field col s12 auth-form-element">
+                            <i class="material-icons prefix white-text">credit_card</i>
+                            <input name="iin" id="iin" type="tel" maxlength="12"
+                                   placeholder="{{__('translations.Iin')}}"
+                                   class="white-text"
+                                   required>
                         </div>
-                        <div class="input-field col s12">
-                            <i class="material-icons prefix white-text">lock</i>
-                            <input name="password" type="password" placeholder="{{__('translations.Password')}}" class="white-text">
-                        </div>
-                        <div class="input-field col s12">
+                        <div class="input-field col s12 auth-form-element">
                             <button type="submit" class="btn orange darken-4 authorization-link">
-                                {{__('translations.Log in')}}
+                                {{__('translations.Restore password')}}
                             </button>
                         </div>
+                        @if (session('message'))
+                            <div class="col s12 auth-form-element">
+                                <ul class="green-text">
+                                    <li>{{session('message')}}</li>
+                                </ul>
+                            </div>
+                        @endif
                         @if ($errors->any())
-                            <div class="col s12">
+                            <div class="col s12 auth-form-element">
                                 <ul class="red-text">
                                     @foreach ($errors->all() as $error)
                                         <li>{{ $error }}</li>
@@ -46,11 +52,9 @@
                     <hr>
                 </form>
             </div>
-            <span class="white-text">{{__('translations.Still do not have an account?')}} <a href="{{route('register')}}" class="orange-text"><u>{{__('translations.Register')}}</u></a></span>
-            <br>
-            <a href="{{route('forgotPassword')}}" class="orange-text" style="margin-right: auto"><u>{{__('translations.Forgot password')}}</u></a>
         </div>
     </div>
 </div>
+<script src="{{asset('js/materialize.js')}}"></script>
 </body>
 </html>

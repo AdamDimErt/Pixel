@@ -144,6 +144,11 @@ class GoodEditScreen extends Screen
                     ->maxlength(200)
                     ->required(),
 
+                Input::make('good.priority')
+                    ->title(__('translations.Good priority'))
+                    ->help(__('translations.Good priority help'))
+                    ->type('number'),
+
                 Upload::make('good.attachment')
                     ->help(__('translations.Good attachment help'))
                     ->title(__('translations.Images'))

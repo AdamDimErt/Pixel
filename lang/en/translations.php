@@ -318,4 +318,11 @@ return [
     'OrderItem additional help' => 'Additionals to a good',
     'You have already placed an order in the past 15 seconds!' => 'You have already placed an order in the past 15 seconds!',
     'Try again after few seconds!' => 'Try again after few seconds!',
+    'Restore password' => 'Restore password',
+    'Forgot password' => 'Forgot password',
+    'No user iin exists' => 'No user iin exists',
+    'We sent a link to reset password' => 'We sent a link to reset password on your email. The link is valid for 20 minutes',
+    'Click link below to reset password' => 'Click link below to reset password',
+    'restore password mail subject' => 'Restore password Pixelrental',
+    'user not found' => 'User not found',
 ];

@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ForgotPasswordRequest;
+use App\Http\Requests\ResetPasswordRequest;
 use App\Mail\ConfirmationMail;
+use App\Mail\RestorePasswordMail;
 use App\Models\Client;
 use App\Models\Wanted;
 use Illuminate\Contracts\Foundation\Application;
@@ -12,6 +15,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
@@ -143,5 +147,52 @@ class AuthController extends Controller
         } catch (\Exception) {
             return view('auth.invalidConfirmationLink');
         }
+    }
+
+    public function forgotPassword(): Factory|\Illuminate\Foundation\Application|View|Application
+    {
+        return view('auth.forgotPassword');
+    }
+
+    public function forgotPasswordPost(ForgotPasswordRequest $request)
+    {
+        $iin = $request->input('iin');
+        $client = Client::query()->where('iin', '=', $iin)->where('blocked', '=',false)->first();
+        if (!$client) {
+            return redirect()->back()->withErrors(['authentication' => __('translations.No user iin exists')]);
+        }
+
+        if (Wanted::query()->where('iin', '=', $iin)->exists()) {
+            return redirect()->back()->withErrors(['authentication' => 'Профиль был заблокирован']);
+        }
+
+        $token = Str::random() . $client->email;
+        Cache::put(Client::RESET_PASSWORD_CACHE_KEY . $token, $iin, now()->addMinutes(20));
+        Mail::to($client->email)->send(new RestorePasswordMail($client->iin, $token));
+        return redirect()->back()->with(['message' => __('translations.We sent a link to reset password')]);
+    }
+
+    public function resetPassword(Request $request, string $token)
+    {
+        $confirmationStringSplit = explode('pixelrental', $token);
+        $iin = Cache::pull(Client::RESET_PASSWORD_CACHE_KEY . $confirmationStringSplit[1]);
+        if ($iin !== $confirmationStringSplit[0] || !$iin) {
+            return view('auth.invalidConfirmationLink');
+        }
+        $client = Client::query()->where('iin', '=', $iin)->first();
+        if (!$client || $client->blocked) {
+            return view('auth.userNotFound');
+        }
+
+        return view('auth.resetPassword', ['email' => $client->email]);
+    }
+
+    public function resetPasswordPost(ResetPasswordRequest $request)
+    {
+        $client = Client::query()->where('email', '=', $request->input('email'))->first();
+        $client->password = Hash::make($request->input('password'));
+        $client->save();
+
+        return redirect()->route('login');
     }
 }
