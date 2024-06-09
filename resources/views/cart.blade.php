@@ -17,6 +17,76 @@
                 </div>
             </div>
         </div>
+        <div class="row">
+            <div class="col s12 m6">
+                <h5 class="white-text">Укажите время аренды</h5>
+                <form action="#">
+                    <p>
+                        <label>
+                            <input name="rent-type" type="radio" value="all"/>
+                            <span>Я укажу время аренды для всех товаров сразу</span>
+                        </label>
+                    </p>
+                    <p>
+                        <label>
+                            <input name="rent-type" type="radio" value="individual"/>
+                            <span>Я укажу время аренды для каждого товара</span>
+                        </label>
+                    </p>
+                </form>
+            </div>
+        </div>
+        <div class="col s12 m9 goods-list-rent-type-all hide">
+            <form action="{{route('settleOrderAll')}}" method="POST" id="order-placement-form-rent-type-all">
+                {{csrf_field()}}
+                <div class="col s12 input-field beginning-date-field-rent-type-all">
+                    <input
+                        name="rent_start_date"
+                        type="text"
+                        class="datepicker white-text beginning-date-rent-type-all" required>
+                    <label class="field-label"
+                           for="rent_start_date">{{__('translations.Rent start')}}: </label>
+                </div>
+                <div class="col s12 input-field white-text rent-starttime-field-rent-type-all">
+                    <select
+                        name="start_time"
+                        class="white-text left rent-starttime-rent-type-all" required>
+                        <option value="" disabled
+                                selected>{{__('translations.Choose time')}}:
+                        </option>
+                    </select>
+                    <label>{{__('translations.Rent start time')}}</label>
+                </div>
+                <div class="col s12 input-field ending-datefield-rent-type-all">
+                    <input
+                        name="rent_end_date"
+                        type="text" class="datepicker white-text endingdate-rent-type-all" required>
+                    <label class="field-label"
+                           for="rent_end_date">{{__('translations.Rent end')}}:</label>
+                </div>
+                <div class="col s12 input-field white-text rent-endtime-field-rent-type-all">
+                    <select name="end_time"
+                            class="white-text left rent-end-time-rent-type-all" required>
+                        <option value="" disabled selected>{{__('translations.Rent end')}}
+                            :
+                        </option>
+                    </select>
+                    <label>{{__('translations.Rent end time')}}</label>
+                </div>
+                <ul class="grey darken-4 additionals-outerwrapper-rent-type-all hide">
+                    <li>
+                        <div class="grey darken-4">
+                            <p>
+                                {{__('translations.Additional accessories')}}:
+                            </p>
+
+                        </div>
+                        <div class="grey darken-4 additionalswrapper-rent-type-all">
+                        </div>
+                    </li>
+                </ul>
+            </form>
+        </div>
         <div class="row client-discount-holder hide" @if($client) data-discount-percent="{{$client['discount']}}" @endif>
             <div class="col s12 m3 additional-info white-text hide-on-med-and-up">
                 <span class="grey-text"><u>{{__('translations.Select rental periods for goods')}}</u></span>
@@ -31,7 +101,7 @@
                 <p>{{__('translations.Please note: For late payment of payments specified in the agreement, the Lessor has the right require the Tenant to pay a penalty in the amount of 5% of the unpaid payment for each day delays')}}</p>
                 <hr>
             </div>
-            <div class="col s12 m9 goods-list">
+            <div class="col s12 m9 goods-list hide">
                 <form action="{{route('settleOrder')}}" method="POST" id="order-placement-form">
                     {{csrf_field()}}
                     @foreach($items as $item)
@@ -159,7 +229,7 @@
                     @endforeach
                 </form>
             </div>
-            <div class="col s12 m3 additional-info white-text hide-on-med-and-down">
+            <div class="col s12 m3 additional-info white-text hide-on-med-and-down hide">
                 <span class="grey-text"><u>{{__('translations.Select rental periods for goods')}}</u></span>
                 <p>{{__('translations.All items that you have added to your cart are listed here.')}}</p>
                 <p>{{__('translations.Check each of them for compliance, and, if necessary, remove unnecessary ones.')}}</p>
@@ -172,13 +242,13 @@
                 <p>{{__('translations.Please note: For late payment of payments specified in the agreement, the Lessor has the right require the Tenant to pay a penalty in the amount of 5% of the unpaid payment for each day delays')}}</p>
             </div>
         </div>
-        <div class="col s12 right-align" id="total-sum-of-items" hidden>
-            <h3>Итого: </h3>
+        <div class="col s12 right-align hide" id="total-sum-of-items" >
+            <h5 class="white-text">Итого: <span class="total-cost-holder">0</span> {{__('translations.KZT')}}</h5>
         </div>
         @auth('clients')
             <div class="col s12 right-align">
                 <a href="#order-placement-modal"
-                   class="btn orange darken-4 auth-link valign-wrapper next-step-btn modal-trigger" disabled>
+                   class="btn orange darken-4 auth-link valign-wrapper next-step-btn modal-trigger">
                     {{__('translations.Place order')}}
                 </a>
             </div>
@@ -186,7 +256,7 @@
         @guest('clients')
             <div class="col s12 right-align">
                 <a href="#auth-modal"
-                   class="btn orange darken-4 auth-link valign-wrapper next-step-btn modal-trigger" disabled>
+                   class="btn orange darken-4 auth-link valign-wrapper next-step-btn modal-trigger">
                     {{__('translations.Place order')}}
                 </a>
                 @include('auth.modal', ['icon' => 'favorite_border', 'title' => __('translations.Authorization required'), 'content' => __('translations.Please enter to your account to continue order settlement')])

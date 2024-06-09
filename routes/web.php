@@ -51,6 +51,7 @@ Route::prefix('/order')->group(function () {
     Route::get('confirm-order', [HttpControllers\OrderController::class, 'confirmOrder'])->name('confirmOrder');
     Route::get('try-again-later', [HttpControllers\OrderController::class, 'spamGuard'])->name('spamGuard');
     Route::post('settle-order', [HttpControllers\OrderController::class, 'settleOrder'])->name('settleOrder');
+    Route::post('settle-order-all', [HttpControllers\OrderController::class, 'settleOrderAll'])->name('settleOrderAll');
 });
 
 Route::prefix('/item')->group(function () {
@@ -58,6 +59,8 @@ Route::prefix('/item')->group(function () {
     Route::post('/{item}/get-available-times', [HttpControllers\ItemController::class, 'getAvailableTimes'])->name('getAvailableTimes');
     Route::post('/{item}/get-rent-end-dates', [HttpControllers\ItemController::class, 'getUnavailableRentEndDates'])->name('getUnavailableRentEndDates');
     Route::post('/{item}/get-next-rent-times', [HttpControllers\ItemController::class, 'getAvailableRentEndTimespans'])->name('getAvailableRentEndTimespans');
+    Route::get('get-default-times', [HttpControllers\ItemController::class, 'getDefaultTimes'])->name('getDefaultTimes');
+    Route::post('get-available-items/{id}', [HttpControllers\ItemController::class, 'getAvailableItemsByTime'])->name('getAvailableItemsByTime');
 });
 
 Route::prefix('/profile')->group(function () {

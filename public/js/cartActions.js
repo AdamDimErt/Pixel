@@ -69,8 +69,10 @@ function changeCart(e) {
                 }
                 if (e.target.checked) {
                     controlSumNode.innerHTML = (+controlSumNode.innerHTML + (+this.dataset.additionalCost / 100 * (100 - discount)) * amountOfDays)
+                    changeTotalCost((+this.dataset.additionalCost / 100 * (100 - discount)) * amountOfDays, 'up')
                 } else {
                     controlSumNode.innerHTML = (+controlSumNode.innerHTML - (+this.dataset.additionalCost / 100 * (100 - discount)) * amountOfDays)
+                    changeTotalCost((+this.dataset.additionalCost / 100 * (100 - discount)) * amountOfDays, 'down')
                 }
                 e.target.disabled = false
             })
@@ -78,6 +80,451 @@ function changeCart(e) {
                 console.error('Error:', error);
             });
     }
+}
+
+function changeTotalCost(value, mode) {
+    let currentValue = parseInt(totalCostHolderNumber.innerHTML, 10) ?? 0
+    if (mode === 'up') {
+        currentValue += value
+    } else {
+        currentValue -= value
+    }
+
+    totalCostHolderNumber.innerHTML = currentValue.toString()
+}
+
+const RENT_TIME_TYPE_ALL = 'all';
+const RENT_TIME_TYPE_INDIVIDUAL = 'individual';
+const ORDER_AVAILABLE = true;
+const ORDER_NOT_AVAILABLE = false;
+let rentTimeType = RENT_TIME_TYPE_ALL;
+let isOrderAvailable = ORDER_NOT_AVAILABLE;
+let selectedItems = [];
+const modalTriggerButton = document.querySelector('.btn.orange.darken-4.auth-link.valign-wrapper.next-step-btn.modal-trigger')
+const itemTotalCostTextElement = document.querySelectorAll('h5[class="inline"]');
+const mainFormElement = document.querySelector('.col.s12.m9.goods-list.hide')
+const informationalTextElement = document.querySelector('.col.s12.m3.additional-info.white-text.hide-on-med-and-down')
+const formRentTypeAll = document.querySelector('.col.s12.m9.goods-list-rent-type-all.hide')
+let rentStartDateV2 = ''
+let rentStartTimeV2 = ''
+let rentEndDateV2 = ''
+let rentEndTimeV2 = ''
+let total_cost = 0;
+document.addEventListener('DOMContentLoaded', function() {
+    const radioButtons = document.querySelectorAll('input[name="rent-type"]');
+    changeStateIndividualCost('add')
+    radioButtons.forEach(radio => {
+        radio.addEventListener('change',  async function () {
+            if (this.value === RENT_TIME_TYPE_ALL) {
+                rentTimeType = RENT_TIME_TYPE_ALL;
+                itemTotalCostTextElement.forEach(item => {
+                    item.classList.add('hide')
+                    changeStateIndividualCost('add')
+                })
+                mainFormElement.classList.add('hide');
+                informationalTextElement.classList.remove('hide');
+                formRentTypeAll.classList.remove('hide');
+
+                await fillAllRentType()
+
+            } else {
+                rentTimeType = RENT_TIME_TYPE_INDIVIDUAL;
+                itemTotalCostTextElement.forEach(item => {
+                    item.classList.remove('hide')
+                    changeStateIndividualCost('remove')
+                })
+                mainFormElement.classList.remove('hide');
+                informationalTextElement.classList.remove('hide');
+                formRentTypeAll.classList.add('hide');
+
+                fillIndividualRentType()
+            }
+        })
+    })
+
+    modalTriggerButton.addEventListener('click', (event) => {
+        if (!isOrderAvailable) {
+            event.preventDefault();
+        }
+    })
+
+    updateButtonState();
+
+})
+
+const fillAllRentType = async () => {
+    await fillTimepickers()
+}
+
+const fillTimepickers = async ()=> {
+    const startDatepicker = document.querySelector('.datepicker.white-text.beginning-date-rent-type-all')
+    const startTimePicker = document.querySelector('.white-text.left.rent-starttime-rent-type-all');
+    const endDatePicker = document.querySelector('.datepicker.white-text.endingdate-rent-type-all');
+    const endTimePicker = document.querySelector('.white-text.left.rent-end-time-rent-type-all')
+    let instance = M.Datepicker.init(startDatepicker, {
+        i18n: {
+            months:
+                [
+                    'Январь',
+                    'Февраль',
+                    'Март',
+                    'Апрель',
+                    'Май',
+                    'Июнь',
+                    'Июль',
+                    'Август',
+                    'Сентябрь',
+                    'Октябрь',
+                    'Ноябрь',
+                    'Декабрь'
+                ],
+
+            monthsShort: [
+                'Янв',
+                'Фев',
+                'Мар',
+                'Апр',
+                'Май',
+                'Июн',
+                'Июл',
+                'Авг',
+                'Сен',
+                'Окт',
+                'Ноя',
+                'Дек'
+            ],
+            weekdays:
+                [
+                    'Воскресенье',
+                    'Понедельник',
+                    'Вторник',
+                    'Среда',
+                    'Четверг',
+                    'Пятница',
+                    'Суббота'
+                ],
+            weekdaysShort:
+                [
+                    'Вс',
+                    'Пн',
+                    'Вт',
+                    'Ср',
+                    'Чт',
+                    'Пт',
+                    'Сб'
+                ],
+            weekdaysAbbrev: [
+                'Вс',
+                'Пн',
+                'Вт',
+                'Ср',
+                'Чт',
+                'Пт',
+                'Сб'
+            ],
+            cancel: 'Отменить',
+            clear: 'Очистить',
+            done: 'ОК'
+        },
+        firstDay: 1,
+        format: 'dd/mm/yyyy',
+        minDate: new Date(),
+        defaultDate: new Date(),
+        autoClose: true
+    });
+    instance.options.onSelect = async (e) => {
+        console.log(e);
+        const day = e.getDate().toString().padStart(2, '0');
+        const month = (e.getMonth() + 1).toString().padStart(2, '0');
+        const year = e.getFullYear();
+        rentStartDateV2 = `${year}-${month}-${day}`;
+
+        const responseData = await fetch('/item/get-default-times', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': csrfToken,
+            }
+        })
+            .then(async resp => {
+                return await resp.json()
+            })
+        const availableTimes = responseData.availableTimes
+        startTimePicker.innerHTML = '<option value="" disabled selected>Выберите время:</option>';
+        availableTimes.forEach(time => {
+            startTimePicker.innerHTML += `<option value="${time}" class="black-text">${time}</option>`
+        })
+        M.FormSelect.init(startTimePicker, {});
+        startTimePicker.onchange = async (e) => {
+            rentStartTimeV2 = e.target.value
+            const secondDatepickerInstance = M.Datepicker.init(endDatePicker, {
+                i18n: {
+                    months:
+                        [
+                            'Январь',
+                            'Февраль',
+                            'Март',
+                            'Апрель',
+                            'Май',
+                            'Июнь',
+                            'Июль',
+                            'Август',
+                            'Сентябрь',
+                            'Октябрь',
+                            'Ноябрь',
+                            'Декабрь'
+                        ],
+
+                    monthsShort: [
+                        'Янв',
+                        'Фев',
+                        'Мар',
+                        'Апр',
+                        'Май',
+                        'Июн',
+                        'Июл',
+                        'Авг',
+                        'Сен',
+                        'Окт',
+                        'Ноя',
+                        'Дек'
+                    ],
+                    weekdays:
+                        [
+                            'Воскресенье',
+                            'Понедельник',
+                            'Вторник',
+                            'Среда',
+                            'Четверг',
+                            'Пятница',
+                            'Суббота'
+
+                        ],
+                    weekdaysShort:
+                        [
+                            'Вс',
+                            'Пн',
+                            'Вт',
+                            'Ср',
+                            'Чт',
+                            'Пт',
+                            'Сб'
+                        ],
+
+                    weekdaysAbbrev: [
+                        'Вс',
+                        'Пн',
+                        'Вт',
+                        'Ср',
+                        'Чт',
+                        'Пт',
+                        'Сб'
+                    ],
+                    cancel: 'Отменить',
+                    clear: 'Очистить',
+                    done: 'ОК'
+                },
+                firstDay: 1,
+                format: 'dd/mm/yyyy',
+                minDate: new Date(rentStartDateV2),
+                defaultDate: new Date(),
+                autoClose: true,
+                onSelect: async (e) => {
+                    const day = e.getDate().toString().padStart(2, '0');
+                    const month = (e.getMonth() + 1).toString().padStart(2, '0');
+                    const year = e.getFullYear();
+                    rentEndDateV2 = `${year}-${month}-${day}`;
+                    endTimePicker.innerHTML = '<option value="" disabled selected>Выберите время:</option>';
+                    availableTimes.forEach(time => {
+                        endTimePicker.innerHTML += `<option value="${time}" class="black-text">${time}</option>`
+                    })
+                    M.FormSelect.init(endTimePicker, {});
+                    endTimePicker.onchange = async (e) => {
+                        try {
+                            const additionalsWrapper = e.target.parentNode.parentNode.parentNode.parentNode.parentNode.querySelector('.additionals-wrapper');
+                            additionalsWrapper.innerHTML = ''
+                        } catch (e) {
+                        }
+
+                        rentEndTimeV2 = e.target.value
+                        mainFormElement.classList.remove('hide');
+                        itemIdPickers.forEach(async item => {
+                            console.log(item.parentNode.parentNode.parentNode)
+                            item.parentNode.classList.remove('hide')
+                            const availableItems = await fetch('item/get-available-items/' + item.parentNode.parentNode.parentNode.dataset.goodId, {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'X-CSRF-TOKEN': csrfToken,
+                                },
+                                body: JSON.stringify({
+                                    'start_date': rentStartDateV2,
+                                    'start_time': rentStartTimeV2,
+                                    'end_date': rentEndDateV2,
+                                    'end_time': rentEndTimeV2,
+                                })
+                            }).then(async resp => {
+                                return resp.json()
+                            }).then(response => {
+                                return response.available_items
+                            })
+                            if (availableItems.length == 0) {
+                                item.innerHTML = '<option value="" disabled selected>На выбранную дату нет свободных вариантов</option>'
+                            } else {
+                                item.innerHTML = '<option value="" disabled selected>Подберите свободный вариант:</option>'
+                                availableItems.forEach(avItem => {
+                                    item.innerHTML += `<option value="${avItem.id}">${avItem.good.name} (${avItem.id})</option>`
+                                })
+                            }
+                            var itemSelect = M.FormSelect.init(item, {})
+                            itemSelect.el.onchange = async (e) => {
+                                const cost = e.target.parentNode.parentNode.parentNode.parentNode.parentNode.dataset.goodCost
+
+                                var startDate = new Date(rentStartDateV2 + ' ' + rentStartTimeV2);
+                                var endDate = new Date(rentEndDateV2 + ' ' + rentEndTimeV2);
+
+                                var differenceMs = Math.abs(endDate.getTime() - startDate.getTime());
+
+                                var differenceDays = Math.ceil(differenceMs / (1000 * 60 * 60 * 24)) ?? 1;
+                                e.target.parentNode.parentNode.parentNode.parentNode.parentNode.dataset.amountOfDays = differenceDays;
+                                const discount = +document.querySelector('.client-discount-holder').dataset.discountPercent
+                                if (discount) {
+                                    changeTotalCost((+cost * differenceDays) / 100 * (100 - discount), 'up');
+                                } else {
+                                    changeTotalCost(+cost * differenceDays, 'up');
+                                }
+
+                                let selectedItemText = removeAfterParenthesis(e.target.selectedOptions[0].text);
+                                const selectedItemId = e.target.value
+                                await changeCartKey(e.target.dataset.goodId, selectedItemId, e.target.dataset.oldItemId)
+                                await changeFieldsItemId(e.target, e.target.dataset.goodId, selectedItemId)
+                                if (!selectedItems.includes(selectedItemText)) {
+                                    selectedItems.push(selectedItemText);
+                                }
+                                isOrderAvailable = selectedItems.length === availableItemsLength
+                                document.querySelector('beginning-date-field-rent-type-all')
+                                updateButtonState();
+
+                                try {
+
+                                    const additionalsWrapper = e.target.parentNode.parentNode.parentNode.parentNode.parentNode.querySelector('.additionals-wrapper');
+                                    const additionalsOuterWrapper = e.target.parentNode.parentNode.parentNode.parentNode.parentNode.querySelector('.additionals-outer-wrapper');
+                                    e.target.parentNode.parentNode.parentNode.insertAdjacentHTML('afterEnd', loaderElement)
+                                    const additionalsResponse = await fetch('/get-available-additions', {
+                                        method: 'POST',
+                                        headers: {
+                                            'Content-Type': 'application/json',
+                                            'X-CSRF-TOKEN': csrfToken,
+                                        },
+                                        body: JSON.stringify({
+                                            startDate: rentStartDateV2,
+                                            startTime: rentStartTimeV2,
+                                            endDate: rentEndDateV2,
+                                            endTime: rentEndTimeV2,
+                                            goodId: e.target.parentNode.parentNode.parentNode.parentNode.parentNode.dataset.goodId,
+                                            cartKey: `${e.target.parentNode.parentNode.parentNode.parentNode.parentNode.dataset.goodId}pixelrental${selectedItemId}`
+                                        }),
+                                    })
+                                        .then(async resp => {
+                                            e.target.parentNode.parentNode.parentNode.parentNode.querySelector('.loader-holder').remove()
+                                            return await resp.json()
+                                        })
+                                        .catch(e => {
+                                            console.log(e)
+                                        })
+
+                                    additionalsResponse.additionals.forEach(additional => {
+                                        if (additional.available) {
+                                            additionalsWrapper.innerHTML += `<p>
+                                    <label>
+                                        <input type="checkbox"
+                                               class="orange-text additional-checkbox"
+                                               data-cart-key="${e.target.parentNode.parentNode.parentNode.parentNode.parentNode.dataset.goodId}pixelrental${selectedItemId}"
+                                               data-additional-id="${additional.id}"
+                                               data-additional-cost="${(additional.good.additional_cost > 0 && additional.good.additional_cost != null) ? additional.good.additional_cost : additional.good.cost}"
+                                               />
+                                        <span>${additional.good.name_ru} <span
+                                            class="white-text">(+ ${(additional.good.additional_cost > 0 && additional.good.additional_cost != null) ? additional.good.additional_cost : additional.good.cost}тг)</span></span>
+                                    </label>
+                                </p>`
+                                        } else {
+                                            additionalsWrapper.innerHTML += `<p>
+                                    <label>
+                                        <input type="checkbox"
+                                               class="orange-text additional-checkbox"
+                                               disabled
+                                               data-cart-key="${e.target.parentNode.parentNode.parentNode.parentNode.dataset.goodId}pixelrental${selectedItemId}"
+                                               data-additional-id="${additional.id}"
+                                               data-additional-cost="${(additional.good.additional_cost > 0 && additional.good.additional_cost != null) ? additional.good.additional_cost : additional.good.cost}"
+                                               />
+                                        <span>${additional.good.name_ru} <span
+                                            class="white-text">(Недоступно на выбранные даты и время)</span></span>
+                                    </label>
+                                </p>`
+                                        }
+                                    })
+                                    if (additionalsResponse.additionals.length > 0) {
+                                        additionalsOuterWrapper.classList.remove('hide')
+
+                                        additionalsWrapper.querySelectorAll('.additional-checkbox').forEach(el => {
+                                            el.onchange = changeCart
+                                        })
+                                    }
+                                } catch (e) {
+                                    console.log(e)
+                                }
+                            }
+                        })
+                    }
+                }
+            })
+        }
+    }
+}
+let totalCostHolder = document.querySelector('#total-sum-of-items')
+let totalCostHolderNumber = document.querySelector('.total-cost-holder')
+const changeStateIndividualCost = (action) => {
+    if (action === 'add') {
+        itemTotalCostTextElement.forEach(item => {
+            item.classList.add('hide')
+        })
+    } else {
+        itemTotalCostTextElement.forEach(item => {
+            item.classList.remove('hide')
+        })
+    }
+}
+
+const updateButtonState = () => {
+    if (isOrderAvailable) {
+        modalTriggerButton.disabled = ORDER_AVAILABLE;
+        modalTriggerButton.classList.remove('disabled');
+
+        totalCostHolder.classList.remove('hide')
+    } else {
+        modalTriggerButton.disabled = ORDER_NOT_AVAILABLE;
+        modalTriggerButton.classList.add('disabled');
+    }
+};
+
+function removeAfterParenthesis(inputString) {
+    const index = inputString.indexOf('(');
+    if (index === -1) {
+        // Если символ '(' не найден, вернуть исходную строку
+        return inputString;
+    }
+    // Возвращаем подстроку от начала до первого вхождения '(' (не включая его)
+    return inputString.substring(0, index);
+}
+
+function removeAfterSquareParenthesis(inputString) {
+    const index = inputString.indexOf('(');
+    if (index === -1) {
+        // Если символ '(' не найден, вернуть исходную строку
+        return inputString;
+    }
+    // Возвращаем подстроку от начала до первого вхождения '(' (не включая его)
+    return inputString.substring(0, index);
 }
 
 document.querySelectorAll('.cancel-btn').forEach(btn => {
@@ -94,138 +541,13 @@ document.querySelectorAll('.start_date').forEach(el => {
 })
 
 const itemIdPickers = document.querySelectorAll('.item-id-selector')
+const availableItemsLength = itemIdPickers.length
 
-itemIdPickers.forEach(async item => {
-    item.parentNode.insertAdjacentHTML('afterend', loaderElement)
-    const availableItems = await fetch('/good/' + item.parentNode.parentNode.parentNode.dataset.goodId + '/get-items', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'X-CSRF-TOKEN': csrfToken,
-        },
-    })
-        .then(async resp => {
-            return await resp.json()
-        })
-        .then(response => {
-            item.parentNode.parentNode.querySelector('.loader-holder').remove()
-            item.parentNode.classList.remove('hide')
-            return response.available_items;
-        })
-        .catch(error => {
-            console.error('Error fetching data:', error);
-        });
-    item.innerHTML = '<option value="" disabled selected>Подберите свободный вариант:</option>'
-    availableItems.forEach(avItem => {
-        item.innerHTML += `<option value="${avItem.id}">${avItem.good.name} (${avItem.id})</option>`
-    })
-    var itemSelect = M.FormSelect.init(item, {})
-    itemSelect.el.onchange = async (e) => {
-        const selectedItemId = e.target.value
-        await changeCartKey(e.target.dataset.goodId, selectedItemId, e.target.dataset.oldItemId)
-        await changeFieldsItemId(e.target, e.target.dataset.goodId, selectedItemId)
-        e.target.parentNode.parentNode.parentNode.parentNode.parentNode.dataset.goodItemId = selectedItemId
-        if (e.target.dataset.oldItemId) {
-            await enableAllOtherOptions(e.target.dataset.goodId, e.target.dataset.oldItemId);
-        }
-        await disableAllOtherOptions(e.target.dataset.goodId, e.target.value)
-        e.target.dataset.oldItemId = selectedItemId;
-        const item = e.target.parentNode.parentNode.parentNode.parentNode.querySelector('.begining-date')
-        e.target.parentNode.parentNode.parentNode.parentNode.querySelector('.begining-date-field').classList.remove('hide')
-        item.value = null
-        try {
-            const rentStartItem = e.target.parentNode.parentNode.parentNode.parentNode.querySelector('.rent-start-time')
-            rentStartItem.value = null
-            e.target.parentNode.parentNode.parentNode.parentNode.querySelector('.rent-start-time-field').classList.add('hide')
-        } catch (e){
-        }
-        try {
-            const endingDateItem = e.target.parentNode.parentNode.parentNode.parentNode.querySelector('.ending-date')
-            endingDateItem.value = null
-            e.target.parentNode.parentNode.parentNode.parentNode.querySelector('.ending-date-field').classList.add('hide')
-        } catch (e) {}
-        try {
-            const rentEndItem = e.target.parentNode.parentNode.parentNode.parentNode.querySelector('.rent-end-time')
-            rentEndItem.value = null
-            e.target.parentNode.parentNode.parentNode.parentNode.querySelector('.rent-end-time-field').classList.add('hide')
-        } catch (e) {}
-        try {
-            e.target.parentNode.parentNode.parentNode.parentNode.querySelector('.additionals-outer-wrapper').classList.add('hide')
-        } catch (e) {}
-        var instance = M.Datepicker.init(item, {
-            i18n: {
-                months:
-                    [
-                        'Январь',
-                        'Февраль',
-                        'Март',
-                        'Апрель',
-                        'Май',
-                        'Июнь',
-                        'Июль',
-                        'Август',
-                        'Сентябрь',
-                        'Октябрь',
-                        'Ноябрь',
-                        'Декабрь'
-                    ],
-
-                monthsShort: [
-                    'Янв',
-                    'Фев',
-                    'Мар',
-                    'Апр',
-                    'Май',
-                    'Июн',
-                    'Июл',
-                    'Авг',
-                    'Сен',
-                    'Окт',
-                    'Ноя',
-                    'Дек'
-                ],
-                weekdays:
-                    [
-                        'Воскресенье',
-                        'Понедельник',
-                        'Вторник',
-                        'Среда',
-                        'Четверг',
-                        'Пятница',
-                        'Суббота'
-                    ],
-                weekdaysShort:
-                    [
-                        'Вс',
-                        'Пн',
-                        'Вт',
-                        'Ср',
-                        'Чт',
-                        'Пт',
-                        'Сб'
-                    ],
-                weekdaysAbbrev: [
-                    'Вс',
-                    'Пн',
-                    'Вт',
-                    'Ср',
-                    'Чт',
-                    'Пт',
-                    'Сб'
-                ],
-                cancel: 'Отменить',
-                clear: 'Очистить',
-                done: 'ОК'
-            },
-            firstDay: 1,
-            format: 'dd/mm/yyyy',
-            minDate: new Date(),
-            defaultDate: new Date(),
-            autoClose: true
-        });
+function fillIndividualRentType() {
+    itemIdPickers.forEach(async item => {
         item.parentNode.insertAdjacentHTML('afterend', loaderElement)
-        const forbiddenDates = await fetch('/item/' + selectedItemId + '/get-unavailable-dates', {
-            method: 'GET',
+        const availableItems = await fetch('/good/' + item.parentNode.parentNode.parentNode.dataset.goodId + '/get-items', {
+            method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
                 'X-CSRF-TOKEN': csrfToken,
@@ -237,99 +559,53 @@ itemIdPickers.forEach(async item => {
             .then(response => {
                 item.parentNode.parentNode.querySelector('.loader-holder').remove()
                 item.parentNode.classList.remove('hide')
-                return response.forbiddenDates;
+                return response.available_items;
             })
             .catch(error => {
                 console.error('Error fetching data:', error);
             });
-        instance.options.disableDayFn = (date) => {
-            const day = date.getDate().toString().padStart(2, '0');
-            const month = (date.getMonth() + 1).toString().padStart(2, '0');
-            const year = date.getFullYear();
-            const dateString = `${year}-${month}-${day}`;
-            return forbiddenDates.includes(dateString);
-        }
-        instance.options.onSelect = async (e) => {
-            const rentStartItem = instance.el.parentNode.parentNode.querySelector('.rent-start-time')
-            rentStartItem.value = null;
-            instance.el.parentNode.parentNode.querySelector('.rent-start-time-field').classList.remove('hide')
-            try {
-                instance.el.parentNode.parentNode.querySelector('.ending-date-field').classList.add('hide')
-                instance.el.parentNode.parentNode.querySelector('.ending-date').value = null
-            } catch (e) {}
-            try {
-                instance.el.parentNode.parentNode.querySelector('.rent-end-time-field').classList.add('hide')
-                instance.el.parentNode.parentNode.querySelector('.rent-end-time').value = null
-            } catch (e) {}
-            try {
-                instance.el.parentNode.parentNode.querySelector('.additionals-outer-wrapper').classList.add('hide')
-            } catch (e) {}
-            const day = e.getDate().toString().padStart(2, '0');
-            const month = (e.getMonth() + 1).toString().padStart(2, '0');
-            const year = e.getFullYear();
-            const rentStartDate = `${year}-${month}-${day}`;
-            item.parentNode.insertAdjacentHTML('afterend', loaderElement)
-            const selector = instance.el.parentNode.parentNode.querySelector('.rent-start-time')
 
-            const responseData = await fetch('/item/' + selectedItemId + '/get-available-times', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': csrfToken,
-                },
+        item.innerHTML = '<option value="" disabled selected>Подберите свободный вариант:</option>'
+        availableItems.forEach(avItem => {
+            item.innerHTML += `<option value="${avItem.id}">${avItem.good.name} (${avItem.id})</option>`
+        })
+        var itemSelect = M.FormSelect.init(item, {})
+        itemSelect.el.onchange = async (e) => {
+            let selectedItemText = removeAfterParenthesis(e.target.selectedOptions[0].text);
+            const selectedItemId = e.target.value
+            await changeCartKey(e.target.dataset.goodId, selectedItemId, e.target.dataset.oldItemId)
+            await changeFieldsItemId(e.target, e.target.dataset.goodId, selectedItemId)
+            e.target.parentNode.parentNode.parentNode.parentNode.parentNode.dataset.goodItemId = selectedItemId
+            if (e.target.dataset.oldItemId) {
+                await enableAllOtherOptions(e.target.dataset.goodId, e.target.dataset.oldItemId);
+            }
+            await disableAllOtherOptions(e.target.dataset.goodId, e.target.value)
+            e.target.dataset.oldItemId = selectedItemId;
+            const item = e.target.parentNode.parentNode.parentNode.parentNode.querySelector('.begining-date')
 
-                body: JSON.stringify({
-                    'start_date': rentStartDate
-                })
-            })
-                .then(async resp => {
-                    return await resp.json()
-                })
-                .then(response => {
-                    item.parentNode.parentNode.querySelector('.loader-holder').remove()
-                    selector.parentNode.classList.remove('hide')
-                    return response;
-                })
-
-            const availableTimes = responseData.availableTimes;
-            const nextUnavailableDate = responseData.nextUnavailableDate;
-            selector.innerHTML = '<option value="" disabled selected>Выберите время:</option>'
-            availableTimes.forEach(time => {
-                selector.innerHTML += `<option value="${time}" class="black-text">${time}</option>`
-            })
-            M.FormSelect.init(selector, {});
-            selector.onchange = async (e) => {
-                e.target.parentNode.parentNode.parentNode.insertAdjacentHTML('afterend', loaderElement)
-                const rentStartTime = e.target.value;
-                const secondDatepicker = e.target.parentNode.parentNode.parentNode.parentNode.querySelector('.ending-date');
-                secondDatepicker.value = null
-                e.target.parentNode.parentNode.parentNode.parentNode.querySelector('.ending-date-field').classList.remove('hide')
+            if (rentTimeType === RENT_TIME_TYPE_INDIVIDUAL) {
+                e.target.parentNode.parentNode.parentNode.parentNode.querySelector('.begining-date-field').classList.remove('hide')
+                item.value = null
                 try {
+                    const rentStartItem = e.target.parentNode.parentNode.parentNode.parentNode.querySelector('.rent-start-time')
+                    rentStartItem.value = null
+                    e.target.parentNode.parentNode.parentNode.parentNode.querySelector('.rent-start-time-field').classList.add('hide')
+                } catch (e){
+                }
+                try {
+                    const endingDateItem = e.target.parentNode.parentNode.parentNode.parentNode.querySelector('.ending-date')
+                    endingDateItem.value = null
+                    e.target.parentNode.parentNode.parentNode.parentNode.querySelector('.ending-date-field').classList.add('hide')
+                } catch (e) {}
+                try {
+                    const rentEndItem = e.target.parentNode.parentNode.parentNode.parentNode.querySelector('.rent-end-time')
+                    rentEndItem.value = null
                     e.target.parentNode.parentNode.parentNode.parentNode.querySelector('.rent-end-time-field').classList.add('hide')
                 } catch (e) {}
                 try {
-                    instance.el.parentNode.parentNode.querySelector('.additionals-outer-wrapper').classList.add('hide')
+                    e.target.parentNode.parentNode.parentNode.parentNode.querySelector('.additionals-outer-wrapper').classList.add('hide')
                 } catch (e) {}
-                const responseData = await fetch('/item/' + selectedItemId + '/get-rent-end-dates', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': csrfToken,
-                    },
-                    body: JSON.stringify({
-                        'start_date': rentStartDate,
-                    })
-                })
-                    .then(async resp => {
-                        return await resp.json()
-                    })
-                    .then(response => {
-                        e.target.parentNode.parentNode.parentNode.parentNode.querySelector('.loader-holder').remove();
-                        secondDatepicker.parentNode.classList.remove('hide')
-                        return response;
-                    })
-                const availableRentEndDates = responseData.availableDates
-                const secondDatepickerInstance = M.Datepicker.init(secondDatepicker, {
+                var instance = M.Datepicker.init(item, {
                     i18n: {
                         months:
                             [
@@ -370,7 +646,6 @@ itemIdPickers.forEach(async item => {
                                 'Четверг',
                                 'Пятница',
                                 'Суббота'
-
                             ],
                         weekdaysShort:
                             [
@@ -382,7 +657,6 @@ itemIdPickers.forEach(async item => {
                                 'Пт',
                                 'Сб'
                             ],
-
                         weekdaysAbbrev: [
                             'Вс',
                             'Пн',
@@ -398,119 +672,306 @@ itemIdPickers.forEach(async item => {
                     },
                     firstDay: 1,
                     format: 'dd/mm/yyyy',
-                    minDate: new Date(rentStartDate),
+                    minDate: new Date(),
                     defaultDate: new Date(),
-                    autoClose: true,
-                    disableDayFn: (date => {
-                        if (availableRentEndDates.length > 0) {
-                            const day = date.getDate().toString().padStart(2, '0');
-                            const month = (date.getMonth() + 1).toString().padStart(2, '0');
-                            const year = date.getFullYear();
-                            const dateString = `${year}-${month}-${day}`;
-                            return !availableRentEndDates.includes(dateString);
-                        }
-                        return false;
-                    }),
-                    onSelect: async (e) => {
-                        const day = e.getDate().toString().padStart(2, '0');
-                        const month = (e.getMonth() + 1).toString().padStart(2, '0');
-                        const year = e.getFullYear();
-                        const rentEndDate = `${year}-${month}-${day}`;
-                        secondDatepickerInstance.el.parentNode.insertAdjacentHTML('afterend', loaderElement)
-                        const endTimeSelector = instance.el.parentNode.parentNode.querySelector('.rent-end-time')
-                        endTimeSelector.value = null
+                    autoClose: true
+                });
+                item.parentNode.insertAdjacentHTML('afterend', loaderElement)
+                const forbiddenDates = await fetch('/item/' + selectedItemId + '/get-unavailable-dates', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': csrfToken,
+                    },
+                })
+                    .then(async resp => {
+                        return await resp.json()
+                    })
+                    .then(response => {
+                        item.parentNode.parentNode.querySelector('.loader-holder').remove()
+                        item.parentNode.classList.remove('hide')
+                        return response.forbiddenDates;
+                    })
+                    .catch(error => {
+                        console.error('Error fetching data:', error);
+                    });
+                instance.options.disableDayFn = (date) => {
+                    const day = date.getDate().toString().padStart(2, '0');
+                    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+                    const year = date.getFullYear();
+                    const dateString = `${year}-${month}-${day}`;
+                    return forbiddenDates.includes(dateString);
+                }
+                instance.options.onSelect = async (e) => {
+                    const rentStartItem = instance.el.parentNode.parentNode.querySelector('.rent-start-time')
+                    rentStartItem.value = null;
+                    instance.el.parentNode.parentNode.querySelector('.rent-start-time-field').classList.remove('hide')
+                    try {
+                        instance.el.parentNode.parentNode.querySelector('.ending-date-field').classList.add('hide')
+                        instance.el.parentNode.parentNode.querySelector('.ending-date').value = null
+                    } catch (e) {}
+                    try {
+                        instance.el.parentNode.parentNode.querySelector('.rent-end-time-field').classList.add('hide')
+                        instance.el.parentNode.parentNode.querySelector('.rent-end-time').value = null
+                    } catch (e) {}
+                    try {
+                        instance.el.parentNode.parentNode.querySelector('.additionals-outer-wrapper').classList.add('hide')
+                    } catch (e) {}
+                    const day = e.getDate().toString().padStart(2, '0');
+                    const month = (e.getMonth() + 1).toString().padStart(2, '0');
+                    const year = e.getFullYear();
+                    const rentStartDate = `${year}-${month}-${day}`;
+                    item.parentNode.insertAdjacentHTML('afterend', loaderElement)
+                    const selector = instance.el.parentNode.parentNode.querySelector('.rent-start-time')
+
+                    const responseData = await fetch('/item/' + selectedItemId + '/get-available-times', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': csrfToken,
+                        },
+
+                        body: JSON.stringify({
+                            'start_date': rentStartDate
+                        })
+                    })
+                        .then(async resp => {
+                            return await resp.json()
+                        })
+                        .then(response => {
+                            item.parentNode.parentNode.querySelector('.loader-holder').remove()
+                            selector.parentNode.classList.remove('hide')
+                            return response;
+                        })
+
+                    const availableTimes = responseData.availableTimes;
+                    const nextUnavailableDate = responseData.nextUnavailableDate;
+                    selector.innerHTML = '<option value="" disabled selected>Выберите время:</option>'
+                    availableTimes.forEach(time => {
+                        selector.innerHTML += `<option value="${time}" class="black-text">${time}</option>`
+                    })
+                    M.FormSelect.init(selector, {});
+                    selector.onchange = async (e) => {
+                        e.target.parentNode.parentNode.parentNode.insertAdjacentHTML('afterend', loaderElement)
+                        const rentStartTime = e.target.value;
+                        const secondDatepicker = e.target.parentNode.parentNode.parentNode.parentNode.querySelector('.ending-date');
+                        secondDatepicker.value = null
+                        e.target.parentNode.parentNode.parentNode.parentNode.querySelector('.ending-date-field').classList.remove('hide')
                         try {
-                            instance.el.parentNode.parentNode.querySelector('.rent-end-time-field').classList.remove('hide')
+                            e.target.parentNode.parentNode.parentNode.parentNode.querySelector('.rent-end-time-field').classList.add('hide')
                         } catch (e) {}
                         try {
                             instance.el.parentNode.parentNode.querySelector('.additionals-outer-wrapper').classList.add('hide')
                         } catch (e) {}
-                        const responseData = await fetch('/item/' + selectedItemId + '/get-next-rent-times', {
+                        const responseData = await fetch('/item/' + selectedItemId + '/get-rent-end-dates', {
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json',
                                 'X-CSRF-TOKEN': csrfToken,
                             },
-
                             body: JSON.stringify({
-                                'finish_date': rentEndDate,
                                 'start_date': rentStartDate,
-                                'start_time': rentStartTime,
                             })
                         })
                             .then(async resp => {
                                 return await resp.json()
                             })
                             .then(response => {
-                                secondDatepickerInstance.el.parentNode.parentNode.querySelector('.loader-holder').remove()
-                                endTimeSelector.parentNode.classList.remove('hide')
+                                e.target.parentNode.parentNode.parentNode.parentNode.querySelector('.loader-holder').remove();
+                                secondDatepicker.parentNode.classList.remove('hide')
                                 return response;
                             })
-                        const nextAvailableTimes = responseData.nextAvailableTimes;
-                        endTimeSelector.innerHTML = '<option value="" disabled selected>Выберите время:</option>'
-                        nextAvailableTimes.forEach(time => {
-                            endTimeSelector.innerHTML += `<option value="${time}" class="black-text">${time}</option>`
-                        })
-                        M.FormSelect.init(endTimeSelector, {});
-                        endTimeSelector.onchange = async (e) => {
-                            try {
-                                const additionalsWrapper = e.target.parentNode.parentNode.parentNode.parentNode.parentNode.querySelector('.additionals-wrapper');
-                                additionalsWrapper.innerHTML = ''
-                            } catch (e) {
-                            }
+                        const availableRentEndDates = responseData.availableDates
+                        const secondDatepickerInstance = M.Datepicker.init(secondDatepicker, {
+                            i18n: {
+                                months:
+                                    [
+                                        'Январь',
+                                        'Февраль',
+                                        'Март',
+                                        'Апрель',
+                                        'Май',
+                                        'Июнь',
+                                        'Июль',
+                                        'Август',
+                                        'Сентябрь',
+                                        'Октябрь',
+                                        'Ноябрь',
+                                        'Декабрь'
+                                    ],
 
-                            const rentEndTime = e.target.value
-                            var startDate = new Date(rentStartDate + ' ' + rentStartTime);
-                            var endDate = new Date(rentEndDate + ' ' + rentEndTime);
+                                monthsShort: [
+                                    'Янв',
+                                    'Фев',
+                                    'Мар',
+                                    'Апр',
+                                    'Май',
+                                    'Июн',
+                                    'Июл',
+                                    'Авг',
+                                    'Сен',
+                                    'Окт',
+                                    'Ноя',
+                                    'Дек'
+                                ],
+                                weekdays:
+                                    [
+                                        'Воскресенье',
+                                        'Понедельник',
+                                        'Вторник',
+                                        'Среда',
+                                        'Четверг',
+                                        'Пятница',
+                                        'Суббота'
 
-                            var differenceMs = Math.abs(endDate.getTime() - startDate.getTime());
+                                    ],
+                                weekdaysShort:
+                                    [
+                                        'Вс',
+                                        'Пн',
+                                        'Вт',
+                                        'Ср',
+                                        'Чт',
+                                        'Пт',
+                                        'Сб'
+                                    ],
 
-                            var differenceDays = Math.ceil(differenceMs / (1000 * 60 * 60 * 24)) ?? 1;
-                            e.target.parentNode.parentNode.parentNode.parentNode.parentNode.dataset.amountOfDays = differenceDays;
-
-                            const sumHolder = e.target.parentNode.parentNode.parentNode.parentNode.parentNode.querySelector('.good-cost-holder')
-
-                            const discount = +document.querySelector('.client-discount-holder').dataset.discountPercent
-
-                            const cost = +e.target.parentNode.parentNode.parentNode.parentNode.parentNode.dataset.goodCost
-
-                            if (discount) {
-                                sumHolder.innerHTML = (+cost * differenceDays) / 100 * (100 - discount);
-                            } else {
-                                sumHolder.innerHTML = +cost * differenceDays;
-                            }
-
-                            try {
-
-                                const additionalsWrapper = e.target.parentNode.parentNode.parentNode.parentNode.parentNode.querySelector('.additionals-wrapper');
-                                const additionalsOuterWrapper = e.target.parentNode.parentNode.parentNode.parentNode.parentNode.querySelector('.additionals-outer-wrapper');
-                                e.target.parentNode.parentNode.parentNode.insertAdjacentHTML('afterEnd', loaderElement)
-                                const additionalsResponse = await fetch('/get-available-additions', {
+                                weekdaysAbbrev: [
+                                    'Вс',
+                                    'Пн',
+                                    'Вт',
+                                    'Ср',
+                                    'Чт',
+                                    'Пт',
+                                    'Сб'
+                                ],
+                                cancel: 'Отменить',
+                                clear: 'Очистить',
+                                done: 'ОК'
+                            },
+                            firstDay: 1,
+                            format: 'dd/mm/yyyy',
+                            minDate: new Date(rentStartDate),
+                            defaultDate: new Date(),
+                            autoClose: true,
+                            disableDayFn: (date => {
+                                if (availableRentEndDates.length > 0) {
+                                    const day = date.getDate().toString().padStart(2, '0');
+                                    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+                                    const year = date.getFullYear();
+                                    const dateString = `${year}-${month}-${day}`;
+                                    return !availableRentEndDates.includes(dateString);
+                                }
+                                return false;
+                            }),
+                            onSelect: async (e) => {
+                                const day = e.getDate().toString().padStart(2, '0');
+                                const month = (e.getMonth() + 1).toString().padStart(2, '0');
+                                const year = e.getFullYear();
+                                const rentEndDate = `${year}-${month}-${day}`;
+                                secondDatepickerInstance.el.parentNode.insertAdjacentHTML('afterend', loaderElement)
+                                const endTimeSelector = instance.el.parentNode.parentNode.querySelector('.rent-end-time')
+                                endTimeSelector.value = null
+                                try {
+                                    instance.el.parentNode.parentNode.querySelector('.rent-end-time-field').classList.remove('hide')
+                                } catch (e) {}
+                                try {
+                                    instance.el.parentNode.parentNode.querySelector('.additionals-outer-wrapper').classList.add('hide')
+                                } catch (e) {}
+                                const responseData = await fetch('/item/' + selectedItemId + '/get-next-rent-times', {
                                     method: 'POST',
                                     headers: {
                                         'Content-Type': 'application/json',
                                         'X-CSRF-TOKEN': csrfToken,
                                     },
+
                                     body: JSON.stringify({
-                                        startDate: rentStartDate,
-                                        startTime: rentStartTime,
-                                        endDate: rentEndDate,
-                                        endTime: rentEndTime,
-                                        goodId: e.target.parentNode.parentNode.parentNode.parentNode.parentNode.dataset.goodId,
-                                        cartKey: `${e.target.parentNode.parentNode.parentNode.parentNode.parentNode.dataset.goodId}pixelrental${selectedItemId}`
-                                    }),
+                                        'finish_date': rentEndDate,
+                                        'start_date': rentStartDate,
+                                        'start_time': rentStartTime,
+                                    })
                                 })
                                     .then(async resp => {
-                                        e.target.parentNode.parentNode.parentNode.parentNode.querySelector('.loader-holder').remove()
                                         return await resp.json()
                                     })
-                                    .catch(e => {
-                                        console.log(e)
+                                    .then(response => {
+                                        secondDatepickerInstance.el.parentNode.parentNode.querySelector('.loader-holder').remove()
+                                        endTimeSelector.parentNode.classList.remove('hide')
+                                        return response;
                                     })
+                                const nextAvailableTimes = responseData.nextAvailableTimes;
+                                endTimeSelector.innerHTML = '<option value="" disabled selected>Выберите время:</option>'
+                                nextAvailableTimes.forEach(time => {
+                                    endTimeSelector.innerHTML += `<option value="${time}" class="black-text">${time}</option>`
+                                })
+                                M.FormSelect.init(endTimeSelector, {});
+                                endTimeSelector.onchange = async (e) => {
+                                    try {
+                                        const additionalsWrapper = e.target.parentNode.parentNode.parentNode.parentNode.parentNode.querySelector('.additionals-wrapper');
+                                        additionalsWrapper.innerHTML = ''
+                                    } catch (e) {
+                                    }
 
-                                additionalsResponse.additionals.forEach(additional => {
-                                    if (additional.available) {
-                                        additionalsWrapper.innerHTML += `<p>
+                                    const rentEndTime = e.target.value
+                                    var startDate = new Date(rentStartDate + ' ' + rentStartTime);
+                                    var endDate = new Date(rentEndDate + ' ' + rentEndTime);
+
+                                    var differenceMs = Math.abs(endDate.getTime() - startDate.getTime());
+
+                                    var differenceDays = Math.ceil(differenceMs / (1000 * 60 * 60 * 24)) ?? 1;
+                                    e.target.parentNode.parentNode.parentNode.parentNode.parentNode.dataset.amountOfDays = differenceDays;
+
+                                    const sumHolder = e.target.parentNode.parentNode.parentNode.parentNode.parentNode.querySelector('.good-cost-holder')
+
+                                    const discount = +document.querySelector('.client-discount-holder').dataset.discountPercent
+
+                                    const cost = +e.target.parentNode.parentNode.parentNode.parentNode.parentNode.dataset.goodCost
+
+                                    if (discount) {
+                                        sumHolder.innerHTML = (+cost * differenceDays) / 100 * (100 - discount);
+                                        changeTotalCost((+cost * differenceDays) / 100 * (100 - discount), 'up');
+                                    } else {
+                                        sumHolder.innerHTML = +cost * differenceDays;
+                                        changeTotalCost(+cost * differenceDays, 'up');
+                                    }
+
+                                    if (!selectedItems.includes(selectedItemText)) {
+                                        selectedItems.push(selectedItemText);
+                                    }
+                                    isOrderAvailable = selectedItems.length === availableItemsLength
+                                    updateButtonState();
+
+                                    try {
+
+                                        const additionalsWrapper = e.target.parentNode.parentNode.parentNode.parentNode.parentNode.querySelector('.additionals-wrapper');
+                                        const additionalsOuterWrapper = e.target.parentNode.parentNode.parentNode.parentNode.parentNode.querySelector('.additionals-outer-wrapper');
+                                        e.target.parentNode.parentNode.parentNode.insertAdjacentHTML('afterEnd', loaderElement)
+                                        const additionalsResponse = await fetch('/get-available-additions', {
+                                            method: 'POST',
+                                            headers: {
+                                                'Content-Type': 'application/json',
+                                                'X-CSRF-TOKEN': csrfToken,
+                                            },
+                                            body: JSON.stringify({
+                                                startDate: rentStartDate,
+                                                startTime: rentStartTime,
+                                                endDate: rentEndDate,
+                                                endTime: rentEndTime,
+                                                goodId: e.target.parentNode.parentNode.parentNode.parentNode.parentNode.dataset.goodId,
+                                                cartKey: `${e.target.parentNode.parentNode.parentNode.parentNode.parentNode.dataset.goodId}pixelrental${selectedItemId}`
+                                            }),
+                                        })
+                                            .then(async resp => {
+                                                e.target.parentNode.parentNode.parentNode.parentNode.querySelector('.loader-holder').remove()
+                                                return await resp.json()
+                                            })
+                                            .catch(e => {
+                                                console.log(e)
+                                            })
+
+                                        additionalsResponse.additionals.forEach(additional => {
+                                            if (additional.available) {
+                                                additionalsWrapper.innerHTML += `<p>
                                     <label>
                                         <input type="checkbox"
                                                class="orange-text additional-checkbox"
@@ -522,8 +983,8 @@ itemIdPickers.forEach(async item => {
                                             class="white-text">(+ ${(additional.good.additional_cost > 0 && additional.good.additional_cost != null) ? additional.good.additional_cost : additional.good.cost}тг)</span></span>
                                     </label>
                                 </p>`
-                                    } else {
-                                        additionalsWrapper.innerHTML += `<p>
+                                            } else {
+                                                additionalsWrapper.innerHTML += `<p>
                                     <label>
                                         <input type="checkbox"
                                                class="orange-text additional-checkbox"
@@ -536,41 +997,50 @@ itemIdPickers.forEach(async item => {
                                             class="white-text">(Недоступно на выбранные даты и время)</span></span>
                                     </label>
                                 </p>`
-                                    }
-                                })
-                                if (additionalsResponse.additionals.length > 0) {
-                                    additionalsOuterWrapper.classList.remove('hide')
+                                            }
+                                        })
+                                        if (additionalsResponse.additionals.length > 0) {
+                                            additionalsOuterWrapper.classList.remove('hide')
 
-                                    additionalsWrapper.querySelectorAll('.additional-checkbox').forEach(el => {
-                                        el.onchange = changeCart
-                                    })
+                                            additionalsWrapper.querySelectorAll('.additional-checkbox').forEach(el => {
+                                                el.onchange = changeCart
+                                            })
+                                        }
+                                    } catch (e) {
+                                        console.log(e)
+                                    }
                                 }
-                            } catch (e) {
-                                console.log(e)
                             }
-                        }
+                        });
                     }
-                });
+                }
             }
+
+
         }
 
-    }
+    })
+}
 
-})
 
 
 function placeOrder(e) {
     const errorTextHolder = document.querySelector('.error-text')
     errorTextHolder.innerHTML = '';
     var flag = true;
-    document.querySelectorAll('[required]').forEach(field => {
+    const formElement = (rentTimeType === RENT_TIME_TYPE_INDIVIDUAL)
+            ? document.querySelector('#order-placement-form')
+            : document.querySelector('#order-placement-form-rent-type-all')
+
+    formElement.querySelectorAll('[required]').forEach(field => {
         if (!field.value) {
             flag = false;
             return null;
         }
     })
     if (flag) {
-        document.querySelector('#order-placement-form').submit()
+        document.querySelector((rentTimeType === RENT_TIME_TYPE_INDIVIDUAL) ? '#order-placement-form' : '#order-placement-form-rent-type-all')
+            .submit()
         e.target.onclick = () => {
         }
     } else {

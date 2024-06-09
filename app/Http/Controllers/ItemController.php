@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Good;
 use App\Models\Item;
 use App\Models\OrderItem;
 use Carbon\Carbon;
@@ -216,6 +217,44 @@ class ItemController extends Controller
                 'success' => true,
                 'nextAvailableTimes' => $timeSpans,
             ]);
+    }
+
+    public function getDefaultTimes()
+    {
+        $availableTimes = $this->generateTimeSpans();
+
+        return response()->json([
+            'success' => true,
+            'availableTimes' => array_values($availableTimes),
+        ]);
+    }
+
+    public function getAvailableItemsByTime(Request $request, int $id)
+    {
+        $good = Good::query()->find($id);
+        $startDate = $request->input('start_date');
+        $startTime = $request->input('start_time');
+        $endDate = $request->input('end_date');
+        $endTime = $request->input('end_time');
+
+        $conflictingItemIds = DB::table('order_items')
+            ->join('items', 'items.id', '=', 'order_items.item_id')
+            ->where('items.good_id', '=', $id)
+            ->whereIn('status', ['in_rent', 'confirmed', 'waiting'])
+            ->where('order_items.rent_start_date', '<=', $endDate)
+            ->where('order_items.rent_start_time', '<=', $endTime)
+            ->where('order_items.rent_end_date', '>=', $startDate)
+            ->where('order_items.rent_end_time', '>=', $startTime)
+            ->pluck('item_id');
+
+        $items = $good->items()->whereNotIn('id', $conflictingItemIds)->with('good')->get();
+
+        foreach ($items as $item){
+            $item->good->name = $item->good['name_'.session()->get('locale', 'ru')];
+        }
+
+        return response()
+            ->json(['available_items' => $items]);
     }
 
     public function generateTimeSpans()
