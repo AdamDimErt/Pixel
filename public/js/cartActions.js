@@ -396,6 +396,11 @@ const fillTimepickers = async ()=> {
 
                                 let selectedItemText = removeAfterParenthesis(e.target.selectedOptions[0].text);
                                 const selectedItemId = e.target.value
+                                if (e.target.dataset.oldItemId) {
+                                    await enableAllOtherOptions(e.target.dataset.goodId, e.target.dataset.oldItemId);
+                                }
+                                await disableAllOtherOptions(e.target.dataset.goodId, e.target.value)
+                                e.target.dataset.oldItemId = selectedItemId;
                                 await changeCartKey(e.target.dataset.goodId, selectedItemId, e.target.dataset.oldItemId)
                                 await changeFieldsItemId(e.target, e.target.dataset.goodId, selectedItemId)
                                 if (!selectedItems.includes(selectedItemText)) {
