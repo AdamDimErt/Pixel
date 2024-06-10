@@ -1,5 +1,6 @@
 @extends('app')
 @section('content')
+    @isset($viewedGoodTypes)
         @foreach($viewedGoodTypes as $goodType)
     <div class="row">
             <h5 class="white-text page-presenter-header">{{__('translations.' . $goodType->code)}}</h5>
@@ -14,6 +15,7 @@
             @endif
     </div>
         @endforeach
+    @endisset
     @push('scripts')
         <script src="{{asset('js/favoriteActions.js')}}"></script>
         <script src="{{asset('js/cart.js')}}"></script>
