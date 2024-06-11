@@ -59,7 +59,7 @@ Route::prefix('/item')->group(function () {
     Route::post('/{item}/get-available-times', [HttpControllers\ItemController::class, 'getAvailableTimes'])->name('getAvailableTimes');
     Route::post('/{item}/get-rent-end-dates', [HttpControllers\ItemController::class, 'getUnavailableRentEndDates'])->name('getUnavailableRentEndDates');
     Route::post('/{item}/get-next-rent-times', [HttpControllers\ItemController::class, 'getAvailableRentEndTimespans'])->name('getAvailableRentEndTimespans');
-    Route::get('get-default-times', [HttpControllers\ItemController::class, 'getDefaultTimes'])->name('getDefaultTimes');
+    Route::post('get-default-times', [HttpControllers\ItemController::class, 'getDefaultTimes'])->name('getDefaultTimes');
     Route::post('get-available-items/{id}', [HttpControllers\ItemController::class, 'getAvailableItemsByTime'])->name('getAvailableItemsByTime');
 });
 

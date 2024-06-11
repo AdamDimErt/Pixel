@@ -110,6 +110,18 @@ let rentStartTimeV2 = ''
 let rentEndDateV2 = ''
 let rentEndTimeV2 = ''
 let total_cost = 0;
+const startDatepicker = document.querySelector('.datepicker.white-text.beginning-date-rent-type-all.hide')
+const startTimePicker = document.querySelector('.white-text.left.rent-starttime-rent-type-all.hide');
+const endDatePicker = document.querySelector('.datepicker.white-text.endingdate-rent-type-all.hide');
+const endTimePicker = document.querySelector('.white-text.left.rent-end-time-rent-type-all.hide')
+const startDatepickerDiv = document.querySelector('.col.s12.input-field.beginning-date-field-rent-type-all.hide')
+const startTimePickerDiv = document.querySelector('.col.s12.input-field.white-text.rent-starttime-field-rent-type-all.hide');
+const endDatePickerDiv = document.querySelector('.col.s12.input-field.ending-datefield-rent-type-all.hide');
+const endTimePickerDiv = document.querySelector('.col.s12.input-field.white-text.rent-endtime-field-rent-type-all.hide')
+
+let itemIdPickers = document.querySelectorAll('.item-id-selector')
+let availableItemsLength = 0
+
 document.addEventListener('DOMContentLoaded', function() {
     const radioButtons = document.querySelectorAll('input[name="rent-type"]');
     changeStateIndividualCost('add')
@@ -123,6 +135,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 })
                 mainFormElement.classList.add('hide');
                 informationalTextElement.classList.remove('hide');
+                selectedItems = [];
+                itemIdPickers = document.querySelectorAll('.item-id-selector')
+                availableItemsLength = itemIdPickers.length
                 formRentTypeAll.classList.remove('hide');
 
                 await fillAllRentType()
@@ -133,9 +148,12 @@ document.addEventListener('DOMContentLoaded', function() {
                     item.classList.remove('hide')
                     changeStateIndividualCost('remove')
                 })
+                selectedItems = [];
                 mainFormElement.classList.remove('hide');
                 informationalTextElement.classList.remove('hide');
                 formRentTypeAll.classList.add('hide');
+                itemIdPickers = document.querySelectorAll('.item-id-selector')
+                availableItemsLength = itemIdPickers.length
 
                 fillIndividualRentType()
             }
@@ -157,10 +175,24 @@ const fillAllRentType = async () => {
 }
 
 const fillTimepickers = async ()=> {
-    const startDatepicker = document.querySelector('.datepicker.white-text.beginning-date-rent-type-all')
-    const startTimePicker = document.querySelector('.white-text.left.rent-starttime-rent-type-all');
-    const endDatePicker = document.querySelector('.datepicker.white-text.endingdate-rent-type-all');
-    const endTimePicker = document.querySelector('.white-text.left.rent-end-time-rent-type-all')
+    startDatepickerDiv.classList.remove('hide');
+    startDatepicker.classList.remove('hide')
+    startDatepicker.value = null
+    try {
+        startTimePickerDiv.classList.add('hide')
+        startTimePicker.classList.add('hide')
+        startTimePicker.value = null;
+    } catch (e) {}
+    try {
+        endDatePickerDiv.classList.add('hide')
+        endDatePicker.classList.add('hide')
+        endDatePicker.value = null;
+    } catch (e) {}
+    try {
+        endTimePickerDiv.classList.add('hide')
+        endTimePicker.classList.add('hide')
+        endTimePicker.value = null;
+    } catch (e) {}
     let instance = M.Datepicker.init(startDatepicker, {
         i18n: {
             months:
@@ -233,6 +265,22 @@ const fillTimepickers = async ()=> {
         autoClose: true
     });
     instance.options.onSelect = async (e) => {
+        mainFormElement.classList.add('hide')
+        startTimePickerDiv.classList.remove('hide')
+        startTimePicker.classList.remove('hide')
+        startTimePicker.value = null
+
+        try {
+            endDatePickerDiv.classList.add('hide')
+            endDatePicker.classList.add('hide')
+            endDatePicker.value = null;
+        } catch (e) {}
+        try {
+            endTimePickerDiv.classList.add('hide')
+            endTimePicker.classList.add('hide')
+            endTimePicker.value = null;
+        } catch (e) {}
+
         console.log(e);
         const day = e.getDate().toString().padStart(2, '0');
         const month = (e.getMonth() + 1).toString().padStart(2, '0');
@@ -240,11 +288,14 @@ const fillTimepickers = async ()=> {
         rentStartDateV2 = `${year}-${month}-${day}`;
 
         const responseData = await fetch('/item/get-default-times', {
-            method: 'GET',
+            method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
                 'X-CSRF-TOKEN': csrfToken,
-            }
+            },
+            body: JSON.stringify({
+                'start_date': rentStartDateV2,
+            })
         })
             .then(async resp => {
                 return await resp.json()
@@ -256,6 +307,17 @@ const fillTimepickers = async ()=> {
         })
         M.FormSelect.init(startTimePicker, {});
         startTimePicker.onchange = async (e) => {
+            mainFormElement.classList.add('hide')
+            endDatePickerDiv.classList.remove('hide')
+            endDatePicker.classList.remove('hide')
+            endDatePicker.value = null
+
+            try {
+                endTimePickerDiv.classList.add('hide')
+                endTimePicker.classList.add('hide')
+                endTimePicker.value = null;
+            } catch (e) {}
+
             rentStartTimeV2 = e.target.value
             const secondDatepickerInstance = M.Datepicker.init(endDatePicker, {
                 i18n: {
@@ -330,12 +392,30 @@ const fillTimepickers = async ()=> {
                 defaultDate: new Date(),
                 autoClose: true,
                 onSelect: async (e) => {
+                    mainFormElement.classList.add('hide')
+                    endTimePickerDiv.classList.remove('hide')
+                    endTimePicker.classList.remove('hide')
+                    endTimePicker.value = null
                     const day = e.getDate().toString().padStart(2, '0');
                     const month = (e.getMonth() + 1).toString().padStart(2, '0');
                     const year = e.getFullYear();
                     rentEndDateV2 = `${year}-${month}-${day}`;
+                    const responseData = await fetch('/item/get-default-times', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': csrfToken,
+                        },
+                        body: JSON.stringify({
+                            'start_date': rentEndDateV2,
+                        })
+                    })
+                        .then(async resp => {
+                            return await resp.json()
+                        })
+                    const availableTimesV2 = responseData.availableTimes
                     endTimePicker.innerHTML = '<option value="" disabled selected>Выберите время:</option>';
-                    availableTimes.forEach(time => {
+                    availableTimesV2.forEach(time => {
                         endTimePicker.innerHTML += `<option value="${time}" class="black-text">${time}</option>`
                     })
                     M.FormSelect.init(endTimePicker, {});
@@ -545,8 +625,7 @@ document.querySelectorAll('.field-label').forEach(el => {
 document.querySelectorAll('.start_date').forEach(el => {
 })
 
-const itemIdPickers = document.querySelectorAll('.item-id-selector')
-const availableItemsLength = itemIdPickers.length
+
 
 function fillIndividualRentType() {
     itemIdPickers.forEach(async item => {

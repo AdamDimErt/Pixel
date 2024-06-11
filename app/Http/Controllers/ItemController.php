@@ -219,9 +219,21 @@ class ItemController extends Controller
             ]);
     }
 
-    public function getDefaultTimes()
+    public function getDefaultTimes(Request $request)
     {
+        date_default_timezone_set('Asia/Almaty');
+
+        $startdate = $request->input('start_date');
         $availableTimes = $this->generateTimeSpans();
+
+        $currentDate = date('Y-m-d');
+        $currentTime = date('H:i');
+
+        if ($startdate === $currentDate) {
+            $availableTimes = array_filter($availableTimes, function($time) use ($currentTime) {
+                return $time >= $currentTime;
+            });
+        }
 
         return response()->json([
             'success' => true,
