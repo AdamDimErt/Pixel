@@ -127,6 +127,9 @@ document.addEventListener('DOMContentLoaded', function() {
     changeStateIndividualCost('add')
     radioButtons.forEach(radio => {
         radio.addEventListener('change',  async function () {
+            radioButtons.forEach(radio => {
+                radio.disabled = true;
+            })
             if (this.value === RENT_TIME_TYPE_ALL) {
                 rentTimeType = RENT_TIME_TYPE_ALL;
                 itemTotalCostTextElement.forEach(item => {
@@ -476,13 +479,14 @@ const fillTimepickers = async ()=> {
 
                                 let selectedItemText = removeAfterParenthesis(e.target.selectedOptions[0].text);
                                 const selectedItemId = e.target.value
+                                await changeCartKey(e.target.dataset.goodId, selectedItemId, e.target.dataset.oldItemId)
+                                await changeFieldsItemId(e.target, e.target.dataset.goodId, selectedItemId)
+                                e.target.parentNode.parentNode.parentNode.parentNode.parentNode.dataset.goodItemId = selectedItemId
                                 if (e.target.dataset.oldItemId) {
                                     await enableAllOtherOptions(e.target.dataset.goodId, e.target.dataset.oldItemId);
                                 }
                                 await disableAllOtherOptions(e.target.dataset.goodId, e.target.value)
                                 e.target.dataset.oldItemId = selectedItemId;
-                                await changeCartKey(e.target.dataset.goodId, selectedItemId, e.target.dataset.oldItemId)
-                                await changeFieldsItemId(e.target, e.target.dataset.goodId, selectedItemId)
                                 if (!selectedItems.includes(selectedItemText)) {
                                     selectedItems.push(selectedItemText);
                                 }
