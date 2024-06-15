@@ -16,7 +16,7 @@
                 </div>
                 <ul class="right nav-buttons">
                     <li class="nav-element center">
-                        <a href="/cart" class="nav-link cart-link">
+                        <a href="{{route('cart')}}" class="nav-link cart-link">
                             <i class="material-icons left navbar-icon">
                                 shopping_cart
                             </i>

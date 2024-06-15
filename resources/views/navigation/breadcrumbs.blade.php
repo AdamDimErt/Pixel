@@ -67,7 +67,7 @@
             </a>
         @endif
         @if (Route::is('cart'))
-            <a href="/cart" class="breadcrumb">
+            <a href="{{route('cart')}}" class="breadcrumb">
                 <span class="breadcrumb-item chip orange darken-4 white-text">
                 <b>
                     {{__( 'translations.Cart')}}
