@@ -671,6 +671,7 @@ function fillIndividualRentType() {
             await disableAllOtherOptions(e.target.dataset.goodId, e.target.value)
             e.target.dataset.oldItemId = selectedItemId;
             const item = e.target.parentNode.parentNode.parentNode.parentNode.querySelector('.begining-date')
+            item.placeholder = 'Дата начала'
 
             if (rentTimeType === RENT_TIME_TYPE_INDIVIDUAL) {
                 e.target.parentNode.parentNode.parentNode.parentNode.querySelector('.begining-date-field').classList.remove('hide')
@@ -683,6 +684,7 @@ function fillIndividualRentType() {
                 }
                 try {
                     const endingDateItem = e.target.parentNode.parentNode.parentNode.parentNode.querySelector('.ending-date')
+                    endingDateItem.placeholder = 'Дата конца'
                     endingDateItem.value = null
                     e.target.parentNode.parentNode.parentNode.parentNode.querySelector('.ending-date-field').classList.add('hide')
                 } catch (e) {}
@@ -835,7 +837,7 @@ function fillIndividualRentType() {
 
                     const availableTimes = responseData.availableTimes;
                     const nextUnavailableDate = responseData.nextUnavailableDate;
-                    selector.innerHTML = '<option value="" disabled selected></option>'
+                    selector.innerHTML = '<option value="" disabled selected>Время начала</option>'
                     availableTimes.forEach(time => {
                         selector.innerHTML += `<option value="${time}" class="black-text">${time}</option>`
                     })
@@ -989,7 +991,7 @@ function fillIndividualRentType() {
                                         return response;
                                     })
                                 const nextAvailableTimes = responseData.nextAvailableTimes;
-                                endTimeSelector.innerHTML = '<option value="" disabled selected></option>'
+                                endTimeSelector.innerHTML = '<option value="" disabled selected>Время конца</option>'
                                 nextAvailableTimes.forEach(time => {
                                     endTimeSelector.innerHTML += `<option value="${time}" class="black-text">${time}</option>`
                                 })

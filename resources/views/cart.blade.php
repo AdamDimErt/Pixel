@@ -147,8 +147,6 @@
                                         name="{{$item->good->id . 'pixelrental' . $item->id}}[rent_start_date]"
                                         data-item-id="{{$item->id}}" type="text"
                                         class="datepicker white-text begining-date" required>
-                                    <label class="field-label"
-                                           for="rent_start_date">{{__('translations.Rent start')}}: </label>
                                 </div>
                                 <div class="col s6 input-field white-text hide rent-start-time-field">
                                     <select
@@ -158,14 +156,11 @@
                                                 selected>{{__('translations.Choose time')}}:
                                         </option>
                                     </select>
-                                    <label>{{__('translations.Rent start time')}}</label>
                                 </div>
                                 <div class="col s6 input-field hide ending-date-field">
                                     <input
                                         name="{{$item->good->id . 'pixelrental' . $item->id}}[rent_end_date]"
                                         type="text" class="datepicker white-text ending-date" required>
-                                    <label class="field-label"
-                                           for="rent_end_date">{{__('translations.Rent end')}}:</label>
                                 </div>
                                 <div class="col s6 input-field white-text hide rent-end-time-field">
                                     <select name="{{$item->good->id . 'pixelrental' . $item->id}}[end_time]"
@@ -174,7 +169,6 @@
                                             :
                                         </option>
                                     </select>
-                                    <label>{{__('translations.Rent end time')}}</label>
                                 </div>
                                 <ul class="grey darken-4 additionals-outer-wrapper hide">
                                     <li>
@@ -188,7 +182,6 @@
                                         </div>
                                     </li>
                                 </ul>
-                                <hr>
                                 <div class="control-sum right"
                                      data-good-cost="{{$item->good->discount_cost ?? $item->good->cost}}">
                                     <h5 class="inline">{{__('translations.Total')}}:

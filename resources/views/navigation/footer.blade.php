@@ -9,6 +9,9 @@
         <a class="tertimony" href="https://web.telegram.org/k/#@pixelrental">
             <img src="{{asset('/img/telegram.jpg')}}" height="150px" alt="">
         </a>
+        <a class="tertimony" href="https://2gis.kz/almaty/geo/70000001069136996">
+            <img src="{{asset('/img/twogis.png')}}" height="150px" alt="">
+        </a>
         <div class="footer-copyright">
             <div class="container">
             <span class="center">

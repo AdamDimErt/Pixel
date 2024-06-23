@@ -11,6 +11,8 @@
     <link rel="stylesheet" href="{{asset('css/materialize.css')}}">
     <link href="{{asset('css/material-icons.css')}}" rel="stylesheet">
     <link href="{{  asset('css/app.css') }}" rel="stylesheet">
+    <link rel="icon" href="{{asset('favicon-32x32.png')}}" type="image/png" sizes="32x32">
+    <link rel="apple-touch-icon" href="{{asset('apple-touch-icon.png')}}">
 </head>
 <body>
 @include('navigation.sidemenu')

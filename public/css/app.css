@@ -672,7 +672,7 @@ input[type="checkbox"]:checked + span:not(.lever)::before {
     background: transparent;
 }
 
-.modal-content.datepicker-container .datepicker-calendar-container .select-wrapper .select-dropdown.dropdown-trigger {
+.modal-content.datepicker-container .datepicker-calendar-container .select-wrapper {
     color: black !important;
 }
 
@@ -768,8 +768,13 @@ input[type="checkbox"]:checked + span:not(.lever)::before {
 }
 
 .input-field label {
-    margin-bottom: 20px;
-    font-size: 10px;
+    margin-bottom: 60px !important;
+    font-size: 12px !important;
+}
+
+.input-field {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
 }
 
 @media (min-width: 768px) {
@@ -778,7 +783,24 @@ input[type="checkbox"]:checked + span:not(.lever)::before {
     }
 
     .select-dropdown.dropdown-trigger {
-        font-size: 16px !important;
+        font-size: 20px;
+        border-radius: 20px 0 0 20px !important;
+        border-color: #303C42 !important;
+        background-color: #171515 !important;
+        text-align: center;
+    }
+
+    .datepicker.white-text {
+        border-radius: 20px 0 0 20px !important;
+        border-color: #303C42 !important;
+        font-size: 20px;
+        background-color: #171515 !important;
+        text-align: center;
+    }
+
+    .input-field label {
+        margin-bottom: 20px !important;
+        font-size: 25px !important;
     }
 }
 
@@ -788,7 +810,19 @@ input[type="checkbox"]:checked + span:not(.lever)::before {
         font-size: 16px; /* еще больше увеличиваем размер шрифта */
     }
     .select-dropdown.dropdown-trigger {
-        font-size: 20px !important;
+        font-size: 30px;
+        border-radius: 20px 0 0 20px !important;
+        border-color: #303C42 !important;
+        background-color: #171515 !important;
+        text-align: center;
+    }
+
+    .datepicker.white-text {
+        border-radius: 20px 0 0 20px !important;
+        border-color: #303C42 !important;
+        font-size: 30px;
+        background-color: #171515 !important;
+        text-align: center;
     }
 }
 
@@ -825,5 +859,33 @@ input[type="radio"][name="rent-type"]:disabled + span {
 }
 
 .select-dropdown.dropdown-trigger {
-    font-size: 13px !important;
+    font-size: 12px !important;
+    border-radius: 20px !important;
+    border: 2px solid #303C42 !important;
+    background-color: #171515 !important;
+    text-align: center;
+}
+
+.datepicker.white-text {
+    border-radius: 20px !important;
+    border: 2px solid #303C42 !important;
+    font-size: 12px !important;
+    background-color: #171515 !important;
+    text-align: center;
+}
+
+.col.s6.input.field {
+    margin-top: 5px !important;
+    margin-bottom: 5px !important;
+}
+.good-cart-additional-info {
+    padding: 0 0.15rem !important;
+}
+
+.select-wrapper.select-year {
+    color: white !important;
+}
+
+.select-wrapper.select-month {
+    color: white !important;
 }
