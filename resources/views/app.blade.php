@@ -22,7 +22,7 @@
         <div class="col s12 no-padding">
             @include('navigation.breadcrumbs')
         </div>
-        <div class="col s12 no-padding">
+        <div class="col s12 no-padding" id="main-content-hernya">
             <div class="container">
                 @yield('content')
             </div>

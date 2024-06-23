@@ -45,6 +45,7 @@ class Order extends Model
     ];
 
     protected $allowedFilters = [
+        'id' => Where::class,
         'client_id' => Where::class,
         'agreement_id' => Where::class,
         'amount_paid' => WhereMaxMin::class,

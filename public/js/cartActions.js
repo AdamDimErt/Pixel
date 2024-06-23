@@ -454,7 +454,7 @@ const fillTimepickers = async ()=> {
                             if (availableItems.length == 0) {
                                 item.innerHTML = '<option value="" disabled selected>На выбранную дату нет свободных вариантов</option>'
                             } else {
-                                item.innerHTML = '<option value="" disabled selected>Подберите свободный вариант:</option>'
+                                item.innerHTML = '<option value="" disabled selected>Выберите вариант товара</option>'
                                 availableItems.forEach(avItem => {
                                     item.innerHTML += `<option value="${avItem.id}">${avItem.good.name} (${avItem.id})</option>`
                                 })
@@ -653,7 +653,7 @@ function fillIndividualRentType() {
                 console.error('Error fetching data:', error);
             });
 
-        item.innerHTML = '<option value="" disabled selected>Подберите свободный вариант:</option>'
+        item.innerHTML = '<option value="" disabled selected>Выберите вариант товара</option>'
         availableItems.forEach(avItem => {
             item.innerHTML += `<option value="${avItem.id}">${avItem.good.name} (${avItem.id})</option>`
         })
@@ -834,7 +834,7 @@ function fillIndividualRentType() {
 
                     const availableTimes = responseData.availableTimes;
                     const nextUnavailableDate = responseData.nextUnavailableDate;
-                    selector.innerHTML = '<option value="" disabled selected>Выберите время:</option>'
+                    selector.innerHTML = '<option value="" disabled selected></option>'
                     availableTimes.forEach(time => {
                         selector.innerHTML += `<option value="${time}" class="black-text">${time}</option>`
                     })
@@ -988,7 +988,7 @@ function fillIndividualRentType() {
                                         return response;
                                     })
                                 const nextAvailableTimes = responseData.nextAvailableTimes;
-                                endTimeSelector.innerHTML = '<option value="" disabled selected>Выберите время:</option>'
+                                endTimeSelector.innerHTML = '<option value="" disabled selected></option>'
                                 nextAvailableTimes.forEach(time => {
                                     endTimeSelector.innerHTML += `<option value="${time}" class="black-text">${time}</option>`
                                 })

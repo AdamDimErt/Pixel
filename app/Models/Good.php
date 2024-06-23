@@ -68,6 +68,7 @@ class Good extends Model
         'cost',
         'discount_cost',
         'additional_cost',
+        'priority',
         'damage_cost',
         'good_type_id',
         'description_ru',

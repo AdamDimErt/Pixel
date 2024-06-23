@@ -420,10 +420,63 @@ hr {
 }
 
 .additional-info {
+    display: none;
     border-left: 1px white solid;
 }
 
+.modal-rent {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+    animation: fadeIn 0.5s;
+}
+
+.modalcontent {
+    position: relative;
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 500px;
+    border-radius: 10px;
+    animation: slideIn 0.5s;
+}
+#openModalBtn {
+    margin-bottom: 5px;
+}
+.close-btn {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close-btn:hover,
+.close-btn:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+@keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
+
+@keyframes slideIn {
+    from {transform: translateY(-50px); opacity: 0;}
+    to {transform: translateY(0); opacity: 1;}
+}
 .good-cart-image {
+    margin-top: 10px;
     border-radius: 10px;
 }
 
@@ -712,4 +765,65 @@ input[type="checkbox"]:checked + span:not(.lever)::before {
 
 .spinner-orange-only {
     border-color: #ff8c00;
+}
+
+.input-field label {
+    margin-bottom: 20px;
+    font-size: 10px;
+}
+
+@media (min-width: 768px) {
+    .input-field label {
+        font-size: 14px; /* увеличиваем размер шрифта */
+    }
+
+    .select-dropdown.dropdown-trigger {
+        font-size: 16px !important;
+    }
+}
+
+/* Стили для устройств с шириной экрана 1024px и более (десктопы) */
+@media (min-width: 1024px) {
+    .input-field label {
+        font-size: 16px; /* еще больше увеличиваем размер шрифта */
+    }
+    .select-dropdown.dropdown-trigger {
+        font-size: 20px !important;
+    }
+}
+
+#main-content-hernya {
+    min-height: 80vh;
+    box-sizing: border-box;
+}
+
+input[type="radio"][name="rent-type"]:disabled:checked + span:before {
+    background-color: orange !important;
+}
+
+input[type="radio"][name="rent-type"]:disabled + span {
+    color: #9e9e9e !important;
+}
+
+#openModalBtn {
+    display: inline-flex;
+    align-items: center;
+    border: none;
+    background-color: #d84315; /* Цвет кнопки */
+    color: white;
+    cursor: pointer;
+    border-radius: 25px;
+}
+
+#openModalBtn .material-icons {
+    margin-right: 8px; /* Отступ между иконкой и текстом */
+    font-size: 20px; /* Размер иконки */
+}
+
+.disabled.selected span {
+    font-size: 14px;
+}
+
+.select-dropdown.dropdown-trigger {
+    font-size: 13px !important;
 }

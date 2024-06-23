@@ -315,7 +315,7 @@ return [
     'OrderItem is_additional help' => 'Если товар берут как дополнение, то к нему будет применена цена дополнения, а не полная',
     'and' => 'и',
     'Item id' => 'Свободный вариант',
-    'Item id select' => 'Подберите свободный вариант',
+    'Item id select' => 'Выберите вариант товара',
     'Full name surname patronymic' => 'Полностью - фамилия, имя, отчество',
     'ID card (from both sides)' => 'Двумя отдельными файлами с двух сторон',
     'not chosen' => 'Не выбран',
@@ -329,4 +329,5 @@ return [
     'Click link below to reset password' => 'Перейдите по ссылке для сброса пароля',
     'restore password mail subject' => 'Сброс пароля. Pixelrental',
     'user not found' => 'Пользователь не был найден',
+    'Priority' => 'Приоритет',
 ];

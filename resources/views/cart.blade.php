@@ -34,6 +34,10 @@
                         </label>
                     </p>
                 </form>
+                <button id="openModalBtn" class="btn orange darken-4 btn-with-icon">
+                    <i class="material-icons prefix white-text">assignment</i>
+                    Условия аренды
+                </button><br>
             </div>
         </div>
         <div class="col s12 m9 goods-list-rent-type-all hide">
@@ -88,7 +92,7 @@
             </form>
         </div>
         <div class="row client-discount-holder hide" @if($client) data-discount-percent="{{$client['discount']}}" @endif>
-            <div class="col s12 m3 additional-info white-text hide-on-med-and-up">
+            <div class="col s12 m3 additional-info white-text hide-on-med-and-up hide">
                 <span class="grey-text"><u>{{__('translations.Select rental periods for goods')}}</u></span>
                 <p>{{__('translations.All items that you have added to your cart are listed here.')}}</p>
                 <p>{{__('translations.Check each of them for compliance, and, if necessary, remove unnecessary ones.')}}</p>
@@ -112,12 +116,11 @@
                                data-product-id="{{$item->good->id . 'pixelrental' . $item->id}}">
                                 <i class="material-icons white-text ">clear</i>
                             </a>
-                            <hr>
-                            <div class="col s12 m3 good-cart-image center">
+                            <div class="col s5 m3 good-cart-image center">
                                 <img src="{{$item->good->attachment()?->first()?->url}}" alt=""
                                      class="good-image">
                             </div>
-                            <div class="col s12 m9 good-cart-additional-info white-text">
+                            <div class="col s7 m9 good-cart-additional-info white-text">
                                 <p>{{__('translations.Name')}}: <a href="/{{$item->good->id}}"><b
                                             class="orange-text text-darken-4"><u>{{$item->good['name_' . session()->get('locale', 'ru')]}}</u></b></a>
                                 </p>
@@ -126,13 +129,8 @@
                                             class="orange-text text-darken-4">{{$item->good->discount_cost}}</b>
                                     </p>
                                 @else
-                                    <p>{{__('translations.Cost for day')}}: <b>{{$item->good->cost}}</b></p>
+                                    <p>{{__('translations.Cost for day')}}: <b class="orange-text text-darken-4">{{$item->good->cost}}</b></p>
                                 @endif
-                                <p>{{__('translations.Price for breakdown during rental')}}:
-                                    <b>{{$item->good->damage_cost}}</b></p>
-                                <p>{{__('translations.Description')}}: <b
-                                        class="truncate">{{$item->good['description_' . session()->get('locale', 'ru')]}}</b>
-                                </p>
                                 <div class="col s12 input-field white-text hide">
                                     <select
                                         name="{{$item->good->id . 'pixelrental' . $item->id}}[item-id]"
@@ -143,9 +141,8 @@
                                                 selected>{{__('translations.Item id select')}}:
                                         </option>
                                     </select>
-                                    <label>{{__('translations.Item id')}}</label>
                                 </div>
-                                <div class="col s12 input-field hide begining-date-field">
+                                <div class="col s6 input-field hide begining-date-field">
                                     <input
                                         name="{{$item->good->id . 'pixelrental' . $item->id}}[rent_start_date]"
                                         data-item-id="{{$item->id}}" type="text"
@@ -153,7 +150,7 @@
                                     <label class="field-label"
                                            for="rent_start_date">{{__('translations.Rent start')}}: </label>
                                 </div>
-                                <div class="col s12 input-field white-text hide rent-start-time-field">
+                                <div class="col s6 input-field white-text hide rent-start-time-field">
                                     <select
                                         name="{{$item->good->id . 'pixelrental' . $item->id}}[start_time]"
                                         class="white-text left rent-start-time" required>
@@ -163,14 +160,14 @@
                                     </select>
                                     <label>{{__('translations.Rent start time')}}</label>
                                 </div>
-                                <div class="col s12 input-field hide ending-date-field">
+                                <div class="col s6 input-field hide ending-date-field">
                                     <input
                                         name="{{$item->good->id . 'pixelrental' . $item->id}}[rent_end_date]"
                                         type="text" class="datepicker white-text ending-date" required>
                                     <label class="field-label"
                                            for="rent_end_date">{{__('translations.Rent end')}}:</label>
                                 </div>
-                                <div class="col s12 input-field white-text hide rent-end-time-field">
+                                <div class="col s6 input-field white-text hide rent-end-time-field">
                                     <select name="{{$item->good->id . 'pixelrental' . $item->id}}[end_time]"
                                             class="white-text left rent-end-time" required>
                                         <option value="" disabled selected>{{__('translations.Rent end')}}
@@ -262,6 +259,37 @@
                 @include('auth.modal', ['icon' => 'favorite_border', 'title' => __('translations.Authorization required'), 'content' => __('translations.Please enter to your account to continue order settlement')])
             </div>
         @endguest
+        <div id="myModal" class="modal-rent">
+            <div class="modalcontent">
+                <span class="close-btn" id="closeModalBtn">&times;</span>
+                <p><b>{{__('translations.IMPORTANT!')}}</b></p>
+                    <p>{{__('translations.Be sure to keep in mind that if you rent equipment and it breaks down, an additional payment will apply, Based on the terms of the contract')}}</p>
+                    <p>{{__('translations.Please note: For late payment of payments specified in the agreement, the Lessor has the right require the Tenant to pay a penalty in the amount of 5% of the unpaid payment for each day delays')}}</p>
+            </div>
+            @push('scripts')
+                <script>
+                    document.addEventListener('DOMContentLoaded', function () {
+                        const modal = document.getElementById("myModal");
+                        const openModalBtn = document.getElementById("openModalBtn");
+                        const closeModalBtn = document.getElementById("closeModalBtn");
+
+                        openModalBtn.onclick = function() {
+                            modal.style.display = "block";
+                        }
+
+                        closeModalBtn.onclick = function() {
+                            modal.style.display = "none";
+                        }
+
+                        window.onclick = function(event) {
+                            if (event.target == modal) {
+                                modal.style.display = "none";
+                            }
+                        }
+                    });
+                </script>
+            @endpush
+        </div>
         @include('confirmModal', [
             'modalClass' => 'order-placement-modal',
             'title' => __('translations.Are you sure you are ready to place an order?'),

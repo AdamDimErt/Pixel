@@ -109,6 +109,9 @@ class GoodListLayout extends Table
                         ->route('platform.goodTypes.edit', $good->goodType);
                 }),
 
+            TD::make('priority', __('translations.Priority'))
+                ->sort(),
+
             TD::make('created_at', __('translations.Created'))
                 ->usingComponent(DateTimeSplit::class)
                 ->align(TD::ALIGN_RIGHT)

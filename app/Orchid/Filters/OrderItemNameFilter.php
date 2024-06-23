@@ -26,16 +26,19 @@ class OrderItemNameFilter extends Filter
      */
     public function parameters(): ?array
     {
-        return ['name', 'status', 'amount_paid', 'rent_start_date', 'rent_end_date', 'rent_start_time', 'rent_end_time'];
+        return ['id', 'name', 'status', 'amount_paid', 'rent_start_date', 'rent_end_date', 'rent_start_time', 'rent_end_time'];
     }
 
     public function run(Builder $builder): Builder
     {
         return $builder
+            ->select('order_items.*', 'items.id as item_id', 'goods.id as good_id', 'goods.name_ru', 'goods.name_en')
             ->join('items', 'items.id', '=', 'order_items.item_id')
             ->join('goods', 'goods.id', '=', 'items.good_id')
-            ->where('goods.name_ru', 'like', '%'.$this->request->get('name').'%')
-            ->orWhere('goods.name_en', 'like', '%'.$this->request->get('name').'%');
+            ->where(function($query) {
+                $query->where('goods.name_ru', 'like', '%'.$this->request->get('name').'%')
+                    ->orWhere('goods.name_en', 'like', '%'.$this->request->get('name').'%');
+            });
     }
 
     public function display() : array
