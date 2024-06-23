@@ -43,15 +43,13 @@
         <div class="col s12 m9 goods-list-rent-type-all hide">
             <form action="{{route('settleOrderAll')}}" method="POST" id="order-placement-form-rent-type-all">
                 {{csrf_field()}}
-                <div class="col s12 input-field beginning-date-field-rent-type-all hide">
+                <div class="col s6 input-field beginning-date-field-rent-type-all hide">
                     <input
                         name="rent_start_date"
                         type="text"
                         class="datepicker white-text beginning-date-rent-type-all hide" required>
-                    <label class="field-label"
-                           for="rent_start_date">{{__('translations.Rent start')}}: </label>
                 </div>
-                <div class="col s12 input-field white-text rent-starttime-field-rent-type-all hide">
+                <div class="col s6 input-field white-text rent-starttime-field-rent-type-all hide">
                     <select
                         name="start_time"
                         class="white-text left rent-starttime-rent-type-all hide" required>
@@ -59,23 +57,19 @@
                                 selected>{{__('translations.Choose time')}}:
                         </option>
                     </select>
-                    <label>{{__('translations.Rent start time')}}</label>
                 </div>
-                <div class="col s12 input-field ending-datefield-rent-type-all hide">
+                <div class="col s6 input-field ending-datefield-rent-type-all hide">
                     <input
                         name="rent_end_date"
                         type="text" class="datepicker white-text endingdate-rent-type-all hide" required>
-                    <label class="field-label"
-                           for="rent_end_date">{{__('translations.Rent end')}}:</label>
                 </div>
-                <div class="col s12 input-field white-text rent-endtime-field-rent-type-all hide">
+                <div class="col s6 input-field white-text rent-endtime-field-rent-type-all hide">
                     <select name="end_time"
                             class="white-text left rent-end-time-rent-type-all hide" required>
                         <option value="" disabled selected>{{__('translations.Rent end')}}
                             :
                         </option>
                     </select>
-                    <label>{{__('translations.Rent end time')}}</label>
                 </div>
                 <ul class="grey darken-4 additionals-outerwrapper-rent-type-all hide">
                     <li>

@@ -115,10 +115,10 @@ const startDatepicker = document.querySelector('.datepicker.white-text.beginning
 const startTimePicker = document.querySelector('.white-text.left.rent-starttime-rent-type-all.hide');
 const endDatePicker = document.querySelector('.datepicker.white-text.endingdate-rent-type-all.hide');
 const endTimePicker = document.querySelector('.white-text.left.rent-end-time-rent-type-all.hide')
-const startDatepickerDiv = document.querySelector('.col.s12.input-field.beginning-date-field-rent-type-all.hide')
-const startTimePickerDiv = document.querySelector('.col.s12.input-field.white-text.rent-starttime-field-rent-type-all.hide');
-const endDatePickerDiv = document.querySelector('.col.s12.input-field.ending-datefield-rent-type-all.hide');
-const endTimePickerDiv = document.querySelector('.col.s12.input-field.white-text.rent-endtime-field-rent-type-all.hide')
+const startDatepickerDiv = document.querySelector('.col.s6.input-field.beginning-date-field-rent-type-all.hide')
+const startTimePickerDiv = document.querySelector('.col.s6.input-field.white-text.rent-starttime-field-rent-type-all.hide');
+const endDatePickerDiv = document.querySelector('.col.s6.input-field.ending-datefield-rent-type-all.hide');
+const endTimePickerDiv = document.querySelector('.col.s6.input-field.white-text.rent-endtime-field-rent-type-all.hide')
 
 let itemIdPickers = document.querySelectorAll('.item-id-selector')
 let availableItemsLength = 0
@@ -182,19 +182,23 @@ const fillTimepickers = async ()=> {
     startDatepickerDiv.classList.remove('hide');
     startDatepicker.classList.remove('hide')
     startDatepicker.value = null
+    startDatepicker.placeholder = 'Дата начала'
     try {
         startTimePickerDiv.classList.add('hide')
         startTimePicker.classList.add('hide')
+        startTimePicker.placeholder = 'Время начала'
         startTimePicker.value = null;
     } catch (e) {}
     try {
         endDatePickerDiv.classList.add('hide')
         endDatePicker.classList.add('hide')
+        endDatePicker.placeholder = 'Дата конца'
         endDatePicker.value = null;
     } catch (e) {}
     try {
         endTimePickerDiv.classList.add('hide')
         endTimePicker.classList.add('hide')
+        endTimePicker.placeholder = 'Время конца'
         endTimePicker.value = null;
     } catch (e) {}
     let instance = M.Datepicker.init(startDatepicker, {
