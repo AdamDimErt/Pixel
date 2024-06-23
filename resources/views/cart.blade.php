@@ -135,6 +135,7 @@
                                                 selected>{{__('translations.Item id select')}}:
                                         </option>
                                     </select>
+                                    <label class="info-for-items-label">У каждого варианта свое свободное время!</label>
                                 </div>
                                 <div class="col s6 input-field hide begining-date-field">
                                     <input

@@ -767,11 +767,6 @@ input[type="checkbox"]:checked + span:not(.lever)::before {
     border-color: #ff8c00;
 }
 
-.input-field label {
-    margin-bottom: 60px !important;
-    font-size: 12px !important;
-}
-
 .input-field {
     margin-top: 0 !important;
     margin-bottom: 0 !important;
@@ -888,4 +883,14 @@ input[type="radio"][name="rent-type"]:disabled + span {
 
 .select-wrapper.select-month {
     color: white !important;
+}
+
+.info-for-items-label {
+    color: #9F0303 !important;
+    display: block; /* Убедитесь, что лейбл отображается как блок, чтобы ширина применялась */
+    width: 100%; /* Установите ширину 100% или конкретное значение */
+    white-space: normal; /* Позволяет переносить текст на новую строку */
+    word-wrap: break-word; /* Перенос длинных слов на следующую строку */
+    word-break: break-word; /* Перенос слов при переполнении */
+    overflow-wrap: break-word; /* Перенос слов при переполнении */
 }
