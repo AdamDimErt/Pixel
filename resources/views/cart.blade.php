@@ -125,6 +125,7 @@
                                 @else
                                     <p>{{__('translations.Cost for day')}}: <b class="orange-text text-darken-4">{{$item->good->cost}}</b></p>
                                 @endif
+                                <p class="info-for-items-label">У каждого варианта свое свободное время!</p>
                                 <div class="col s12 input-field white-text hide">
                                     <select
                                         name="{{$item->good->id . 'pixelrental' . $item->id}}[item-id]"
@@ -135,7 +136,6 @@
                                                 selected>{{__('translations.Item id select')}}:
                                         </option>
                                     </select>
-                                    <label class="info-for-items-label">У каждого варианта свое свободное время!</label>
                                 </div>
                                 <div class="col s6 input-field hide begining-date-field">
                                     <input

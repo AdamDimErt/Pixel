@@ -887,10 +887,4 @@ input[type="radio"][name="rent-type"]:disabled + span {
 
 .info-for-items-label {
     color: #9F0303 !important;
-    display: block; /* Убедитесь, что лейбл отображается как блок, чтобы ширина применялась */
-    width: 100%; /* Установите ширину 100% или конкретное значение */
-    white-space: normal; /* Позволяет переносить текст на новую строку */
-    word-wrap: break-word; /* Перенос длинных слов на следующую строку */
-    word-break: break-word; /* Перенос слов при переполнении */
-    overflow-wrap: break-word; /* Перенос слов при переполнении */
 }
