@@ -12,6 +12,7 @@ function removeFromCart(e) {
             body: JSON.stringify({product_id: productId}),
         })
             .then(() => {
+                availableItemsLength--;
                 enableAllOtherOptions(e.target.parentNode.parentNode.dataset.goodId, e.target.parentNode.parentNode.dataset.goodItemId)
                 e.target.parentNode.parentNode.remove()
             })
