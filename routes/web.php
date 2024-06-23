@@ -29,7 +29,7 @@ Route::prefix('/')->group(function () {
     Route::post('/additional-add', [HttpControllers\CartController::class, 'additionalAdd']);
     Route::post('/additional-remove', [HttpControllers\CartController::class, 'additionalRemove']);
     Route::get('/get-cart-count', [HttpControllers\CartController::class, 'getCartCount']);
-    Route::get('/cart1', [HttpControllers\CartController::class, 'cart'])->name('cart');
+    Route::get('/cart2', [HttpControllers\CartController::class, 'cart'])->name('cart');
     Route::post('/get-available-additions', [HttpControllers\CartController::class, 'getAvailableAdditionals']);
 });
 
