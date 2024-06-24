@@ -249,15 +249,29 @@ class ItemController extends Controller
         $endDate = $request->input('end_date');
         $endTime = $request->input('end_time');
 
-        $conflictingItemIds = DB::table('order_items')
-            ->join('items', 'items.id', '=', 'order_items.item_id')
-            ->where('items.good_id', '=', $id)
-            ->whereIn('status', ['in_rent', 'confirmed', 'waiting'])
-            ->where('order_items.rent_start_date', '<=', $endDate)
-            ->where('order_items.rent_start_time', '<=', $endTime)
-            ->where('order_items.rent_end_date', '>=', $startDate)
-            ->where('order_items.rent_end_time', '>=', $startTime)
-            ->pluck('item_id');
+        $conflictingItemIds = DB::select("
+    SELECT order_items.item_id
+    FROM order_items
+    JOIN items ON order_items.item_id = items.id
+    WHERE items.good_id = :good_id
+    AND order_items.status IN ('in_rent', 'waiting', 'confirmed')
+    AND (
+        (order_items.rent_start_date < :end_date OR (order_items.rent_start_date = :end_date_v2 AND order_items.rent_start_time <= :end_time))
+        AND
+        (order_items.rent_end_date > :start_date OR (order_items.rent_end_date = :start_date_v2 AND order_items.rent_end_time >= :start_time))
+    )
+", [
+            'good_id' => $good->id,
+            'start_date' => $startDate,
+            'start_date_v2' => $startDate,
+            'start_time' => $startTime,
+            'end_date' => $endDate,
+            'end_date_v2' => $endDate,
+            'end_time' => $endTime,
+        ]);
+        $conflictingItemIds = array_map(function ($item) {
+            return $item->item_id;
+        }, $conflictingItemIds);
 
         $items = $good->items()->whereNotIn('id', $conflictingItemIds)->with('good')->get();
 
