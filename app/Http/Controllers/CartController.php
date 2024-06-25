@@ -142,12 +142,37 @@ class CartController extends Controller
 
         $endDate = $endDateTime->toDateString();
 
-        $unavailableOrderItemsIds = OrderItem::query()
-            ->whereIn('item_id', $additionalItemsIds)
-            ->whereIn('status', ['in_rent', 'waiting', 'confirmed'])
-            ->whereBetween('rent_start_date', [$startDate, $endDate])
-            ->whereBetween('rent_end_date', [$startDate, $endDate])
-            ->pluck('item_id');
+        $placeholders = implode(',', array_fill(0, count($additionalItemsIds), '?'));
+
+        $sql = "
+    SELECT order_items.item_id
+    FROM order_items
+    JOIN items ON order_items.item_id = items.id
+    WHERE items.id IN ($placeholders)
+    AND order_items.status IN ('in_rent', 'waiting', 'confirmed')
+    AND (
+        (order_items.rent_start_date < ? OR (order_items.rent_start_date = ? AND order_items.rent_start_time <= ?))
+        AND
+        (order_items.rent_end_date > ? OR (order_items.rent_end_date = ? AND order_items.rent_end_time >= ?))
+    )
+";
+
+        $params = array_merge(
+            $additionalItemsIds,
+            [
+                $endDateString,
+                $endDateString,
+                $endTimeString,
+                $startDateString,
+                $startDateString,
+                $startTimeString
+            ]
+        );
+        $unavailableOrderItemsIds = DB::select($sql, $params);
+
+        $unavailableOrderItemsIds = array_map(function ($item) {
+            return $item->item_id;
+            }, $unavailableOrderItemsIds);
 
         $unavailableAdditionalIds = Item::query()
             ->whereIn('id', $unavailableOrderItemsIds)
