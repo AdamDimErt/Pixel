@@ -177,12 +177,13 @@
                                         </div>
                                     </li>
                                 </ul>
+                                @php $clientDiscount = isset($client) ? $client['discount'] : 0 @endphp
                                 <div class="control-sum right"
                                      data-good-cost="{{$item->good->discount_cost ?? $item->good->cost}}">
                                     <h5 class="inline">{{__('translations.Total')}}:
                                         @if($item->good->discount_cost && $item->good->discount_cost != 0)
                                             <span
-                                                class="good-cost-holder orange-text text-darken-4">{{$item->good->discount_cost / 100 * (100 - $client['discount'])}}
+                                                class="good-cost-holder orange-text text-darken-4">{{$item->good->discount_cost / 100 * (100 - $clientDiscount)}}
                                             </span>
                                             {{__('translations.KZT')}}
                                             @if(Auth::guard('clients')->id() && $client['discount'])
