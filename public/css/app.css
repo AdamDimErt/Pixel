@@ -780,15 +780,15 @@ input[type="checkbox"]:checked + span:not(.lever)::before {
     .select-dropdown.dropdown-trigger {
         font-size: 20px;
         border-radius: 20px 0 0 20px !important;
-        border-color: #303C42 !important;
+        box-shadow: 0 0 0 2px #303C42 !important;
         background-color: #171515 !important;
         text-align: center;
     }
 
     .datepicker.white-text {
         border-radius: 20px 0 0 20px !important;
-        border-color: #303C42 !important;
         font-size: 20px;
+        box-shadow: 0 0 0 2px #303C42 !important;
         background-color: #171515 !important;
         text-align: center;
     }
@@ -807,15 +807,15 @@ input[type="checkbox"]:checked + span:not(.lever)::before {
     .select-dropdown.dropdown-trigger {
         font-size: 30px;
         border-radius: 20px 0 0 20px !important;
-        border-color: #303C42 !important;
+        box-shadow: 0 0 0 2px #303C42 !important;
         background-color: #171515 !important;
         text-align: center;
     }
 
     .datepicker.white-text {
         border-radius: 20px 0 0 20px !important;
-        border-color: #303C42 !important;
         font-size: 30px;
+        box-shadow: 0 0 0 2px #303C42 !important;
         background-color: #171515 !important;
         text-align: center;
     }
@@ -856,14 +856,16 @@ input[type="radio"][name="rent-type"]:disabled + span {
 .select-dropdown.dropdown-trigger {
     font-size: 12px !important;
     border-radius: 20px !important;
-    border: 2px solid #303C42 !important;
+    box-shadow: 0 0 0 2px #303C42 !important;
+    border-bottom: none !important;
     background-color: #171515 !important;
     text-align: center;
 }
 
 .datepicker.white-text {
     border-radius: 20px !important;
-    border: 2px solid #303C42 !important;
+    box-shadow: 0 0 0 3px #303C42 !important;
+    border-bottom: none !important;
     font-size: 12px !important;
     background-color: #171515 !important;
     text-align: center;
