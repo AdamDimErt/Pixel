@@ -502,6 +502,7 @@ const fillTimepickers = async ()=> {
                                 try {
 
                                     const additionalsWrapper = e.target.parentNode.parentNode.parentNode.parentNode.parentNode.querySelector('.additionals-wrapper');
+                                    additionalsWrapper.innerHTML = ''
                                     const additionalsOuterWrapper = e.target.parentNode.parentNode.parentNode.parentNode.parentNode.querySelector('.additionals-outer-wrapper');
                                     e.target.parentNode.parentNode.parentNode.insertAdjacentHTML('afterEnd', loaderElement)
                                     const additionalsResponse = await fetch('/get-available-additions', {
@@ -1110,10 +1111,7 @@ function fillIndividualRentType() {
                     }
                 }
             }
-
-
         }
-
     })
 }
 
