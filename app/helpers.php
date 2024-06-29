@@ -25,7 +25,7 @@ if (! function_exists('sendTelegramMessage')) {
 
     function escapeCharacters($text): string
     {
-        $includedChars = ['_', '*', '[', ']', '(', ')', '~', '`', '>', '#', '+', '-', '=', '|', '{', '}', '.', '!'];
+        $includedChars = ['_', '[', ']', '(', ')', '~', '`', '>', '#', '+', '-', '=', '|', '{', '}', '.', '!'];
 
         foreach ($includedChars as $char) {
             $text = str_replace($char, '\\'.$char, $text);
