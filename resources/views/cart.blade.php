@@ -116,7 +116,7 @@
                             </div>
                             <div class="col s7 m9 good-cart-additional-info white-text">
                                 <p>{{__('translations.Name')}}: <a href="/{{$item->good->id}}"><b
-                                            class="orange-text text-darken-4"><u>{{$item->good['name_' . session()->get('locale', 'ru')]}}</u></b></a>
+                                            class="orange-text text-darken-4">{{$item->good['name_' . session()->get('locale', 'ru')]}}</b></a>
                                 </p>
                                 @if($item->good->discount_cost && $item->good->discount_cost != 0)
                                     <p>{{__('translations.Cost for day')}}: <s>{{$item->good->cost}}</s> <b
