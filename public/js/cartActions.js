@@ -482,7 +482,7 @@ const fillTimepickers = async ()=> {
                                     changeTotalCost(+cost * differenceDays, 'up');
                                 }
 
-                                let selectedItemText = removeAfterParenthesis(e.target.selectedOptions[0].text);
+                                let selectedItemText = e.target.selectedOptions[0].text;
                                 const selectedItemId = e.target.value
                                 await changeCartKey(e.target.dataset.goodId, selectedItemId, e.target.dataset.oldItemId)
                                 await changeFieldsItemId(e.target, e.target.dataset.goodId, selectedItemId)
@@ -665,7 +665,7 @@ function fillIndividualRentType() {
         })
         var itemSelect = M.FormSelect.init(item, {})
         itemSelect.el.onchange = async (e) => {
-            let selectedItemText = removeAfterParenthesis(e.target.selectedOptions[0].text);
+            let selectedItemText = e.target.selectedOptions[0].text;
             const selectedItemId = e.target.value
             await changeCartKey(e.target.dataset.goodId, selectedItemId, e.target.dataset.oldItemId)
             await changeFieldsItemId(e.target, e.target.dataset.goodId, selectedItemId)
