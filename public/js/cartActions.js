@@ -493,7 +493,24 @@ const fillTimepickers = async ()=> {
                                 await disableAllOtherOptions(e.target.dataset.goodId, e.target.value)
                                 e.target.dataset.oldItemId = selectedItemId;
                                 if (!selectedItems.includes(selectedItemText)) {
-                                    selectedItems.push(selectedItemText);
+                                    let indexArray = 0
+                                    let classValue = '';
+                                    let classValueItem = '';
+                                    for (let i = 0; i < selectedItems.length; i++) {
+                                        const index = selectedItems[i].indexOf('|')
+                                        const valuee = selectedItems[i].substring(0, index)
+                                        if (valuee == e.target.parentNode.parentNode.parentNode.className) {
+                                            indexArray = i
+                                            classValue = valuee
+                                            classValueItem = selectedItems[i].split('|')
+                                            classValueItem = classValueItem[1].trim()
+                                        }
+                                    }
+                                    if (removeAfterParenthesis(classValueItem) == removeAfterParenthesis(selectedItemText)) {
+                                        selectedItems[indexArray] = e.target.parentNode.parentNode.parentNode.className + '|' + selectedItemText
+                                    } else {
+                                        selectedItems.push(e.target.parentNode.parentNode.parentNode.className + '|' + selectedItemText);
+                                    }
                                 }
                                 isOrderAvailable = selectedItems.length === availableItemsLength
                                 document.querySelector('beginning-date-field-rent-type-all')
@@ -1032,7 +1049,24 @@ function fillIndividualRentType() {
                                     }
 
                                     if (!selectedItems.includes(selectedItemText)) {
-                                        selectedItems.push(selectedItemText);
+                                        let indexArray = 0
+                                        let classValue = '';
+                                        let classValueItem = '';
+                                        for (let i = 0; i < selectedItems.length; i++) {
+                                            const index = selectedItems[i].indexOf('|')
+                                            const valuee = selectedItems[i].substring(0, index)
+                                            if (valuee == e.target.parentNode.parentNode.parentNode.className) {
+                                                indexArray = i
+                                                classValue = valuee
+                                                classValueItem = selectedItems[i].split('|')
+                                                classValueItem = classValueItem[1].trim()
+                                            }
+                                        }
+                                        if (removeAfterParenthesis(classValueItem) == removeAfterParenthesis(selectedItemText)) {
+                                            selectedItems[indexArray] = e.target.parentNode.parentNode.parentNode.className + '|' + selectedItemText
+                                        } else {
+                                            selectedItems.push(e.target.parentNode.parentNode.parentNode.className + '|' + selectedItemText);
+                                        }
                                     }
                                     isOrderAvailable = selectedItems.length === availableItemsLength
                                     updateButtonState();

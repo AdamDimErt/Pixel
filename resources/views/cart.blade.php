@@ -126,7 +126,7 @@
                                     <p>{{__('translations.Cost for day')}}: <b class="orange-text text-darken-4">{{$item->good->cost}}</b></p>
                                 @endif
                                 <p class="info-for-items-label">У каждого варианта свое свободное время!</p>
-                                <div class="col s12 input-field white-text hide">
+                                <div class="col s12 input-field white-text hide {{$loop->index}}">
                                     <select
                                         name="{{$item->good->id . 'pixelrental' . $item->id}}[item-id]"
                                         data-good-id="{{$item->good->id}}"
