@@ -325,4 +325,6 @@ return [
     'Click link below to reset password' => 'Click link below to reset password',
     'restore password mail subject' => 'Restore password Pixelrental',
     'user not found' => 'User not found',
+    'ItemSerial' => 'item serial',
+    'ItemSerialHelp' => 'unique item serial',
 ];

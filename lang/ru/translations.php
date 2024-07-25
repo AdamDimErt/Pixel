@@ -330,4 +330,6 @@ return [
     'restore password mail subject' => 'Сброс пароля. Pixelrental',
     'user not found' => 'Пользователь не был найден',
     'Priority' => 'Приоритет',
+    'ItemSerial' => 'Серийный номер товара',
+    'ItemSerialHelp' => 'Уникальный серийный номер товара',
 ];
