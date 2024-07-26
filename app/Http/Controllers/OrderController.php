@@ -229,7 +229,15 @@ class OrderController extends Controller
             return redirect()->back()->withErrors(['cart' => 'Пожалуйста, выберите товары и оформите по ним заказ']);
         }
 
+        $uniqueCartData = [];
         $cartData = json_decode($request->cookie('cart', '{}'), true);
+
+        foreach ($cartData as $key => $value) {
+            if (!array_key_exists($key, $uniqueCartData)) {
+                $uniqueCartData[$key] = $value;
+            }
+        }
+        $cartData = $uniqueCartData;
 
         $totalSum = 0;
 
