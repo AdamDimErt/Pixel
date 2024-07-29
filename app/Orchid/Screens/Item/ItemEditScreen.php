@@ -83,7 +83,7 @@ class ItemEditScreen extends Screen
                 Input::make('item.serial')
                     ->title(__('translations.ItemSerial'))
                     ->help(__('translations.ItemSerialHelp'))
-                    ->type('number'),
+                    ->type('string'),
             ]),
         ];
     }
