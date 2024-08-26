@@ -95,6 +95,7 @@ class ClientEditScreen extends Screen
                 Input::make('client.discount')
                     ->title(__('translations.Discount'))
                     ->help(__('translations.Client discount help'))
+                    ->type('number')
                     ->required(),
 
                 Input::make('client.iin')
