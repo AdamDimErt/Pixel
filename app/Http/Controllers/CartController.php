@@ -200,7 +200,21 @@ class CartController extends Controller
 
         $cartData = json_decode($request->cookie('cart', '{}'), true);
 
-        $cartData[$request->input('cartKey')] = [];
+        preg_match('/^(\d+pixelrental)/', $request->input('cartKey'), $matches);
+        $newKey = $request->input('cartKey');
+        $newPrefix = $matches[1];
+
+        $keysWithSamePrefix = array_filter(array_keys($cartData), function($key) use ($newPrefix) {
+            return strpos($key, $newPrefix) === 0;
+        });
+        $keysWithSamePrefix = array_values($keysWithSamePrefix);
+
+        if (count($keysWithSamePrefix) === 1) {
+            $oldKey = $keysWithSamePrefix[0];
+            unset($cartData[$oldKey]); // Удаляем старый ключ
+        }
+
+        $cartData[$newKey] = [];
 
         $response->withCookie(cookie('cart', json_encode($cartData)));
 
