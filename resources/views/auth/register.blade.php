@@ -30,9 +30,10 @@
                         </div>
                         <div class="input-field col s12 auth-form-element">
                             <i class="material-icons prefix white-text">phone</i>
-                            <input name="phone" id="phone" type="tel" maxlength="12"
+                            <input name="phone" id="phone-input" type="tel" maxlength="12"
                                    placeholder="{{__('translations.Phone')}}"
                                    class="white-text"
+                                   value="+7"
                                    required>
                         </div>
                         <div class="input-field col s12 auth-form-element">
@@ -108,5 +109,38 @@
     </div>
 </div>
 <script src="{{asset('js/materialize.js')}}"></script>
+<script>
+    const phoneInput = document.getElementById('phone-input');
+
+    phoneInput.addEventListener('input', function() {
+        // Если пользователь попытается удалить +7, оно снова вставится
+        if (!this.value.startsWith('+7')) {
+            this.value = '+7' + this.value.slice(3);
+        }
+    });
+
+    phoneInput.addEventListener('keydown', function(event) {
+        const cursorPosition = this.selectionStart;
+
+        // Запрещаем удаление +7 с помощью клавиш Backspace и Delete
+        if (cursorPosition <= 2 && (event.key === 'Backspace' || event.key === 'Delete')) {
+            event.preventDefault();
+        }
+    });
+
+    phoneInput.addEventListener('click', function() {
+        // Перемещаем курсор сразу после +7 при клике в начало инпута
+        if (this.selectionStart < 3) {
+            this.setSelectionRange(3, 3);
+        }
+    });
+
+    phoneInput.addEventListener('focus', function() {
+        // Перемещаем курсор сразу после +7 при фокусе
+        if (this.selectionStart < 3) {
+            this.setSelectionRange(3, 3);
+        }
+    });
+</script>
 </body>
 </html>

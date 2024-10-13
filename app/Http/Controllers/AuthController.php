@@ -31,35 +31,92 @@ class AuthController extends Controller
     public function authenticate(Request $request): RedirectResponse
     {
         $credentials = $request->only('phone', 'password');
-        $client = Client::query()->where('phone', '=', $credentials['phone'])->first();
+
+        // Приведение введённого номера к формату +7
+        $formattedPhone = $this->formatPhoneNumber($credentials['phone']);
+
+        // Ищем клиента по различным вариантам форматов номера
+        $client = Client::query()
+            ->where('phone', '=', $formattedPhone)                 // Введённый номер через +7
+            ->orWhere('phone', '=', $this->convertTo8Format($formattedPhone))  // Номер через 8
+            ->orWhere('phone', '=', $this->convertTo7Format($formattedPhone))  // Номер через 7
+            ->first();
+
+        // Если клиент не найден
         if (is_null($client)) {
             return redirect()->back()->withErrors(['phone' => 'Неверно введены данные']);
         }
 
+        // Далее идёт проверка статусов клиента
         $isConfirmed = $client->email_confirmed;
         $isBlocked = $client->blocked;
 
+        // Проверка на нахождение в списке Wanted
         $wanted = Wanted::query()
             ->orWhere('iin', '=', $client->iin)
             ->first();
 
         if ($wanted) {
             Auth::guard('clients')->logout();
-
             return redirect()->back()->withErrors(['authentication' => 'Профиль был заблокирован']);
         }
 
         if ($isBlocked) {
             return redirect()->back()->withErrors(['authentication' => 'Профиль был заблокирован']);
         }
+
         if (! $isConfirmed) {
             return redirect()->back()->withErrors(['authentication' => 'Сперва нужно подтвердить свой почтовый адрес']);
         }
-        if (Auth::guard('clients')->attempt($credentials)) {
+
+        // Попытка аутентификации
+        if (Auth::guard('clients')->attempt(['phone' => $client->phone, 'password' => $credentials['password']])) {
             return redirect()->intended('');
         }
 
         return redirect()->back()->withErrors(['phone' => 'Неверно введены данные']);
+    }
+
+    /**
+     * Приведение номера телефона к формату +7
+     */
+    private function formatPhoneNumber($phone)
+    {
+        // Удаляем все пробелы, скобки, тире и прочие символы
+        $phone = preg_replace('/\D/', '', $phone);
+
+        // Если номер начинается с 8 или 7, заменяем на +7
+        if (strlen($phone) === 11 && ($phone[0] == '8' || $phone[0] == '7')) {
+            $phone = '+7' . substr($phone, 1);
+        }
+
+        return $phone;
+    }
+
+    /**
+     * Преобразование номера +7 в формат 8
+     */
+    private function convertTo8Format($phone)
+    {
+        // Если номер начинается с +7, преобразуем в 8
+        if (strpos($phone, '+7') === 0) {
+            return '8' . substr($phone, 2);
+        }
+
+        return $phone;
+    }
+
+    /**
+     * Преобразование номера +7 в формат 7
+     */
+    private function convertTo7Format($phone)
+    {
+        // Если номер начинается с +7, преобразуем в 7
+        if (strpos($phone, '+7') === 0) {
+            return '7' . substr($phone, 2);
+        }
+
+        return $phone;
     }
 
     public function register(): View|\Illuminate\Foundation\Application|Factory|Application

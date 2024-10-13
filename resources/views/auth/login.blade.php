@@ -22,7 +22,8 @@
                     <div class="row">
                         <div class="input-field col s12">
                             <i class="material-icons prefix white-text">phone</i>
-                            <input name="phone" type="tel" placeholder="{{__('translations.Phone')}}" class="white-text">
+                            <input name="phone" type="tel" placeholder="{{__('translations.Phone')}}" class="white-text"
+                                   id="phone-input" value="+7">
                         </div>
                         <div class="input-field col s12">
                             <i class="material-icons prefix white-text">lock</i>
@@ -53,4 +54,37 @@
     </div>
 </div>
 </body>
+<script>
+    const phoneInput = document.getElementById('phone-input');
+
+    phoneInput.addEventListener('input', function() {
+        // Если пользователь попытается удалить +7, оно снова вставится
+        if (!this.value.startsWith('+7')) {
+            this.value = '+7' + this.value.slice(3);
+        }
+    });
+
+    phoneInput.addEventListener('keydown', function(event) {
+        const cursorPosition = this.selectionStart;
+
+        // Запрещаем удаление +7 с помощью клавиш Backspace и Delete
+        if (cursorPosition <= 2 && (event.key === 'Backspace' || event.key === 'Delete')) {
+            event.preventDefault();
+        }
+    });
+
+    phoneInput.addEventListener('click', function() {
+        // Перемещаем курсор сразу после +7 при клике в начало инпута
+        if (this.selectionStart < 3) {
+            this.setSelectionRange(3, 3);
+        }
+    });
+
+    phoneInput.addEventListener('focus', function() {
+        // Перемещаем курсор сразу после +7 при фокусе
+        if (this.selectionStart < 3) {
+            this.setSelectionRange(3, 3);
+        }
+    });
+</script>
 </html>
