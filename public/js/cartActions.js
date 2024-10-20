@@ -120,7 +120,6 @@ const startTimePickerDiv = document.querySelector('.col.s6.input-field.white-tex
 const endDatePickerDiv = document.querySelector('.col.s6.input-field.ending-datefield-rent-type-all.hide');
 const endTimePickerDiv = document.querySelector('.col.s6.input-field.white-text.rent-endtime-field-rent-type-all.hide')
 
-let itemIdPickers = document.querySelectorAll('.item-id-selector')
 let availableItemsLength = 0
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -429,6 +428,9 @@ const fillTimepickers = async ()=> {
                     M.FormSelect.init(endTimePicker, {});
                     endTimePicker.onchange = async (e) => {
                         try {
+                            selectedItems = [];
+                            isOrderAvailable = selectedItems.length === availableItemsLength
+                            updateButtonState()
                             const additionalsWrapper = e.target.parentNode.parentNode.parentNode.parentNode.parentNode.querySelector('.additionals-wrapper');
                             additionalsWrapper.innerHTML = ''
                         } catch (e) {
@@ -436,8 +438,13 @@ const fillTimepickers = async ()=> {
 
                         rentEndTimeV2 = e.target.value
                         mainFormElement.classList.remove('hide');
+                        let itemIdPickers = document.querySelectorAll('.item-id-selector')
                         itemIdPickers.forEach(async item => {
-                            console.log(item.parentNode.parentNode.parentNode)
+                            if (item.parentNode.parentNode.classList.contains('select-wrapper')){
+                                const baseWrapper = item.parentNode.parentNode.parentNode
+                                baseWrapper.innerHTML = item.outerHTML;
+                                item = baseWrapper.firstChild
+                            }
                             item.parentNode.classList.remove('hide')
                             const availableItems = await fetch('item/get-available-items/' + item.parentNode.parentNode.parentNode.dataset.goodId, {
                                 method: 'POST',
@@ -1156,8 +1163,8 @@ function placeOrder(e) {
     errorTextHolder.innerHTML = '';
     var flag = true;
     const formElement = (rentTimeType === RENT_TIME_TYPE_INDIVIDUAL)
-            ? document.querySelector('#order-placement-form')
-            : document.querySelector('#order-placement-form-rent-type-all')
+        ? document.querySelector('#order-placement-form')
+        : document.querySelector('#order-placement-form-rent-type-all')
 
     formElement.querySelectorAll('[required]').forEach(field => {
         if (!field.value) {
