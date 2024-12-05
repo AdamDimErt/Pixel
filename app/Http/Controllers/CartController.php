@@ -16,7 +16,7 @@ class CartController extends Controller
 {
     public function addToCart(Request $request): JsonResponse
     {
-        $goodId = $request->input('product_id');
+        $goodId = urldecode($request->input('product_id')); // Декодируем product_id
         $additionalIds = $request->input('additional_ids', []);
         $cartData = json_decode($request->cookie('cart', '{}'), true);
         $idCounts = $this->countDistinctKeys($cartData);

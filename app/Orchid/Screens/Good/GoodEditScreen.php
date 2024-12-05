@@ -82,11 +82,13 @@ class GoodEditScreen extends Screen
                 Input::make('good.name_ru')
                     ->title(__('translations.Name ru'))
                     ->help(__('translations.Good name help'))
+                    ->type('string')
                     ->required(),
 
                 Input::make('good.name_en')
                     ->title(__('translations.Name en'))
                     ->help(__('translations.Good name help'))
+                    ->type('string')
                     ->required(),
 
                 Input::make('good.cost')
@@ -171,6 +173,7 @@ class GoodEditScreen extends Screen
         if (! $request->input('good.additionals')) {
             $good->additionals = '[]';
         }
+
 
         $good->save();
 

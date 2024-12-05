@@ -18,5 +18,5 @@ enum GoodTypeEnum: string
     case SOFTBOXES = 'Софтбоксы';
     case FILTERS = 'Фильтры';
     case STANDS = 'Штативы/стойки';
-    case KITS = 'Наборы';
+    case KITS = 'Кабели';
 }

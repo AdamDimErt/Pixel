@@ -37,16 +37,21 @@ class GoodSeeder extends Seeder
                 ]);
 
                 if (! is_null($value['image'])) {
-                    $file = new UploadedFile('resources/img/'.$value['image'], $value['image']);
+                    // Заменяем символы '/' на '_' в имени файла изображения
+                    $imagePath = str_replace('/', '_', $value['image']);
 
+                    // Создаем объект UploadedFile с новым путем
+                    $file = new UploadedFile('resources/img/'.$imagePath, $imagePath);
+
+                    // Загружаем файл
                     $attachment = (new File($file))->load();
 
+                    // Привязываем его к товару
                     $good->attachment()->syncWithoutDetaching($attachment);
                 }
             }
         }
     }
-
     public function goods(): array
     {
         return [

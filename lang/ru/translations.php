@@ -250,7 +250,7 @@ return [
     'softboxes' => 'Софтбоксы',
     'filters' => 'Фильтры',
     'stands' => 'Штативы/стойки',
-    'kits' => 'Наборы',
+    'kits' => 'Кабели',
     'Additional accessories' => 'Дополнительные аксессуары',
     'Price for breakdown during rental' => 'Цена за поломку во время аренды',
     'Cost for day' => 'Цена (за сутки)',

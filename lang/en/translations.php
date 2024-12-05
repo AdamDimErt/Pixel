@@ -237,7 +237,7 @@ return [
     'softboxes' => 'Softboxes',
     'filters' => 'Filters',
     'stands' => 'Tripods/stands',
-    'kits' => 'Sets',
+    'kits' => 'Cables',
     'Additional accessories' => 'Additional Accessories',
     'Price for breakdown during rental' => 'Price for breakage during rental',
     'Cost for day' => 'Price (per day)',

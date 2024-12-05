@@ -82,5 +82,8 @@ Route::prefix('/profile')->group(function () {
 });
 
 Route::get('{good}', [HttpControllers\GoodController::class, 'view'])->name('viewGood');
-Route::get('autofill/{goodName}', [HttpControllers\GoodController::class, 'autofill'])->name('autofill');
-Route::post('good/{id}/get-items', [HttpControllers\GoodController::class, 'getAvailableItems'])->name('getAvailableItems');
+Route::get('autofill/{goodName}', [HttpControllers\GoodController::class, 'autofill'])->name('autofill')
+->where('id', '[a-zA-Z0-9_-]+');;
+Route::post('good/{id}/get-items', [HttpControllers\GoodController::class, 'getAvailableItems'])->name('getAvailableItems')
+->where('id', '[a-zA-Z0-9_-]+');
+

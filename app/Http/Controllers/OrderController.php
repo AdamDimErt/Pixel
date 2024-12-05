@@ -86,7 +86,7 @@ class OrderController extends Controller
 
             $diffInDays = max(1, $diffInDays);
 
-            $orderItemMessageData = $orderItemMessageData.'Товар: '.str_replace(")", "", str_replace("(", "", $good->name_ru)).'
+            $orderItemMessageData = $orderItemMessageData.'Товар: '.str_replace(['(', ')', '/'], "", str_replace("(", "", $good->name_ru)).'
 ';
 
             if ($good->discount_cost) {
@@ -266,7 +266,7 @@ class OrderController extends Controller
 
             $diffInDays = max(1, $diffInDays);
 
-            $orderItemMessageData = $orderItemMessageData.'Товар: '.str_replace(")", "", str_replace("(", "", $good->name_ru)).'
+            $orderItemMessageData = $orderItemMessageData.'Товар: '.str_replace(['(', ')', '/'], "", str_replace("(", "", $good->name_ru)).'
 ';
 
             if ($good->discount_cost) {
